@@ -1,17 +1,14 @@
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import { RecoilRoot } from "recoil";
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.tsx';
+import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
-createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')!).render(
+  <RecoilRoot>
     <BrowserRouter>
-      <RecoilRoot>
-        {/* <GlobalStyle /> */}
-        <App />
-      </RecoilRoot>
+      {/* <GlobalStyle /> */}
+      <App />
     </BrowserRouter>
-  </React.StrictMode>,
+  </RecoilRoot>,
 );
