@@ -1,11 +1,11 @@
 const Theme = {
   colors: {
-    mainBlue: '#3d75ee',
+    mainBlue: '#0370ff',
     mainOrange: '#ff4c14',
     mainGreen: '#0d8a23',
-    subBlue: '#eff4fe',
+    subBlue: '#f0f5ff',
     subOrange: '#fff7f6',
-    subBalck: 'ecf6ed',
+    subBlack: '#f4ff6',
     gray50: '#f2f2f2',
     gray100: '#d9d9d9',
     gray200: '#bfbfbf',
@@ -16,9 +16,9 @@ const Theme = {
     gray700: '#404040',
     gray800: '#262626',
     gray900: '#0d0d0d',
-    positive: '12bd45',
-    negative: 'ff3737',
-    white: 'ffffff',
+    positive: '#12bd45',
+    negative: '#ff3d00',
+    white: '#ffffff',
   },
   typography: {
     fontFamily: 'Pretandard Variable',
