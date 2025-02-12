@@ -1,4 +1,4 @@
-const Theme = {
+const theme = {
   colors: {
     mainBlue: '#0370ff',
     mainOrange: '#ff4c14',
@@ -38,7 +38,9 @@ const Theme = {
       semibold: 600,
       bold: 700,
     },
+    lineHeight: '140%',
+    letterSpacing: '-2.5%',
   },
 };
 
-export default Theme;
+export default theme;
