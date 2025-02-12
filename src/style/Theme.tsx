@@ -1,0 +1,46 @@
+const theme = {
+  colors: {
+    mainBlue: '#0370ff',
+    mainOrange: '#ff4c14',
+    mainGreen: '#0d8a23',
+    subBlue: '#f0f5ff',
+    subOrange: '#fff7f6',
+    subBlack: '#f4ff6',
+    gray50: '#f2f2f2',
+    gray100: '#d9d9d9',
+    gray200: '#bfbfbf',
+    gray300: '#a6a6a6',
+    gray400: '#8c8c8c',
+    gray500: '#737373',
+    gray600: '#595959',
+    gray700: '#404040',
+    gray800: '#262626',
+    gray900: '#0d0d0d',
+    positive: '#12bd45',
+    negative: '#ff3d00',
+    white: '#ffffff',
+  },
+  typography: {
+    fontFamily: 'Pretandard Variable',
+    fontSize: {
+      title1: '24px',
+      title2: '20px',
+      title3: '18px',
+      title4: '16px',
+      body1: '16px',
+      body2: '14px',
+      body3: '13px',
+      body4: '12px',
+    },
+    fontWeight: {
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+    lineHeight: '140%',
+    letterSpacing: '-2.5%',
+  },
+};
+
+export default theme;
