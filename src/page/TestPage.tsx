@@ -7,6 +7,7 @@ import { InputBox } from '@/components/common/InputBox/InputBox';
 import { Dropdown } from '@/components/common/Dropdown/Dropdown';
 import { useState } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
+import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 
 export const TestPage = () => {
   const tabData = [
@@ -19,6 +20,8 @@ export const TestPage = () => {
   const dropContents = ['요양', '보호', '사회', '복지'];
   const [smallContents, setSmallContents] = useState<string[]>([]);
   const smallDropContents = ['1급', '2급'];
+  const [middleContents, setMiddleContents] = useState<string[]>([]);
+  const middleDropContents = ['시급', '일급', '월급', '연봉'];
   return (
     <div>
       <h1>Test Page</h1>
@@ -70,6 +73,12 @@ export const TestPage = () => {
         contents={smallDropContents}
         selectedContents={smallContents}
         setSelectedContents={setSmallContents}
+      />
+      <MiddleDropdown
+        title="시급"
+        contents={middleDropContents}
+        selectedContents={middleContents}
+        setSelectedContents={setMiddleContents}
       />
     </div>
   );
