@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as IconAlarm } from '@/assets/icons/IconAlarm.svg';
 import { Tab } from '@/components/common/Tab/Tab';
+import { InputBox } from '../components/common/InputBox';
 
 export const TestPage = () => {
   const tabData = [
@@ -15,6 +16,27 @@ export const TestPage = () => {
       </IconWrapper>
       <Title>Test Title</Title>
       <Tab tabs={tabData} />
+      <InputBox
+        width="320px"
+        label="필드 레이블"
+        state="default"
+        placeholder="플레이스홀더"
+        guide="도움말"
+      />
+      <InputBox
+        width="320px"
+        label="필드 레이블"
+        state="error"
+        placeholder="플레이스홀더"
+        guide="도움말"
+      />
+      <InputBox
+        width="320px"
+        label="필드 레이블"
+        state="success"
+        placeholder="플레이스홀더"
+        guide="도움말"
+      />
     </div>
   );
 };
