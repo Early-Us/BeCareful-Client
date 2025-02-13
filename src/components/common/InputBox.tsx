@@ -99,7 +99,6 @@ const InputFieldLabel = styled.div`
   color: ${({ theme }) => theme.colors.gray900};
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  line-height: ${({ theme }) => theme.typography.lineHeight};
   letter-spacing: -0.35px;
 `;
 
@@ -107,7 +106,6 @@ const InputFieldStar = styled.div`
   color: ${({ theme }) => theme.colors.mainBlue};
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  line-height: ${({ theme }) => theme.typography.lineHeight};
   letter-spacing: -0.35px;
 `;
 
@@ -131,14 +129,12 @@ const InputDefault = styled.input<InputBoxState>`
   color: ${({ theme }) => theme.colors.gray900};
   font-size: 16px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: ${({ theme }) => theme.typography.lineHeight};
   letter-spacing: -0.4px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray300};
     font-size: 16px;
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-    line-height: ${({ theme }) => theme.typography.lineHeight};
     letter-spacing: -0.4px;
   }
 
@@ -173,7 +169,6 @@ const InputGuideStar = styled.p<InputBoxState>`
 
   font-size: 13px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: ${({ theme }) => theme.typography.lineHeight};
   letter-spacing: -0.35px;
 `;
 
@@ -191,6 +186,5 @@ const InputGuideLabel = styled.p<InputBoxState>`
 
   font-size: 13px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: ${({ theme }) => theme.typography.lineHeight};
   letter-spacing: -0.35px;
 `;
