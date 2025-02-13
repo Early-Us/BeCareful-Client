@@ -3,15 +3,22 @@ import { ReactComponent as IconAlarm } from '@/assets/icons/IconAlarm.svg';
 import { Tab } from '@/components/common/Tab/Tab';
 
 import { Button } from '@/components/common/Button/Button';
-
-import { InputBox } from '../components/common/InputBox';
-
+import { InputBox } from '@/components/common/InputBox/InputBox';
+import { Dropdown } from '@/components/common/Dropdown/Dropdown';
+import { useState } from 'react';
+import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 
 export const TestPage = () => {
   const tabData = [
     { name: '요양보호사', content: <Tab1Content /> },
     { name: '사회복지사', content: <Tab2Content /> },
   ];
+  const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
+    [],
+  );
+  const dropContents = ['요양', '보호', '사회', '복지'];
+  const [smallContents, setSmallContents] = useState<string[]>([]);
+  const smallDropContents = ['1급', '2급'];
   return (
     <div>
       <h1>Test Page</h1>
@@ -52,7 +59,18 @@ export const TestPage = () => {
         placeholder="플레이스홀더"
         guide="도움말"
       />
-
+      <Dropdown
+        title="드롭다운 가이드"
+        contents={dropContents}
+        selectedContents={selectedDropContents}
+        setSelectedContents={setSelectedDropContents}
+      />
+      <SmallDropdown
+        title="1급"
+        contents={smallDropContents}
+        selectedContents={smallContents}
+        setSelectedContents={setSmallContents}
+      />
     </div>
   );
 };
