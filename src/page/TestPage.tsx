@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-  InputBox,
-  InputBoxError,
-  InputBoxSuccess,
-} from '../components/common/InputBox';
+import { InputBox } from '../components/common/InputBox';
 
 export const TestPage = () => {
   return (
@@ -13,18 +9,21 @@ export const TestPage = () => {
       <InputBox
         width="320px"
         label="필드 레이블"
+        state="default"
         placeholder="플레이스홀더"
         guide="도움말"
       />
-      <InputBoxError
-        width="520px"
+      <InputBox
+        width="320px"
         label="필드 레이블"
+        state="error"
         placeholder="플레이스홀더"
         guide="도움말"
       />
-      <InputBoxSuccess
-        width=""
+      <InputBox
+        width="320px"
         label="필드 레이블"
+        state="success"
         placeholder="플레이스홀더"
         guide="도움말"
       />
