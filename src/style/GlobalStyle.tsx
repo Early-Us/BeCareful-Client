@@ -15,7 +15,9 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Pretendard Variable';
-    font-styled: normal;
+    font-style: normal;
+    line-height: 1.4;
+    letter-spacing: -0.025em; 
   }
 
   p, h1, h2, h3 {
@@ -28,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
     background: none;
     padding: 0;
     cursor: pointer;
+    
   }
 
   img {
