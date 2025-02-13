@@ -10,13 +10,20 @@ export const TestPage = () => {
     <div>
       <h1>Test Page</h1>
       <Title>Test Title</Title>
-      <InputBox label="필드 레이블" placeholder="플레이스홀더" guide="도움말" />
+      <InputBox
+        width="320px"
+        label="필드 레이블"
+        placeholder="플레이스홀더"
+        guide="도움말"
+      />
       <InputBoxError
+        width="520px"
         label="필드 레이블"
         placeholder="플레이스홀더"
         guide="도움말"
       />
       <InputBoxSuccess
+        width=""
         label="필드 레이블"
         placeholder="플레이스홀더"
         guide="도움말"

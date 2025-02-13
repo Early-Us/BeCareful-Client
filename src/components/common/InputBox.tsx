@@ -1,18 +1,24 @@
 import styled from 'styled-components';
 
-interface InputState extends React.HTMLProps<HTMLParagraphElement> {
-  state?: 'error' | 'success'; // `state` 속성 정의
+interface InputBoxState extends React.HTMLProps<HTMLParagraphElement> {
+  state?: 'error' | 'success';
 }
 
 interface InputBoxProps {
+  width: string;
   label: string;
   placeholder: string;
   guide: string;
 }
 
-export const InputBox = ({ label, placeholder, guide }: InputBoxProps) => {
+export const InputBox = ({
+  width,
+  label,
+  placeholder,
+  guide,
+}: InputBoxProps) => {
   return (
-    <InputWrapper>
+    <InputWrapper width={width}>
       <InputFieldLabelWrapper>
         <InputFieldLabel>{label}</InputFieldLabel>
         <InputFieldStar>*</InputFieldStar>
@@ -26,9 +32,14 @@ export const InputBox = ({ label, placeholder, guide }: InputBoxProps) => {
   );
 };
 
-export const InputBoxError = ({ label, placeholder, guide }: InputBoxProps) => {
+export const InputBoxError = ({
+  width,
+  label,
+  placeholder,
+  guide,
+}: InputBoxProps) => {
   return (
-    <InputWrapper>
+    <InputWrapper width={width}>
       <InputFieldLabelWrapper>
         <InputFieldLabel>{label}</InputFieldLabel>
         <InputFieldStar>*</InputFieldStar>
@@ -47,12 +58,13 @@ export const InputBoxError = ({ label, placeholder, guide }: InputBoxProps) => {
 };
 
 export const InputBoxSuccess = ({
+  width,
   label,
   placeholder,
   guide,
 }: InputBoxProps) => {
   return (
-    <InputWrapper>
+    <InputWrapper width={width}>
       <InputFieldLabelWrapper>
         <InputFieldLabel>{label}</InputFieldLabel>
         <InputFieldStar>*</InputFieldStar>
@@ -70,11 +82,11 @@ export const InputBoxSuccess = ({
   );
 };
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.div<{ width: string }>`
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: 320px;
+  width: ${({ width }) => (width ? width : '100%')};
 `;
 
 const InputFieldLabelWrapper = styled.div`
@@ -99,7 +111,7 @@ const InputFieldStar = styled.div`
   letter-spacing: -0.35px;
 `;
 
-const InputDefault = styled.input<InputState>`
+const InputDefault = styled.input<InputBoxState>`
   height: 22px;
   padding: 15px 16px;
   border-radius: 12px;
@@ -147,7 +159,7 @@ const InputGuideWrapper = styled.div`
   gap: 2px;
 `;
 
-const InputGuideStar = styled.p<InputState>`
+const InputGuideStar = styled.p<InputBoxState>`
   color: ${({ theme, state }) => {
     switch (state) {
       case 'error':
@@ -165,7 +177,7 @@ const InputGuideStar = styled.p<InputState>`
   letter-spacing: -0.35px;
 `;
 
-const InputGuideLabel = styled.p<InputState>`
+const InputGuideLabel = styled.p<InputBoxState>`
   color: ${({ theme, state }) => {
     switch (state) {
       case 'error':
