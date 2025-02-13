@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { ReactComponent as IconAlarm } from '@/assets/icons/IconAlarm.svg';
 import { Tab } from '@/components/common/Tab/Tab';
+
+import { Button } from '@/components/common/Button/Button';
+
 import { InputBox } from '../components/common/InputBox';
+
 
 export const TestPage = () => {
   const tabData = [
@@ -16,6 +20,17 @@ export const TestPage = () => {
       </IconWrapper>
       <Title>Test Title</Title>
       <Tab tabs={tabData} />
+
+      <Button variant="blue" width="320px" height="52px">
+        다음 단계로 이동
+      </Button>
+      <Button variant="blue2" width="120px" height="52px">
+        인증번호 전송
+      </Button>
+      <Button variant="blue2" width="120px" height="52px">
+        재전송
+      </Button>
+
       <InputBox
         width="320px"
         label="필드 레이블"
@@ -37,6 +52,7 @@ export const TestPage = () => {
         placeholder="플레이스홀더"
         guide="도움말"
       />
+
     </div>
   );
 };
