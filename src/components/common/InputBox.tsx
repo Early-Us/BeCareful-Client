@@ -100,8 +100,8 @@ const InputFieldStar = styled.div`
 `;
 
 const InputDefault = styled.input<InputState>`
-  height: 36px;
-  padding: 8px 16px;
+  height: 22px;
+  padding: 15px 16px;
   border-radius: 12px;
   border: 1px solid;
   border-color: ${({ theme, state }) => {
