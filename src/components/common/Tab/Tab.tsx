@@ -67,6 +67,7 @@ const TabItem = styled.div`
 
   &.active {
     background-color: ${({ theme }) => theme.colors.white};
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
   }
   cursor: pointer;
   transition:
