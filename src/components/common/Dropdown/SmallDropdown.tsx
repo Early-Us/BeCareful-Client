@@ -100,7 +100,7 @@ const SmallDropdownExpandContent = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+
   box-sizing: border-box;
   border-radius: 8px;
   min-width: 100%;
