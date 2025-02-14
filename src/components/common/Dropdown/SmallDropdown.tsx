@@ -115,7 +115,7 @@ const SmallDropdownExpandContent = styled.div`
   box-sizing: border-box;
   border-radius: 8px;
   width: 90px;
-  min-width: 100%;
+
   overflow: hidden;
 `;
 
