@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { InputBox } from '../components/common/InputBox';
+import { CheckBox } from '../components/common/CheckBox/CheckBox';
 
 export const TestPage = () => {
   return (
@@ -26,6 +27,28 @@ export const TestPage = () => {
         state="success"
         placeholder="플레이스홀더"
         guide="도움말"
+      />
+
+      <CheckBox
+        id="1"
+        borderRadius="4px"
+        label="자동로그인"
+        select=""
+        guide=""
+      />
+      <CheckBox
+        id="2"
+        borderRadius=""
+        label=""
+        select="필수"
+        guide="이용약관"
+      />
+      <CheckBox
+        id="3"
+        borderRadius=""
+        label=""
+        select="선택"
+        guide="이용약관"
       />
     </div>
   );
