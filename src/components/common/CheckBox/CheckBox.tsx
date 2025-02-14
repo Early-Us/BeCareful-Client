@@ -1,8 +1,9 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 interface CheckBoxProps {
   id: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
   borderRadius: string;
   label: string;
   select: string;
@@ -11,21 +12,17 @@ interface CheckBoxProps {
 
 export const CheckBox = ({
   id,
+  checked,
+  onChange,
   borderRadius,
   label,
   select,
   guide,
 }: CheckBoxProps) => {
-  const [isChecked, setIsChecked] = useState(false);
-
   return (
     <CheckWrapper>
-      <Check type="checkbox" id={id} checked={isChecked} />
-      <LabelWrapper
-        onClick={() => {
-          setIsChecked(!isChecked);
-        }}
-      >
+      <Check type="checkbox" id={id} checked={checked} />
+      <LabelWrapper onClick={() => onChange(!checked)}>
         <CheckIcon aria-hidden="true" borderRadius={borderRadius} />
         {select === '' ? (
           <Label htmlFor={id}>{label}</Label>
