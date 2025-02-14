@@ -8,6 +8,7 @@ interface DropdownProps {
   selectedContents: string[];
   setSelectedContents: (selectedContents: string[]) => void;
   width?: string;
+  pressed?: boolean;
 }
 
 export const Dropdown = ({
@@ -16,6 +17,7 @@ export const Dropdown = ({
   selectedContents,
   setSelectedContents,
   width = '280px',
+  pressed = false,
 }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const selectContainerRef = useRef<HTMLDivElement>(null);
@@ -45,9 +47,11 @@ export const Dropdown = ({
 
   return (
     <Dropdowns ref={selectContainerRef} width={width}>
-      <DropdownHeader onClick={handleToggleDropdown}>
-        <DropdownLabel>{selectedLabel}</DropdownLabel>
-        <IconPolygon5 />
+      <DropdownHeader onClick={handleToggleDropdown} pressed={pressed}>
+        <DropdownLabel pressed={pressed}>{selectedLabel}</DropdownLabel>
+        <IconWrapper pressed={pressed}>
+          <IconPolygon5 />
+        </IconWrapper>
       </DropdownHeader>
       {open && (
         <DropdownExpandContent>
@@ -74,23 +78,26 @@ const Dropdowns = styled.div<{ width: string }>`
   width: ${(props) => props.width};
 `;
 
-const DropdownHeader = styled.div`
+const DropdownHeader = styled.div<{ pressed?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding: 0 16px;
-  height: 44px;
+  height: 42px;
   border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  border: 1px solid
+    ${({ theme, pressed }) =>
+      pressed ? theme.colors.white : theme.colors.gray100};
   background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
 `;
 
-const DropdownLabel = styled.div`
+const DropdownLabel = styled.div<{ pressed?: boolean }>`
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme, pressed }) =>
+    pressed ? theme.colors.mainBlue : theme.colors.gray900};
 `;
 
 const DropdownExpandContent = styled.div`
@@ -125,5 +132,16 @@ const DropdownItem = styled.button<{ selected: boolean }>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.subBlue};
     color: ${({ theme }) => theme.colors.mainBlue};
+  }
+`;
+
+const IconWrapper = styled.div<{ pressed?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  path {
+    fill: ${({ theme, pressed }) =>
+      pressed ? theme.colors.mainBlue : theme.colors.gray900};
   }
 `;

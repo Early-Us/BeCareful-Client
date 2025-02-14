@@ -7,6 +7,8 @@ import { InputBox } from '@/components/common/InputBox/InputBox';
 import { Dropdown } from '@/components/common/Dropdown/Dropdown';
 import { useState } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
+import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
+import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 
 export const TestPage = () => {
   const tabData = [
@@ -19,6 +21,17 @@ export const TestPage = () => {
   const dropContents = ['요양', '보호', '사회', '복지'];
   const [smallContents, setSmallContents] = useState<string[]>([]);
   const smallDropContents = ['1급', '2급'];
+  const [middleContents, setMiddleContents] = useState<string[]>([]);
+  const middleDropContents = ['시급', '일급', '월급', '연봉'];
+  const [certificateData, setCertificateData] = useState({
+    type: '간호지원사',
+    level: '1급',
+    number: '',
+  });
+
+  const handleCertificateChange = (updatedData: typeof certificateData) => {
+    setCertificateData(updatedData);
+  };
   return (
     <div>
       <h1>Test Page</h1>
@@ -27,7 +40,6 @@ export const TestPage = () => {
       </IconWrapper>
       <Title>Test Title</Title>
       <Tab tabs={tabData} />
-
       <Button variant="blue" width="320px" height="52px">
         다음 단계로 이동
       </Button>
@@ -37,7 +49,6 @@ export const TestPage = () => {
       <Button variant="blue2" width="120px" height="52px">
         재전송
       </Button>
-
       <InputBox
         width="320px"
         label="필드 레이블"
@@ -65,11 +76,35 @@ export const TestPage = () => {
         selectedContents={selectedDropContents}
         setSelectedContents={setSelectedDropContents}
       />
+      <Dropdown
+        title="드롭다운 가이드"
+        contents={dropContents}
+        selectedContents={selectedDropContents}
+        setSelectedContents={setSelectedDropContents}
+        pressed={true}
+      />
       <SmallDropdown
         title="1급"
         contents={smallDropContents}
         selectedContents={smallContents}
         setSelectedContents={setSmallContents}
+      />
+      <SmallDropdown
+        title="1급"
+        contents={smallDropContents}
+        selectedContents={smallContents}
+        setSelectedContents={setSmallContents}
+        pressed={true}
+      />
+      <NursingQualificationCard
+        initialType={certificateData.type}
+        onChange={handleCertificateChange}
+      />
+      <MiddleDropdown
+        title="시급"
+        contents={middleDropContents}
+        selectedContents={middleContents}
+        setSelectedContents={setMiddleContents}
       />
     </div>
   );
