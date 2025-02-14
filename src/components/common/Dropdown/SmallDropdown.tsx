@@ -7,6 +7,7 @@ interface SmallDropdownProps {
   contents: string[];
   selectedContents: string[];
   setSelectedContents: (selectedContents: string[]) => void;
+  pressed?: boolean;
 }
 
 export const SmallDropdown = ({
@@ -14,6 +15,7 @@ export const SmallDropdown = ({
   contents,
   selectedContents,
   setSelectedContents,
+  pressed = false,
 }: SmallDropdownProps) => {
   const [open, setOpen] = useState(false);
   const selectContainerRef = useRef<HTMLDivElement>(null);
@@ -43,9 +45,16 @@ export const SmallDropdown = ({
 
   return (
     <SmallDropdowns ref={selectContainerRef}>
-      <SmallDropdownHeader onClick={handleToggleSmallDropdown}>
-        <SmallDropdownLabel>{selectedLabel}</SmallDropdownLabel>
-        <IconPolygon6 />
+      <SmallDropdownHeader
+        onClick={handleToggleSmallDropdown}
+        pressed={pressed}
+      >
+        <SmallDropdownLabel pressed={pressed}>
+          {selectedLabel}
+        </SmallDropdownLabel>
+        <IconWrapper pressed={pressed}>
+          <IconPolygon6 />
+        </IconWrapper>
       </SmallDropdownHeader>
       {open && (
         <SmallDropdownExpandContent>
@@ -72,7 +81,7 @@ const SmallDropdowns = styled.div`
   width: 90px;
 `;
 
-const SmallDropdownHeader = styled.div`
+const SmallDropdownHeader = styled.div<{ pressed?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,14 +90,16 @@ const SmallDropdownHeader = styled.div`
   width: 56px;
   height: 52px;
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.mainBlue};
+  background-color: ${({ theme, pressed }) =>
+    pressed ? theme.colors.white : theme.colors.mainBlue};
   cursor: pointer;
 `;
 
-const SmallDropdownLabel = styled.div`
+const SmallDropdownLabel = styled.div<{ pressed?: boolean }>`
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme, pressed }) =>
+    pressed ? theme.colors.mainBlue : theme.colors.white};
 `;
 
 const SmallDropdownExpandContent = styled.div`
@@ -100,6 +111,7 @@ const SmallDropdownExpandContent = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
 
   box-sizing: border-box;
   border-radius: 8px;
@@ -123,5 +135,16 @@ const SmallDropdownItem = styled.button<{ selected: boolean }>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.subBlue};
     color: ${({ theme }) => theme.colors.mainBlue};
+  }
+`;
+
+const IconWrapper = styled.div<{ pressed?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  path {
+    fill: ${({ theme, pressed }) =>
+      pressed ? theme.colors.mainBlue : theme.colors.white};
   }
 `;

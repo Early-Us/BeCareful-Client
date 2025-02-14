@@ -68,11 +68,25 @@ export const TestPage = () => {
         selectedContents={selectedDropContents}
         setSelectedContents={setSelectedDropContents}
       />
+      <Dropdown
+        title="드롭다운 가이드"
+        contents={dropContents}
+        selectedContents={selectedDropContents}
+        setSelectedContents={setSelectedDropContents}
+        pressed={true}
+      />
       <SmallDropdown
         title="1급"
         contents={smallDropContents}
         selectedContents={smallContents}
         setSelectedContents={setSmallContents}
+      />
+      <SmallDropdown
+        title="1급"
+        contents={smallDropContents}
+        selectedContents={smallContents}
+        setSelectedContents={setSmallContents}
+        pressed={true}
       />
       <MiddleDropdown
         title="시급"
