@@ -24,9 +24,10 @@ const theme = {
     fontFamily: 'Pretandard Variable',
     fontSize: {
       title1: '24px',
-      title2: '20px',
-      title3: '18px',
-      title4: '16px',
+      title2: '22px',
+      title3: '20px',
+      title4: '18px',
+      title5: '16px',
       body1: '16px',
       body2: '14px',
       body3: '13px',
