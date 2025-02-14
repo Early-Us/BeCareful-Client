@@ -106,7 +106,7 @@ const MiddleDropdownExpandContent = styled.div`
 
   box-sizing: border-box;
   border-radius: 8px;
-  min-width: 100%;
+
   width: 90px;
   overflow: hidden;
 `;

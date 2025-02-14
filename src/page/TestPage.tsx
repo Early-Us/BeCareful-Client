@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
+import { Toggle } from '@/components/common/Toggle/Toggle';
 
 export const TestPage = () => {
   const tabData = [
@@ -28,6 +29,11 @@ export const TestPage = () => {
     level: '1급',
     number: '',
   });
+
+  const [isToggleChecked, setIsToggleChecked] = useState(true);
+  const handleToggleChange = () => {
+    setIsToggleChecked((prevChecked) => !prevChecked);
+  };
 
   const handleCertificateChange = (updatedData: typeof certificateData) => {
     setCertificateData(updatedData);
@@ -100,6 +106,7 @@ export const TestPage = () => {
         initialType={certificateData.type}
         onChange={handleCertificateChange}
       />
+      <Toggle checked={isToggleChecked} onChange={handleToggleChange} />
       <MiddleDropdown
         title="시급"
         contents={middleDropContents}
