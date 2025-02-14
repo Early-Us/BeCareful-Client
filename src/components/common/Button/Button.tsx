@@ -34,7 +34,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   width: ${({ $width }) => ($width ? $width : '100%')};
   height: ${({ $height }) => $height};
 
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
+  font-size: ${({ theme }) => theme.typography.fontSize.title4};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 
   border-radius: 12px;
