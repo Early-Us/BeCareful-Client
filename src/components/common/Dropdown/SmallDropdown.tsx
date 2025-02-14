@@ -78,7 +78,6 @@ const SmallDropdowns = styled.div`
   flex-direction: column;
   position: relative;
   gap: 4px;
-  width: 90px;
 `;
 
 const SmallDropdownHeader = styled.div<{ pressed?: boolean }>`
@@ -115,6 +114,7 @@ const SmallDropdownExpandContent = styled.div`
 
   box-sizing: border-box;
   border-radius: 8px;
+  width: 90px;
   min-width: 100%;
   overflow: hidden;
 `;

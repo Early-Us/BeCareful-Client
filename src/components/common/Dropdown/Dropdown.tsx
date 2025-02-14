@@ -50,7 +50,7 @@ export const Dropdown = ({
       <DropdownHeader onClick={handleToggleDropdown} pressed={pressed}>
         <DropdownLabel pressed={pressed}>{selectedLabel}</DropdownLabel>
         <IconWrapper pressed={pressed}>
-          <IconPolygon5 />{' '}
+          <IconPolygon5 />
         </IconWrapper>
       </DropdownHeader>
       {open && (
@@ -142,6 +142,6 @@ const IconWrapper = styled.div<{ pressed?: boolean }>`
 
   path {
     fill: ${({ theme, pressed }) =>
-      pressed ? theme.colors.mainBlue : theme.colors.white};
+      pressed ? theme.colors.mainBlue : theme.colors.gray900};
   }
 `;
