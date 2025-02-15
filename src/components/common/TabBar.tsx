@@ -16,11 +16,13 @@ export const TabBar = () => {
         </TabBarIcon>
         <TabBarLabel isActive={location.pathname == '/'}>홈</TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/job">
-        <TabBarIcon isActive={location.pathname == '/job'}>
+      <TabBarContentWrapper href="/work">
+        <TabBarIcon isActive={location.pathname == '/work'}>
           <Task />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/job'}>일자리</TabBarLabel>
+        <TabBarLabel isActive={location.pathname == '/work'}>
+          일자리
+        </TabBarLabel>
       </TabBarContentWrapper>
       <TabBarContentWrapper href="/apply">
         <TabBarIcon isActive={location.pathname == '/apply'}>
