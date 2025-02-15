@@ -3,6 +3,7 @@ import styled from 'styled-components';
 interface InputBoxProps {
   width: string;
   label: string;
+  labelStar: boolean;
   state: string;
   placeholder: string;
   guide: string;
@@ -11,6 +12,7 @@ interface InputBoxProps {
 export const InputBox = ({
   width,
   label,
+  labelStar,
   state,
   placeholder,
   guide,
@@ -19,7 +21,7 @@ export const InputBox = ({
     <InputWrapper width={width}>
       <InputFieldLabelWrapper>
         <InputFieldLabel>{label}</InputFieldLabel>
-        <InputFieldStar>*</InputFieldStar>
+        {labelStar ? <InputFieldStar>*</InputFieldStar> : <></>}
       </InputFieldLabelWrapper>
       <InputDefault
         type="text"
