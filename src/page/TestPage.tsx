@@ -1,6 +1,3 @@
-import styled from 'styled-components';
-import { ReactComponent as IconAlarm } from '@/assets/icons/IconAlarm.svg';
-import { Tab } from '@/components/common/Tab/Tab';
 import { Button } from '@/components/common/Button/Button';
 import { InputBox } from '@/components/common/InputBox/InputBox';
 import { Dropdown } from '@/components/common/Dropdown/Dropdown';
@@ -9,13 +6,12 @@ import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { Toggle } from '@/components/common/Toggle/Toggle';
+
 import { CheckBox } from '../components/common/CheckBox/CheckBox';
 
+import { CareGiverCard } from '@/components/common/SingUp/CareGiverCard';
+
 export const TestPage = () => {
-  const tabData = [
-    { name: '요양보호사', content: <Tab1Content /> },
-    { name: '사회복지사', content: <Tab2Content /> },
-  ];
   const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
     [],
   );
@@ -44,14 +40,19 @@ export const TestPage = () => {
     setIsChecked(check);
   };
 
+  const [pressed, setPressed] = useState(false);
+  const handleCardClick = () => {
+    setPressed(!pressed);
+  };
+
   return (
     <div>
       <h1>Test Page</h1>
-      <IconWrapper>
-        <IconAlarm />
-      </IconWrapper>
-      <Title>Test Title</Title>
-      <Tab tabs={tabData} />
+
+      <div onClick={handleCardClick}>
+        <CareGiverCard pressed={pressed} />
+      </div>
+
       <Button variant="blue" width="320px" height="52px">
         다음 단계로 이동
       </Button>
@@ -150,18 +151,3 @@ export const TestPage = () => {
     </div>
   );
 };
-
-const Tab1Content = () => <div>첫번째내용티비</div>;
-const Tab2Content = () => <div>두번째내용티비</div>;
-
-const IconWrapper = styled.div`
-  path {
-    fill: ${({ theme }) => theme.colors.mainOrange};
-  }
-`;
-
-const Title = styled.div`
-  color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.title1};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-`;
