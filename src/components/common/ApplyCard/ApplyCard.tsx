@@ -10,6 +10,7 @@ interface ApplyCardProps {
   workingDays: string[];
   workingHours: string;
   hourlyRate: string;
+  chipState: 'pass' | 'fail' | 'pending';
 }
 
 export const ApplyCard = ({
@@ -20,10 +21,11 @@ export const ApplyCard = ({
   workingDays,
   workingHours,
   hourlyRate,
+  chipState,
 }: ApplyCardProps) => {
   return (
     <CardContainer>
-      <ApplyChip state={'pass'} />
+      <ApplyChip state={chipState} />
       <CardTopContainer>
         <CardTopHeader>
           <CardTopTitle>{centerName}</CardTopTitle>

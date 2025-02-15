@@ -48,6 +48,7 @@ export const TestPage = () => {
       <ApplyTag label="인기공고" />
       <ApplyTag label="시급 TOP" />
       <ApplyCard
+        chipState="fail"
         centerName="행복사랑요양센터"
         description="방문요양/1일 9시간씩 주6일 모집"
         tags={['인기공고', '시급 TOP']}
