@@ -26,10 +26,14 @@ export const InputBox = ({
         placeholder={placeholder}
         state={state}
       ></InputDefault>
-      <InputGuideWrapper>
-        <InputGuideStar state={state}>*</InputGuideStar>
-        <InputGuideLabel state={state}>{guide}</InputGuideLabel>
-      </InputGuideWrapper>
+      {guide === '' ? (
+        <></>
+      ) : (
+        <InputGuideWrapper>
+          <InputGuideStar state={state}>*</InputGuideStar>
+          <InputGuideLabel state={state}>{guide}</InputGuideLabel>
+        </InputGuideWrapper>
+      )}
     </InputWrapper>
   );
 };
