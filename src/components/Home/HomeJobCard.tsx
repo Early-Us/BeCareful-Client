@@ -12,11 +12,11 @@ const HomeJobCard = () => {
         <InfoWrapper>
           <NameWrapper>
             <Name>김옥자</Name>
-            <ASWrapper>
+            <AgeGenderWrapper>
               <Detail>65세</Detail>
               <Border />
               <Detail>여</Detail>
-            </ASWrapper>
+            </AgeGenderWrapper>
           </NameWrapper>
           <LabelWrapper>
             <Label>
@@ -113,7 +113,7 @@ const Name = styled.label`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
 
-const ASWrapper = styled.div`
+const AgeGenderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 4px;
@@ -157,9 +157,9 @@ const LabelDetail = styled.label`
 `;
 
 const PersonImg = styled.img`
-  width: 80px; // 5rem
-  height: 80px; // 5rem
-  border-radius: 12px; // 0.75rem
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
 
   border: 1px solid;
 `;
