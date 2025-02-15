@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface InputBoxProps {
+interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   width: string;
   label: string;
   labelStar: boolean;
@@ -16,6 +16,7 @@ export const InputBox = ({
   state,
   placeholder,
   guide,
+  ...props
 }: InputBoxProps) => {
   return (
     <InputWrapper width={width}>
@@ -27,7 +28,8 @@ export const InputBox = ({
         type="text"
         placeholder={placeholder}
         state={state}
-      ></InputDefault>
+        {...props}
+      />
       {guide === '' ? (
         <></>
       ) : (
