@@ -13,7 +13,7 @@ export const Tab = ({ tabs }: TabProps) => {
   };
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <TabContainer>
         <TabItems>
           {tabs.map((item, index) => (
@@ -39,7 +39,7 @@ const TabContainer = styled.div`
   padding: 6px;
   box-sizing: border-box;
 
-  width: 320px;
+  width: 100%;
   height: 52px;
   background: ${({ theme }) => theme.colors.gray50};
   border-radius: 8px;
