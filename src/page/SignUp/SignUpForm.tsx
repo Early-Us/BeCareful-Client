@@ -9,7 +9,7 @@ import { SignUpFormData } from '@/type/SignUp';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export const SignUpForm = () => {
+const SignUpForm = () => {
   const [formData, setFormData] = useState<SignUpFormData>({
     name: '',
     birthDate: '',
@@ -20,6 +20,14 @@ export const SignUpForm = () => {
     detailAddress: '',
     caregiverCertificate: {
       grade: 'FIRST',
+      certificateNumber: '',
+    },
+    socialWorkerCertificate: {
+      grade: '',
+      certificateNumber: '',
+    },
+    nursingCareCertificate: {
+      grade: '',
       certificateNumber: '',
     },
     isHavingCar: false,
@@ -114,3 +122,5 @@ const FormWrapper = styled.div`
 
   margin: 24px 16px auto 16px;
 `;
+
+export default SignUpForm;

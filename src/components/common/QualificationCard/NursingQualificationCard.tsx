@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconCheckCircle } from '@/assets/icons/IconCheckCircle.svg';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 import { Dropdown } from '@/components/common/Dropdown/Dropdown';
 
@@ -26,23 +26,14 @@ export const NursingQualificationCard = ({
     [],
   );
 
-  const prevDataRef = useRef({ type: certificateType, level: '', number: '' });
-
   useEffect(() => {
-    const newData = {
+    onChange({
       type: certificateType,
       level: certificateLevel,
       number: certificateNumber,
-    };
+    });
+  }, [certificateLevel, certificateNumber, onChange]);
 
-    if (
-      prevDataRef.current.level !== newData.level ||
-      prevDataRef.current.number !== newData.number
-    ) {
-      onChange(newData);
-      prevDataRef.current = newData;
-    }
-  }, [certificateType, certificateLevel, certificateNumber, onChange]);
   return (
     <CardContainer state={cardState} onClick={() => setCardState('focus')}>
       <CardTopContainer>

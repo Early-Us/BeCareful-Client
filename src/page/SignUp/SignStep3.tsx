@@ -1,4 +1,5 @@
-import { StepProps } from '@/type/SignUp';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { SignUpFormData, StepProps } from '@/type/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';
@@ -20,6 +21,8 @@ export const Step3 = ({
       type: '요양보호사',
       number: '',
       component: CareGiverQualificationCard,
+      onChange: (data: any) =>
+        handleCertificateChange('caregiverCertificate', data),
     },
   ]);
 
@@ -28,18 +31,38 @@ export const Step3 = ({
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
+  const handleCertificateChange = (key: keyof SignUpFormData, data: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: {
+        grade: data.level === '2급' ? 'SECOND' : 'FIRST',
+        certificateNumber: data.number,
+      },
+    }));
+  };
+
   const handleAddCertificate = (type: string) => {
+    let key: keyof SignUpFormData;
+    let component;
+
+    if (type === '간호지원사') {
+      key = 'nursingCareCertificate';
+      component = NursingQualificationCard;
+    } else {
+      key = 'socialWorkerCertificate';
+      component = SocialQualificationCard;
+    }
+
     setCertificateList((prev) => [
       ...prev,
       {
         type,
         number: '',
-        component:
-          type === '간호지원사'
-            ? NursingQualificationCard
-            : SocialQualificationCard,
+        component,
+        onChange: (data: any) => handleCertificateChange(key, data),
       },
     ]);
+
     handleCloseModal();
   };
 
@@ -57,7 +80,7 @@ export const Step3 = ({
 
       {certificateList.map((cert, index) => (
         <CardWrapper key={index}>
-          <cert.component initialType={cert.type} onChange={() => {}} />
+          <cert.component initialType={cert.type} onChange={cert.onChange} />
         </CardWrapper>
       ))}
 

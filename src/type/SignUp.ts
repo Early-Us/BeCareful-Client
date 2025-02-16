@@ -1,5 +1,5 @@
 export interface Certificate {
-  grade: 'FIRST' | 'SECOND';
+  grade: 'FIRST' | 'SECOND' | '';
   certificateNumber: string;
 }
 

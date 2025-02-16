@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconCheckCircle } from '@/assets/icons/IconCheckCircle.svg';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 type CardState = 'default' | 'focus' | 'check';
 
@@ -17,19 +17,12 @@ export const CareGiverQualificationCard = ({
   const [certificateType] = useState(initialType);
   const [certificateNumber, setCertificateNumber] = useState('');
 
-  const prevDataRef = useRef({ type: certificateType, number: '' });
-
   useEffect(() => {
-    const newData = {
+    onChange({
       type: certificateType,
       number: certificateNumber,
-    };
-
-    if (prevDataRef.current.number !== newData.number) {
-      onChange(newData);
-      prevDataRef.current = newData;
-    }
-  }, [certificateType, certificateNumber, onChange]);
+    });
+  }, [certificateNumber, onChange]);
 
   return (
     <CardContainer state={cardState} onClick={() => setCardState('focus')}>
