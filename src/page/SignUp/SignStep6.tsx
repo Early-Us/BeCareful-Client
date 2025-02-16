@@ -14,6 +14,23 @@ export const Step6 = ({
   onPrevious,
 }: StepProps) => {
   const [showInput, setShowInput] = useState(false);
+  const [street, setStreet] = useState(formData.streetAddress || '');
+  const [detail, setDetail] = useState(formData.detailAddress || '');
+  const handleStreetChange = (value: string) => {
+    setStreet(value);
+    setFormData((prev) => ({
+      ...prev,
+      streetAddress: value,
+    }));
+  };
+
+  const handleDetailChange = (value: string) => {
+    setDetail(value);
+    setFormData((prev) => ({
+      ...prev,
+      detailAddress: value,
+    }));
+  };
 
   return (
     <StepWrapper>
@@ -29,6 +46,7 @@ export const Step6 = ({
       <CardContainer>
         <SearchInput
           placeholder="도로명, 지번, 건물명 검색"
+          onChange={(e) => handleStreetChange(e.target.value)}
           onClick={() => setShowInput(true)}
         />
       </CardContainer>
@@ -40,6 +58,8 @@ export const Step6 = ({
             state="default"
             placeholder="상세 주소 입력"
             guide=""
+            value={detail}
+            onChange={(e) => handleDetailChange(e.target.value)}
           />
         </CardContainer>
       )}
@@ -53,6 +73,7 @@ export const Step6 = ({
             console.log('현재 입력된 formData:', formData);
             if (onNext) onNext();
           }}
+          disabled={!street || !detail}
         >
           다음 단계로 이동
         </Button>
