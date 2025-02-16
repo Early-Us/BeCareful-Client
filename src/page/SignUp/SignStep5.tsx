@@ -6,7 +6,7 @@ import { BooleanNoCard } from '@/components/common/SignUp/BooleanNoCard';
 import { BooleanYesCard } from '@/components/common/SignUp/BooleanYesCard';
 import { useState } from 'react';
 
-export const Step4 = ({
+export const Step5 = ({
   formData,
   setFormData,
   onNext,
@@ -21,16 +21,16 @@ export const Step4 = ({
       <IconContainer onClick={onPrevious}>
         <IconArrowLeft />
       </IconContainer>
-      <Header>차량을 소유하고 계신가요?</Header>
+      <Header>치매 교육을 이수하셨나요?</Header>
       <CardContainer>
         <BooleanYesCard
           pressed={selectedCard === 'yes'}
-          text="네, 소유하고 있습니다."
+          text="네, 이수하였습니다."
           onClick={() => handleCardSelect('yes')}
         />
         <BooleanNoCard
           pressed={selectedCard === 'no'}
-          text="아니오, 가지고 있지 않습니다."
+          text="아니요, 이수하지 않았습니다."
           onClick={() => handleCardSelect('no')}
         />
       </CardContainer>
