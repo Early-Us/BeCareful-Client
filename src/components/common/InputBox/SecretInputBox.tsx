@@ -17,7 +17,7 @@ export const SecretInputBox = ({
   guide,
   value = '',
   onChange,
-  masked = false,
+  masked = true,
 }: SecretInputBoxProps) => {
   return (
     <InputWrapper width={width}>
