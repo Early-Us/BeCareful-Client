@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as IconAlarm } from '@/assets/icons/IconAlarm.svg';
 import { Tab } from '@/components/common/Tab/Tab';
-
 import { Button } from '@/components/common/Button/Button';
 import { InputBox } from '@/components/common/InputBox/InputBox';
 import { Dropdown } from '@/components/common/Dropdown/Dropdown';
@@ -10,9 +9,13 @@ import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { Toggle } from '@/components/common/Toggle/Toggle';
+
 import { ApplyChip } from '@/components/common/ApplyCard/ApplyChip';
 import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
 import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
+
+import { CheckBox } from '../components/common/CheckBox/CheckBox';
+
 
 export const TestPage = () => {
   const tabData = [
@@ -41,6 +44,12 @@ export const TestPage = () => {
   const handleCertificateChange = (updatedData: typeof certificateData) => {
     setCertificateData(updatedData);
   };
+
+  const [isChecked, setIsChecked] = useState(false);
+  const checkBoxClicked = (check: boolean) => {
+    setIsChecked(check);
+  };
+
   return (
     <div>
       <h1>Test Page</h1>
@@ -129,6 +138,34 @@ export const TestPage = () => {
         contents={middleDropContents}
         selectedContents={middleContents}
         setSelectedContents={setMiddleContents}
+      />
+      <CheckBox
+        id="1"
+        checked={isChecked}
+        onChange={checkBoxClicked}
+        borderRadius="4px"
+        label="자동로그인"
+        select=""
+        guide=""
+      />
+      <p>체크박스 상태: {isChecked ? '체크됨' : '체크되지 않음'}</p>
+      <CheckBox
+        id="2"
+        checked={isChecked}
+        onChange={checkBoxClicked}
+        borderRadius=""
+        label=""
+        select="필수"
+        guide="이용약관"
+      />
+      <CheckBox
+        id="3"
+        checked={isChecked}
+        onChange={checkBoxClicked}
+        borderRadius=""
+        label=""
+        select="선택"
+        guide="이용약관"
       />
     </div>
   );
