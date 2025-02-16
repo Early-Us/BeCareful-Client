@@ -182,7 +182,6 @@ const InputWrapper = styled.div`
 const ResidentWrapper = styled.div`
   display: flex;
   align-items: center;
-  height: 52px;
   gap: 8px;
 `;
 
