@@ -61,6 +61,7 @@ const StepWrapper = styled.div`
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+  box-sizing: border-box;
   align-items: center;
   padding: 0px 20px;
   height: 56px;
@@ -74,6 +75,7 @@ const Header = styled.div`
   gap: 8px;
 
   align-items: flex-start;
+  box-sizing: border-box;
   padding: 16px 20px 0px 20px;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
@@ -94,4 +96,5 @@ const CardContainer = styled.div`
   padding: 20px 20px 0px 20px;
   gap: 8px;
   width: 100%;
+  box-sizing: border-box;
 `;

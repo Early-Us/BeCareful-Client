@@ -111,6 +111,7 @@ const StepWrapper = styled.div`
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+  box-sizing: border-box;
   align-items: center;
   padding: 0px 20px;
   height: 56px;
@@ -120,6 +121,7 @@ const IconContainer = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   width: 100%;
   gap: 8px;
 

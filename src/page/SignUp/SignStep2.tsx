@@ -124,6 +124,7 @@ const StepWrapper = styled.div`
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+  box-sizing: border-box;
   align-items: center;
   padding: 0px 20px;
   height: 56px;
@@ -138,6 +139,7 @@ const Header = styled.div`
 
   align-items: flex-start;
   padding: 16px 20px 0px 20px;
+  box-sizing: border-box;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
@@ -156,6 +158,7 @@ const InputWrapper = styled.div`
 
   gap: 8px;
   width: 100%;
+  box-sizing: border-box;
 
   font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
@@ -171,11 +174,12 @@ const InputWrapper = styled.div`
 const AgreeWrapper = styled.div`
   display: flex;
   height: 218px;
-  width: 100%;
+  width: 98%;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+  box-sizing: border-box;
 `;
 
 const AgreeCheckContainer = styled.div`

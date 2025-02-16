@@ -1,42 +1,52 @@
 import { StepProps } from '@/type/SignUp';
-import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
+import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { BooleanNoCard } from '@/components/common/SignUp/BooleanNoCard';
-import { BooleanYesCard } from '@/components/common/SignUp/BooleanYesCard';
-import { useState } from 'react';
+import { SearchInput } from '@/page/SignUp/SearchInput';
 
-export const Step5 = ({
+import { useState } from 'react';
+import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
+
+export const Step6 = ({
   formData,
   setFormData,
   onNext,
   onPrevious,
 }: StepProps) => {
-  const [selectedCard, setSelectedCard] = useState<'yes' | 'no' | null>(null);
-  const handleCardSelect = (cardType: 'yes' | 'no') => {
-    setSelectedCard(cardType);
-  };
+  const [showInput, setShowInput] = useState(false);
+
   return (
     <StepWrapper>
       <IconContainer onClick={onPrevious}>
         <IconArrowLeft />
       </IconContainer>
-      <Header>치매 교육을 이수하셨나요?</Header>
+      <Header>
+        현재 거주하시는
+        <br />
+        주소를 입력하세요
+      </Header>
+
       <CardContainer>
-        <BooleanYesCard
-          pressed={selectedCard === 'yes'}
-          text="네, 이수하였습니다."
-          onClick={() => handleCardSelect('yes')}
-        />
-        <BooleanNoCard
-          pressed={selectedCard === 'no'}
-          text="아니요, 이수하지 않았습니다."
-          onClick={() => handleCardSelect('no')}
+        <SearchInput
+          placeholder="도로명, 지번, 건물명 검색"
+          onClick={() => setShowInput(true)}
         />
       </CardContainer>
+
+      {showInput && (
+        <CardContainer>
+          <PlainInputBox
+            width="320px"
+            state="default"
+            placeholder="상세 주소 입력"
+            guide=""
+          />
+        </CardContainer>
+      )}
+
       <ButtonContainer>
         <Button
-          variant={selectedCard ? 'blue' : 'disabled'}
+          variant="blue"
           width="320px"
           height="52px"
           onClick={() => {
@@ -50,6 +60,7 @@ export const Step5 = ({
     </StepWrapper>
   );
 };
+
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,8 +73,8 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0px 20px;
   box-sizing: border-box;
+  padding: 0px 20px;
   height: 56px;
   width: 100%;
 `;
@@ -75,8 +86,8 @@ const Header = styled.div`
   gap: 8px;
 
   align-items: flex-start;
-  box-sizing: border-box;
   padding: 16px 20px 0px 20px;
+  box-sizing: border-box;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
@@ -93,8 +104,6 @@ const ButtonContainer = styled.div`
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   padding: 20px 20px 0px 20px;
-  box-sizing: border-box;
-  gap: 8px;
-  width: 100%;
 `;
