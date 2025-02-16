@@ -3,20 +3,22 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { ReactComponent as ProfileImage } from '@/assets/icons/signup/PofileImage.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
-export const Step7 = ({
-  formData,
-  setFormData,
-  onSubmit,
-  onPrevious,
-}: StepProps) => {
+export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
+  const navigate = useNavigate();
+  const handleStart = () => {
+    console.log('현재 입력된 formData:', formData);
+    if (onSubmit) onSubmit();
+    navigate('/');
+  };
   return (
     <StepWrapper>
       <TopText>
         <IconContainer onClick={onPrevious}>
           <IconArrowLeft />
         </IconContainer>
-        건너뛰기
+        <div onClick={handleStart}>건너뛰기 </div>
       </TopText>
 
       <Header>
@@ -33,10 +35,7 @@ export const Step7 = ({
           variant="blue"
           width="320px"
           height="52px"
-          onClick={() => {
-            console.log('현재 입력된 formData:', formData);
-            if (onSubmit) onSubmit();
-          }}
+          onClick={handleStart}
         >
           시작하기
         </Button>
