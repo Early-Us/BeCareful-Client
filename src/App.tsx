@@ -1,7 +1,8 @@
-import SignUp from '@/page/SignUp/SignUp';
 import { TestPage } from '@/page/TestPage';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './page/Login/LoginPage';
+import { SignUpPage } from '@/page/SignUp/SignUpPage';
+import SignUpForm from '@/page/SignUp/SignUpForm';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
 
       <Route path="/login" element={<LoginPage />} />
 
-      <Route path="/signup" element={<SignUp />} />
+      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/signup/caregiver" element={<SignUpForm />} />
     </Routes>
   );
 }
