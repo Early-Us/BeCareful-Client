@@ -15,7 +15,12 @@ export const Step4 = ({
   const [selectedCard, setSelectedCard] = useState<'yes' | 'no' | null>(null);
   const handleCardSelect = (cardType: 'yes' | 'no') => {
     setSelectedCard(cardType);
+    setFormData((prev) => ({
+      ...prev,
+      isHavingCar: cardType === 'yes',
+    }));
   };
+
   return (
     <StepWrapper>
       <IconContainer onClick={onPrevious}>
