@@ -131,7 +131,8 @@ const CardHeaderText = styled.div<{ state: CardState }>`
   color: ${({ theme, state }) =>
     state === 'focus' ? theme.colors.white : theme.colors.gray900};
   span {
-    color: ${({ theme }) => theme.colors.mainBlue};
+    color: ${({ theme, state }) =>
+      state === 'focus' ? theme.colors.white : theme.colors.mainBlue};
   }
 `;
 
@@ -164,10 +165,10 @@ const QualificationCard = styled.div<{ state: CardState }>`
     state === 'focus' ? theme.colors.white : theme.colors.mainBlue};
   color: ${({ theme, state }) =>
     state === 'focus'
-      ? theme.colors.white
+      ? theme.colors.mainBlue
       : state === 'check'
         ? theme.colors.gray900
-        : theme.colors.gray300};
+        : theme.colors.white};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `;
