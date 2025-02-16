@@ -105,7 +105,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 320px;
+  width: 360px;
 `;
 
 const IconContainer = styled.div`
@@ -139,7 +139,6 @@ const Header = styled.div`
 
 const CardWrapper = styled.div`
   display: flex;
-  //width: 360px;
   padding: 16px 20px 0px 20px;
   flex-direction: column;
   align-items: center;

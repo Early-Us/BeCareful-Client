@@ -55,7 +55,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 320px;
+  width: 360px;
 `;
 
 const IconContainer = styled.div`

@@ -15,13 +15,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
       <IconContainer>
         <IconArrowLeft />
       </IconContainer>
-      <Header>
-        환영합니다!
-        <div>
-          <span className="highlight">기본 정보를 입력</span>
-          <span>하세요</span>
-        </div>
-      </Header>
+      <Header>기본 정보를 입력하세요</Header>
       <InputWrapper>
         <div>
           <span>이름</span>
@@ -130,7 +124,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 320px;
+  width: 360px;
 `;
 const IconContainer = styled.div`
   display: flex;
@@ -151,7 +145,7 @@ const Header = styled.div`
   padding: 16px 20px 0px 20px;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.gray900};
 
   .highlight {
