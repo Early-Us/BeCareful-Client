@@ -85,7 +85,7 @@ const Label = styled.label`
   position: relative;
   cursor: pointer;
   font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium}
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme }) => theme.colors.gray900};
 `;
 

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconCheckCircle } from '@/assets/icons/IconCheckCircle.svg';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 
 type CardState = 'default' | 'focus' | 'check';
@@ -21,23 +21,13 @@ export const SocialQualificationCard = ({
 
   const smallDropContents = ['1급', '2급'];
 
-  const prevDataRef = useRef({ type: certificateType, level: '', number: '' });
-
   useEffect(() => {
-    const newData = {
+    onChange({
       type: certificateType,
       level: certificateLevel,
       number: certificateNumber,
-    };
-
-    if (
-      prevDataRef.current.level !== newData.level ||
-      prevDataRef.current.number !== newData.number
-    ) {
-      onChange(newData);
-      prevDataRef.current = newData;
-    }
-  }, [certificateType, certificateLevel, certificateNumber, onChange]);
+    });
+  }, [certificateLevel, certificateNumber, onChange]);
   return (
     <CardContainer state={cardState} onClick={() => setCardState('focus')}>
       <CardTopContainer>
@@ -86,13 +76,16 @@ const CardContainer = styled.div<{ state: CardState }>`
   padding: 24px 20px;
   width: 320px;
   border-radius: 12px;
-  border: 1px solid
-    ${({ state, theme }) =>
-      state === 'focus'
-        ? theme.colors.mainBlue
-        : state === 'check'
-          ? theme.colors.mainBlue
-          : theme.colors.gray100};
+  border: ${({ state, theme }) => {
+    switch (state) {
+      case 'focus':
+        return `1px solid ${theme.colors.mainBlue}`;
+      case 'check':
+        return `2px solid ${theme.colors.mainBlue}`;
+      default:
+        return `1px solid ${theme.colors.gray100}`;
+    }
+  }};
   box-sizing: border-box;
   background-color: ${({ state, theme }) =>
     state === 'focus' ? theme.colors.mainBlue : 'white'};
