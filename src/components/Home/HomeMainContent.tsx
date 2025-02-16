@@ -166,6 +166,7 @@ const CardWrapper = styled.div`
   gap: 8px;
   overflow-x: scroll;
   flex-wrap: nowrap;
+  width: calc(100% + 20px);
 `;
 
 const ScheduleWrapper = styled.div`
