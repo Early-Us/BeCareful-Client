@@ -9,7 +9,13 @@ import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { Toggle } from '@/components/common/Toggle/Toggle';
+
+import { ApplyChip } from '@/components/common/ApplyCard/ApplyChip';
+import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
+import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
+
 import { CheckBox } from '../components/common/CheckBox/CheckBox';
+
 
 export const TestPage = () => {
   const tabData = [
@@ -47,6 +53,20 @@ export const TestPage = () => {
   return (
     <div>
       <h1>Test Page</h1>
+      <ApplyChip state={'pass'} />
+      <ApplyTag label="인기공고" />
+      <ApplyTag label="시급 TOP" />
+      <ApplyCard
+        chipState="fail"
+        centerName="행복사랑요양센터"
+        description="방문요양/1일 9시간씩 주6일 모집"
+        tags={['인기공고', '시급 TOP']}
+        careItems={['식사보조', '이동보조']}
+        workingDays={['목', '일']}
+        workingHours="15:00~19:00"
+        hourlyRate="12,000원"
+      />
+
       <IconWrapper>
         <IconAlarm />
       </IconWrapper>
