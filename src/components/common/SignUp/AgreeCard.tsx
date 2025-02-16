@@ -4,10 +4,15 @@ import { styled } from 'styled-components';
 interface AgreeCardProps {
   pressed?: boolean;
   text: string;
+  onClick?: () => void;
 }
-export const AgreeCard = ({ pressed = false, text }: AgreeCardProps) => {
+export const AgreeCard = ({
+  pressed = false,
+  text,
+  onClick,
+}: AgreeCardProps) => {
   return (
-    <CardContainer pressed={pressed} text={text}>
+    <CardContainer pressed={pressed} text={text} onClick={onClick}>
       <IconWrapper pressed={pressed}>
         <CheckFilled />
       </IconWrapper>

@@ -9,7 +9,11 @@ import { Toggle } from '@/components/common/Toggle/Toggle';
 
 import { CheckBox } from '../components/common/CheckBox/CheckBox';
 
-import { CareGiverCard } from '@/components/common/SingUp/CareGiverCard';
+import { CareGiverCard } from '@/components/common/SignUp/CareGiverCard';
+import { SocialCard } from '@/components/common/SignUp/SocialCard';
+import { BooleanNoCard } from '@/components/common/SignUp/BooleanNoCard';
+import { BooleanYesCard } from '@/components/common/SignUp/BooleanYesCard';
+import { AgreeCard } from '@/components/common/SignUp/AgreeCard';
 
 export const TestPage = () => {
   const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
@@ -48,9 +52,13 @@ export const TestPage = () => {
   return (
     <div>
       <h1>Test Page</h1>
-
+      <BooleanNoCard pressed={true} text="네, 소유하고 있습니다." />
+      <BooleanNoCard pressed={false} text="네, 소유하고 있습니다." />
+      <BooleanYesCard pressed={true} text="네, 소유하고 있습니다." />
+      <AgreeCard pressed={false} text="네, 소유하고 있습ㅇㅇ니다." />
       <div onClick={handleCardClick}>
         <CareGiverCard pressed={pressed} />
+        <SocialCard pressed={pressed} />
       </div>
 
       <Button variant="blue" width="320px" height="52px">

@@ -1,11 +1,10 @@
-import { StepProps } from '@/type/SignUp';
+import { SignUpFormData, StepProps } from '@/type/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
 import { AgreeCard } from '@/components/common/SignUp/AgreeCard';
 import { ReactComponent as ChevronRight } from '@/assets/icons/signup/ChevronRight.svg';
 import { CheckBox } from '@/components/common/CheckBox/CheckBox';
-import { useState } from 'react';
 import { Button } from '@/components/common/Button/Button';
 
 export const Step2 = ({
@@ -14,9 +13,28 @@ export const Step2 = ({
   onNext,
   onPrevious,
 }: StepProps) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const checkBoxClicked = (check: boolean) => {
-    setIsChecked(check);
+  const {
+    isAgreedToTerms,
+    isAgreedToCollectPersonalInfo,
+    isAgreedToReceiveMarketingInfo,
+  } = formData;
+  const isAllChecked =
+    isAgreedToTerms &&
+    isAgreedToCollectPersonalInfo &&
+    isAgreedToReceiveMarketingInfo;
+  const handleCheckboxChange = (
+    key: keyof SignUpFormData,
+    checked: boolean,
+  ) => {
+    setFormData({ ...formData, [key]: checked });
+  };
+  const handleAllAgree = (checked: boolean) => {
+    setFormData({
+      ...formData,
+      isAgreedToTerms: checked,
+      isAgreedToCollectPersonalInfo: checked,
+      isAgreedToReceiveMarketingInfo: checked,
+    });
   };
 
   return (
@@ -56,13 +74,19 @@ export const Step2 = ({
         />
       </InputWrapper>
       <AgreeWrapper>
-        <AgreeCard pressed={false} text="전체 동의" />
+        <AgreeCard
+          pressed={isAllChecked}
+          text="전체 동의"
+          onClick={() => handleAllAgree(!isAllChecked)}
+        />
         <AgreeCheckContainer>
           <AgreeCheck>
             <CheckBox
               id="2"
-              checked={isChecked}
-              onChange={checkBoxClicked}
+              checked={isAgreedToTerms}
+              onChange={(checked) =>
+                handleCheckboxChange('isAgreedToTerms', checked)
+              }
               borderRadius=""
               label=""
               select="필수"
@@ -73,8 +97,10 @@ export const Step2 = ({
           <AgreeCheck>
             <CheckBox
               id="2"
-              checked={isChecked}
-              onChange={checkBoxClicked}
+              checked={isAgreedToCollectPersonalInfo}
+              onChange={(checked) =>
+                handleCheckboxChange('isAgreedToCollectPersonalInfo', checked)
+              }
               borderRadius=""
               label=""
               select="필수"
@@ -85,8 +111,10 @@ export const Step2 = ({
           <AgreeCheck>
             <CheckBox
               id="3"
-              checked={isChecked}
-              onChange={checkBoxClicked}
+              checked={isAgreedToReceiveMarketingInfo}
+              onChange={(checked) =>
+                handleCheckboxChange('isAgreedToReceiveMarketingInfo', checked)
+              }
               borderRadius=""
               label=""
               select="선택"
