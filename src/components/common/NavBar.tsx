@@ -28,12 +28,18 @@ const NavbarWrapper = styled.div<{ color: string }>`
 
 const NavLeft = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: flex-start;
 `;
 
 const NavCenter = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: center;
 `;
 
 const NavRight = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: flex-end;
 `;
