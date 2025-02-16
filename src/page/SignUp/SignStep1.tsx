@@ -9,6 +9,19 @@ import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
 
 export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
   const [showVerificationInput, setShowVerificationInput] = useState(false);
+  const [genderInput, setGenderInput] = useState('');
+  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (/^[0-9]{0,1}$/.test(value)) {
+      setGenderInput(value);
+      if (value === '1' || value === '3') {
+        setFormData({ ...formData, gender: 'MALE' });
+      } else if (value === '2' || value === '4') {
+        setFormData({ ...formData, gender: 'FEMALE' });
+      }
+    }
+  };
 
   return (
     <StepWrapper>
@@ -52,14 +65,9 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
             state="default"
             placeholder=""
             guide=""
-            value={formData.gender}
+            value={genderInput}
             masked={true}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                gender: e.target.value as 'MALE' | 'FEMALE',
-              })
-            }
+            onChange={handleGenderChange}
           />
           <IconWrapper>
             <ResidentCircle />
@@ -75,7 +83,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           <PlainInputBox
             width="192px"
             state="default"
-            placeholder="주민등록번호"
+            placeholder="휴대전화 번호"
             guide=""
             value={formData.phoneNumber}
             onChange={(e) =>
@@ -85,7 +93,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           <Button
             variant="blue2"
             width="120px"
-            height="52px"
+            height="56px"
             onClick={() => setShowVerificationInput(true)}
           >
             인증번호 전송
@@ -179,6 +187,7 @@ const InputWrapper = styled.div`
 const ResidentWrapper = styled.div`
   display: flex;
   align-items: center;
+
   gap: 8px;
 `;
 
