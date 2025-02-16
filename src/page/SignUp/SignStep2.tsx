@@ -6,6 +6,7 @@ import { AgreeCard } from '@/components/common/SignUp/AgreeCard';
 import { ReactComponent as ChevronRight } from '@/assets/icons/signup/ChevronRight.svg';
 import { CheckBox } from '@/components/common/CheckBox/CheckBox';
 import { Button } from '@/components/common/Button/Button';
+import { useEffect, useState } from 'react';
 
 export const Step2 = ({
   formData,
@@ -18,10 +19,22 @@ export const Step2 = ({
     isAgreedToCollectPersonalInfo,
     isAgreedToReceiveMarketingInfo,
   } = formData;
-  const isAllChecked =
-    isAgreedToTerms &&
-    isAgreedToCollectPersonalInfo &&
-    isAgreedToReceiveMarketingInfo;
+  const [isAllChecked, setIsAllChecked] = useState(false);
+  const [isRequiredChecked, setIsRequiredChecked] = useState(false);
+
+  useEffect(() => {
+    setIsRequiredChecked(isAgreedToTerms && isAgreedToCollectPersonalInfo);
+
+    setIsAllChecked(
+      isAgreedToTerms &&
+        isAgreedToCollectPersonalInfo &&
+        isAgreedToReceiveMarketingInfo,
+    );
+  }, [
+    isAgreedToTerms,
+    isAgreedToCollectPersonalInfo,
+    isAgreedToReceiveMarketingInfo,
+  ]);
   const handleCheckboxChange = (
     key: keyof SignUpFormData,
     checked: boolean,
@@ -126,13 +139,14 @@ export const Step2 = ({
       </AgreeWrapper>
       <ButtonContainer>
         <Button
-          variant="blue"
+          variant={isRequiredChecked ? 'blue' : 'disabled'}
           width="320px"
           height="52px"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
-            if (onNext) onNext();
+            if (isRequiredChecked && onNext) onNext();
           }}
+          disabled={!isRequiredChecked}
         >
           다음 단계로 이동
         </Button>

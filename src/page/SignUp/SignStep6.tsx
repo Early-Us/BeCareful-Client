@@ -66,14 +66,14 @@ export const Step6 = ({
 
       <ButtonContainer>
         <Button
-          variant="blue"
+          variant={detail.length > 0 && street ? 'blue' : 'disabled'}
           width="320px"
           height="52px"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
             if (onNext) onNext();
           }}
-          disabled={!street || !detail}
+          disabled={!(street && detail.length > 0)}
         >
           다음 단계로 이동
         </Button>

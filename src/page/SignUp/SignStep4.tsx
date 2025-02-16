@@ -45,9 +45,12 @@ export const Step4 = ({
           width="320px"
           height="52px"
           onClick={() => {
-            console.log('현재 입력된 formData:', formData);
-            if (onNext) onNext();
+            if (selectedCard && onNext) {
+              console.log('현재 입력된 formData:', formData);
+              onNext();
+            }
           }}
+          disabled={!selectedCard}
         >
           다음 단계로 이동
         </Button>
