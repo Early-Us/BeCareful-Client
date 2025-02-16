@@ -34,6 +34,7 @@ const SignUpForm = () => {
     isAgreedToTerms: false,
     isAgreedToCollectPersonalInfo: false,
     isAgreedToReceiveMarketingInfo: false,
+    isCompleteDementiaEducation: false,
   });
 
   const [currentStep, setCurrentStep] = useState(1);

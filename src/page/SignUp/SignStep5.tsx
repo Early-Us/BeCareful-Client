@@ -15,7 +15,12 @@ export const Step5 = ({
   const [selectedCard, setSelectedCard] = useState<'yes' | 'no' | null>(null);
   const handleCardSelect = (cardType: 'yes' | 'no') => {
     setSelectedCard(cardType);
+    setFormData((prev) => ({
+      ...prev,
+      isCompleteDementiaEducation: cardType === 'yes',
+    }));
   };
+
   return (
     <StepWrapper>
       <IconContainer onClick={onPrevious}>
