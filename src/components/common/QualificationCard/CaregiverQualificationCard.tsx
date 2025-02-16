@@ -15,7 +15,6 @@ export const CareGiverQualificationCard = ({
 }: CareGiverQualificationCardProps) => {
   const [cardState, setCardState] = useState<CardState>('default');
   const [certificateType] = useState(initialType);
-
   const [certificateNumber, setCertificateNumber] = useState('');
 
   const prevDataRef = useRef({ type: certificateType, number: '' });
@@ -23,7 +22,6 @@ export const CareGiverQualificationCard = ({
   useEffect(() => {
     const newData = {
       type: certificateType,
-
       number: certificateNumber,
     };
 
@@ -32,6 +30,7 @@ export const CareGiverQualificationCard = ({
       prevDataRef.current = newData;
     }
   }, [certificateType, certificateNumber, onChange]);
+
   return (
     <CardContainer state={cardState} onClick={() => setCardState('focus')}>
       <CardTopContainer>
@@ -73,13 +72,16 @@ const CardContainer = styled.div<{ state: CardState }>`
   padding: 24px 20px;
   width: 320px;
   border-radius: 12px;
-  border: 1px solid
-    ${({ state, theme }) =>
-      state === 'focus'
-        ? theme.colors.mainBlue
-        : state === 'check'
-          ? theme.colors.mainBlue
-          : theme.colors.gray100};
+  border: ${({ state, theme }) => {
+    switch (state) {
+      case 'focus':
+        return `1px solid ${theme.colors.mainBlue}`;
+      case 'check':
+        return `2px solid ${theme.colors.mainBlue}`;
+      default:
+        return `1px solid ${theme.colors.gray100}`;
+    }
+  }};
   box-sizing: border-box;
   background-color: ${({ state, theme }) =>
     state === 'focus' ? theme.colors.mainBlue : 'white'};
@@ -159,16 +161,10 @@ const QualificationCard = styled.div<{ state: CardState }>`
   height: 52px;
   box-sizing: border-box;
   border-radius: 8px;
-
-  box-sizing: border-box;
   background-color: ${({ theme, state }) =>
     state === 'focus' ? theme.colors.white : theme.colors.mainBlue};
   color: ${({ theme, state }) =>
-    state === 'focus'
-      ? theme.colors.mainBlue
-      : state === 'check'
-        ? theme.colors.gray900
-        : theme.colors.white};
+    state === 'focus' ? theme.colors.mainBlue : theme.colors.white};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `;

@@ -97,13 +97,16 @@ const CardContainer = styled.div<{ state: CardState }>`
   padding: 24px 20px;
   width: 320px;
   border-radius: 12px;
-  border: 1px solid
-    ${({ state, theme }) =>
-      state === 'focus'
-        ? theme.colors.mainBlue
-        : state === 'check'
-          ? theme.colors.mainBlue
-          : theme.colors.gray100};
+  border: ${({ state, theme }) => {
+    switch (state) {
+      case 'focus':
+        return `1px solid ${theme.colors.mainBlue}`;
+      case 'check':
+        return `2px solid ${theme.colors.mainBlue}`;
+      default:
+        return `1px solid ${theme.colors.gray100}`;
+    }
+  }};
   box-sizing: border-box;
   background-color: ${({ state, theme }) =>
     state === 'focus' ? theme.colors.mainBlue : 'white'};
