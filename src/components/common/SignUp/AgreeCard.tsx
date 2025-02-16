@@ -1,29 +1,25 @@
-import { ReactComponent as CircleFilled } from '@/assets/icons/signup/CircleFilled.svg';
+import { ReactComponent as CheckFilled } from '@/assets/icons/signup/CheckFilled.svg';
 import { styled } from 'styled-components';
 
-interface BooleanYesCardProps {
+interface AgreeCardProps {
   pressed?: boolean;
   text: string;
-  onClick?: () => void;
 }
-export const BooleanYesCard = ({
-  pressed = false,
-  text,
-  onClick,
-}: BooleanYesCardProps) => {
+export const AgreeCard = ({ pressed = false, text }: AgreeCardProps) => {
   return (
-    <CardContainer pressed={pressed} text={text} onClick={onClick}>
+    <CardContainer pressed={pressed} text={text}>
       <IconWrapper pressed={pressed}>
-        <CircleFilled />
+        <CheckFilled />
       </IconWrapper>
       <span>{text}</span>
     </CardContainer>
   );
 };
 
-const CardContainer = styled.div<BooleanYesCardProps>`
+const CardContainer = styled.div<AgreeCardProps>`
+  width: 100%;
   display: flex;
-  height: 64px;
+  height: 52px;
   padding: 24px 16px;
   box-sizing: border-box;
   align-items: center;
@@ -47,6 +43,8 @@ const IconWrapper = styled.div<{ pressed: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme, pressed }) =>
-    pressed ? theme.colors.mainBlue : theme.colors.gray200};
+  path {
+    fill: ${({ theme, pressed }) =>
+      pressed ? theme.colors.mainBlue : theme.colors.gray200};
+  }
 `;

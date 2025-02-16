@@ -4,13 +4,15 @@ import { styled } from 'styled-components';
 interface BooleanNoCardProps {
   pressed?: boolean;
   text: string;
+  onClick?: () => void;
 }
 export const BooleanNoCard = ({
   pressed = false,
   text,
+  onClick,
 }: BooleanNoCardProps) => {
   return (
-    <CardContainer pressed={pressed} text={text}>
+    <CardContainer pressed={pressed} text={text} onClick={onClick}>
       <IconWrapper pressed={pressed}>
         <XFilled />
       </IconWrapper>
