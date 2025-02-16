@@ -6,7 +6,7 @@ import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';
 import { useState } from 'react';
 import { Button } from '@/components/common/Button/Button';
 import { CareGiverQualificationCard } from '@/components/common/QualificationCard/CaregiverQualificationCard';
-import { Modal } from '@/page/SignUp/SignUpModal';
+import { Modal } from '@/components/common/SignUp/SignUpModal';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { SocialQualificationCard } from '@/components/common/QualificationCard/SocialQualificationCard';
 
