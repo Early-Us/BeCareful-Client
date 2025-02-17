@@ -7,6 +7,7 @@ interface ElderInfoProps {
   healthStatus: string;
   livingArrangement: string;
   petStatus: string;
+  profileImageUrl: string;
 }
 
 export const ElderInfo = ({
@@ -16,12 +17,14 @@ export const ElderInfo = ({
   healthStatus,
   livingArrangement,
   petStatus,
+  profileImageUrl,
 }: ElderInfoProps) => {
   return (
     <ElderInfoContainer>
       <ElderTitle>어르신 정보</ElderTitle>
       <ElderProfile>
-        <div>사진</div> {name}
+        <ProfileImage src={profileImageUrl} alt={`${name}의 프로필`} />
+        <span>{name}</span>
       </ElderProfile>
       <DetailContentContainer>
         <DetailContent>
@@ -69,7 +72,7 @@ const ElderProfile = styled.div`
   gap: 4px;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
@@ -94,4 +97,13 @@ const DetailContent = styled.div`
     color: ${({ theme }) => theme.colors.gray500};
     width: 72px;
   }
+`;
+
+const ProfileImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.colors.gray200};
+  margin-right: 8px;
 `;

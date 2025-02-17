@@ -18,6 +18,7 @@ export const WorkDetailPage = () => {
       />
       <GapContainer />
       <ElderInfo
+        profileImageUrl=""
         name="박순자"
         ageAndGender="65세 여성"
         address="서울시 마포구 구방동"
