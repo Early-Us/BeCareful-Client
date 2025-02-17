@@ -57,7 +57,7 @@ export const handleVerifyAuthNumber = async (
 
 export const handleGenderChange = (
   e: React.ChangeEvent<HTMLInputElement>,
-  genderInput: string,
+  _genderInput: string,
   setGenderInput: React.Dispatch<React.SetStateAction<string>>,
   setFormData: React.Dispatch<React.SetStateAction<StepProps['formData']>>,
 ) => {
