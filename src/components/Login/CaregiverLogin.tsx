@@ -4,6 +4,7 @@ import { Button } from '../common/Button/Button';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CheckBox } from '../common/CheckBox/CheckBox';
 
 const CaregiverLogin = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const CaregiverLogin = () => {
             setPassword(e.target.value);
           }}
         />
-        {/* <CheckBox
+        <CheckBox
           id="1"
           checked={isAutoLoginChecked}
           onChange={checkBoxClicked}
@@ -82,7 +83,7 @@ const CaregiverLogin = () => {
           label="자동로그인"
           select=""
           guide=""
-        /> */}
+        />
       </InputWrapper>
       <ButtonWrapper>
         <Button
