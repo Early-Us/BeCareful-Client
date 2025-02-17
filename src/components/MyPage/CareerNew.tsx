@@ -2,12 +2,14 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '../common/Button/Button';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface CareerNewProps {
   title: string;
 }
 
 export const CareerNew = ({ title }: CareerNewProps) => {
+  const navigate = useNavigate();
   const [textCount, setTextCount] = useState(0);
   const [memoContent, setMemoContent] = useState('');
 
@@ -68,7 +70,10 @@ export const CareerNew = ({ title }: CareerNewProps) => {
           variant={memoContent ? 'blue' : 'disabled'}
           width=""
           height="52px"
-          onClick={putData}
+          onClick={() => {
+            putData();
+            navigate('/mypage');
+          }}
         >
           경력서 등록하기
         </Button>

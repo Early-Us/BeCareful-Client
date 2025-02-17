@@ -4,6 +4,7 @@ import { Button } from '../common/Button/Button';
 import { InputBox } from '../common/InputBox/InputBox';
 import { CareerDropdown } from './CareerDropdown';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface Experience {
   workInstitution: string;
@@ -15,6 +16,8 @@ interface CareerExpProps {
 }
 
 export const CareerExp = ({ title }: CareerExpProps) => {
+  const navigate = useNavigate();
+
   const [experiences, setExperiences] = useState<Experience[]>([
     { workInstitution: '', workYear: '1년' },
   ]);
@@ -126,7 +129,10 @@ export const CareerExp = ({ title }: CareerExpProps) => {
         width=""
         height="52px"
         style={{ marginTop: '20px' }}
-        onClick={putData}
+        onClick={() => {
+          putData();
+          navigate('/mypage');
+        }}
       >
         경력서 등록하기
       </Button>
