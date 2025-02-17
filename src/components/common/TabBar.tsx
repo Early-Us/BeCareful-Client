@@ -16,19 +16,19 @@ export const TabBar = () => {
         </TabBarIcon>
         <TabBarLabel isActive={location.pathname == '/'}>홈</TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/task">
-        <TabBarIcon isActive={location.pathname == '/task'}>
+      <TabBarContentWrapper href="/work">
+        <TabBarIcon isActive={location.pathname == '/work'}>
           <Task />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/task'}>
+        <TabBarLabel isActive={location.pathname == '/work'}>
           일자리
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/recruite">
-        <TabBarIcon isActive={location.pathname == '/recruite'}>
+      <TabBarContentWrapper href="/apply">
+        <TabBarIcon isActive={location.pathname == '/apply'}>
           <Recruite />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/recruite'}>
+        <TabBarLabel isActive={location.pathname == '/apply'}>
           지원현황
         </TabBarLabel>
       </TabBarContentWrapper>

@@ -92,6 +92,7 @@ export const TestPage = () => {
       <InputBox
         width="320px"
         label="필드 레이블"
+        labelStar={false}
         state="default"
         placeholder="플레이스홀더"
         guide="도움말"
@@ -99,6 +100,7 @@ export const TestPage = () => {
       <InputBox
         width="320px"
         label="필드 레이블"
+        labelStar={true}
         state="error"
         placeholder="플레이스홀더"
         guide="도움말"
@@ -106,6 +108,7 @@ export const TestPage = () => {
       <InputBox
         width="320px"
         label="필드 레이블"
+        labelStar={false}
         state="success"
         placeholder="플레이스홀더"
         guide="도움말"
