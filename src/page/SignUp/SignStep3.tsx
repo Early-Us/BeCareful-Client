@@ -6,7 +6,7 @@ import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';
 import { useState } from 'react';
 import { Button } from '@/components/common/Button/Button';
 import { CareGiverQualificationCard } from '@/components/common/QualificationCard/CaregiverQualificationCard';
-import { Modal } from '@/components/common/SignUp/SignUpModal';
+import { Modal } from '@/components/SignUp/SignUpModal';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { SocialQualificationCard } from '@/components/common/QualificationCard/SocialQualificationCard';
 
@@ -109,7 +109,6 @@ export const Step3 = ({
       <ButtonContainer>
         <Button
           variant="blue"
-          width="320px"
           height="52px"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
@@ -128,7 +127,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 360px;
+  width: 100%;
 `;
 
 const IconContainer = styled.div`
@@ -180,5 +179,10 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 49px 0 20px 0;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
 `;

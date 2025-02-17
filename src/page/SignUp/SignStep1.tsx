@@ -50,7 +50,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
         </div>
         <ResidentWrapper>
           <PlainInputBox
-            width="148px"
+            width=""
             state="default"
             placeholder="주민등록번호"
             guide=""
@@ -81,7 +81,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
         </div>
         <ResidentWrapper>
           <PlainInputBox
-            width="192px"
+            width=""
             state="default"
             placeholder="휴대전화 번호"
             guide=""
@@ -102,18 +102,19 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
       </InputWrapper>
       {showVerificationInput && (
         <ResidentWrapper>
-          <PlainInputBox
-            width="320px"
-            state="default"
-            placeholder="인증번호 입력"
-            guide=""
-          />
+          <InputInner>
+            <PlainInputBox
+              width=""
+              state="default"
+              placeholder="인증번호 입력"
+              guide=""
+            />
+          </InputInner>
         </ResidentWrapper>
       )}
-      <ButtonContainer showVerificationInput={showVerificationInput}>
+      <ButtonContainer>
         <Button
           variant="blue"
-          width="320px"
           height="52px"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
@@ -132,7 +133,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 360px;
+  width: 100%;
 `;
 const IconContainer = styled.div`
   display: flex;
@@ -187,20 +188,31 @@ const InputWrapper = styled.div`
 const ResidentWrapper = styled.div`
   display: flex;
   align-items: center;
-
+  width: 100%;
   gap: 8px;
 `;
 
-const ButtonContainer = styled.div<{ showVerificationInput: boolean }>`
+const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: ${({ showVerificationInput }) =>
-    showVerificationInput ? '111px 0 20px 0' : '185px 0 20px 0'};
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
 `;
 
 const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const InputInner = styled.div`
+  display: flex;
+  padding: 0 20px;
+  box-sizing: border-box;
+  width: 100%;
 `;
