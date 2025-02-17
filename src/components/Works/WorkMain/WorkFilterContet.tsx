@@ -14,15 +14,19 @@ export const WorkFilterContent = () => {
 
 const FilterContainer = styled.div`
   display: flex;
-  width: 360px;
   padding: 0 20px;
   flex-direction: row;
   align-items: flex-start;
   gap: 8px;
-  overflow-x: auto;
   white-space: nowrap;
+  overflow-x: auto;
+
   ::-webkit-scrollbar {
     width: 0px;
     display: none;
+  }
+
+  @media (max-width: 360px) {
+    width: 100%;
   }
 `;
