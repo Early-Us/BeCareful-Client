@@ -10,6 +10,23 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HomeMainContent } from '@/components/Home/HomeMainContent';
 
+interface SceheduleData {
+  workStartTime: string;
+  workEndTime: string;
+  seniorName: string;
+  seniorGender: string;
+  seniorAge: number;
+  seniorCareType: string[];
+  workLocation: string;
+}
+
+interface CaregiverData {
+  name: string;
+  applicationCount: number;
+  recruitmentCount: number;
+  workScheduleList: SceheduleData[];
+}
+
 const HomePage = () => {
   const navigate = useNavigate();
 
@@ -17,7 +34,7 @@ const HomePage = () => {
   const [chatNew, setChatNew] = useState(false);
   // 매칭된 어르신 존재 여부
   const [matching, setMatching] = useState(true);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<CaregiverData>();
 
   const getTodayDate = () => {
     const today = new Date();
@@ -73,13 +90,13 @@ const HomePage = () => {
         <LabelWrapper>
           {matching ? (
             <Name>
-              {data.name}님,
+              {data?.name}님,
               <br />
               돌봄을 시작하세요!
             </Name>
           ) : (
             <Name>
-              {data.name}님,
+              {data?.name}님,
               <br />
               오늘의 일정이에요!
             </Name>
@@ -92,10 +109,10 @@ const HomePage = () => {
       </MainWrapper>
       <HomeMainContent
         matching={matching}
-        schedule={data.workScheduleList}
-        apply={data.recruitmentCount != 0}
-        notice={data.applicationCount}
-        status={data.recruitmentCount}
+        schedule={data ? data.workScheduleList : []}
+        apply={data ? data.recruitmentCount != 0 : false}
+        notice={data ? data.applicationCount : 0}
+        status={data ? data.recruitmentCount : 0}
       />
       <TabBar />
     </Container>
