@@ -7,6 +7,7 @@ import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import SignUpForm from '@/page/SignUp/SignUpForm';
 import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
+import { ApplyPage } from '@/page/Apply/ApplyPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/signup/caregiver" element={<SignUpForm />} />
 
       <Route path="/work" element={<WorkMainPage />} />
+      <Route path="apply" element={<ApplyPage />} />
       <Route path="/work/workdetail" element={<WorkDetailPage />} />
     </Routes>
   );

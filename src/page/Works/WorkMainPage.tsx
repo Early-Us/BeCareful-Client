@@ -59,6 +59,9 @@ const PageWrapper = styled.div`
   overflow-x: hidden;
 `;
 
+{
+  /*TODO: 필터링에 따른 카들 구분 나중에 구현해야 함*/
+}
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
