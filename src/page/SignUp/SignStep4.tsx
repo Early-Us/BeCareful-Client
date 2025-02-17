@@ -2,8 +2,8 @@ import { StepProps } from '@/type/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
-import { BooleanNoCard } from '@/components/common/SignUp/BooleanNoCard';
-import { BooleanYesCard } from '@/components/common/SignUp/BooleanYesCard';
+import { BooleanNoCard } from '@/components/SignUp/BooleanNoCard';
+import { BooleanYesCard } from '@/components/SignUp/BooleanYesCard';
 import { useState } from 'react';
 
 export const Step4 = ({
@@ -42,7 +42,6 @@ export const Step4 = ({
       <ButtonContainer>
         <Button
           variant={selectedCard ? 'blue' : 'disabled'}
-          width="320px"
           height="52px"
           onClick={() => {
             if (selectedCard && onNext) {
@@ -63,7 +62,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 360px;
+  width: 100%;
 `;
 
 const IconContainer = styled.div`
@@ -95,7 +94,12 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 334px 0 20px 0;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
 `;
 
 const CardContainer = styled.div`

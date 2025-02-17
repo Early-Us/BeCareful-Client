@@ -6,6 +6,7 @@ interface SearchInputProps {
   value?: string;
   onClick?: () => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  readOnly?: boolean;
 }
 
 export const SearchInput = ({
@@ -13,6 +14,7 @@ export const SearchInput = ({
   value,
   onChange,
   onClick,
+  readOnly,
 }: SearchInputProps) => {
   return (
     <SearchContainer>
@@ -24,6 +26,7 @@ export const SearchInput = ({
         value={value}
         onChange={onChange}
         onClick={onClick}
+        readOnly={readOnly}
       />
     </SearchContainer>
   );

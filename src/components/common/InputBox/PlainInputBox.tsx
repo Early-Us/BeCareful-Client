@@ -7,6 +7,8 @@ interface PlainInputBoxProps {
   guide: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  suffix?: React.ReactNode;
 }
 
 export const PlainInputBox = ({
@@ -16,6 +18,8 @@ export const PlainInputBox = ({
   guide,
   value,
   onChange,
+  onKeyDown,
+  suffix,
 }: PlainInputBoxProps) => {
   return (
     <InputWrapper width={width}>
@@ -26,6 +30,7 @@ export const PlainInputBox = ({
         state={state}
         value={value}
         onChange={onChange}
+        onKeyDown={onKeyDown}
       ></InputDefault>
       {guide === '' ? (
         <></>
@@ -33,6 +38,11 @@ export const PlainInputBox = ({
         <InputGuideWrapper>
           <InputGuideLabel state={state}>{guide}</InputGuideLabel>
         </InputGuideWrapper>
+      )}
+      {suffix && (
+        <div style={{ position: 'absolute', right: '12px', color: 'red' }}>
+          {suffix}
+        </div>
       )}
     </InputWrapper>
   );
