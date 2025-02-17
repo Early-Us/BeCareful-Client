@@ -45,7 +45,7 @@ export const InputBox = ({
 const InputWrapper = styled.div<{ width: string }>`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   width: ${({ width }) => (width ? width : '100%')};
 `;
 
