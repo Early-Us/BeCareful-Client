@@ -6,20 +6,6 @@ import { ReactComponent as Notice } from '@/assets/icons/home/Notice.svg';
 import { ReactComponent as Status } from '@/assets/icons/home/Status.svg';
 import HomeScheduleCard from './HomeScheduleCard';
 
-// interface WorkStartTime {
-//   hour: number;
-//   minute: number;
-//   second: number;
-//   nano: number;
-// }
-
-// interface WorkEndTime {
-//   hour: number;
-//   minute: number;
-//   second: number;
-//   nano: number;
-// }
-
 interface WorkSchedule {
   workStartTime: string;
   workEndTime: string;
@@ -55,10 +41,6 @@ export const HomeMainContent = ({
             {schedule.map((workSchedule, index) => (
               <HomeScheduleCard
                 key={index}
-                // startHour={workSchedule.workStartTime.hour}
-                // startMinute={workSchedule.workStartTime.minute}
-                // endHour={workSchedule.workEndTime.hour}
-                // endMinute={workSchedule.workEndTime.minute}
                 startTime={workSchedule.workStartTime}
                 endTime={workSchedule.workEndTime}
                 name={workSchedule.seniorName}
