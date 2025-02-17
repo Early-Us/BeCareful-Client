@@ -77,6 +77,16 @@ const EditProfile = () => {
     handleCloseModal();
   };
 
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newCheck, setNewCheck] = useState('');
+  const [isMatch, setIsMatch] = useState(true);
+  const isValidPassword = (password: string) => {
+    const regex =
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    return regex.test(password);
+  };
+
   return (
     <Container>
       <NavBar
@@ -171,33 +181,56 @@ const EditProfile = () => {
         <PasswordTitle>비밀번호 변경</PasswordTitle>
         <InputBox
           label="현재 비밀번호"
+          type="password"
           labelStar={true}
+          //   state={password === currentPassword?"":"error"}
           state=""
           width=""
           guide=""
           placeholder="현재 비밀번호 입력"
+          onChange={(e) => {
+            setCurrentPassword(e.target.value);
+          }}
         />
         <InputBox
+          type="password"
           label="새 비밀번호"
           labelStar={true}
-          state=""
+          state={!isValidPassword(newPassword) ? 'error' : ''}
           width=""
-          guide=""
+          guide={
+            !isValidPassword(newPassword)
+              ? '영문, 숫자, 특수문자를 포함한 8자리 이상이어야 합니다.'
+              : ''
+          }
           placeholder="새 비밀번호 입력"
+          onChange={(e) => {
+            setNewPassword(e.target.value);
+            setIsMatch(e.target.value === newCheck);
+          }}
         />
         <InputBox
+          type="password"
           label="새 비밀번호 재입력"
           labelStar={true}
-          state=""
+          state={newCheck !== newPassword && newCheck !== '' ? 'error' : ''}
           width=""
-          guide=""
+          guide={
+            newCheck !== newPassword && newCheck !== ''
+              ? '비밀번호가 일치하지 않습니다.'
+              : ''
+          }
           placeholder="새 비밀번호 재입력"
+          onChange={(e) => {
+            setNewCheck(e.target.value);
+            setIsMatch(newPassword === newCheck);
+          }}
         />
       </Password>
 
       <Border />
       <Button
-        variant="blue"
+        variant={newPassword && newPassword === newCheck ? 'blue' : 'disabled'}
         width=""
         height="52px"
         style={{ margin: '20px 0px' }}
