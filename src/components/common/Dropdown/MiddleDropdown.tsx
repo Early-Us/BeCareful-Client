@@ -54,7 +54,10 @@ export const MiddleDropdown = ({
           {contents.map((content) => (
             <MiddleDropdownItem
               key={content}
-              onClick={() => handleSelectContent(content)}
+              onClick={() => {
+                handleSelectContent(content);
+                setOpen(false);
+              }}
               selected={selectedContents.includes(content)}
             >
               {content}
