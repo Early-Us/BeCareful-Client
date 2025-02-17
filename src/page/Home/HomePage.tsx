@@ -54,10 +54,18 @@ const HomePage = () => {
 
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
   const getData = async () => {
+    let accessToken;
+
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
     try {
       const response = await axios.get(`${apiBaseURL}/caregiver/home`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       setData(response.data);
@@ -77,7 +85,7 @@ const HomePage = () => {
         left={
           <NavLeft
             onClick={() => {
-              navigate('/');
+              navigate('/home');
             }}
           >
             <Logo />

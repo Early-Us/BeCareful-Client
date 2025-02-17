@@ -5,19 +5,25 @@ import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import HomePage from './page/Home/HomePage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import SignUpForm from '@/page/SignUp/SignUpForm';
+import MyPage from './page/MyPage/MyPage';
+import SplashPage from './page/SplashPage';
 
 function App() {
   return (
     <Routes>
       <Route path="/test" element={<TestPage />} />
 
-      <Route path="/" element={<HomePage />} />
-      <Route path="/mywork" element={<HomeMyworkPage />} />
+      <Route path="/" element={<SplashPage />} />
 
       <Route path="/login" element={<LoginPage />} />
 
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/signup/caregiver" element={<SignUpForm />} />
+
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/mywork" element={<HomeMyworkPage />} />
+
+      <Route path="/mypage" element={<MyPage />} />
     </Routes>
   );
 }

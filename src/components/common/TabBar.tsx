@@ -10,11 +10,11 @@ export const TabBar = () => {
 
   return (
     <TabBarWrapper>
-      <TabBarContentWrapper href="/">
-        <TabBarIcon isActive={location.pathname == '/'}>
+      <TabBarContentWrapper href="/home">
+        <TabBarIcon isActive={location.pathname == '/home'}>
           <Home />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/'}>홈</TabBarLabel>
+        <TabBarLabel isActive={location.pathname == '/home'}>홈</TabBarLabel>
       </TabBarContentWrapper>
       <TabBarContentWrapper href="/work">
         <TabBarIcon isActive={location.pathname == '/work'}>
