@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-interface InputBoxProps {
+interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   width: string;
   label: string;
+  labelStar: boolean;
   state: string;
   placeholder: string;
   guide: string;
@@ -11,21 +12,24 @@ interface InputBoxProps {
 export const InputBox = ({
   width,
   label,
+  labelStar,
   state,
   placeholder,
   guide,
+  ...props
 }: InputBoxProps) => {
   return (
     <InputWrapper width={width}>
       <InputFieldLabelWrapper>
         <InputFieldLabel>{label}</InputFieldLabel>
-        <InputFieldStar>*</InputFieldStar>
+        {labelStar ? <InputFieldStar>*</InputFieldStar> : <></>}
       </InputFieldLabelWrapper>
       <InputDefault
         type="text"
         placeholder={placeholder}
         state={state}
-      ></InputDefault>
+        {...props}
+      />
       {guide === '' ? (
         <></>
       ) : (
