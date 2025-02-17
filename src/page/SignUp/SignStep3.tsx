@@ -128,6 +128,8 @@ const StepWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding-bottom: 135px;
+  overflow-y: auto;
 `;
 
 const IconContainer = styled.div`

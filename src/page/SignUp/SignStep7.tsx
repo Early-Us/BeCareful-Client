@@ -3,13 +3,14 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { ReactComponent as ProfileImage } from '@/assets/icons/signup/PofileImage.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleStart = () => {
     console.log('현재 입력된 formData:', formData);
     if (onSubmit) onSubmit();
-    //navigate('/');
+    navigate('/');
   };
   return (
     <StepWrapper>

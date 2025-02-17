@@ -1,11 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StepProps } from '@/type/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { SearchInput } from '@/components/SignUp/SearchInput';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
+
+declare global {
+  interface Window {
+    daum: any;
+  }
+}
 
 export const Step6 = ({
   formData,
@@ -13,23 +20,30 @@ export const Step6 = ({
   onNext,
   onPrevious,
 }: StepProps) => {
-  const [showInput, setShowInput] = useState(false);
   const [street, setStreet] = useState(formData.streetAddress || '');
   const [detail, setDetail] = useState(formData.detailAddress || '');
-  const handleStreetChange = (value: string) => {
-    setStreet(value);
-    setFormData((prev) => ({
-      ...prev,
-      streetAddress: value,
-    }));
-  };
+  const [, setIsOpen] = useState(false);
 
-  const handleDetailChange = (value: string) => {
-    setDetail(value);
-    setFormData((prev) => ({
-      ...prev,
-      detailAddress: value,
-    }));
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src =
+      '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  const openPostcode = () => {
+    setIsOpen(true);
+    new window.daum.Postcode({
+      oncomplete: (data: any) => {
+        setStreet(data.roadAddress);
+        setFormData((prev) => ({
+          ...prev,
+          streetAddress: data.roadAddress,
+        }));
+        setIsOpen(false);
+      },
+    }).open();
   };
 
   return (
@@ -46,12 +60,13 @@ export const Step6 = ({
       <CardContainer>
         <SearchInput
           placeholder="도로명, 지번, 건물명 검색"
-          onChange={(e) => handleStreetChange(e.target.value)}
-          onClick={() => setShowInput(true)}
+          onClick={openPostcode}
+          value={street}
+          readOnly
         />
       </CardContainer>
 
-      {showInput && (
+      {street && (
         <CardContainer>
           <PlainInputBox
             width="320px"
@@ -59,7 +74,13 @@ export const Step6 = ({
             placeholder="상세 주소 입력"
             guide=""
             value={detail}
-            onChange={(e) => handleDetailChange(e.target.value)}
+            onChange={(e) => {
+              setDetail(e.target.value);
+              setFormData((prev) => ({
+                ...prev,
+                detailAddress: e.target.value,
+              }));
+            }}
           />
         </CardContainer>
       )}
@@ -68,10 +89,7 @@ export const Step6 = ({
         <Button
           variant={detail.length > 0 && street ? 'blue' : 'disabled'}
           height="52px"
-          onClick={() => {
-            console.log('현재 입력된 formData:', formData);
-            if (onNext) onNext();
-          }}
+          onClick={onNext}
           disabled={!(street && detail.length > 0)}
         >
           다음 단계로 이동
