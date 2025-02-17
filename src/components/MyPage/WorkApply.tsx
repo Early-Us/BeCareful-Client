@@ -6,9 +6,9 @@ interface WorkApplyProps {
   fix: string;
   apply: boolean;
   caretype: string;
-  day: string;
-  time: string;
-  pay: string;
+  day: string | undefined;
+  time: string | undefined;
+  pay: number;
   location: string;
 }
 
@@ -56,7 +56,7 @@ const WorkApply = ({
         </LabelWrapper>
         <LabelWrapper>
           <LabelTitle>희망급여</LabelTitle>
-          <LabelDetail>{pay}</LabelDetail>
+          <LabelDetail>{pay}원</LabelDetail>
         </LabelWrapper>
         <LabelWrapper>
           <LabelTitle>근무지역</LabelTitle>
