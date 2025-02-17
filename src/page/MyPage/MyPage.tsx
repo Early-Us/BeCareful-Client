@@ -205,7 +205,14 @@ const MyPage = () => {
                 나의 경력을 입력하여 합격률을 높여보세요!
               </InsideDetail>
             </InsideWrapper>
-            <Button variant="blue2" width="" height="52px">
+            <Button
+              variant="blue2"
+              width=""
+              height="52px"
+              onClick={() => {
+                navigate('/career/edit');
+              }}
+            >
               경력서 등록하기
             </Button>
           </SectionWrapper>

@@ -8,6 +8,7 @@ import SignUpForm from '@/page/SignUp/SignUpForm';
 import MyPage from './page/MyPage/MyPage';
 import SplashPage from './page/SplashPage';
 import EditProfile from './page/MyPage/EditProfile';
+import EditCareer from './page/MyPage/EditCareer';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
 
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/mypage/profile" element={<EditProfile />} />
+      <Route path="/career/edit" element={<EditCareer />} />
     </Routes>
   );
 }
