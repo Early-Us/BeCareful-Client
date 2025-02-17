@@ -7,6 +7,7 @@ import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import SignUpForm from '@/page/SignUp/SignUpForm';
 import MyPage from './page/MyPage/MyPage';
 import SplashPage from './page/SplashPage';
+import EditProfile from './page/MyPage/EditProfile';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/mywork" element={<HomeMyworkPage />} />
 
       <Route path="/mypage" element={<MyPage />} />
+      <Route path="/mypage/profile" element={<EditProfile />} />
     </Routes>
   );
 }

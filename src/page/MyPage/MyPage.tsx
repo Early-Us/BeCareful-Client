@@ -147,7 +147,13 @@ const MyPage = () => {
                   <Detail>여자</Detail>
                 </PhoneGenderWrapper>
               </ProfileLeft>
-              <EditButton>수정</EditButton>
+              <EditButton
+                onClick={() => {
+                  navigate('/mypage/profile');
+                }}
+              >
+                수정
+              </EditButton>
             </ProfileTop>
             <ProfileInfoWrapper>
               <ProfileInfo color={data ? data.isHavingCar : false}>
@@ -173,7 +179,7 @@ const MyPage = () => {
         </LicenseWrapper>
         <Border />
 
-        {!data?.careerTitle ? (
+        {data?.careerTitle ? (
           <SectionWrapper>
             <TitleLabel>경력서</TitleLabel>
             <NoApplication>
