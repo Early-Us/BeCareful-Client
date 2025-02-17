@@ -1,7 +1,3 @@
-import styled from 'styled-components';
-import { ReactComponent as IconAlarm } from '@/assets/icons/IconAlarm.svg';
-import { Tab } from '@/components/common/Tab/Tab';
-
 import { Button } from '@/components/common/Button/Button';
 import { InputBox } from '@/components/common/InputBox/InputBox';
 import { Dropdown } from '@/components/common/Dropdown/Dropdown';
@@ -11,11 +7,19 @@ import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { Toggle } from '@/components/common/Toggle/Toggle';
 
+import { CareGiverCard } from '@/components/common/SignUp/CareGiverCard';
+import { SocialCard } from '@/components/common/SignUp/SocialCard';
+import { BooleanNoCard } from '@/components/common/SignUp/BooleanNoCard';
+import { BooleanYesCard } from '@/components/common/SignUp/BooleanYesCard';
+import { AgreeCard } from '@/components/common/SignUp/AgreeCard';
+
+import { ApplyChip } from '@/components/common/ApplyCard/ApplyChip';
+import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
+import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
+
+import { CheckBox } from '../components/common/CheckBox/CheckBox';
+
 export const TestPage = () => {
-  const tabData = [
-    { name: '요양보호사', content: <Tab1Content /> },
-    { name: '사회복지사', content: <Tab2Content /> },
-  ];
   const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
     [],
   );
@@ -38,14 +42,44 @@ export const TestPage = () => {
   const handleCertificateChange = (updatedData: typeof certificateData) => {
     setCertificateData(updatedData);
   };
+
+  const [isChecked, setIsChecked] = useState(false);
+  const checkBoxClicked = (check: boolean) => {
+    setIsChecked(check);
+  };
+
+  const [pressed, setPressed] = useState(false);
+  const handleCardClick = () => {
+    setPressed(!pressed);
+  };
+
   return (
     <div>
       <h1>Test Page</h1>
-      <IconWrapper>
-        <IconAlarm />
-      </IconWrapper>
-      <Title>Test Title</Title>
-      <Tab tabs={tabData} />
+
+      <BooleanNoCard pressed={true} text="네, 소유하고 있습니다." />
+      <BooleanNoCard pressed={false} text="네, 소유하고 있습니다." />
+      <BooleanYesCard pressed={true} text="네, 소유하고 있습니다." />
+      <AgreeCard pressed={false} text="네, 소유하고 있습ㅇㅇ니다." />
+      <div onClick={handleCardClick}>
+        <CareGiverCard pressed={pressed} />
+        <SocialCard pressed={pressed} />
+      </div>
+
+      <ApplyChip state={'pass'} />
+      <ApplyTag label="인기공고" />
+      <ApplyTag label="시급 TOP" />
+      <ApplyCard
+        chipState="fail"
+        centerName="행복사랑요양센터"
+        description="방문요양/1일 9시간씩 주6일 모집"
+        tags={['인기공고', '시급 TOP']}
+        careItems={['식사보조', '이동보조']}
+        workingDays={['목', '일']}
+        workingHours="15:00~19:00"
+        hourlyRate="12,000원"
+      />
+
       <Button variant="blue" width="320px" height="52px">
         다음 단계로 이동
       </Button>
@@ -116,21 +150,34 @@ export const TestPage = () => {
         selectedContents={middleContents}
         setSelectedContents={setMiddleContents}
       />
+      <CheckBox
+        id="1"
+        checked={isChecked}
+        onChange={checkBoxClicked}
+        borderRadius="4px"
+        label="자동로그인"
+        select=""
+        guide=""
+      />
+      <p>체크박스 상태: {isChecked ? '체크됨' : '체크되지 않음'}</p>
+      <CheckBox
+        id="2"
+        checked={isChecked}
+        onChange={checkBoxClicked}
+        borderRadius=""
+        label=""
+        select="필수"
+        guide="이용약관"
+      />
+      <CheckBox
+        id="3"
+        checked={isChecked}
+        onChange={checkBoxClicked}
+        borderRadius=""
+        label=""
+        select="선택"
+        guide="이용약관"
+      />
     </div>
   );
 };
-
-const Tab1Content = () => <div>첫번째내용티비</div>;
-const Tab2Content = () => <div>두번째내용티비</div>;
-
-const IconWrapper = styled.div`
-  path {
-    fill: ${({ theme }) => theme.colors.mainOrange};
-  }
-`;
-
-const Title = styled.div`
-  color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.title1};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-`;

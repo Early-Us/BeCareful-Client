@@ -1,40 +1,36 @@
 import styled from 'styled-components';
 
-interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface PlainInputBoxProps {
   width: string;
-  label: string;
-  labelStar: boolean;
   state: string;
   placeholder: string;
   guide: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputBox = ({
+export const PlainInputBox = ({
   width,
-  label,
-  labelStar,
   state,
   placeholder,
   guide,
-  ...props
-}: InputBoxProps) => {
+  value,
+  onChange,
+}: PlainInputBoxProps) => {
   return (
     <InputWrapper width={width}>
-      <InputFieldLabelWrapper>
-        <InputFieldLabel>{label}</InputFieldLabel>
-        {labelStar ? <InputFieldStar>*</InputFieldStar> : <></>}
-      </InputFieldLabelWrapper>
+      <InputFieldLabelWrapper></InputFieldLabelWrapper>
       <InputDefault
         type="text"
         placeholder={placeholder}
         state={state}
-        {...props}
-      />
+        value={value}
+        onChange={onChange}
+      ></InputDefault>
       {guide === '' ? (
         <></>
       ) : (
         <InputGuideWrapper>
-          <InputGuideStar state={state}>*</InputGuideStar>
           <InputGuideLabel state={state}>{guide}</InputGuideLabel>
         </InputGuideWrapper>
       )}
@@ -53,20 +49,6 @@ const InputFieldLabelWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2px;
-`;
-
-const InputFieldLabel = styled.div`
-  color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  letter-spacing: -0.35px;
-`;
-
-const InputFieldStar = styled.div`
-  color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  letter-spacing: -0.35px;
 `;
 
 const InputDefault = styled.input<{ state: string }>`
@@ -113,23 +95,6 @@ const InputGuideWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2px;
-`;
-
-const InputGuideStar = styled.p<{ state: string }>`
-  color: ${({ theme, state }) => {
-    switch (state) {
-      case 'error':
-        return theme.colors.negative;
-      case 'success':
-        return theme.colors.positive;
-      default:
-        return theme.colors.mainBlue;
-    }
-  }};
-
-  font-size: ${({ theme }) => theme.typography.fontSize.body3};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  letter-spacing: -0.35px;
 `;
 
 const InputGuideLabel = styled.p<{ state: string }>`
