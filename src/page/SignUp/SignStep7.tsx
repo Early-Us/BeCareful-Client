@@ -31,12 +31,7 @@ export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
         <ProfileImage />
       </ProfileContainer>
       <ButtonContainer>
-        <Button
-          variant="blue"
-          width="320px"
-          height="52px"
-          onClick={handleStart}
-        >
+        <Button variant="blue" height="52px" onClick={handleStart}>
           시작하기
         </Button>
       </ButtonContainer>
@@ -49,7 +44,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 360px;
+  width: 100%;
 `;
 
 const IconContainer = styled.div`
@@ -95,7 +90,12 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 334px 0 20px 0;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
 `;
 
 const ProfileContainer = styled.div`

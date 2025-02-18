@@ -12,6 +12,9 @@ import CreateCareer from './page/MyPage/CreateCareer';
 import CreateApplication from './page/MyPage/CreateApplication';
 import EditCareer from './page/MyPage/EditCareer';
 import EditApplication from './page/MyPage/EditApplication';
+import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
+import { WorkMainPage } from '@/page/Works/WorkMainPage';
+import { ApplyPage } from '@/page/Apply/ApplyPage';
 
 function App() {
   return (
@@ -34,6 +37,10 @@ function App() {
       <Route path="/career/edit" element={<EditCareer />} />
       <Route path="/application/create" element={<CreateApplication />} />
       <Route path="/application/edit" element={<EditApplication />} />
+
+      <Route path="/work" element={<WorkMainPage />} />
+      <Route path="apply" element={<ApplyPage />} />
+      <Route path="/work/workdetail" element={<WorkDetailPage />} />
     </Routes>
   );
 }

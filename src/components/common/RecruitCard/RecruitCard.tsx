@@ -1,8 +1,8 @@
-import { ApplyChip } from '@/components/common/ApplyCard/ApplyChip';
+import { RecruitChip } from '@/components/common/RecruitCard/RecruitChip';
 import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
 import { styled } from 'styled-components';
 
-interface ApplyCardProps {
+interface RecruitCardProps {
   centerName: string;
   description: string;
   tags: string[];
@@ -10,10 +10,10 @@ interface ApplyCardProps {
   workingDays: string[];
   workingHours: string;
   hourlyRate: string;
-  chipState: 'pass' | 'fail' | 'pending';
+  chipState: 'pass' | 'fail';
 }
 
-export const ApplyCard = ({
+export const RecruitCard = ({
   centerName,
   description,
   tags,
@@ -22,10 +22,10 @@ export const ApplyCard = ({
   workingHours,
   hourlyRate,
   chipState,
-}: ApplyCardProps) => {
+}: RecruitCardProps) => {
   return (
     <CardContainer>
-      <ApplyChip state={chipState} />
+      <RecruitChip state={chipState} />
       <CardTopContainer>
         <CardTopHeader>
           <CardTopTitle>{centerName}</CardTopTitle>

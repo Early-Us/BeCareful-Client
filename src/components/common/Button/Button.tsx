@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-type ButtonVariant = 'blue' | 'blue2' | 'gray' | 'disabled';
+type ButtonVariant = 'blue' | 'blue2' | 'gray' | 'disabled' | 'white';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -69,6 +69,12 @@ const getVariantStyle = (variant: ButtonVariant) => {
       return css`
         background-color: ${({ theme }) => theme.colors.gray300};
         color: ${({ theme }) => theme.colors.white};
+      `;
+    case 'white':
+      return css`
+        background-color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.gray900};
+        border: 1px solid ${({ theme }) => theme.colors.gray100};
       `;
   }
 };

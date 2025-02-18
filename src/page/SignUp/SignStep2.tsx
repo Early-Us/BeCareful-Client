@@ -2,7 +2,7 @@ import { SignUpFormData, StepProps } from '@/type/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
-import { AgreeCard } from '@/components/common/SignUp/AgreeCard';
+import { AgreeCard } from '@/components/SignUp/AgreeCard';
 import { ReactComponent as ChevronRight } from '@/assets/icons/signup/ChevronRight.svg';
 import { CheckBox } from '@/components/common/CheckBox/CheckBox';
 import { Button } from '@/components/common/Button/Button';
@@ -56,6 +56,7 @@ export const Step2 = ({
         <IconArrowLeft />
       </IconContainer>
       <Header>비밀번호를 입력하세요</Header>
+
       <InputWrapper>
         <div>
           <span>비밀번호</span>
@@ -86,6 +87,7 @@ export const Step2 = ({
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
       </InputWrapper>
+
       <AgreeWrapper>
         <AgreeCard
           pressed={isAllChecked}
@@ -140,7 +142,6 @@ export const Step2 = ({
       <ButtonContainer>
         <Button
           variant={isRequiredChecked ? 'blue' : 'disabled'}
-          width="320px"
           height="52px"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
@@ -160,7 +161,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 360px;
+  width: 100%;
 `;
 
 const IconContainer = styled.div`
@@ -216,7 +217,7 @@ const InputWrapper = styled.div`
 const AgreeWrapper = styled.div`
   display: flex;
   height: 218px;
-  width: 98%;
+  width: 100%;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;
@@ -240,10 +241,14 @@ const AgreeCheck = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 49px 0 20px 0;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
 `;
