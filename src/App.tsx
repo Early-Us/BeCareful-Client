@@ -10,7 +10,6 @@ import SplashPage from './page/SplashPage';
 import EditProfile from './page/MyPage/EditProfile';
 import CreateCareer from './page/MyPage/CreateCareer';
 import CreateApplication from './page/MyPage/CreateApplication';
-import AreaSelect from './page/MyPage/AreaSelect';
 
 function App() {
   return (
@@ -31,7 +30,6 @@ function App() {
       <Route path="/mypage/profile" element={<EditProfile />} />
       <Route path="/career/create" element={<CreateCareer />} />
       <Route path="/application/create" element={<CreateApplication />} />
-      <Route path="/area" element={<AreaSelect />} />
     </Routes>
   );
 }

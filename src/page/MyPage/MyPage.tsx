@@ -107,7 +107,8 @@ const MyPage = () => {
           return '오전';
         case 'AFTERNOON':
           return '오후';
-
+        case 'NIGHT':
+          return '저녁';
         default:
           return time;
       }
@@ -179,7 +180,7 @@ const MyPage = () => {
         </LicenseWrapper>
         <Border />
 
-        {data?.careerTitle ? (
+        {!data?.careerTitle ? (
           <SectionWrapper>
             <TitleLabel>경력서</TitleLabel>
             <NoApplication>
@@ -210,7 +211,7 @@ const MyPage = () => {
               width=""
               height="52px"
               onClick={() => {
-                navigate('/career/create');
+                window.location.href = '/career/create';
               }}
             >
               경력서 등록하기
@@ -218,7 +219,7 @@ const MyPage = () => {
           </SectionWrapper>
         )}
 
-        {data?.workApplicationInfo ? (
+        {!data?.workApplicationInfo ? (
           <SectionWrapper>
             <TitleLabel>일자리 신청서</TitleLabel>
             <WorkApply
@@ -257,7 +258,7 @@ const MyPage = () => {
               width=""
               height="52px"
               onClick={() => {
-                navigate('/appliction/create');
+                window.location.href = '/application/create';
               }}
             >
               신청서 등록하기
