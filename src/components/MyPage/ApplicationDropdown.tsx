@@ -2,19 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { ReactComponent as IconPolygon6 } from '@/assets/icons/IconPolygon6.svg';
 
-interface MiddleDropdownProps {
+interface SmallDropdownProps {
   title: string;
   contents: string[];
   selectedContents: string[];
   setSelectedContents: (selectedContents: string[]) => void;
+  pressed?: boolean;
 }
 
-export const MiddleDropdown = ({
+export const ApplicationDropdown = ({
   title,
   contents,
   selectedContents,
   setSelectedContents,
-}: MiddleDropdownProps) => {
+  pressed = false,
+}: SmallDropdownProps) => {
   const [open, setOpen] = useState(false);
   const selectContainerRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +34,7 @@ export const MiddleDropdown = ({
     return () => document.removeEventListener('click', outsideClickHandler);
   }, []);
 
-  const handleToggleMiddleDropdown = () => setOpen((prev) => !prev);
+  const handleToggleSmallDropdown = () => setOpen((prev) => !prev);
 
   const handleSelectContent = (content: string) => {
     setSelectedContents([content]);
@@ -42,17 +44,22 @@ export const MiddleDropdown = ({
     selectedContents.length > 0 ? selectedContents[0] : title;
 
   return (
-    <MiddleDropdowns ref={selectContainerRef}>
-      <MiddleDropdownHeader onClick={handleToggleMiddleDropdown}>
-        <MiddleDropdownLabel>{selectedLabel}</MiddleDropdownLabel>
-        <IconWrapper>
+    <SmallDropdowns ref={selectContainerRef}>
+      <SmallDropdownHeader
+        onClick={handleToggleSmallDropdown}
+        pressed={pressed}
+      >
+        <SmallDropdownLabel pressed={pressed}>
+          {selectedLabel}
+        </SmallDropdownLabel>
+        <IconWrapper pressed={pressed}>
           <IconPolygon6 />
         </IconWrapper>
-      </MiddleDropdownHeader>
+      </SmallDropdownHeader>
       {open && (
-        <MiddleDropdownExpandContent>
+        <SmallDropdownExpandContent>
           {contents.map((content) => (
-            <MiddleDropdownItem
+            <SmallDropdownItem
               key={content}
               onClick={() => {
                 handleSelectContent(content);
@@ -61,44 +68,47 @@ export const MiddleDropdown = ({
               selected={selectedContents.includes(content)}
             >
               {content}
-            </MiddleDropdownItem>
+            </SmallDropdownItem>
           ))}
-        </MiddleDropdownExpandContent>
+        </SmallDropdownExpandContent>
       )}
-    </MiddleDropdowns>
+    </SmallDropdowns>
   );
 };
 
-const MiddleDropdowns = styled.div`
+const SmallDropdowns = styled.div`
+  width: 22.5%;
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 4px;
 `;
 
-const MiddleDropdownHeader = styled.div`
+const SmallDropdownHeader = styled.div<{ pressed?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6.2px;
+  gap: 4px;
 
-  width: 70px;
-  height: 46px;
-  border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid
+    ${({ theme, pressed }) =>
+      pressed ? theme.colors.white : theme.colors.gray100};
   background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
 `;
 
-const MiddleDropdownLabel = styled.div`
+const SmallDropdownLabel = styled.div<{ pressed?: boolean }>`
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme, pressed }) =>
+    pressed ? theme.colors.mainBlue : theme.colors.gray900};
 `;
 
-const MiddleDropdownExpandContent = styled.div`
+const SmallDropdownExpandContent = styled.div`
   position: absolute;
-  top: 52px;
+  top: 56px;
   left: 0;
   z-index: 2;
 
@@ -109,12 +119,12 @@ const MiddleDropdownExpandContent = styled.div`
 
   box-sizing: border-box;
   border-radius: 8px;
-
   width: 90px;
+
   overflow: hidden;
 `;
 
-const MiddleDropdownItem = styled.button<{ selected: boolean }>`
+const SmallDropdownItem = styled.button<{ selected: boolean }>`
   display: flex;
   padding: 16px;
   height: 48px;
@@ -133,11 +143,13 @@ const MiddleDropdownItem = styled.button<{ selected: boolean }>`
   }
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.div<{ pressed?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+
   path {
-    fill: ${({ theme }) => theme.colors.gray900};
+    fill: ${({ theme, pressed }) =>
+      pressed ? theme.colors.mainBlue : theme.colors.gray900};
   }
 `;

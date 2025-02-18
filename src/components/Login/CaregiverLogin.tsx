@@ -18,7 +18,6 @@ const CaregiverLogin = () => {
   };
 
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
-
   const loginButtonClicked = async () => {
     try {
       const response = await axios.post(
@@ -35,11 +34,13 @@ const CaregiverLogin = () => {
       const token = response.data.accessToken;
       if (isAutoLoginChecked) {
         localStorage.setItem('accessToken', token);
+        localStorage.setItem('isAutoLogin', 'true');
       } else {
         sessionStorage.setItem('accessToken', token);
+        localStorage.removeItem('isAutoLogin');
       }
 
-      navigate('/');
+      navigate('/home');
     } catch (e) {
       console.log('요양보호사 로그인 에러: ', e);
       alert('아이디 또는 비밀번호가 틀렸습니다.');

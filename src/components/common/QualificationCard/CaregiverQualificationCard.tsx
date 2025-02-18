@@ -63,7 +63,7 @@ const CardContainer = styled.div<{ state: CardState }>`
   flex-direction: column;
   gap: 8px;
   padding: 24px 20px;
-  width: 320px;
+  width: 100%;
   border-radius: 12px;
   border: ${({ state, theme }) => {
     switch (state) {

@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 interface WorkApplyProps {
   fix: string;
-  apply: boolean;
+  apply: boolean | undefined;
   caretype: string;
-  day: string;
-  time: string;
-  pay: string;
+  day: string | undefined;
+  time: string | undefined;
+  pay: number;
   location: string;
 }
 
@@ -37,7 +37,10 @@ const WorkApply = ({
           <Title>일자리 신청서</Title>
         </TitleWrapper>
         <ToggleWrapper>
-          <Toggle checked={isToggleChecked} onChange={handleToggleChange} />
+          <Toggle
+            checked={isToggleChecked ? isToggleChecked : false}
+            onChange={handleToggleChange}
+          />
           <ToggleLabel>{isToggleChecked ? '신청중' : '미신청'}</ToggleLabel>
         </ToggleWrapper>
       </TitlesWrapper>
@@ -56,7 +59,7 @@ const WorkApply = ({
         </LabelWrapper>
         <LabelWrapper>
           <LabelTitle>희망급여</LabelTitle>
-          <LabelDetail>{pay}</LabelDetail>
+          <LabelDetail>{pay}원</LabelDetail>
         </LabelWrapper>
         <LabelWrapper>
           <LabelTitle>근무지역</LabelTitle>

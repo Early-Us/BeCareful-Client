@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
-import { ReactComponent as IconPolygon6 } from '@/assets/icons/IconPolygon6.svg';
+import { ReactComponent as IconPolygon5 } from '@/assets/icons/IconPolygon5.svg';
 
-interface MiddleDropdownProps {
+interface CareerDropdownProps {
   title: string;
   contents: string[];
   selectedContents: string[];
   setSelectedContents: (selectedContents: string[]) => void;
 }
 
-export const MiddleDropdown = ({
+export const CareerDropdown = ({
   title,
   contents,
   selectedContents,
   setSelectedContents,
-}: MiddleDropdownProps) => {
+}: CareerDropdownProps) => {
   const [open, setOpen] = useState(false);
   const selectContainerRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ export const MiddleDropdown = ({
     return () => document.removeEventListener('click', outsideClickHandler);
   }, []);
 
-  const handleToggleMiddleDropdown = () => setOpen((prev) => !prev);
+  const handleToggleDropdown = () => setOpen((prev) => !prev);
 
   const handleSelectContent = (content: string) => {
     setSelectedContents([content]);
@@ -42,17 +42,17 @@ export const MiddleDropdown = ({
     selectedContents.length > 0 ? selectedContents[0] : title;
 
   return (
-    <MiddleDropdowns ref={selectContainerRef}>
-      <MiddleDropdownHeader onClick={handleToggleMiddleDropdown}>
-        <MiddleDropdownLabel>{selectedLabel}</MiddleDropdownLabel>
+    <Dropdowns ref={selectContainerRef}>
+      <DropdownHeader onClick={handleToggleDropdown}>
+        <DropdownLabel>{selectedLabel}</DropdownLabel>
         <IconWrapper>
-          <IconPolygon6 />
+          <IconPolygon5 />
         </IconWrapper>
-      </MiddleDropdownHeader>
+      </DropdownHeader>
       {open && (
-        <MiddleDropdownExpandContent>
+        <DropdownExpandContent>
           {contents.map((content) => (
-            <MiddleDropdownItem
+            <DropdownItem
               key={content}
               onClick={() => {
                 handleSelectContent(content);
@@ -61,44 +61,44 @@ export const MiddleDropdown = ({
               selected={selectedContents.includes(content)}
             >
               {content}
-            </MiddleDropdownItem>
+            </DropdownItem>
           ))}
-        </MiddleDropdownExpandContent>
+        </DropdownExpandContent>
       )}
-    </MiddleDropdowns>
+    </Dropdowns>
   );
 };
 
-const MiddleDropdowns = styled.div`
+const Dropdowns = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 4px;
 `;
 
-const MiddleDropdownHeader = styled.div`
+const DropdownHeader = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6.2px;
+  justify-content: space-between;
 
-  width: 70px;
-  height: 46px;
-  border-radius: 8px;
+  padding: 0 16px;
+  height: 52px;
+  border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
 `;
 
-const MiddleDropdownLabel = styled.div`
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.gray900};
+const DropdownLabel = styled.div`
+  color: ${({ theme }) => theme.colors.gray800};
+  font-size: ${({ theme }) => theme.typography.fontSize.body1};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  letter-spacing: -0.4px;
 `;
 
-const MiddleDropdownExpandContent = styled.div`
+const DropdownExpandContent = styled.div`
   position: absolute;
-  top: 52px;
+  top: 60px;
   left: 0;
   z-index: 2;
 
@@ -106,15 +106,13 @@ const MiddleDropdownExpandContent = styled.div`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-
   box-sizing: border-box;
   border-radius: 8px;
-
-  width: 90px;
+  min-width: 100%;
   overflow: hidden;
 `;
 
-const MiddleDropdownItem = styled.button<{ selected: boolean }>`
+const DropdownItem = styled.button<{ selected: boolean }>`
   display: flex;
   padding: 16px;
   height: 48px;
@@ -133,11 +131,13 @@ const MiddleDropdownItem = styled.button<{ selected: boolean }>`
   }
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.div<{ pressed?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+
   path {
-    fill: ${({ theme }) => theme.colors.gray900};
+    fill: ${({ theme, pressed }) =>
+      pressed ? theme.colors.mainBlue : theme.colors.gray900};
   }
 `;

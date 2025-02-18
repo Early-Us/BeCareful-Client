@@ -61,7 +61,10 @@ export const SmallDropdown = ({
           {contents.map((content) => (
             <SmallDropdownItem
               key={content}
-              onClick={() => handleSelectContent(content)}
+              onClick={() => {
+                handleSelectContent(content);
+                setOpen(false);
+              }}
               selected={selectedContents.includes(content)}
             >
               {content}
