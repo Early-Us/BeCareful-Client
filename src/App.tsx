@@ -23,8 +23,10 @@ function App() {
       <Route path="/signup/caregiver" element={<SignUpForm />} />
 
       <Route path="/work" element={<WorkMainPage />} />
-      <Route path="apply" element={<ApplyPage />} />
-      <Route path="/work/workdetail" element={<WorkDetailPage />} />
+      <Route path="/apply" element={<ApplyPage />} />
+
+      <Route path="/work/:recruitmentId" element={<WorkDetailPage />} />
+      <Route path="/workdetail" element={<WorkDetailPage />} />
     </Routes>
   );
 }

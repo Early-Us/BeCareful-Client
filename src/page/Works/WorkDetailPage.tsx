@@ -4,47 +4,112 @@ import { WorkBottomButton } from '@/components/Works/WorkDetail/WorkBottomButton
 import { WorkDetailMain } from '@/components/Works/WorkDetail/WorkDetailMain';
 import { WorkHeader } from '@/components/Works/WorkDetail/WorkHeader';
 import { WorkInfo } from '@/components/Works/WorkDetail/WorkInfo';
+import { RecruitmentDetailResponse } from '@/type/Work';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const WorkDetailPage = () => {
+  const { recruitmentId } = useParams();
+
+  const [recruitmentDetail, setRecruitmentDetail] =
+    useState<RecruitmentDetailResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+
+  useEffect(() => {
+    const fetchRecruitmentDetail = async () => {
+      try {
+        const response = await axios.get(
+          `${apiUrl}/recruitment/list/${recruitmentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+            },
+          },
+        );
+        setRecruitmentDetail(response.data);
+      } catch (error) {
+        setError('데이터를 불러오는 중 오류가 발생했습니다.');
+        console.error('WorkDetailPage.tsx:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecruitmentDetail();
+  }, [apiUrl, recruitmentId, sessionStorage.getItem('accessToken')]);
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  const { recruitmentInfo, elderlyInfo, institutionInfo } = recruitmentDetail!;
+  const {
+    title,
+    workDays,
+    workStartTime,
+    workEndTime,
+    workSalaryAmount,
+    careInfoList,
+  } = recruitmentInfo;
+  const {
+    name,
+    address,
+    gender,
+    age,
+    hasInmate,
+    hasPet,
+    profileImageUrl,
+
+    healthCondition,
+  } = elderlyInfo;
+  const { name: institutionName, address: institutionAddress } =
+    institutionInfo;
+
   return (
     <div>
       <WorkHeader />
-
       <WorkDetailMain
-        centerName="행복사랑요양센터"
-        details="[창동/3등급/76세/남성,독거] 방문요양/1일 9시간씩 주6일"
-        tags={['태그1', '태그2', '태그3']}
+        centerName={institutionName}
+        details={title}
+        tags={workDays}
+        workDays={workDays}
+        workStartTime={workStartTime}
+        workEndTime={workEndTime}
+        workSalaryAmount={workSalaryAmount}
       />
       <GapContainer />
       <ElderInfo
-        profileImageUrl=""
-        name="박순자"
-        ageAndGender="65세 여성"
-        address="서울시 마포구 구방동"
-        healthStatus="당뇨, 신장질환"
-        livingArrangement="동거중"
-        petStatus="없음"
+        profileImageUrl={profileImageUrl}
+        name={name}
+        ageAndGender={`${age}세 ${gender === 'MALE' ? '남성' : '여성'}`}
+        address={address}
+        healthStatus={healthCondition}
+        livingArrangement={hasInmate ? '동거중' : '독거'}
+        petStatus={hasPet ? '있음' : '없음'}
       />
       <GapContainer />
       <WorkInfo
-        careItems={[
-          '식사보조 - 식사 차려드리기, 경관식 보조',
-          '이동보조 - 휠체어 이동 보조',
-          '배변보조 - 스스로 배변 가능',
+        careItems={careInfoList.map((care) => care.careType)}
+        others={[
+          `급여: ${workSalaryAmount}원`,
+          `근무시간: ${workStartTime} ~ ${workEndTime}`,
         ]}
-        others={['여성우대, 초보자 가능', '긍정적이고 책임감 있으신분 모집']}
       />
       <GapContainer />
-      <OrganizationInfo
-        name="사랑행복재활주간보호센터"
-        address="서울특별시 강남구 테헤란로 172"
-      />
+      <OrganizationInfo name={institutionName} address={institutionAddress} />
       <WorkBottomButton />
     </div>
   );
 };
-
 const GapContainer = styled.div`
   display: flex;
   height: 6px;
