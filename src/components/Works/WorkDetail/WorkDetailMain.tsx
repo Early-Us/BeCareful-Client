@@ -5,12 +5,20 @@ interface WorkDetailMainProps {
   centerName: string;
   details: string;
   tags: string[];
+  workDays: string[];
+  workStartTime: string;
+  workEndTime: string;
+  workSalaryAmount: number;
 }
 
 export const WorkDetailMain = ({
   centerName,
   details,
   tags,
+  workDays,
+  workStartTime,
+  workEndTime,
+  workSalaryAmount,
 }: WorkDetailMainProps) => {
   return (
     <DetailContainer>
@@ -30,15 +38,15 @@ export const WorkDetailMain = ({
         </DetailContent>
         <DetailContent>
           <span className="highlight">근무요일</span>
-          <span>화,수,목</span>
+          <span>{workDays.join(', ')}</span>
         </DetailContent>
         <DetailContent>
           <span className="highlight">근무시간</span>
-          <span>09:30 ~ 10:30</span>
+          <span>{`${workStartTime} ~ ${workEndTime}`}</span>
         </DetailContent>
         <DetailContent>
           <span className="highlight">시급</span>
-          <span>20,2000원</span>
+          <span>{workSalaryAmount.toLocaleString()}원</span>
         </DetailContent>
       </DetailContentContainer>
     </DetailContainer>

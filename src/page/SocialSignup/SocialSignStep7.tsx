@@ -1,13 +1,20 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { StepProps } from '@/type/SignUp';
-import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
-import { ReactComponent as ProfileImage } from '@/assets/icons/signup/PofileImage.svg';
 import { styled } from 'styled-components';
-import { Button } from '@/components/common/Button/Button';
+import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
+import { SocialStepProps } from '@/type/SocialSignUp';
+import { ReactComponent as ProfileImage } from '@/assets/icons/signup/SocialProfileImage.svg';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Button } from '@/components/common/Button/Button';
 
-export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
+export const SocialStep7 = ({
+  formSocialData,
+  setFormSocialData,
+  onPrevious,
+  onSubmit,
+}: SocialStepProps) => {
+  console.log(formSocialData, setFormSocialData);
+
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -15,7 +22,7 @@ export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
   const apiUrl = import.meta.env.VITE_APP_API_URL;
 
   const handleStart = () => {
-    console.log('현재 입력된 formData:', formData);
+    console.log('현재 입력된 formData:', formSocialData);
     if (onSubmit) onSubmit();
     navigate('/');
   };
@@ -40,12 +47,12 @@ export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
 
     const formDataObj = new FormData();
     formDataObj.append('file', profileImage);
-    formDataObj.append('phoneNumber', formData.phoneNumber);
+    formDataObj.append('phoneNumber', formSocialData.phoneNumber);
 
     try {
       setLoading(true);
       const response = await axios.post(
-        `${apiUrl}/caregiver/upload-profile-img`,
+        `${apiUrl}/nursingInstitution/upload-profile-img`,
         formDataObj,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -65,7 +72,6 @@ export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
       setLoading(false);
     }
   };
-
   return (
     <StepWrapper>
       <TopText>
@@ -110,7 +116,6 @@ export const Step7 = ({ formData, onSubmit, onPrevious }: StepProps) => {
     </StepWrapper>
   );
 };
-
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -121,8 +126,12 @@ const StepWrapper = styled.div`
 
 const IconContainer = styled.div`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  cursor: pointer;
+  padding: 0px 20px;
+  box-sizing: border-box;
+  height: 56px;
+  width: 100%;
 `;
 
 const Header = styled.div`
@@ -147,14 +156,16 @@ const Header = styled.div`
 const TopText = styled.div`
   box-sizing: border-box;
   width: 100%;
+  height: 56px;
   display: flex;
-  flex-direction: row;
+
   justify-content: space-between;
   align-items: center;
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.mainBlue};
-  padding: 16px 20px;
+  white-space: nowrap;
+  //padding: 16px 20px;
 `;
 
 const ButtonContainer = styled.div`

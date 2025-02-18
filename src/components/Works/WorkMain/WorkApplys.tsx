@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { useState } from 'react';
 import { Toggle } from '@/components/common/Toggle/Toggle';
+import axios from 'axios';
 
 interface WorkApplyProps {
   fix: string;
@@ -23,8 +24,28 @@ const WorkApplys = ({
   location,
 }: WorkApplyProps) => {
   const [isToggleChecked, setIsToggleChecked] = useState(apply);
-  const handleToggleChange = () => {
-    setIsToggleChecked((prevChecked) => !prevChecked);
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const handleToggleChange = async () => {
+    const newCheckedState = !isToggleChecked;
+    setIsToggleChecked(newCheckedState);
+
+    if (newCheckedState) {
+      try {
+        const response = await axios.post(
+          `${apiUrl}/caregiver/work-application/active`,
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+            },
+          },
+        );
+        if (response.status === 200) {
+          console.log('일자라 신청 성공');
+        }
+      } catch (error) {
+        console.error('일자리 신청 실패(WorkApply.tsx):', error);
+      }
+    }
   };
 
   return (
