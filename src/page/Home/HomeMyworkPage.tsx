@@ -56,8 +56,6 @@ const HomeMyworkPage = () => {
       />
       {jobs ? (
         <JobCardWrapper>
-          {/* search */}
-          <div>search</div>
           <CardWrapper>
             <HomeWorkCard />
             <HomeWorkCard />
