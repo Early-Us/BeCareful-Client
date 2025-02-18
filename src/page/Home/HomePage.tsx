@@ -97,7 +97,7 @@ const HomePage = () => {
         left={
           <NavLeft
             onClick={() => {
-              navigate('/home');
+              navigate('/home/caregiver');
             }}
           >
             <Logo />

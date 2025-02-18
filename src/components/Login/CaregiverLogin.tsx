@@ -39,8 +39,9 @@ const CaregiverLogin = () => {
         sessionStorage.setItem('accessToken', token);
         localStorage.removeItem('isAutoLogin');
       }
+      localStorage.setItem('role', 'caregiver');
 
-      navigate('/home');
+      navigate('/home/caregiver');
     } catch (e) {
       console.log('요양보호사 로그인 에러: ', e);
       alert('아이디 또는 비밀번호가 틀렸습니다.');

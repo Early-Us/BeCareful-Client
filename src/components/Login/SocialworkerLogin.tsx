@@ -39,8 +39,9 @@ const SocialworkerLogin = () => {
         sessionStorage.setItem('accessToken', token);
         localStorage.removeItem('isAutoLogin');
       }
+      localStorage.setItem('role', 'socialworker');
 
-      navigate('/home');
+      navigate('/home/social');
     } catch (e) {
       console.log('사회복지사 로그인 에러: ', e);
       alert('아이디 또는 비밀번호가 틀렸습니다.');
