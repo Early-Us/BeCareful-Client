@@ -26,6 +26,7 @@ interface WorkApplicationInfo {
 
 interface Caregiver {
   name: string;
+  gender: string;
   phoneNumber: string;
   profileImageUrl: string;
   certificateNames: string[];
@@ -143,8 +144,7 @@ const MyPage = () => {
                 <PhoneGenderWrapper>
                   <Detail>{data?.phoneNumber}</Detail>
                   <Detail>·</Detail>
-                  {/* <Detail>{data.gender === 'FEMALE' ? '여자' : '남자'}</Detail> */}
-                  <Detail>여자</Detail>
+                  <Detail>{data?.gender === 'FEMALE' ? '여자' : '남자'}</Detail>
                 </PhoneGenderWrapper>
               </ProfileLeft>
               <EditButton
