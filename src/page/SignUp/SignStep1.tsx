@@ -4,12 +4,27 @@ import { styled } from 'styled-components';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 import { ReactComponent as ResidentCircle } from '@/assets/icons/signup/ResidentCircle.svg';
 import { Button } from '@/components/common/Button/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
+import {
+  handleSendAuthNumber,
+  handleVerifyAuthNumber,
+} from '@/page/SignUp/Step1Function';
 
 export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
+  const [authNumber, setAuthNumber] = useState('');
   const [showVerificationInput, setShowVerificationInput] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(180);
+  const [, setAuthSent] = useState(false);
   const [genderInput, setGenderInput] = useState('');
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const [, setAuthButtonText] = useState('인증번호 전송');
+
+  useEffect(() => {
+    if (remainingTime === 0) {
+      setAuthButtonText('재전송');
+    }
+  }, [remainingTime]);
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
@@ -23,6 +38,12 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
     }
   };
 
+  useEffect(() => {
+    if (remainingTime === 0) {
+      alert('인증번호 유효 시간이 초과되었습니다.');
+    }
+  }, [remainingTime]);
+
   return (
     <StepWrapper>
       <IconContainer>
@@ -35,7 +56,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           <span className="highlight"> *</span>
         </div>
         <PlainInputBox
-          width=""
+          width="320px"
           state="default"
           placeholder="이름"
           guide=""
@@ -94,7 +115,20 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
             variant="blue2"
             width="120px"
             height="56px"
-            onClick={() => setShowVerificationInput(true)}
+            style={{
+              minWidth: '120px',
+              flexShrink: 0,
+            }}
+            onClick={() =>
+              handleSendAuthNumber(
+                formData.phoneNumber,
+                setShowVerificationInput,
+                setAuthSent,
+                setRemainingTime,
+                setAuthButtonText,
+                apiUrl,
+              )
+            }
           >
             인증번호 전송
           </Button>
@@ -102,18 +136,46 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
       </InputWrapper>
       {showVerificationInput && (
         <ResidentWrapper>
-          <PlainInputBox
-            width="320px"
-            state="default"
-            placeholder="인증번호 입력"
-            guide=""
-          />
+          <InputInner>
+            <PlainInputBox
+              width="100%"
+              state="default"
+              placeholder="인증번호 입력"
+              guide=""
+              value={authNumber}
+              onChange={(e) => setAuthNumber(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleVerifyAuthNumber(
+                    formData.phoneNumber,
+                    authNumber,
+                    apiUrl,
+                    onNext,
+                  );
+                }
+              }}
+              suffix={
+                <span
+                  style={{
+                    position: 'absolute',
+                    right: '42px',
+                    top: '22px',
+                    whiteSpace: 'nowrap',
+                    color: 'red',
+                    fontSize: '14px',
+                  }}
+                >
+                  남은시간 {Math.floor(remainingTime / 60)}:
+                  {(remainingTime % 60).toString().padStart(2, '0')}
+                </span>
+              }
+            />
+          </InputInner>
         </ResidentWrapper>
       )}
-      <ButtonContainer showVerificationInput={showVerificationInput}>
+      <ButtonContainer>
         <Button
           variant="blue"
-          width="320px"
           height="52px"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
@@ -130,10 +192,11 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  width: 360px;
+  width: 100%;
 `;
+
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -147,19 +210,18 @@ const IconContainer = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   width: 100%;
   gap: 8px;
-
   align-items: flex-start;
   padding: 16px 20px 0px 20px;
-  box-sizing: border-box;
-
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.gray900};
-
   .highlight {
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    color: ${({ theme }) => theme.colors.gray500};
   }
 `;
 
@@ -186,21 +248,38 @@ const InputWrapper = styled.div`
 
 const ResidentWrapper = styled.div`
   display: flex;
-  align-items: center;
-
+  align-items: flex-end;
+  justify-content: flex-start;
   gap: 8px;
-`;
-
-const ButtonContainer = styled.div<{ showVerificationInput: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: ${({ showVerificationInput }) =>
-    showVerificationInput ? '111px 0 20px 0' : '185px 0 20px 0'};
+  width: 100%;
+  flex-grow: 1;
 `;
 
 const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 8px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
+`;
+
+const InputInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  margin-top: 12px;
+  padding: 0px 20px;
 `;

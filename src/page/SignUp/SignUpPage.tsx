@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { useState } from 'react';
-import { CareGiverCard } from '@/components/common/SignUp/CareGiverCard';
-import { SocialCard } from '@/components/common/SignUp/SocialCard';
+import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
+import { SocialCard } from '@/components/SignUp/SocialCard';
 import { Button } from '@/components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,7 +50,6 @@ export const SignUpPage = () => {
         <ButtonContainer>
           <Button
             variant={pressed ? 'blue' : 'disabled'}
-            width="320px"
             height="52px"
             onClick={handleNextStep}
             disabled={!pressed}
@@ -108,5 +107,10 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 185px 20px 20px 20px;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
 `;

@@ -67,7 +67,7 @@ const CardContainer = styled.div`
   gap: 12px;
   flex-direction: column;
   border-radius: 12px;
-  width: 320px;
+  width: 100%;
   box-sizing: border-box;
   align-items: flex-start;
   align-self: stretch;

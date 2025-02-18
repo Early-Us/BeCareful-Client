@@ -1,11 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StepProps } from '@/type/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { SearchInput } from '@/components/common/SignUp/SearchInput';
+import { SearchInput } from '@/components/SignUp/SearchInput';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
+
+interface PostcodeData {
+  roadAddress: string;
+  jibunAddress: string;
+  autoRoadAddress: string;
+  autoJibunAddress: string;
+  zonecode: string;
+}
+
+declare global {
+  interface Window {
+    daum: any;
+  }
+}
 
 export const Step6 = ({
   formData,
@@ -13,23 +28,41 @@ export const Step6 = ({
   onNext,
   onPrevious,
 }: StepProps) => {
-  const [showInput, setShowInput] = useState(false);
   const [street, setStreet] = useState(formData.streetAddress || '');
   const [detail, setDetail] = useState(formData.detailAddress || '');
-  const handleStreetChange = (value: string) => {
-    setStreet(value);
-    setFormData((prev) => ({
-      ...prev,
-      streetAddress: value,
-    }));
-  };
+  const [isPostcodeReady, setIsPostcodeReady] = useState(false);
 
-  const handleDetailChange = (value: string) => {
-    setDetail(value);
-    setFormData((prev) => ({
-      ...prev,
-      detailAddress: value,
-    }));
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src =
+      '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+    script.async = true;
+
+    script.onload = () => {
+      setIsPostcodeReady(true);
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const openPostcode = () => {
+    if (isPostcodeReady && window.daum.Postcode) {
+      new window.daum.Postcode({
+        oncomplete: (data: PostcodeData) => {
+          setStreet(data.roadAddress);
+          setFormData((prev) => ({
+            ...prev,
+            streetAddress: data.roadAddress,
+          }));
+        },
+      }).open();
+    } else {
+      console.error('다음 api로드 실패');
+    }
   };
 
   return (
@@ -46,12 +79,13 @@ export const Step6 = ({
       <CardContainer>
         <SearchInput
           placeholder="도로명, 지번, 건물명 검색"
-          onChange={(e) => handleStreetChange(e.target.value)}
-          onClick={() => setShowInput(true)}
+          onClick={openPostcode}
+          value={street}
+          readOnly
         />
       </CardContainer>
 
-      {showInput && (
+      {street && (
         <CardContainer>
           <PlainInputBox
             width="320px"
@@ -59,7 +93,13 @@ export const Step6 = ({
             placeholder="상세 주소 입력"
             guide=""
             value={detail}
-            onChange={(e) => handleDetailChange(e.target.value)}
+            onChange={(e) => {
+              setDetail(e.target.value);
+              setFormData((prev) => ({
+                ...prev,
+                detailAddress: e.target.value,
+              }));
+            }}
           />
         </CardContainer>
       )}
@@ -67,12 +107,8 @@ export const Step6 = ({
       <ButtonContainer>
         <Button
           variant={detail.length > 0 && street ? 'blue' : 'disabled'}
-          width="320px"
           height="52px"
-          onClick={() => {
-            console.log('현재 입력된 formData:', formData);
-            if (onNext) onNext();
-          }}
+          onClick={onNext}
           disabled={!(street && detail.length > 0)}
         >
           다음 단계로 이동
@@ -87,7 +123,7 @@ const StepWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 360px;
+  width: 100%;
 `;
 
 const IconContainer = styled.div`
@@ -119,7 +155,12 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 334px 0 20px 0;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  box-sizing: border-box;
+  width: 100%;
 `;
 
 const CardContainer = styled.div`
