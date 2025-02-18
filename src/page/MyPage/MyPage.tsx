@@ -63,7 +63,7 @@ const MyPage = () => {
       setData(response.data);
       console.log(response.data);
     } catch (e) {
-      console.log('요양보호사 로그인 에러: ', e);
+      console.log('마이페이지 에러: ', e);
     }
   };
 
@@ -107,7 +107,7 @@ const MyPage = () => {
           return '오전';
         case 'AFTERNOON':
           return '오후';
-        case 'NIGHT':
+        case 'EVENING':
           return '저녁';
         default:
           return time;
@@ -117,8 +117,10 @@ const MyPage = () => {
 
   const formattedLocation = data?.workApplicationInfo?.workLocations
     ? data.workApplicationInfo.workLocations.length > 2
-      ? `${data.workApplicationInfo.workLocations[0]}, ${data.workApplicationInfo.workLocations[1]} 외 ${data.workApplicationInfo.workLocations.length - 2}`
-      : data.workApplicationInfo.workLocations.join(', ')
+      ? `${data.workApplicationInfo.workLocations[0].siGuGun} ${data.workApplicationInfo.workLocations[0].dongEupMyeon}, ${data.workApplicationInfo.workLocations[1].siGuGun} ${data.workApplicationInfo.workLocations[1].dongEupMyeon} 외 ${data.workApplicationInfo.workLocations.length - 2}개`
+      : data.workApplicationInfo.workLocations
+          .map((location) => `${location.siGuGun} ${location.dongEupMyeon}`)
+          .join(', ')
     : '';
 
   return (
@@ -180,7 +182,7 @@ const MyPage = () => {
         </LicenseWrapper>
         <Border />
 
-        {!data?.careerTitle ? (
+        {data?.careerTitle ? (
           <SectionWrapper>
             <TitleLabel>경력서</TitleLabel>
             <NoApplication>
@@ -190,7 +192,14 @@ const MyPage = () => {
               </FixWrapper>
               <NoApplicationLabel>{data?.careerTitle}</NoApplicationLabel>
             </NoApplication>
-            <Button variant="blue2" width="" height="52px">
+            <Button
+              variant="blue2"
+              width=""
+              height="52px"
+              onClick={() => {
+                window.location.href = '/career/edit';
+              }}
+            >
               경력서 수정하기
             </Button>
           </SectionWrapper>
@@ -219,7 +228,7 @@ const MyPage = () => {
           </SectionWrapper>
         )}
 
-        {!data?.workApplicationInfo ? (
+        {data?.workApplicationInfo ? (
           <SectionWrapper>
             <TitleLabel>일자리 신청서</TitleLabel>
             <WorkApply
@@ -235,7 +244,14 @@ const MyPage = () => {
               }
               location={formattedLocation}
             />
-            <Button variant="blue2" width="" height="52px">
+            <Button
+              variant="blue2"
+              width=""
+              height="52px"
+              onClick={() => {
+                window.location.href = '/application/edit';
+              }}
+            >
               신청서 수정하기
             </Button>
           </SectionWrapper>

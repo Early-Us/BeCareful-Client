@@ -11,6 +11,7 @@ import EditProfile from './page/MyPage/EditProfile';
 import CreateCareer from './page/MyPage/CreateCareer';
 import CreateApplication from './page/MyPage/CreateApplication';
 import EditCareer from './page/MyPage/EditCareer';
+import EditApplication from './page/MyPage/EditApplication';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path="/career/create" element={<CreateCareer />} />
       <Route path="/career/edit" element={<EditCareer />} />
       <Route path="/application/create" element={<CreateApplication />} />
+      <Route path="/application/edit" element={<EditApplication />} />
     </Routes>
   );
 }

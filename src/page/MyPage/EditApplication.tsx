@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import styled from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ApplicationDropdown } from '@/components/MyPage/ApplicationDropdown';
 import { CheckBoxSelect } from '@/components/common/CheckBox/CheckBoxSelect';
 import axios from 'axios';
@@ -146,6 +146,53 @@ const CreateApplication = () => {
 
   // api 연결
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const getData = async () => {
+    let accessToken;
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    try {
+      const response = await axios.get(
+        `${apiBaseURL}/caregiver/work-application`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      console.log(response.data);
+      setSelectedArea(response.data.workLocations);
+      setSelectDay(
+        response.data.workDays.map((day: string) => {
+          return (
+            Object.keys(dayAPI).find(
+              (key: string) => dayAPI[key as keyof typeof dayAPI] === day,
+            ) || day
+          );
+        }),
+      );
+      setSelectTime(
+        response.data.workTimes.map((time: string) => {
+          return (
+            Object.keys(timeAPI).find(
+              (key: string) => timeAPI[key as keyof typeof timeAPI] === time,
+            ) || time
+          ); // 영어를 한글로 변환
+        }),
+      );
+      setCertificateLevel(
+        response.data.workSalaryType === '시급' ? '시급' : '월급',
+      );
+      setPay(response.data.workSalaryAmount);
+      setSelectCare(response.data.careTypes);
+    } catch (e) {
+      console.log('일자리 신청서 수정 get 에러: ', e);
+    }
+  };
+
   const putData = async () => {
     let accessToken;
     if (localStorage.getItem('isAutoLogin')) {
@@ -180,9 +227,13 @@ const CreateApplication = () => {
       );
       console.log(response);
     } catch (e) {
-      console.log('일자리 신청서 등록 에러: ', e);
+      console.log('일자리 신청서 수정 put 에러: ', e);
     }
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Container>
@@ -374,6 +425,7 @@ const CreateApplication = () => {
             <PayField
               id="pay"
               placeholder="금액입력"
+              value={pay}
               onChange={(e) => {
                 setPay(e.target.value);
               }}
