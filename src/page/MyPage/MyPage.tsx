@@ -210,7 +210,7 @@ const MyPage = () => {
               width=""
               height="52px"
               onClick={() => {
-                navigate('/career/edit');
+                navigate('/career/create');
               }}
             >
               경력서 등록하기
@@ -252,7 +252,14 @@ const MyPage = () => {
                 나에게 딱 맞는 일자리 확인하세요!
               </InsideDetail>
             </InsideWrapper>
-            <Button variant="blue2" width="" height="52px">
+            <Button
+              variant="blue2"
+              width=""
+              height="52px"
+              onClick={() => {
+                navigate('/appliction/create');
+              }}
+            >
               신청서 등록하기
             </Button>
           </SectionWrapper>
