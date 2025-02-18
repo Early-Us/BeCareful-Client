@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '../common/Button/Button';
 import { InputBox } from '../common/InputBox/InputBox';
@@ -13,9 +13,10 @@ interface Experience {
 
 interface CareerExpProps {
   title: string;
+  careerDetails?: Experience[];
 }
 
-export const CareerExp = ({ title }: CareerExpProps) => {
+export const CareerExp = ({ title, careerDetails }: CareerExpProps) => {
   const navigate = useNavigate();
 
   const [experiences, setExperiences] = useState<Experience[]>([
@@ -78,11 +79,17 @@ export const CareerExp = ({ title }: CareerExpProps) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response.data);
+      console.log(response);
     } catch (e) {
       console.log('경력 경력 등록하기 에러: ', e);
     }
   };
+
+  useEffect(() => {
+    if (careerDetails) {
+      setExperiences(careerDetails);
+    }
+  }, [careerDetails]);
 
   return (
     <Container>

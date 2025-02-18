@@ -5,15 +5,54 @@ import { NavBar } from '@/components/common/NavBar';
 import { Tab } from '@/components/common/Tab/Tab';
 import { CareerNew } from '@/components/MyPage/CareerNew';
 import { CareerExp } from '@/components/MyPage/CareerExp';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const CreateCareer = () => {
+const EditCareer = () => {
   const navigate = useNavigate();
+
   const [title, setTitle] = useState('');
+  const [introduce, setIntroduce] = useState('');
+  const [careerDetails, setCareerDetails] = useState([]);
+
   const tabData = [
-    { name: '신입', content: <CareerNew title={title} /> },
-    { name: '경력', content: <CareerExp title={title} /> },
+    {
+      name: '신입',
+      content: <CareerNew title={title} introduce={introduce} />,
+    },
+    {
+      name: '경력',
+      content: <CareerExp title={title} careerDetails={careerDetails} />,
+    },
   ];
+
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const getData = async () => {
+    let accessToken;
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    try {
+      const response = await axios.get(`${apiBaseURL}/caregiver/career`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(response.data);
+      setTitle(response.data.title);
+      setIntroduce(response.data.introduce);
+      setCareerDetails(response.data.careerDetails);
+    } catch (e) {
+      console.log('경력서 수정하기 에러: ', e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Container>
@@ -37,7 +76,7 @@ const CreateCareer = () => {
           <InputFieldLabel color="blue">*</InputFieldLabel>
         </InputFieldLabelWrapper>
         <InputDefault
-          placeholder="나를 표현할 한마디를 적어보세요"
+          value={title}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
@@ -51,7 +90,7 @@ const CreateCareer = () => {
   );
 };
 
-export default CreateCareer;
+export default EditCareer;
 
 const Container = styled.div`
   margin: auto 20px;

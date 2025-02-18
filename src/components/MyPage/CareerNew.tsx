@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '../common/Button/Button';
 import axios from 'axios';
@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 
 interface CareerNewProps {
   title: string;
+  introduce?: string;
 }
 
-export const CareerNew = ({ title }: CareerNewProps) => {
+export const CareerNew = ({ title, introduce }: CareerNewProps) => {
   const navigate = useNavigate();
+
   const [textCount, setTextCount] = useState(0);
   const [memoContent, setMemoContent] = useState('');
 
@@ -25,11 +27,11 @@ export const CareerNew = ({ title }: CareerNewProps) => {
     const data = {
       title: title,
       careerType: '신입',
-      introduce: { memoContent },
+      introduce: memoContent,
       careerDetails: [
         {
           workInstitution: '',
-          workYear: 0,
+          workYear: '0',
         },
       ],
     };
@@ -41,11 +43,18 @@ export const CareerNew = ({ title }: CareerNewProps) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response.data);
+      console.log(response);
     } catch (e) {
       console.log('신입 경력 등록하기 에러: ', e);
     }
   };
+
+  useEffect(() => {
+    if (introduce) {
+      setMemoContent(introduce);
+      setTextCount(introduce.length);
+    }
+  }, [introduce]);
 
   return (
     <Container>
@@ -54,7 +63,8 @@ export const CareerNew = ({ title }: CareerNewProps) => {
         <MemoFieldWrapper>
           <MemoField
             id="memo"
-            placeholder="나를 표현할 한마디를 적어보세요"
+            placeholder="나의 강점을 자유롭게 설명해주세요."
+            value={memoContent}
             maxLength={200}
             onChange={(e) => {
               setTextCount(e.target.value.length);
