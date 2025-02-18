@@ -8,6 +8,14 @@ import { SearchInput } from '@/components/SignUp/SearchInput';
 import { useEffect, useState } from 'react';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 
+interface PostcodeData {
+  roadAddress: string;
+  jibunAddress: string;
+  autoRoadAddress: string;
+  autoJibunAddress: string;
+  zonecode: string;
+}
+
 declare global {
   interface Window {
     daum: any;
@@ -22,28 +30,39 @@ export const Step6 = ({
 }: StepProps) => {
   const [street, setStreet] = useState(formData.streetAddress || '');
   const [detail, setDetail] = useState(formData.detailAddress || '');
-  const [, setIsOpen] = useState(false);
+  const [isPostcodeReady, setIsPostcodeReady] = useState(false);
 
   useEffect(() => {
     const script = document.createElement('script');
     script.src =
       '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
     script.async = true;
+
+    script.onload = () => {
+      setIsPostcodeReady(true);
+    };
+
     document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
   const openPostcode = () => {
-    setIsOpen(true);
-    new window.daum.Postcode({
-      oncomplete: (data: any) => {
-        setStreet(data.roadAddress);
-        setFormData((prev) => ({
-          ...prev,
-          streetAddress: data.roadAddress,
-        }));
-        setIsOpen(false);
-      },
-    }).open();
+    if (isPostcodeReady && window.daum.Postcode) {
+      new window.daum.Postcode({
+        oncomplete: (data: PostcodeData) => {
+          setStreet(data.roadAddress);
+          setFormData((prev) => ({
+            ...prev,
+            streetAddress: data.roadAddress,
+          }));
+        },
+      }).open();
+    } else {
+      console.error('다음 api로드 실패');
+    }
   };
 
   return (
