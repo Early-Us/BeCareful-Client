@@ -19,12 +19,16 @@ export const Step2 = ({
     isAgreedToCollectPersonalInfo,
     isAgreedToReceiveMarketingInfo,
   } = formData;
+
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isRequiredChecked, setIsRequiredChecked] = useState(false);
 
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmError, setConfirmError] = useState('');
+
   useEffect(() => {
     setIsRequiredChecked(isAgreedToTerms && isAgreedToCollectPersonalInfo);
-
     setIsAllChecked(
       isAgreedToTerms &&
         isAgreedToCollectPersonalInfo &&
@@ -35,12 +39,14 @@ export const Step2 = ({
     isAgreedToCollectPersonalInfo,
     isAgreedToReceiveMarketingInfo,
   ]);
+
   const handleCheckboxChange = (
     key: keyof SignUpFormData,
     checked: boolean,
   ) => {
     setFormData({ ...formData, [key]: checked });
   };
+
   const handleAllAgree = (checked: boolean) => {
     setFormData({
       ...formData,
@@ -49,6 +55,39 @@ export const Step2 = ({
       isAgreedToReceiveMarketingInfo: checked,
     });
   };
+
+  const validatePassword = (password: string) => {
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setFormData({ ...formData, password: newPassword });
+
+    if (!validatePassword(newPassword)) {
+      setPasswordError('영문, 숫자, 특수문자를 포함한 8자리 이상 입력하세요.');
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const handlePasswordConfirmChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newConfirmPassword = e.target.value;
+    setPasswordConfirm(newConfirmPassword);
+
+    if (newConfirmPassword !== formData.password) {
+      setConfirmError('비밀번호가 일치하지 않습니다.');
+    } else {
+      setConfirmError('');
+    }
+  };
+
+  const isFormValid =
+    isRequiredChecked && validatePassword(formData.password) && !confirmError;
 
   return (
     <StepWrapper>
@@ -65,14 +104,13 @@ export const Step2 = ({
         <SecretInputBox
           width=""
           state="default"
-          placeholder="비밀번호 입력"
-          guide=""
+          placeholder="영문, 숫자, 특수문자를 포함한 8자리 이상"
+          guide={passwordError}
           value={formData.password}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
+          onChange={handlePasswordChange}
         />
       </InputWrapper>
+
       <InputWrapper>
         <div>
           <span>비밀번호 재입력</span>
@@ -81,10 +119,10 @@ export const Step2 = ({
         <SecretInputBox
           width=""
           state="default"
-          placeholder="비밀번호 재입력"
-          guide=""
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          placeholder="비밀번호를 다시 입력하세요"
+          guide={confirmError}
+          value={passwordConfirm}
+          onChange={handlePasswordConfirmChange}
         />
       </InputWrapper>
 
@@ -139,15 +177,16 @@ export const Step2 = ({
           </AgreeCheck>
         </AgreeCheckContainer>
       </AgreeWrapper>
+
       <ButtonContainer>
         <Button
-          variant={isRequiredChecked ? 'blue' : 'disabled'}
+          variant={isFormValid ? 'blue' : 'disabled'}
           height="52px"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
-            if (isRequiredChecked && onNext) onNext();
+            if (isFormValid && onNext) onNext();
           }}
-          disabled={!isRequiredChecked}
+          disabled={!isFormValid}
         >
           다음 단계로 이동
         </Button>

@@ -6,6 +6,7 @@ export const handleSendAuthNumber = async (
   setShowVerificationInput: React.Dispatch<React.SetStateAction<boolean>>,
   setAuthSent: React.Dispatch<React.SetStateAction<boolean>>,
   setRemainingTime: React.Dispatch<React.SetStateAction<number>>,
+  setAuthButtonText: React.Dispatch<React.SetStateAction<string>>,
   apiUrl: string,
 ) => {
   try {
@@ -13,8 +14,8 @@ export const handleSendAuthNumber = async (
 
     setShowVerificationInput(true);
     setAuthSent(true);
-
-    alert('인증번호가 발송되었습니다.');
+    setAuthButtonText('인증번호 전송');
+    setRemainingTime(180);
 
     const timer = setInterval(() => {
       setRemainingTime((prevTime) => {

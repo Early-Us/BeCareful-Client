@@ -18,6 +18,13 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
   const [, setAuthSent] = useState(false);
   const [genderInput, setGenderInput] = useState('');
   const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const [, setAuthButtonText] = useState('인증번호 전송');
+
+  useEffect(() => {
+    if (remainingTime === 0) {
+      setAuthButtonText('재전송');
+    }
+  }, [remainingTime]);
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
@@ -49,7 +56,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           <span className="highlight"> *</span>
         </div>
         <PlainInputBox
-          width="320px"
+          width=""
           state="default"
           placeholder="이름"
           guide=""
@@ -118,6 +125,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
                 setShowVerificationInput,
                 setAuthSent,
                 setRemainingTime,
+                setAuthButtonText,
                 apiUrl,
               )
             }
