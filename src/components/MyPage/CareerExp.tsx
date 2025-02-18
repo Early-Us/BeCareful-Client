@@ -123,19 +123,50 @@ export const CareerExp = ({ title }: CareerExpProps) => {
         )}
       </ButtonWrapper>
 
-      <Border />
-      <Button
-        variant={experiences[0].workInstitution === '' ? 'disabled' : 'blue'}
-        width=""
-        height="52px"
-        style={{ marginTop: '20px' }}
-        onClick={() => {
-          putData();
-          navigate('/mypage');
-        }}
-      >
-        경력서 등록하기
-      </Button>
+      {experiences.length > 1 ? (
+        <>
+          <Border />
+          <Button
+            variant={
+              experiences[0].workInstitution === '' ? 'disabled' : 'blue'
+            }
+            width=""
+            height="52px"
+            style={{ margin: '20px 0px' }}
+            onClick={() => {
+              putData();
+              navigate('/mypage');
+            }}
+          >
+            경력서 등록하기
+          </Button>
+        </>
+      ) : (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            left: '20px',
+            right: '20px',
+          }}
+        >
+          <Border />
+          <Button
+            variant={
+              experiences[0].workInstitution === '' ? 'disabled' : 'blue'
+            }
+            width=""
+            height="52px"
+            style={{ marginTop: '20px' }}
+            onClick={() => {
+              putData();
+              navigate('/mypage');
+            }}
+          >
+            경력서 등록하기
+          </Button>
+        </div>
+      )}
     </Container>
   );
 };
