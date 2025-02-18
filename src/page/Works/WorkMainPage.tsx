@@ -4,7 +4,7 @@ import { WorkFilterContent } from '@/components/Works/WorkMain/WorkFilterContet'
 import { WorkMainHeader } from '@/components/Works/WorkMain/WorkMainHeader';
 import WorkApplys from '@/components/Works/WorkMain/WorkApplys';
 import { styled } from 'styled-components';
-import { RecruitCard } from '@/components/common/RecruitCard/RecruitCard';
+import { RecruitmentList } from '@/components/Works/RecruitCard/RecruitmentList';
 
 export const WorkMainPage = () => {
   return (
@@ -22,26 +22,7 @@ export const WorkMainPage = () => {
       <GapContainer />
       <WorkFilterContent />
       <CardContainer>
-        <RecruitCard
-          chipState="fail"
-          centerName="행복사랑요양센터"
-          description="방문요양/1일 9시간씩 주6일 모집"
-          tags={['인기공고', '시급 TOP']}
-          careItems={['식사보조', '이동보조']}
-          workingDays={['목', '일']}
-          workingHours="15:00~19:00"
-          hourlyRate="12,000원"
-        />
-        <RecruitCard
-          chipState="fail"
-          centerName="행복사랑요양센터"
-          description="방문요양/1일 9시간씩 주6일 모집"
-          tags={['인기공고', '시급 TOP']}
-          careItems={['식사보조', '이동보조']}
-          workingDays={['목', '일']}
-          workingHours="15:00~19:00"
-          hourlyRate="12,000원"
-        />
+        <RecruitmentList />
       </CardContainer>
 
       <TabBar />

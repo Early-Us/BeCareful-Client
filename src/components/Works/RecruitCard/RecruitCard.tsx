@@ -1,8 +1,8 @@
-import { RecruitChip } from '@/components/common/RecruitCard/RecruitChip';
+import { RecruitChip } from '@/components/Works/RecruitCard/RecruitChip';
 import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
 import { styled } from 'styled-components';
 
-interface RecruitCardProps {
+export interface RecruitCardProps {
   centerName: string;
   description: string;
   tags: string[];
@@ -11,6 +11,7 @@ interface RecruitCardProps {
   workingHours: string;
   hourlyRate: string;
   chipState: 'pass' | 'fail';
+  recruitmentId: string;
 }
 
 export const RecruitCard = ({
