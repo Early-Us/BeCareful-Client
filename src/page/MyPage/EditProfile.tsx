@@ -18,13 +18,30 @@ const EditProfile = () => {
 
   const [showVerificationInput, setShowVerificationInput] = useState(false);
 
-  const [certificateList, setCertificateList] = useState([
+  const [certificateList, setCertificateList] = useState<
+    {
+      type: string;
+      number: string;
+      component: React.FC<{
+        initialType: string;
+        onChange: (data: {
+          level?: string;
+          type?: string;
+          number: string;
+        }) => void;
+      }>;
+      onChange: (data: {
+        level?: string;
+        type?: string;
+        number: string;
+      }) => void;
+    }[]
+  >([
     {
       type: '요양보호사',
       number: '',
       component: CareGiverQualificationCard,
-      onChange: (data: any) =>
-        handleCertificateChange('caregiverCertificate', data),
+      onChange: (data) => handleCertificateChange('caregiverCertificate', data),
     },
   ]);
 
@@ -42,14 +59,11 @@ const EditProfile = () => {
     setIsCarChecked((prevChecked) => !prevChecked);
   };
 
-  const handleCertificateChange = (key: string, data: any) => {
-    // setFormData((prev) => ({
-    //   ...prev,
-    //   [key]: {
-    //     grade: data.level === '2급' ? 'SECOND' : 'FIRST',
-    //     certificateNumber: data.number,
-    //   },
-    // }));
+  const handleCertificateChange = (
+    key: string,
+    data: { level?: string; number: string },
+  ) => {
+    console.log(`자격증 업데이트: ${key}`, data);
   };
 
   const handleAddCertificate = (type: string) => {
@@ -70,21 +84,34 @@ const EditProfile = () => {
         type,
         number: '',
         component,
-        onChange: (data: any) => handleCertificateChange(key, data),
+        onChange: (data) => handleCertificateChange(key, data),
       },
     ]);
 
     handleCloseModal();
   };
 
-  const [currentPassword, setCurrentPassword] = useState('');
+  // const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newCheck, setNewCheck] = useState('');
-  const [isMatch, setIsMatch] = useState(true);
+  // const [isMatch, setIsMatch] = useState(true);
+  const [, setIsMatch] = useState(true);
   const isValidPassword = (password: string) => {
     const regex =
       /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
     return regex.test(password);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setNewPassword(value);
+    setIsMatch(value === newCheck);
+  };
+
+  const handleCheckChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setNewCheck(value);
+    setIsMatch(newPassword === value);
   };
 
   return (
@@ -188,9 +215,9 @@ const EditProfile = () => {
           width=""
           guide=""
           placeholder="현재 비밀번호 입력"
-          onChange={(e) => {
-            setCurrentPassword(e.target.value);
-          }}
+          // onChange={(e) => {
+          //   setCurrentPassword(e.target.value);
+          // }}
         />
         <InputBox
           type="password"
@@ -204,10 +231,7 @@ const EditProfile = () => {
               : ''
           }
           placeholder="새 비밀번호 입력"
-          onChange={(e) => {
-            setNewPassword(e.target.value);
-            setIsMatch(e.target.value === newCheck);
-          }}
+          onChange={handlePasswordChange}
         />
         <InputBox
           type="password"
@@ -221,16 +245,17 @@ const EditProfile = () => {
               : ''
           }
           placeholder="새 비밀번호 재입력"
-          onChange={(e) => {
-            setNewCheck(e.target.value);
-            setIsMatch(newPassword === newCheck);
-          }}
+          onChange={handleCheckChange}
         />
       </Password>
 
       <Border />
       <Button
-        variant={newPassword && newPassword === newCheck ? 'blue' : 'disabled'}
+        variant={
+          isValidPassword(newPassword) && newPassword === newCheck
+            ? 'blue'
+            : 'disabled'
+        }
         width=""
         height="52px"
         style={{ margin: '20px 0px' }}
