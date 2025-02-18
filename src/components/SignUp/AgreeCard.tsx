@@ -25,16 +25,15 @@ const CardContainer = styled.div<AgreeCardProps>`
   width: 100%;
   display: flex;
   height: 52px;
-  padding: 24px 16px;
+  padding: 24px 12px;
   box-sizing: border-box;
   align-items: center;
   flex-direction: row;
   gap: 8px;
 
   border-radius: 12px;
-  border: 1px solid
-    ${({ theme, pressed }) =>
-      pressed ? theme.colors.mainBlue : theme.colors.gray100};
+  border: ${({ theme, pressed }) =>
+    `${pressed ? '2px' : '1px'} solid ${pressed ? theme.colors.mainBlue : theme.colors.gray100}`};
 
   background-color: ${({ theme, pressed }) =>
     pressed ? theme.colors.subBlue : theme.colors.white};

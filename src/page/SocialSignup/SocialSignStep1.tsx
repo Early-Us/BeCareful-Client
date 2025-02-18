@@ -1,17 +1,19 @@
-import { StepProps } from '@/type/SignUp';
-import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
+import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
+import { SocialStepProps } from '@/type/SocialSignUp';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
-import { ReactComponent as ResidentCircle } from '@/assets/icons/signup/ResidentCircle.svg';
-import { Button } from '@/components/common/Button/Button';
-import { useState, useEffect } from 'react';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
-import {
-  handleSendAuthNumber,
-  handleVerifyAuthNumber,
-} from '@/page/SignUp/Step1Function';
+import { Button } from '@/components/common/Button/Button';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { handleVerifyAuthNumber } from '@/page/SignUp/Step1Function';
 
-export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
+export const SocialStep1 = ({
+  formSocialData,
+  setFormSocialData,
+  onPrevious,
+  onNext,
+}: SocialStepProps) => {
   const [authNumber, setAuthNumber] = useState('');
   const [showVerificationInput, setShowVerificationInput] = useState(false);
   const [remainingTime, setRemainingTime] = useState(180);
@@ -25,15 +27,16 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
       setAuthButtonText('재전송');
     }
   }, [remainingTime]);
+
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (/^[0-9]{0,1}$/.test(value)) {
       setGenderInput(value);
       if (value === '1' || value === '3') {
-        setFormData({ ...formData, gender: 'MALE' });
+        setFormSocialData({ ...formSocialData, gender: 'MALE' });
       } else if (value === '2' || value === '4') {
-        setFormData({ ...formData, gender: 'FEMALE' });
+        setFormSocialData({ ...formSocialData, gender: 'FEMALE' });
       }
     }
   };
@@ -44,84 +47,126 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
     }
   }, [remainingTime]);
 
+  const handleSendAuthNumber = async (
+    phoneNumber: string,
+    setShowVerificationInput: React.Dispatch<React.SetStateAction<boolean>>,
+    setAuthSent: React.Dispatch<React.SetStateAction<boolean>>,
+    setRemainingTime: React.Dispatch<React.SetStateAction<number>>,
+    setAuthButtonText: React.Dispatch<React.SetStateAction<string>>,
+    apiUrl: string,
+  ) => {
+    try {
+      await axios.post(`${apiUrl}/sms/send-auth-number`, { phoneNumber });
+
+      setShowVerificationInput(true);
+      setAuthSent(true);
+      setAuthButtonText('인증번호 전송');
+      setRemainingTime(180);
+
+      const timer = setInterval(() => {
+        setRemainingTime((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(timer);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } catch (error) {
+      console.error('인증번호 전송 실패:', error);
+      alert('인증번호 전송에 실패했습니다.');
+    }
+  };
+
   return (
     <StepWrapper>
-      <IconContainer>
+      <IconContainer onClick={onPrevious}>
         <IconArrowLeft />
       </IconContainer>
       <Header>기본 정보를 입력하세요</Header>
-      <InputWrapper>
-        <div>
+      <NameContainer>
+        <div className="name">
           <span>이름</span>
-          <span className="highlight"> *</span>
+          <span className="highlight">*</span>
         </div>
+
         <PlainInputBox
-          width="320px"
           state="default"
           placeholder="이름"
           guide=""
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-      </InputWrapper>
-      <InputWrapper>
-        <div>
+          width={''}
+          value={formSocialData.name}
+          onChange={(e) =>
+            setFormSocialData({ ...formSocialData, name: e.target.value })
+          }
+        ></PlainInputBox>
+      </NameContainer>
+      <NameContainer>
+        <div className="name">
           <span>주민등록번호</span>
-          <span className="highlight"> *</span>
+          <span className="highlight">*</span>
         </div>
-        <ResidentWrapper>
+        <ResidentInputContainer>
           <PlainInputBox
-            width="148px"
             state="default"
             placeholder="주민등록번호"
             guide=""
-            value={formData.birthDate}
+            width="148px"
+            value={formSocialData.birthDate}
             onChange={(e) =>
-              setFormData({ ...formData, birthDate: e.target.value })
+              setFormSocialData({
+                ...formSocialData,
+                birthDate: e.target.value,
+              })
             }
-          />
-          -
+          ></PlainInputBox>
+          <span>-</span>
           <SecretInputBox
-            width="52px"
             state="default"
-            placeholder=""
+            placeholder=" "
             guide=""
+            width={'52px'}
             value={genderInput}
             masked={true}
             onChange={handleGenderChange}
-          />
-          <IconWrapper>
-            <ResidentCircle />
-          </IconWrapper>
-        </ResidentWrapper>
-      </InputWrapper>
-      <InputWrapper>
-        <div>
+          ></SecretInputBox>
+          <CircleWrapper>
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} />
+            ))}
+          </CircleWrapper>
+        </ResidentInputContainer>
+      </NameContainer>
+      <NameContainer>
+        <div className="name">
           <span>휴대전화</span>
-          <span className="highlight"> *</span>
+          <span className="highlight">*</span>
         </div>
         <ResidentWrapper>
           <PlainInputBox
-            width="192px"
+            width=""
             state="default"
             placeholder="휴대전화 번호"
             guide=""
-            value={formData.phoneNumber}
+            value={formSocialData.phoneNumber}
             onChange={(e) =>
-              setFormData({ ...formData, phoneNumber: e.target.value })
+              setFormSocialData({
+                ...formSocialData,
+                phoneNumber: e.target.value,
+              })
             }
           />
           <Button
             variant="blue2"
             width="120px"
-            height="56px"
+            height="54px"
             style={{
               minWidth: '120px',
               flexShrink: 0,
             }}
             onClick={() =>
               handleSendAuthNumber(
-                formData.phoneNumber,
+                formSocialData.phoneNumber,
                 setShowVerificationInput,
                 setAuthSent,
                 setRemainingTime,
@@ -133,7 +178,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
             인증번호 전송
           </Button>
         </ResidentWrapper>
-      </InputWrapper>
+      </NameContainer>
       {showVerificationInput && (
         <ResidentWrapper>
           <InputInner>
@@ -147,7 +192,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   handleVerifyAuthNumber(
-                    formData.phoneNumber,
+                    formSocialData.phoneNumber,
                     authNumber,
                     apiUrl,
                     onNext,
@@ -159,7 +204,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
                   style={{
                     position: 'absolute',
                     right: '42px',
-                    top: '22px',
+                    top: '24px',
                     whiteSpace: 'nowrap',
                     color: 'red',
                     fontSize: '14px',
@@ -178,7 +223,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           variant="blue"
           height="52px"
           onClick={() => {
-            console.log('현재 입력된 formData:', formData);
+            console.log('현재 입력된 formSocialData:', formSocialData);
             if (onNext) onNext();
           }}
         >
@@ -188,11 +233,10 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
     </StepWrapper>
   );
 };
-
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
 `;
@@ -200,40 +244,35 @@ const StepWrapper = styled.div`
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  box-sizing: border-box;
   align-items: center;
   padding: 0px 20px;
+  box-sizing: border-box;
   height: 56px;
   width: 100%;
 `;
 
 const Header = styled.div`
   display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
   width: 100%;
-  gap: 8px;
-  align-items: flex-start;
   padding: 16px 20px 0px 20px;
+  align-items: flex-start;
+  box-sizing: border-box;
+
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.gray900};
-  .highlight {
-    font-size: ${({ theme }) => theme.typography.fontSize.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-    color: ${({ theme }) => theme.colors.gray500};
-  }
 `;
 
-const InputWrapper = styled.div`
+const NameContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  width: 100%;
   padding: 16px 20px 0px 20px;
+  box-sizing: border-box;
+
+  align-items: flex-start;
+  flex-direction: column;
 
   gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
 
   font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
@@ -244,6 +283,36 @@ const InputWrapper = styled.div`
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     color: ${({ theme }) => theme.colors.mainBlue};
   }
+
+  .name {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+  }
+`;
+
+const ResidentInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+`;
+
+const CircleWrapper = styled.div`
+  display: flex;
+  gap: 4px;
+  max-width: 80px;
+
+  & > div {
+    width: 10px;
+    height: 10px;
+    background-color: ${({ theme }) => theme.colors.gray600};
+    border-radius: 50%;
+  }
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const ResidentWrapper = styled.div`
@@ -255,11 +324,14 @@ const ResidentWrapper = styled.div`
   flex-grow: 1;
 `;
 
-const IconWrapper = styled.div`
+const InputInner = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-left: 8px;
+  width: 100%;
+
+  margin-top: 12px;
+  padding: 0px 20px;
 `;
 
 const ButtonContainer = styled.div`
@@ -272,14 +344,4 @@ const ButtonContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   box-sizing: border-box;
   width: 100%;
-`;
-
-const InputInner = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-
-  margin-top: 12px;
-  padding: 0px 20px;
 `;

@@ -73,6 +73,7 @@ const InputDefault = styled.input<{ state: string; masked?: boolean }>`
 
   text-align: left;
   align-items: center;
+
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   width: 100%;

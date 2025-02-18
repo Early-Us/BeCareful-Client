@@ -9,4 +9,14 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  /*
+  server: {
+    proxy: {
+      '/apis': {
+        target: 'http://apis.data.go.kr',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/apis/, ''),
+      },
+    },
+  },*/
 });

@@ -8,6 +8,7 @@ import SignUpForm from '@/page/SignUp/SignUpForm';
 import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { ApplyPage } from '@/page/Apply/ApplyPage';
+import SocialSignUpForm from '@/page/SocialSignup/SocialSignUpForm';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
 
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/signup/caregiver" element={<SignUpForm />} />
+      <Route path="/signup/social" element={<SocialSignUpForm />} />
 
       <Route path="/work" element={<WorkMainPage />} />
       <Route path="/apply" element={<ApplyPage />} />
