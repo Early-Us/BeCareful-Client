@@ -222,12 +222,16 @@ const MyPage = () => {
           <SectionWrapper>
             <TitleLabel>일자리 신청서</TitleLabel>
             <WorkApply
-              fix={data.workApplicationLastModifyDate}
-              apply={data.isWorkApplicationActive}
+              fix={data ? data.workApplicationLastModifyDate : ''}
+              apply={data ? data.isWorkApplicationActive : false}
               caretype={formattedCareTypes}
               day={formattedDay}
               time={formattedTime}
-              pay={data.workApplicationInfo.workSalaryAmount}
+              pay={
+                data && data.workApplicationInfo
+                  ? data.workApplicationInfo.workSalaryAmount
+                  : 0
+              }
               location={formattedLocation}
             />
             <Button variant="blue2" width="" height="52px">
