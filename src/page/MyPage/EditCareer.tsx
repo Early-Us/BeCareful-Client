@@ -74,6 +74,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-top: 16px;
 `;
 
 const InputFieldLabelWrapper = styled.div`
@@ -127,5 +128,5 @@ const TabWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 16px;
-  margin-top: 8px;
+  margin-top: 16px;
 `;
