@@ -362,6 +362,7 @@ const TitleDetailImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
 `;
 
 const SectionWrapper = styled.div`
