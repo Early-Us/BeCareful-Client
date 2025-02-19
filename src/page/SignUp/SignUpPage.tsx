@@ -25,9 +25,9 @@ export const SignUpPage = () => {
   };
 
   return (
-    <div>
+    <FormWrapper>
       <SignUpPageContainer>
-        <IconContainer>
+        <IconContainer onClick={() => navigate('/login')}>
           <IconArrowLeft />
         </IconContainer>
         <Header>
@@ -41,8 +41,7 @@ export const SignUpPage = () => {
           <div onClick={() => handleCardClick('caregiver')}>
             <CareGiverCard pressed={pressed === 'caregiver'} />
           </div>
-        </CardContainer>
-        <CardContainer>
+
           <div onClick={() => handleCardClick('social')}>
             <SocialCard pressed={pressed === 'social'} />
           </div>
@@ -58,21 +57,33 @@ export const SignUpPage = () => {
           </Button>
         </ButtonContainer>
       </SignUpPageContainer>
-    </div>
+    </FormWrapper>
   );
 };
+
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin: 24px 16px auto 16px;
+`;
 
 const SignUpPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 24px 16px auto 16px;
+  width: 100%;
+  padding-bottom: 135px;
+  // margin: 24px 16px auto 16px;
 `;
 
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+  box-sizing: border-box;
   align-items: center;
   padding: 0px 20px;
   height: 56px;
@@ -85,6 +96,7 @@ const Header = styled.div`
   width: 100%;
   gap: 8px;
   align-items: flex-start;
+  box-sizing: border-box;
   padding: 16px 20px 0px 20px;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
@@ -98,9 +110,12 @@ const Header = styled.div`
 
 const CardContainer = styled.div`
   display: flex;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
   padding: 20px 20px 0px 20px;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px;
 `;
 
 const ButtonContainer = styled.div`
@@ -110,6 +125,7 @@ const ButtonContainer = styled.div`
   position: fixed;
   bottom: 0;
   padding: 20px;
+  background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   box-sizing: border-box;
   width: 100%;
