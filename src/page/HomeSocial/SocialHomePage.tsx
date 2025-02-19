@@ -52,7 +52,7 @@ const SocialHomePage = () => {
         left={
           <NavLeft
             onClick={() => {
-              navigate('/home');
+              navigate('/home/social');
             }}
           >
             <Logo />
