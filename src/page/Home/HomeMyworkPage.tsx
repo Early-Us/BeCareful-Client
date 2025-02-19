@@ -1,15 +1,43 @@
 import { Button } from '@/components/common/Button/Button';
 import HomeWorkCard from '@/components/Home/HomeWorkCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as HomeJob } from '@/assets/icons/home/HomeJob.svg';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { NavBar } from '@/components/common/NavBar';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const HomeMyworkPage = () => {
   const [jobs, setJobs] = useState(true);
   const navigate = useNavigate();
+
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const getData = async () => {
+    let accessToken;
+
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    try {
+      const response = await axios.get(`${apiBaseURL}/caregiver/my`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setJobs(response.data);
+      console.log(response.data);
+    } catch (e) {
+      console.log('마이페이지 에러: ', e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Container jobs={jobs}>
@@ -28,8 +56,6 @@ const HomeMyworkPage = () => {
       />
       {jobs ? (
         <JobCardWrapper>
-          {/* search */}
-          <div>search</div>
           <CardWrapper>
             <HomeWorkCard />
             <HomeWorkCard />

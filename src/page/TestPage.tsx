@@ -186,7 +186,7 @@ export const TestPage = () => {
         caretype={'식사보조'}
         day={'화, 수, 토'}
         time={'오전, 오후'}
-        pay={'20,200원'}
+        pay={20200}
         location={'동대문구 전체'}
       />
     </div>

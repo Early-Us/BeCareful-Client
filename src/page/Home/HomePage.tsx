@@ -2,7 +2,7 @@ import { TabBar } from '@/components/common/TabBar';
 import axios from 'axios';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
 import { ReactComponent as Chat } from '@/assets/icons/home/Chat.svg';
-import { ReactComponent as ChatNew } from '@/assets/icons/home/ChatNew.svg';
+// import { ReactComponent as ChatNew } from '@/assets/icons/home/ChatNew.svg';
 import { ReactComponent as Person } from '@/assets/icons/home/HomePerson.svg';
 import { NavBar } from '@/components/common/NavBar';
 import styled from 'styled-components';
@@ -25,16 +25,16 @@ interface CaregiverData {
   applicationCount: number;
   recruitmentCount: number;
   workScheduleList: SceheduleData[];
+  isWorking: boolean;
 }
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   // 새로운 채팅 존재 여부
-  const [chatNew, setChatNew] = useState(false);
-  // 매칭된 어르신 존재 여부
-  const [matching, setMatching] = useState(true);
+  // const [chatNew, setChatNew] = useState(false);
   const [data, setData] = useState<CaregiverData>();
+  const [apply, setApply] = useState(false);
 
   const getTodayDate = () => {
     const today = new Date();
@@ -73,6 +73,18 @@ const HomePage = () => {
     } catch (e) {
       console.log('요양보호사 로그인 에러: ', e);
     }
+
+    try {
+      const response = await axios.get(`${apiBaseURL}/caregiver/my`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(response.data);
+      setApply(response.data.isWorkApplicationActive);
+    } catch (e) {
+      console.log('요양보호사 로그인 에러: ', e);
+    }
   };
 
   useEffect(() => {
@@ -91,12 +103,17 @@ const HomePage = () => {
             <Logo />
           </NavLeft>
         }
-        right={<NavRight>{chatNew ? <ChatNew /> : <Chat />}</NavRight>}
+        // right={<NavRight>{chatNew ? <ChatNew /> : <Chat />}</NavRight>}
+        right={
+          <NavRight>
+            <Chat />
+          </NavRight>
+        }
         color="blue"
       />
       <MainWrapper>
         <LabelWrapper>
-          {matching ? (
+          {data?.isWorking ? (
             <Name>
               {data?.name}님,
               <br />
@@ -116,9 +133,9 @@ const HomePage = () => {
         </PersonWrapper>
       </MainWrapper>
       <HomeMainContent
-        matching={matching}
+        matching={data ? data.isWorking : false}
         schedule={data ? data.workScheduleList : []}
-        apply={data ? data.recruitmentCount != 0 : false}
+        apply={apply}
         notice={data ? data.applicationCount : 0}
         status={data ? data.recruitmentCount : 0}
       />
