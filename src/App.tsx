@@ -16,6 +16,7 @@ import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { ApplyPage } from '@/page/Apply/ApplyPage';
 import SocialSignUpForm from '@/page/SocialSignup/SocialSignUpForm';
+import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
 
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
 
       <Route path="/work/:recruitmentId" element={<WorkDetailPage />} />
       <Route path="/workdetail" element={<WorkDetailPage />} />
+
+      <Route path="/matching" element={<MatchingApplyPage />} />
     </Routes>
   );
 }
