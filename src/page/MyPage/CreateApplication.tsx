@@ -303,10 +303,15 @@ const CreateApplication = () => {
               )}
             </AreasWrapper>
             <Button
-              variant="blue"
+              variant={
+                selectedCity && selectedGu && selectedDong ? 'blue' : 'disabled'
+              }
               width=""
               height="52px"
               onClick={handleSelectBtn}
+              disabled={
+                selectedCity && selectedGu && selectedDong ? false : true
+              }
             >
               선택하기
             </Button>
