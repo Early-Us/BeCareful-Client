@@ -7,9 +7,18 @@ import { TimeDropdown } from '@/components/common/Dropdown/TimeDropdown';
 import { MatchingCareCard } from '@/page/Matching/MatchingCareCard';
 import { ApplicationDropdown } from '@/components/MyPage/ApplicationDropdown';
 import { Button } from '@/components/common/Button/Button';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const MatchingElderPage = () => {
   const [selectDay, setSelectDay] = useState<string[]>([]);
+  const [title, setTitle] = useState('');
+  const [startTime, setStartTime] = useState('00:00');
+  const [endTime, setEndTime] = useState('00:00');
+  const [careTypes, setCareTypes] = useState<string[]>([]);
+  const [workSalaryAmount, setWorkSalaryAmount] = useState(0);
+  const [memoContent, setMemoContent] = useState('');
+
   const handleSelectDay = (id: string) => {
     setSelectDay((prev) => {
       if (prev.includes(id)) {
@@ -19,8 +28,43 @@ export const MatchingElderPage = () => {
       }
     });
   };
-  const [textCount, setTextCount] = useState(0);
-  const [memoContent, setMemoContent] = useState('');
+
+  const handleCareTypeChange = (careType: string) => {
+    setCareTypes((prev) => {
+      if (prev.includes(careType)) {
+        return prev.filter((type) => type !== careType);
+      } else {
+        return [...prev, careType];
+      }
+    });
+  };
+
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+
+  const handleSubmit = async () => {
+    const payload = {
+      elderlyId: 1,
+      title,
+      workDays: selectDay.map((day) => dayAPI[day as keyof typeof dayAPI]),
+      workStartTime: startTime,
+      workEndTime: endTime,
+      careTypes,
+      workSalaryType: 'HOUR',
+      workSalaryAmount,
+      description: memoContent,
+    };
+    const token = sessionStorage.getItem('accessToken');
+    try {
+      const response = await axios.post(`${apiUrl}/recruitment`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('매칭 공고 등록 성공:', response.data);
+    } catch (error) {
+      console.error('매칭 공고 등록 실패:', error);
+    }
+  };
 
   const days: (keyof typeof dayAPI)[] = [
     '월',
@@ -32,7 +76,6 @@ export const MatchingElderPage = () => {
     '일',
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dayAPI = {
     월: 'MONDAY',
     화: 'TUESDAY',
@@ -43,10 +86,21 @@ export const MatchingElderPage = () => {
     일: 'SUNDAY',
   };
 
+  const isFormValid =
+    title.trim() !== '' &&
+    selectDay.length > 0 &&
+    startTime !== '' &&
+    endTime !== '' &&
+    careTypes.length > 0 &&
+    workSalaryAmount > 0;
+
+  const navigate = useNavigate();
   return (
     <Container>
       <TopContainer>
-        <IconArrowLeft />
+        <IconContainer onClick={() => navigate('/matching')}>
+          <IconArrowLeft />
+        </IconContainer>
         매칭 등록
         <HideIconContainer />
       </TopContainer>
@@ -55,13 +109,14 @@ export const MatchingElderPage = () => {
           <span>제목</span>
           <span className="highlight">*</span>
         </div>
-
         <PlainInputBox
           state="default"
           placeholder="공고 제목을 입력하세요."
-          guide=""
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           width="100%"
-        ></PlainInputBox>
+          guide={''}
+        />
       </TitleContainer>
       <SectionWrapper>
         <SectionTitleWrapper>
@@ -89,9 +144,17 @@ export const MatchingElderPage = () => {
           <span className="highlight">*</span>
         </div>
         <TimeBoxContainer>
-          <TimeDropdown width="50%" />
+          <TimeDropdown
+            width="50%"
+            value={startTime || '00:00'}
+            onChange={(time: string) => setStartTime(time)}
+          />
           ~
-          <TimeDropdown width="50%" />
+          <TimeDropdown
+            width="50%"
+            value={endTime || '00:00'}
+            onChange={(time: string) => setEndTime(time)}
+          />
         </TimeBoxContainer>
       </TitleContainer>
       <SectionWrapper>
@@ -103,17 +166,20 @@ export const MatchingElderPage = () => {
         <MatchingCareCard
           title="식사보조"
           description="스스로 식사가능, 경관식 보조"
-          initialChecked={true}
+          initialChecked={false}
+          onChange={() => handleCareTypeChange('식사보조')}
         />
         <MatchingCareCard
           title="배변보조"
           description="가끔 대소변 실수 시 도움, 기저귀 케어 필요"
           initialChecked={false}
+          onChange={() => handleCareTypeChange('배변보조')}
         />
         <MatchingCareCard
           title="일상생활"
           description="청소, 빨래보조"
           initialChecked={false}
+          onChange={() => handleCareTypeChange('일상생활')}
         />
       </SectionWrapper>
       <SectionWrapper>
@@ -127,7 +193,8 @@ export const MatchingElderPage = () => {
             <PayField
               id="pay"
               placeholder="금액입력"
-              onChange={(e) => console.log(e.target.value)}
+              value={workSalaryAmount}
+              onChange={(e) => setWorkSalaryAmount(Number(e.target.value))}
             />
             <PayCount>원</PayCount>
           </PayFieldWrapper>
@@ -143,17 +210,20 @@ export const MatchingElderPage = () => {
             placeholder="참고할 사항을 입력하세요."
             value={memoContent}
             maxLength={200}
-            onChange={(e) => {
-              setTextCount(e.target.value.length);
-              setMemoContent(e.target.value);
-            }}
+            onChange={(e) => setMemoContent(e.target.value)}
           />
-          <MemoCount>{textCount}/200</MemoCount>
+          <MemoCount>{memoContent.length}/200</MemoCount>
         </MemoFieldWrapper>
       </SectionWrapper>
       <Border />
-      <Button variant="blue" height="52px" style={{ margin: '20px 0px' }}>
-        다음 단계로 이동
+      <Button
+        variant={isFormValid ? 'blue' : 'disabled'}
+        height="52px"
+        style={{ margin: '20px 0px' }}
+        onClick={handleSubmit}
+        disabled={!isFormValid}
+      >
+        매칭 등록하기
       </Button>
     </Container>
   );
@@ -357,4 +427,10 @@ const Border = styled.div`
   background: ${({ theme }) => theme.colors.gray50};
   margin-left: -20px;
   margin-top: 40px;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

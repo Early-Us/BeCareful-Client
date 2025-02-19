@@ -3,11 +3,19 @@ import styled from 'styled-components';
 
 interface TimeDropdownProps {
   width: string;
+  value: string;
+  onChange: (e: string) => void;
 }
 
-export const TimeDropdown = ({ width }: TimeDropdownProps) => {
-  const [selectedHour, setSelectedHour] = useState('00');
-  const [selectedMinute, setSelectedMinute] = useState('00');
+export const TimeDropdown = ({
+  width,
+  value = '00:00',
+  onChange,
+}: TimeDropdownProps) => {
+  const [selectedHour, setSelectedHour] = useState(value.split(':')[0] || '00');
+  const [selectedMinute, setSelectedMinute] = useState(
+    value.split(':')[1] || '00',
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const hours = Array.from({ length: 24 }, (_, i) =>
@@ -33,12 +41,20 @@ export const TimeDropdown = ({ width }: TimeDropdownProps) => {
     }
   }, [selectedHour, selectedMinute]);
 
+  const handleHourChange = (hour: string) => {
+    setSelectedHour(hour);
+    onChange(`${hour}:${selectedMinute}`);
+  };
+
+  const handleMinuteChange = (minute: string) => {
+    setSelectedMinute(minute);
+    onChange(`${selectedHour}:${minute}`);
+  };
+
   return (
     <DropdownContainer width={width}>
       <TimeDropdownHeader onClick={() => setIsOpen(!isOpen)}>
-        <TimeDropdownLabel>
-          {selectedHour}시 {selectedMinute}분
-        </TimeDropdownLabel>
+        <TimeDropdownLabel>{`${selectedHour}:${selectedMinute}`}</TimeDropdownLabel>
       </TimeDropdownHeader>
       {isOpen && (
         <DropdownMenu>
@@ -48,11 +64,11 @@ export const TimeDropdown = ({ width }: TimeDropdownProps) => {
                 <React.Fragment key={hour}>
                   <TimeItem
                     selected={hour === selectedHour}
-                    onClick={() => setSelectedHour(hour)}
+                    onClick={() => handleHourChange(hour)}
                   >
                     {hour}
                   </TimeItem>
-                  {index < hours.length - 1 && <Divider>-</Divider>}{' '}
+                  {index < hours.length - 1 && <Divider> </Divider>}
                 </React.Fragment>
               ))}
             </ScrollableColumn>
@@ -62,11 +78,11 @@ export const TimeDropdown = ({ width }: TimeDropdownProps) => {
                 <React.Fragment key={minute}>
                   <TimeItem
                     selected={minute === selectedMinute}
-                    onClick={() => setSelectedMinute(minute)}
+                    onClick={() => handleMinuteChange(minute)}
                   >
                     {minute}
                   </TimeItem>
-                  {index < minutes.length - 1 && <Divider>-</Divider>}{' '}
+                  {index < minutes.length - 1 && <Divider> </Divider>}
                 </React.Fragment>
               ))}
             </ScrollableColumn>
@@ -103,7 +119,7 @@ const TimeDropdownHeader = styled.div`
 const TimeDropdownLabel = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme }) => theme.colors.gray300};
+  color: ${({ theme }) => theme.colors.gray900};
 `;
 
 const DropdownMenu = styled.div`

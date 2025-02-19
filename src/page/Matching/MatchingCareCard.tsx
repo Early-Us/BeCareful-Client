@@ -6,16 +6,21 @@ interface MatchingCareCardProps {
   title: string;
   description: string;
   initialChecked: boolean;
+  onChange: (checked: boolean) => void;
 }
 
 export const MatchingCareCard = ({
   title,
   description,
   initialChecked,
+  onChange,
 }: MatchingCareCardProps) => {
   const [isClicked, setIsClicked] = useState(initialChecked);
+
   const handleClick = () => {
-    setIsClicked((prev) => !prev);
+    const newCheckedState = !isClicked;
+    setIsClicked(newCheckedState);
+    onChange(newCheckedState);
   };
 
   return (
