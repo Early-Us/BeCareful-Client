@@ -2,7 +2,6 @@ import { StepProps } from '@/type/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
-import { ReactComponent as ResidentCircle } from '@/assets/icons/signup/ResidentCircle.svg';
 import { Button } from '@/components/common/Button/Button';
 import { useState, useEffect } from 'react';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
@@ -10,6 +9,7 @@ import {
   handleSendAuthNumber,
   handleVerifyAuthNumber,
 } from '@/page/SignUp/Step1Function';
+import { useNavigate } from 'react-router-dom';
 
 export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
   const [authNumber, setAuthNumber] = useState('');
@@ -44,11 +44,14 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
     }
   }, [remainingTime]);
 
+  const navigate = useNavigate();
+
   return (
     <StepWrapper>
-      <IconContainer>
+      <IconContainer onClick={() => navigate('/signup')}>
         <IconArrowLeft />
       </IconContainer>
+
       <Header>기본 정보를 입력하세요</Header>
       <InputWrapper>
         <div>
@@ -56,7 +59,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           <span className="highlight"> *</span>
         </div>
         <PlainInputBox
-          width="320px"
+          width="100%"
           state="default"
           placeholder="이름"
           guide=""
@@ -71,7 +74,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
         </div>
         <ResidentWrapper>
           <PlainInputBox
-            width="148px"
+            width="45%"
             state="default"
             placeholder="주민등록번호"
             guide=""
@@ -82,7 +85,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           />
           -
           <SecretInputBox
-            width="52px"
+            width="25%"
             state="default"
             placeholder=""
             guide=""
@@ -90,9 +93,11 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
             masked={true}
             onChange={handleGenderChange}
           />
-          <IconWrapper>
-            <ResidentCircle />
-          </IconWrapper>
+          <CircleWrapper>
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} />
+            ))}
+          </CircleWrapper>
         </ResidentWrapper>
       </InputWrapper>
       <InputWrapper>
@@ -100,9 +105,9 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           <span>휴대전화</span>
           <span className="highlight"> *</span>
         </div>
-        <ResidentWrapper>
+        <PassWordWrapper>
           <PlainInputBox
-            width="192px"
+            width="60%"
             state="default"
             placeholder="휴대전화 번호"
             guide=""
@@ -113,7 +118,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           />
           <Button
             variant="blue2"
-            width="120px"
+            width="40%"
             height="56px"
             style={{
               minWidth: '120px',
@@ -132,7 +137,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           >
             인증번호 전송
           </Button>
-        </ResidentWrapper>
+        </PassWordWrapper>
       </InputWrapper>
       {showVerificationInput && (
         <ResidentWrapper>
@@ -246,20 +251,20 @@ const InputWrapper = styled.div`
   }
 `;
 
+const PassWordWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+
 const ResidentWrapper = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-start;
   gap: 8px;
   width: 100%;
   flex-grow: 1;
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 8px;
 `;
 
 const ButtonContainer = styled.div`
@@ -282,4 +287,19 @@ const InputInner = styled.div`
 
   margin-top: 12px;
   padding: 0px 20px;
+`;
+
+const CircleWrapper = styled.div`
+  display: flex;
+  margin-left: 8px;
+  gap: 4px;
+  & > div {
+    width: 10px;
+    height: 10px;
+    background-color: ${({ theme }) => theme.colors.gray600};
+    border-radius: 50%;
+  }
+  width: 50%;
+  justify-content: space-between;
+  align-items: center;
 `;

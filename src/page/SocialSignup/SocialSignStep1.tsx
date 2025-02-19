@@ -7,11 +7,11 @@ import { Button } from '@/components/common/Button/Button';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { handleVerifyAuthNumber } from '@/page/SignUp/Step1Function';
+import { useNavigate } from 'react-router-dom';
 
 export const SocialStep1 = ({
   formSocialData,
   setFormSocialData,
-  onPrevious,
   onNext,
 }: SocialStepProps) => {
   const [authNumber, setAuthNumber] = useState('');
@@ -78,11 +78,14 @@ export const SocialStep1 = ({
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <StepWrapper>
-      <IconContainer onClick={onPrevious}>
+      <IconContainer onClick={() => navigate('/signup')}>
         <IconArrowLeft />
       </IconContainer>
+
       <Header>기본 정보를 입력하세요</Header>
       <NameContainer>
         <div className="name">
@@ -94,7 +97,7 @@ export const SocialStep1 = ({
           state="default"
           placeholder="이름"
           guide=""
-          width={''}
+          width="100%"
           value={formSocialData.name}
           onChange={(e) =>
             setFormSocialData({ ...formSocialData, name: e.target.value })
@@ -111,7 +114,7 @@ export const SocialStep1 = ({
             state="default"
             placeholder="주민등록번호"
             guide=""
-            width="148px"
+            width="45%"
             value={formSocialData.birthDate}
             onChange={(e) =>
               setFormSocialData({
@@ -125,7 +128,7 @@ export const SocialStep1 = ({
             state="default"
             placeholder=" "
             guide=""
-            width={'52px'}
+            width="25%"
             value={genderInput}
             masked={true}
             onChange={handleGenderChange}
@@ -144,7 +147,7 @@ export const SocialStep1 = ({
         </div>
         <ResidentWrapper>
           <PlainInputBox
-            width=""
+            width="60%"
             state="default"
             placeholder="휴대전화 번호"
             guide=""
@@ -158,7 +161,7 @@ export const SocialStep1 = ({
           />
           <Button
             variant="blue2"
-            width="120px"
+            width="40%"
             height="54px"
             style={{
               minWidth: '120px',
@@ -301,16 +304,15 @@ const ResidentInputContainer = styled.div`
 
 const CircleWrapper = styled.div`
   display: flex;
+  margin-left: 8px;
   gap: 4px;
-  max-width: 80px;
-
   & > div {
     width: 10px;
     height: 10px;
     background-color: ${({ theme }) => theme.colors.gray600};
     border-radius: 50%;
   }
-  width: 100%;
+  width: 30%;
   justify-content: space-between;
   align-items: center;
 `;

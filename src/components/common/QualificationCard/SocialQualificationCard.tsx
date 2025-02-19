@@ -71,6 +71,7 @@ export const SocialQualificationCard = ({
 
 const CardContainer = styled.div<{ state: CardState }>`
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 8px;
   padding: 24px 20px;
@@ -95,6 +96,7 @@ const CardTopContainer = styled.div`
   display: flex;
   gap: 8px;
   flex-direction: column;
+  width: 100%;
 `;
 
 const CardMiddleText = styled.div<{ state: CardState }>`
