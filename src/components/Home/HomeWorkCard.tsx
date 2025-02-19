@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 interface WorkCardProps {
+  id: number;
   name: string;
   age: number;
   gender: string;
@@ -16,6 +17,7 @@ interface WorkCardProps {
 }
 
 const HomeWorkCard = ({
+  id,
   name,
   age,
   gender,
@@ -41,7 +43,7 @@ const HomeWorkCard = ({
 
     try {
       const response = await axios.put(
-        `${apiBaseURL}/caregiver/my/completed-matching-list`,
+        `${apiBaseURL}/caregiver/my/completed-matching-list/${id}`,
         {
           note: memoContent,
         },

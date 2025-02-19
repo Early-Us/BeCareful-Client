@@ -77,6 +77,7 @@ const HomeMyworkPage = () => {
           <CardWrapper>
             {datas.map((data) => (
               <HomeWorkCard
+                id={data.id}
                 name={data.elderlyName}
                 age={data.elderlyAge}
                 gender={data.elderlyGender === 'FEMALE' ? '여' : '남'}
