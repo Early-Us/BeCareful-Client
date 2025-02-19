@@ -500,7 +500,7 @@ const CreateApplication = () => {
         </Button>
       </LastWrapper>
 
-      <Modal isOpen={isEditModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
         <Modal2Wrapper>
           <ModalXImg
             onClick={() => {

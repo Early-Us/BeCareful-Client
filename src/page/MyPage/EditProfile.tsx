@@ -259,6 +259,7 @@ const EditProfile = () => {
         width=""
         height="52px"
         style={{ margin: '20px 0px' }}
+        onClick={() => navigate('/mypage')}
       >
         프로필 수정하기
       </Button>

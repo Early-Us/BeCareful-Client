@@ -18,6 +18,8 @@ import { ApplyPage } from '@/page/Apply/ApplyPage';
 import SocialSignUpForm from '@/page/SocialSignup/SocialSignUpForm';
 import SocialHomePage from './page/HomeSocial/SocialHomePage';
 import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
+import ElderlyPage from './page/Elderly/ElderlyPage';
+import EdlerlyCreatePage from './page/Elderly/ElderlyCreatePage';
 
 function App() {
   return (
@@ -49,6 +51,9 @@ function App() {
       <Route path="/workdetail" element={<WorkDetailPage />} />
 
       <Route path="/home/social" element={<SocialHomePage />} />
+
+      <Route path="/elderly" element={<ElderlyPage />} />
+      <Route path="/elderly/create" element={<EdlerlyCreatePage />} />
 
       <Route path="/matching" element={<MatchingApplyPage />} />
     </Routes>
