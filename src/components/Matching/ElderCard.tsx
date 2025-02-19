@@ -2,27 +2,33 @@ import { styled } from 'styled-components';
 import { ReactComponent as ElderProfile } from '@/assets/icons/matching/ElderProfile.svg';
 import { ElderData } from '@/type/Matching';
 
-export interface ElderCardProps {
-  name: string;
-  age: number;
-  gender: string;
-  cognitiveLevel: string;
-  imageUrl?: string;
+export interface ElderCardProps extends ElderData {
   onClick: (data: ElderData) => void;
 }
 
 export const ElderCard = ({
+  elderlyId,
   name,
   age,
   gender,
-
   cognitiveLevel,
+  careLevel,
   imageUrl,
   onClick,
 }: ElderCardProps) => {
   return (
     <CardContainer
-      onClick={() => onClick({ name, age, gender, cognitiveLevel, imageUrl })}
+      onClick={() =>
+        onClick({
+          elderlyId,
+          name,
+          age,
+          gender,
+          cognitiveLevel,
+          careLevel,
+          imageUrl,
+        })
+      }
     >
       <CardLeftContainer>
         <CardHeader>
@@ -30,12 +36,12 @@ export const ElderCard = ({
           <CardHeaderText>
             <span>{age}세</span>
             <span className="highlight">|</span>
-            <span>{gender}</span>
+            <span>{gender === 'MALE' ? '남' : '여'}</span>{' '}
           </CardHeaderText>
         </CardHeader>
         <CardContent>
           <span className="highlight">장기요양등급</span>
-          <span>{cognitiveLevel}</span>
+          <span>{careLevel}</span>
         </CardContent>
       </CardLeftContainer>
       {imageUrl ? (
@@ -50,7 +56,7 @@ export const ElderCard = ({
 const ElderProfileStyled = styled.img`
   width: 56px;
   height: 56px;
-  border-radius: 50%;
+  border-radius: 8px;
 `;
 
 const CardContainer = styled.div`

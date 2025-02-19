@@ -1,15 +1,55 @@
+import { useEffect, useState } from 'react';
 import { ElderCard } from '@/components/Matching/ElderCard';
 import { MatchingSearchBox } from '@/components/Matching/MatchingSearchBox';
 import { MatchingApplyModal } from '@/components/Matching/Modal/MatchingApplyModal';
 import { SocialTabBar } from '@/components/Matching/SocialTabBar';
 import { ElderData } from '@/type/Matching';
-import { useState } from 'react';
-
+import axios from 'axios';
 import { styled } from 'styled-components';
 
 export const MatchingApplyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<ElderData | null>(null);
+  const [elderList, setElderList] = useState<ElderData[]>([]);
+
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const token = sessionStorage.getItem('accessToken');
+
+  useEffect(() => {
+    const fetchElderList = async () => {
+      try {
+        const response = await axios.get<
+          {
+            elderlyId: number;
+            name: string;
+            age: number;
+            gender: 'MALE' | 'FEMALE';
+            careLevel: string;
+            cognitiveLevel: string;
+            profileImageUrl: string;
+          }[]
+        >(`${apiUrl}/elderly/list`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const transformedData: ElderData[] = response.data.map((elder) => ({
+          elderlyId: elder.elderlyId,
+          name: elder.name,
+          age: elder.age,
+          gender: elder.gender === 'MALE' ? 'MALE' : 'FEMALE',
+          careLevel: elder.careLevel,
+          cognitiveLevel: elder.cognitiveLevel,
+          imageUrl: elder.profileImageUrl,
+        }));
+
+        setElderList(transformedData);
+      } catch (error) {
+        console.error('matchingapplypage', error);
+      }
+    };
+
+    fetchElderList();
+  }, [apiUrl, token]);
 
   const openModal = (data: ElderData) => {
     setModalData(data);
@@ -28,27 +68,9 @@ export const MatchingApplyPage = () => {
         <MatchingSearchBox placeholder="검색할 이름을 입력해주세요." />
       </SearchContainer>
       <CardContainer>
-        <ElderCard
-          name="김옥자"
-          age={65}
-          gender="여"
-          cognitiveLevel="인지등급"
-          onClick={openModal}
-        />
-        <ElderCard
-          name="김옥자"
-          age={65}
-          gender="여"
-          cognitiveLevel="인지등급"
-          onClick={openModal}
-        />
-        <ElderCard
-          name="김옥자"
-          age={65}
-          gender="여"
-          cognitiveLevel="인지등급"
-          onClick={openModal}
-        />
+        {elderList.map((elder) => (
+          <ElderCard key={elder.elderlyId} {...elder} onClick={openModal} />
+        ))}
       </CardContainer>
       {isModalOpen && modalData && (
         <MatchingApplyModal
