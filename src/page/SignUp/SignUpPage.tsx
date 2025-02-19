@@ -77,7 +77,6 @@ const SignUpPageContainer = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: 135px;
-  // margin: 24px 16px auto 16px;
 `;
 
 const IconContainer = styled.div`
@@ -112,6 +111,7 @@ const CardContainer = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   padding: 20px 20px 0px 20px;
   flex-direction: column;
