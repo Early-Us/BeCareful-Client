@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Toggle } from '../common/Toggle/Toggle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface WorkApplyProps {
   fix: string;
@@ -25,6 +26,54 @@ const WorkApply = ({
   const handleToggleChange = () => {
     setIsToggleChecked((prevChecked) => !prevChecked);
   };
+
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const postData = async () => {
+    let accessToken;
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    if (isToggleChecked) {
+      try {
+        const response = await axios.post(
+          `${apiBaseURL}/caregiver/work-applicatioin/active`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+        console.log(response);
+        console.log('신청');
+      } catch (e) {
+        console.log('요양보호사 일자리 신청 토글 active 에러: ', e);
+      }
+    } else {
+      try {
+        const response = await axios.post(
+          `${apiBaseURL}/caregiver/work-applicatioin/inactive`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+        console.log(response);
+        console.log('신청취소');
+      } catch (e) {
+        console.log('요양보호사 일자리 신청 토글 inactive 에러: ', e);
+      }
+    }
+  };
+
+  useEffect(() => {
+    postData();
+  }, [isToggleChecked]);
 
   return (
     <Container>
