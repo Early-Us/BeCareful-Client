@@ -9,6 +9,7 @@ import { ApplicationDropdown } from '@/components/MyPage/ApplicationDropdown';
 import { Button } from '@/components/common/Button/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FinishMatchingApplyModal } from '@/components/Matching/Modal/FinishMatchingModal';
 
 export const MatchingElderPage = () => {
   const [selectDay, setSelectDay] = useState<string[]>([]);
@@ -18,6 +19,18 @@ export const MatchingElderPage = () => {
   const [careTypes, setCareTypes] = useState<string[]>([]);
   const [workSalaryAmount, setWorkSalaryAmount] = useState(0);
   const [memoContent, setMemoContent] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState<{
+    elderlyId: number;
+    title: string;
+    workDays: string[];
+    workStartTime: string;
+    workEndTime: string;
+    careTypes: string[];
+    workSalaryType: string;
+    workSalaryAmount: number;
+    description: string;
+  } | null>(null);
 
   const handleSelectDay = (id: string) => {
     setSelectDay((prev) => {
@@ -61,9 +74,15 @@ export const MatchingElderPage = () => {
         },
       });
       console.log('매칭 공고 등록 성공:', response.data);
+      setModalData(payload);
+      setIsModalOpen(true);
     } catch (error) {
       console.error('매칭 공고 등록 실패:', error);
     }
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   const days: (keyof typeof dayAPI)[] = [
@@ -225,6 +244,13 @@ export const MatchingElderPage = () => {
       >
         매칭 등록하기
       </Button>
+      {isModalOpen && (
+        <FinishMatchingApplyModal
+          width="312px"
+          onClose={handleModalClose}
+          data={modalData}
+        />
+      )}
     </Container>
   );
 };
