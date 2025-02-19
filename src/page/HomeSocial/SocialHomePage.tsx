@@ -16,6 +16,7 @@ import { ReactComponent as Applyer } from '@/assets/icons/socailHome/Applyer.svg
 import { ReactComponent as Applying } from '@/assets/icons/socailHome/Applying.svg';
 import { JobLevelBox } from '@/components/HomeSocial/JobLevelBox';
 import { Button } from '@/components/common/Button/Button';
+import { SocialTabBar } from '@/components/common/SocialTabBar';
 
 const SocialHomePage = () => {
   const navigate = useNavigate();
@@ -267,7 +268,7 @@ const SocialHomePage = () => {
         </SectionWrapper>
       </HomeContainer>
 
-      {/* 탭바 */}
+      <SocialTabBar />
     </Container>
   );
 };
@@ -275,7 +276,7 @@ const SocialHomePage = () => {
 export default SocialHomePage;
 
 const Container = styled.div`
-  padding-bottom: 40px;
+  padding-bottom: 97px;
   background: #f2f4f6;
 `;
 
