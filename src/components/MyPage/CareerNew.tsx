@@ -5,11 +5,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 interface CareerNewProps {
+  edit: boolean;
   title: string;
   introduce?: string;
 }
 
-export const CareerNew = ({ title, introduce }: CareerNewProps) => {
+export const CareerNew = ({ edit, title, introduce }: CareerNewProps) => {
   const navigate = useNavigate();
 
   const [textCount, setTextCount] = useState(0);
@@ -84,8 +85,9 @@ export const CareerNew = ({ title, introduce }: CareerNewProps) => {
             putData();
             navigate('/mypage');
           }}
+          disabled={memoContent ? false : true}
         >
-          경력서 등록하기
+          {edit ? '경력서 수정하기' : '경력서 등록하기'}
         </Button>
       </ButtonWrapper>
     </Container>
