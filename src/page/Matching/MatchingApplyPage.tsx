@@ -1,5 +1,5 @@
 import { MatchingSearchBox } from '@/components/Matching/MatchingSearchBox';
-import { SocialTabBar } from '@/components/Matching/SocialTabBar';
+import { SocialTabBar } from '@/components/common/SocialTabBar';
 
 import { styled } from 'styled-components';
 

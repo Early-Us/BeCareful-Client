@@ -16,6 +16,7 @@ import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { ApplyPage } from '@/page/Apply/ApplyPage';
 import SocialSignUpForm from '@/page/SocialSignup/SocialSignUpForm';
+import SocialHomePage from './page/HomeSocial/SocialHomePage';
 import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
       <Route path="/signup/caregiver" element={<SignUpForm />} />
       <Route path="/signup/social" element={<SocialSignUpForm />} />
 
-      <Route path="/home" element={<HomePage />} />
+      <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />
 
       <Route path="/mypage" element={<MyPage />} />
@@ -46,6 +47,8 @@ function App() {
 
       <Route path="/work/:recruitmentId" element={<WorkDetailPage />} />
       <Route path="/workdetail" element={<WorkDetailPage />} />
+
+      <Route path="/home/social" element={<SocialHomePage />} />
 
       <Route path="/matching" element={<MatchingApplyPage />} />
     </Routes>

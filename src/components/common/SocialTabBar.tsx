@@ -10,11 +10,11 @@ export const SocialTabBar = () => {
 
   return (
     <TabBarWrapper>
-      <TabBarContentWrapper href="/social-main">
-        <TabBarIcon isActive={location.pathname == '/social-main'}>
+      <TabBarContentWrapper href="home/social">
+        <TabBarIcon isActive={location.pathname == '/home/social'}>
           <Home />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/social-main'}>
+        <TabBarLabel isActive={location.pathname == 'home/social'}>
           홈
         </TabBarLabel>
       </TabBarContentWrapper>
