@@ -66,7 +66,7 @@ const EditCareer = () => {
             <ArrowLeft />
           </NavLeft>
         }
-        center={<NavCenter>경력서 등록</NavCenter>}
+        center={<NavCenter>경력서 수정</NavCenter>}
         color="white"
       />
 

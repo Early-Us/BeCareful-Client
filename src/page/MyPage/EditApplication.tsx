@@ -247,7 +247,7 @@ const CreateApplication = () => {
             <ArrowLeft />
           </NavLeft>
         }
-        center={<NavCenter>신청서 등록</NavCenter>}
+        center={<NavCenter>신청서 수정하기</NavCenter>}
         color="white"
       />
 
@@ -494,7 +494,7 @@ const CreateApplication = () => {
             navigate('/mypage');
           }}
         >
-          경력서 등록하기
+          신청서 수정하기
         </Button>
       </LastWrapper>
     </Container>
