@@ -221,18 +221,19 @@ export const SocialStep1 = ({
           </InputInner>
         </ResidentWrapper>
       )}
-      <ButtonContainer>
-        <Button
-          variant="blue"
-          height="52px"
-          onClick={() => {
-            console.log('현재 입력된 formSocialData:', formSocialData);
-            if (onNext) onNext();
-          }}
-        >
-          다음 단계로 이동
-        </Button>
-      </ButtonContainer>
+
+      <Border />
+      <Button
+        variant="blue"
+        height="52px"
+        onClick={() => {
+          console.log('현재 입력된 formSocialData:', formSocialData);
+          if (onNext) onNext();
+        }}
+        style={{ margin: '20px 0px' }}
+      >
+        다음 단계로 이동
+      </Button>
     </StepWrapper>
   );
 };
@@ -336,14 +337,10 @@ const InputInner = styled.div`
   padding: 0px 20px;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
-  box-sizing: border-box;
-  width: 100%;
+const Border = styled.div`
+  width: 100vw;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  margin-left: -20px;
+  margin-top: 185px;
 `;
