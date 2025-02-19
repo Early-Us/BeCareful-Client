@@ -6,15 +6,15 @@ import { Button } from '@/components/common/Button/Button';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { ElderlyDropDown } from '@/components/Elderly/ElderlyDropDown';
-import { Area } from '@/data/Area';
 import Modal from '@/components/common/Modal';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { ReactComponent as ButtonLeft } from '@/assets/icons/elderly/ButtonLeft.svg';
 import { CareTypeList } from '@/data/CareTypeList';
 import { CareChcekBox } from '@/components/common/CheckBox/CareChcekBox';
 import axios from 'axios';
+import { AreaSocial } from '@/data/AreaSocial';
 
-interface Area {
+interface AreaSocial {
   siDo: string;
   siGuGun: string;
   dongEupMyeon: string;
@@ -71,7 +71,7 @@ const EdlerlyCreatePage = () => {
   };
 
   // 근무 지역
-  const [selectedArea, setSelectedArea] = useState<Area | null>(null);
+  const [selectedArea, setSelectedArea] = useState<AreaSocial | null>(null);
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedGu, setSelectedGu] = useState('');
   const [selectedDong, setSelectedDong] = useState('');
@@ -294,7 +294,7 @@ const EdlerlyCreatePage = () => {
                 <AreaWrapper>
                   <AreaTitle>시/도</AreaTitle>
                   <AreaAreaWrapper>
-                    {Area.city.map((city) => (
+                    {AreaSocial.city.map((city) => (
                       <AreaArea
                         key={city.name}
                         onClick={() => handleCitySelect(city.name)}
@@ -314,7 +314,7 @@ const EdlerlyCreatePage = () => {
                         borderRight: '1px solid #d9d9d9',
                       }}
                     >
-                      {Area.city
+                      {AreaSocial.city
                         .find((city) => city.name === selectedCity)
                         ?.gu?.map((gu) => (
                           <AreaArea
@@ -332,7 +332,7 @@ const EdlerlyCreatePage = () => {
                   <AreaWrapper>
                     <AreaTitle>동/면/읍</AreaTitle>
                     <AreaAreaWrapper>
-                      {Area.city
+                      {AreaSocial.city
                         .find((city) => city.name === selectedCity)
                         ?.gu.find((gu) => gu.name === selectedGu)
                         ?.dong.map((dong) => (

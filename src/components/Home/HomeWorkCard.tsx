@@ -1,10 +1,38 @@
 import styled from 'styled-components';
-import { Button } from '../common/Button/Button';
 import { useState } from 'react';
+import axios from 'axios';
 
 const HomeWorkCard = () => {
   const [textCount, setTextCount] = useState(0);
   const [memoContent, setMemoContent] = useState('');
+
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const putData = async () => {
+    let accessToken;
+
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    try {
+      const response = await axios.put(
+        `${apiBaseURL}/caregiver/my/completed-matching-list`,
+        {
+          note: memoContent,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      console.log(response);
+    } catch (e) {
+      console.log('마이페이지 에러: ', e);
+    }
+  };
 
   return (
     <CardContainer>
@@ -59,10 +87,8 @@ const HomeWorkCard = () => {
           <MemoCount>{textCount}/200</MemoCount>
         </MemoFieldWrapper>
         <Button
-          variant="blue2"
-          width=""
-          height="36px"
           onClick={() => {
+            putData();
             console.log(memoContent);
           }}
         >
@@ -218,4 +244,14 @@ const MemoCount = styled.label`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   right: 16px;
   bottom: 16px;
+`;
+
+const Button = styled.button`
+  background-color: ${({ theme }) => theme.colors.subBlue};
+  color: ${({ theme }) => theme.colors.mainBlue};
+  height: 36px;
+  border-radius: 12px;
+  line-height: 1.4;
+  font-size: ${({ theme }) => theme.typography.fontSize.body4};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;

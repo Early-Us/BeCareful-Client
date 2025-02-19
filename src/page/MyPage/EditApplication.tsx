@@ -661,6 +661,7 @@ const Border = styled.div`
 `;
 
 const LastWrapper = styled.div`
+  background: ${({ theme }) => theme.colors.white};
   margin-top: 24px;
 `;
 

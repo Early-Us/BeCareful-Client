@@ -134,13 +134,13 @@ const MemoField = styled.textarea`
   box-sizing: border-box;
 
   color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
+  font-size: ${({ theme }) => theme.typography.fontSize.body1};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   letter-spacing: -0.4px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray300};
-    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-size: ${({ theme }) => theme.typography.fontSize.body1};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     letter-spacing: -0.4px;
   }
@@ -172,6 +172,7 @@ const Border = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
+  background: ${({ theme }) => theme.colors.white};
   position: absolute;
   bottom: 20px;
   right: 20px;

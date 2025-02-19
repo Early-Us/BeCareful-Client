@@ -69,13 +69,22 @@ const MyPage = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [data]);
 
   const formattedCareTypes = data?.workApplicationInfo?.careTypes
     ? data.workApplicationInfo.careTypes.length > 2
       ? `${data.workApplicationInfo.careTypes[0]}, ${data.workApplicationInfo.careTypes[1]} 외 ${data.workApplicationInfo.careTypes.length - 2}`
       : data.workApplicationInfo.careTypes.join(', ')
     : '';
+
+  const logout = () => {
+    if (localStorage.getItem('isAutoLogin')) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('isAutoLogin');
+    } else {
+      localStorage.removeItem('isAutoLogin');
+    }
+  };
 
   const formattedDay = data?.workApplicationInfo?.workDays
     .map((day) => {
@@ -281,6 +290,8 @@ const MyPage = () => {
             </Button>
           </SectionWrapper>
         )}
+
+        <Label onClick={() => logout()}>로그아웃</Label>
       </Container>
       <TabBar />
     </>
@@ -488,4 +499,14 @@ const NoApplicationLabel = styled.div`
   color: ${({ theme }) => theme.colors.gray900};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+`;
+
+const Label = styled.label`
+  margin-top: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  color: ${({ theme }) => theme.colors.gray600};
+  font-size: ${({ theme }) => theme.typography.fontSize.body2};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;

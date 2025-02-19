@@ -23,11 +23,14 @@ const HomeMyworkPage = () => {
     }
 
     try {
-      const response = await axios.get(`${apiBaseURL}/caregiver/my`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const response = await axios.get(
+        `${apiBaseURL}/caregiver/my/completed-matching-list`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      });
+      );
       setJobs(response.data);
       console.log(response.data);
     } catch (e) {

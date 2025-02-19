@@ -146,15 +146,6 @@ const EditProfile = () => {
     getData();
   }, []);
 
-  const logout = () => {
-    if (localStorage.getItem('isAutoLogin')) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('isAutoLogin');
-    } else {
-      localStorage.removeItem('isAutoLogin');
-    }
-  };
-
   return (
     <Container>
       <NavBar
@@ -183,6 +174,7 @@ const EditProfile = () => {
           width="60%"
           guide=""
           placeholder="휴대전화 번호"
+          type="tel"
         />
         <Button
           variant="blue2"
@@ -291,7 +283,6 @@ const EditProfile = () => {
       </Password> */}
 
       <Border />
-      <Label onClick={() => logout()}>로그아웃</Label>
       <Button
         // variant={
         //   isValidPassword(newPassword) && newPassword === newCheck
@@ -398,13 +389,3 @@ const ToggleLabel = styled.label`
 //   font-size: ${({ theme }) => theme.typography.fontSize.title4};
 //   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 // `;
-
-const Label = styled.label`
-  margin-top: 24px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  color: ${({ theme }) => theme.colors.gray600};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-`;
