@@ -5,7 +5,7 @@ const theme = {
     mainGreen: '#0d8a23',
     subBlue: '#f0f5ff',
     subOrange: '#fff7f6',
-    subBlack: '#f4ff6',
+    subGreen: '#F4FFF6',
     gray50: '#f2f2f2',
     gray100: '#d9d9d9',
     gray200: '#bfbfbf',

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ElderCard } from '@/components/Matching/ElderCard';
 import { MatchingSearchBox } from '@/components/Matching/MatchingSearchBox';
+
 import { MatchingApplyModal } from '@/components/Matching/Modal/MatchingApplyModal';
-import { SocialTabBar } from '@/components/Matching/SocialTabBar';
+
 import { ElderData } from '@/type/Matching';
 import axios from 'axios';
+
+import { SocialTabBar } from '@/components/common/SocialTabBar';
+
 import { styled } from 'styled-components';
 
 export const MatchingApplyPage = () => {

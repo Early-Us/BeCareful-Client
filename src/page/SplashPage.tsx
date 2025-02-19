@@ -14,7 +14,11 @@ const SplashPage = () => {
         sessionStorage.getItem('accessToken');
 
       if (isAutoLogin === 'true' && accessToken) {
-        navigate('/home');
+        if (localStorage.getItem('role') === 'caregiver') {
+          navigate('/home/caregiver');
+        } else {
+          navigate('/home/social');
+        }
       } else {
         navigate('/login');
       }
