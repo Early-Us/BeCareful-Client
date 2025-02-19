@@ -30,6 +30,6 @@ export type SocialStepProps = {
   formSocialData: SocialSignUpFormData;
   setFormSocialData: React.Dispatch<React.SetStateAction<SocialSignUpFormData>>;
   onPrevious: () => void;
-  onNext: () => void;
+  onNext: (step?: number) => void;
   onSubmit?: () => void;
 };
