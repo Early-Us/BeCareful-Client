@@ -13,7 +13,6 @@ export const SocialStep2 = ({
   setFormSocialData,
   onPrevious,
   onNext,
-  onSubmit,
 }: SocialStepProps) => {
   const {
     isAgreedToTerms,
