@@ -84,6 +84,7 @@ export const NursingQualificationCard = ({
 const CardContainer = styled.div<{ state: CardState }>`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 8px;
   padding: 24px 20px;
   width: 100%;

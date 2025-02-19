@@ -129,7 +129,6 @@ const StepWrapper = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: 135px;
-  overflow-y: auto;
 `;
 
 const IconContainer = styled.div`
@@ -168,6 +167,8 @@ const CardWrapper = styled.div`
   padding: 16px 20px 0px 20px;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 320px;
 `;
 
 const ButtonContent = styled.div`
@@ -186,5 +187,6 @@ const ButtonContainer = styled.div`
   padding: 20px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   box-sizing: border-box;
+  background-color: ${({ theme }) => theme.colors.white};
   width: 100%;
 `;
