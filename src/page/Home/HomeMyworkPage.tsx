@@ -8,9 +8,24 @@ import { NavBar } from '@/components/common/NavBar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+interface MyWorkProps {
+  id: number;
+  elderlyName: string;
+  elderlyAge: number;
+  elderlyGender: string;
+  elderlyProfileImageUrl: string;
+  workDays: string[];
+  workAddress: string;
+  careTypes: string[];
+  healthCondition: string;
+  institutionName: string;
+  note: string;
+}
+
 const HomeMyworkPage = () => {
-  const [jobs, setJobs] = useState(true);
   const navigate = useNavigate();
+
+  const [datas, setDatas] = useState<MyWorkProps[]>([]);
 
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
   const getData = async () => {
@@ -31,10 +46,10 @@ const HomeMyworkPage = () => {
           },
         },
       );
-      setJobs(response.data);
+      setDatas(response.data);
       console.log(response.data);
     } catch (e) {
-      console.log('마이페이지 에러: ', e);
+      console.log('홈 나의 일자리 에러: ', e);
     }
   };
 
@@ -43,7 +58,7 @@ const HomeMyworkPage = () => {
   }, []);
 
   return (
-    <Container jobs={jobs}>
+    <Container data={datas.length > 0}>
       <NavBar
         left={
           <NavLeft
@@ -57,12 +72,50 @@ const HomeMyworkPage = () => {
         center={<NavCenter>나의 일자리</NavCenter>}
         color="white"
       />
-      {jobs ? (
+      {datas.length > 0 ? (
         <JobCardWrapper>
           <CardWrapper>
-            <HomeWorkCard />
-            <HomeWorkCard />
-            <HomeWorkCard />
+            {datas.map((data) => (
+              <HomeWorkCard
+                name={data.elderlyName}
+                age={data.elderlyAge}
+                gender={data.elderlyGender === 'FEMALE' ? '여' : '남'}
+                profileImgUrl={data.elderlyProfileImageUrl}
+                workDays={
+                  data?.careTypes
+                    ? data.careTypes.length > 2
+                      ? `${data.careTypes[0]}, ${data.careTypes[1]} 외 ${data.careTypes.length - 2}`
+                      : data.careTypes.join(', ')
+                    : ''
+                }
+                workAddress={data.workAddress}
+                careTypes={data?.workDays
+                  .map((day) => {
+                    switch (day) {
+                      case 'MONDAY':
+                        return '월';
+                      case 'TUESDAY':
+                        return '화';
+                      case 'WEDNESDAY':
+                        return '수';
+                      case 'THURSDAY':
+                        return '목';
+                      case 'FRIDAY':
+                        return '금';
+                      case 'SATURDAY':
+                        return '토';
+                      case 'SUNDAY':
+                        return '일';
+                      default:
+                        return day;
+                    }
+                  })
+                  .join(', ')}
+                healthCondition={data.healthCondition}
+                institutionName={data.institutionName}
+                note={data.note}
+              />
+            ))}
           </CardWrapper>
         </JobCardWrapper>
       ) : (
@@ -98,9 +151,9 @@ const HomeMyworkPage = () => {
 
 export default HomeMyworkPage;
 
-const Container = styled.div<{ jobs: boolean }>`
-  background: ${({ theme, jobs }) =>
-    jobs ? theme.colors.white : theme.colors.gray50};
+const Container = styled.div<{ data: boolean }>`
+  background: ${({ theme, data }) =>
+    data ? theme.colors.white : theme.colors.gray50};
   height: 100vh;
 `;
 
