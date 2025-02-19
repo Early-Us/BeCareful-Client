@@ -34,11 +34,11 @@ export const SocialTabBar = () => {
           매칭현황
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/elderlist">
-        <TabBarIcon isActive={location.pathname == '/elderlist'}>
+      <TabBarContentWrapper href="/elderly">
+        <TabBarIcon isActive={location.pathname == '/elderly'}>
           <Mypage />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/elderlist'}>
+        <TabBarLabel isActive={location.pathname == '/elderly'}>
           어르신 목록
         </TabBarLabel>
       </TabBarContentWrapper>
