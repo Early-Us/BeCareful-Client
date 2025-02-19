@@ -14,16 +14,16 @@ export const ApplyTab = () => {
 
 const tabsData = [
   {
+    name: '검토중',
+    content: <ApplyPendingContainer />,
+  },
+  {
     name: '합격',
     content: <ApplyPassContainer />,
   },
   {
     name: '거절',
     content: <ApplyFailContainer />,
-  },
-  {
-    name: '검토중',
-    content: <ApplyPendingContainer />,
   },
 ];
 

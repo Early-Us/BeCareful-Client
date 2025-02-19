@@ -36,6 +36,7 @@ export const FinishMatchingApplyModal = ({
       navigate(`/matching/info/${recruitmentId}`);
     }
   };
+  console.log('Recruitment ID:', recruitmentId);
 
   console.log(data);
   return (

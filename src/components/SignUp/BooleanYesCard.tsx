@@ -31,9 +31,10 @@ const CardContainer = styled.div<BooleanYesCardProps>`
   gap: 8px;
 
   border-radius: 12px;
-  border: 1px solid
-    ${({ theme, pressed }) =>
-      pressed ? theme.colors.mainBlue : theme.colors.gray100};
+  border: ${({ theme, pressed }) =>
+    pressed
+      ? `2px solid ${theme.colors.mainBlue}`
+      : `1px solid ${theme.colors.gray100}`};
 
   background-color: ${({ theme, pressed }) =>
     pressed ? theme.colors.subBlue : theme.colors.white};

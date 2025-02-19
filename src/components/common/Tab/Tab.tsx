@@ -77,7 +77,7 @@ const TabItem = styled.div`
 
 const TabText = styled.div`
   font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 
   &.active {
     color: ${({ theme }) => theme.colors.mainBlue};

@@ -27,8 +27,8 @@ export const SignUpPage = () => {
   return (
     <FormWrapper>
       <SignUpPageContainer>
-        <IconContainer onClick={() => navigate('/login')}>
-          <IconArrowLeft />
+        <IconContainer>
+          <IconArrowLeft onClick={() => navigate('/login')} />
         </IconContainer>
         <Header>
           환영합니다!
