@@ -5,11 +5,12 @@ import { useState } from 'react';
 import { CheckBoxSelect } from '@/components/common/CheckBox/CheckBoxSelect';
 import { TimeDropdown } from '@/components/common/Dropdown/TimeDropdown';
 import { MatchingCareCard } from '@/page/Matching/MatchingCareCard';
-import { ApplicationDropdown } from '@/components/MyPage/ApplicationDropdown';
+
 import { Button } from '@/components/common/Button/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FinishMatchingApplyModal } from '@/components/Matching/Modal/FinishMatchingModal';
+import { MatchingApplicationDropdown } from '@/components/Matching/MatchingApplicationDropdown';
 
 export const MatchingElderPage = () => {
   const [selectDay, setSelectDay] = useState<string[]>([]);
@@ -20,6 +21,8 @@ export const MatchingElderPage = () => {
   const [workSalaryAmount, setWorkSalaryAmount] = useState(0);
   const [memoContent, setMemoContent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPayType, setSelectedPayType] = useState<string[]>([]);
+
   const [modalData, setModalData] = useState<{
     elderlyId: number;
     title: string;
@@ -53,6 +56,7 @@ export const MatchingElderPage = () => {
   };
 
   const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const [recruitmentId, setRecruitmentId] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     const payload = {
@@ -66,16 +70,25 @@ export const MatchingElderPage = () => {
       workSalaryAmount,
       description: memoContent,
     };
+
     const token = sessionStorage.getItem('accessToken');
+
     try {
       const response = await axios.post(`${apiUrl}/recruitment`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('매칭 공고 등록 성공:', response.data);
-      setModalData(payload);
-      setIsModalOpen(true);
+
+      if (response.status === 201) {
+        const locationHeader = response.headers.location;
+        const newRecruitmentId = locationHeader.split('/').pop();
+        if (newRecruitmentId) {
+          setRecruitmentId(newRecruitmentId);
+          setModalData(payload);
+          setIsModalOpen(true);
+        }
+      }
     } catch (error) {
       console.error('매칭 공고 등록 실패:', error);
     }
@@ -207,7 +220,12 @@ export const MatchingElderPage = () => {
           <SectionTitle color="blue">*</SectionTitle>
         </SectionTitleWrapper>
         <PayWrapper>
-          <ApplicationDropdown title="시급" contents={['10000']} />
+          <MatchingApplicationDropdown
+            title="시급"
+            contents={['시급', '일급', '월급', '연봉']}
+            selectedContents={selectedPayType}
+            setSelectedContents={setSelectedPayType}
+          />
           <PayFieldWrapper>
             <PayField
               id="pay"
@@ -244,11 +262,12 @@ export const MatchingElderPage = () => {
       >
         매칭 등록하기
       </Button>
-      {isModalOpen && (
+      {isModalOpen && recruitmentId && (
         <FinishMatchingApplyModal
           width="312px"
           onClose={handleModalClose}
           data={modalData}
+          recruitmentId={recruitmentId}
         />
       )}
     </Container>

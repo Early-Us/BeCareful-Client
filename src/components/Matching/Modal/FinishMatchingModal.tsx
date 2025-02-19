@@ -24,15 +24,19 @@ export const FinishMatchingApplyModal = ({
   width,
   onClose,
   data,
-}: FinishMatchingApplyModalProps) => {
+  recruitmentId,
+}: FinishMatchingApplyModalProps & { recruitmentId: string | null }) => {
   const navigate = useNavigate();
   const handleCancel = () => {
     navigate('/matching/elder-apply');
   };
 
   const handleApply = () => {
-    navigate('/matching/info');
+    if (recruitmentId) {
+      navigate(`/matching/info/${recruitmentId}`);
+    }
   };
+
   console.log(data);
   return (
     <Overlay>

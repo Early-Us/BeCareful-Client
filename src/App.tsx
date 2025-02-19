@@ -51,7 +51,10 @@ function App() {
 
       <Route path="/matching" element={<MatchingApplyPage />} />
       <Route path="/matching/elder-apply" element={<MatchingElderPage />} />
-      <Route path="/matching/info" element={<MatchingInformationPage />} />
+      <Route
+        path="/matching/info/:recruitmentId"
+        element={<MatchingInformationPage />}
+      />
     </Routes>
   );
 }
