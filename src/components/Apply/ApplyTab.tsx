@@ -1,8 +1,8 @@
-import { ApplyFailContainer } from '@/components/Apply/ApplyFailContainer';
+import { ApplyFailContainer } from '@/components/Apply/ApplyPendingContainer';
 import { ApplyPassContainer } from '@/components/Apply/ApplyPassContainer';
 import { Tab } from '@/components/common/Tab/Tab';
 import { styled } from 'styled-components';
-import { ApplyPendingContainer } from './ApplyPendingContainer';
+import { ApplyPendingContainer } from './ApplyFailContainer';
 
 export const ApplyTab = () => {
   return (
