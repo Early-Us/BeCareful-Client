@@ -252,7 +252,7 @@ const SocialHomePage = () => {
             </TitleDetailWrapper>
           </TitleWrapper>
           <StatusRowWrapper>
-            {data?.matchingElderlyList.map((elderly) => (
+            {data?.matchingElderlyList.slice(0, 3).map((elderly) => (
               <ElderlyList>
                 <ElderlImg src={elderly.profileImageUrl} />
                 <NameWrapper>
