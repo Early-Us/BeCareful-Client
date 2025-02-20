@@ -243,7 +243,7 @@ const SocialHomePage = () => {
           <TitleWrapper>
             <TitleLabel>매칭 대기중인 어르신</TitleLabel>
             <TitleDetailWrapper>
-              <TitleDetail onClick={() => (window.location.href = '/erderly')}>
+              <TitleDetail onClick={() => (window.location.href = '/elderly')}>
                 자세히 보기
               </TitleDetail>
               <TitleDetailImg>
