@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 interface RealRefuseModalProps {
   width: string;
@@ -7,6 +8,11 @@ interface RealRefuseModalProps {
 }
 
 export const RealRefuseModal = ({ width }: RealRefuseModalProps) => {
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate('/work');
+  };
+
   return (
     <Overlay>
       <ModalContent width={width}>
@@ -19,7 +25,7 @@ export const RealRefuseModal = ({ width }: RealRefuseModalProps) => {
           </span>
         </ModalMiddleContainer>
         <ModalBottomContainer>
-          <Button variant="blue" height="52px">
+          <Button variant="blue" height="52px" onClick={handleButtonClick}>
             다른 일자리 보러가기
           </Button>
         </ModalBottomContainer>

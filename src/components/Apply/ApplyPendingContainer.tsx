@@ -1,7 +1,8 @@
 import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
-import { styled } from 'styled-components';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // useNavigate 임포트
+import { styled } from 'styled-components';
 
 interface RecruitmentInfo {
   recruitmentId: number;
@@ -27,6 +28,7 @@ interface ApplyData {
 export const ApplyPendingContainer = () => {
   const [applyData, setApplyData] = useState<ApplyData[]>([]);
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const navigate = useNavigate();
 
   const fetchApplyData = async () => {
     try {
@@ -44,7 +46,7 @@ export const ApplyPendingContainer = () => {
             Authorization: `Bearer ${accessToken}`,
           },
           params: {
-            recruitmentStatus: '지원',
+            recruitmentStatus: '불합격',
           },
         },
       );
@@ -59,14 +61,18 @@ export const ApplyPendingContainer = () => {
     fetchApplyData();
   }, []);
 
+  const handleCardClick = (recruitmentId: number) => {
+    navigate(`/apply/${recruitmentId}`);
+  };
+
   return (
     <TabContainer>
       {applyData.map((apply, index) => {
         const { recruitmentInfo, matchingStatus } = apply;
         const chipState =
-          matchingStatus === '미지원'
+          matchingStatus === '합격'
             ? 'pending'
-            : matchingStatus === '합격'
+            : matchingStatus === '미지원'
               ? 'pass'
               : 'fail';
 
@@ -81,6 +87,7 @@ export const ApplyPendingContainer = () => {
             workingDays={recruitmentInfo.workDays.map((day) => day.slice(0, 3))}
             workingHours={`${recruitmentInfo.workStartTime}~${recruitmentInfo.workEndTime}`}
             hourlyRate={`${recruitmentInfo.workSalaryAmount}원`}
+            onClick={() => handleCardClick(recruitmentInfo.recruitmentId)}
           />
         );
       })}

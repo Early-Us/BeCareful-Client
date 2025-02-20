@@ -65,6 +65,7 @@ export const RecruitCard = ({
 const CardContainer = styled.div`
   display: inline-flex;
   padding: 20px 20px 28px 20px;
+  margin-bottom: 12px;
   gap: 12px;
   flex-direction: column;
   border-radius: 12px;
