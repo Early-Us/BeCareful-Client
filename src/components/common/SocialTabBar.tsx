@@ -3,42 +3,42 @@ import { ReactComponent as Home } from '@/assets/icons/tabbar/Home.svg';
 import { ReactComponent as MatchingIcon } from '@/assets/icons/matching/MatchingIcon.svg';
 import { ReactComponent as CurrentMatching } from '@/assets/icons/matching/CurrentMatching.svg';
 import { ReactComponent as Mypage } from '@/assets/icons/tabbar/Mypage.svg';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const SocialTabBar = () => {
   const location = useLocation();
 
   return (
     <TabBarWrapper>
-      <TabBarContentWrapper href="home/social">
-        <TabBarIcon isActive={location.pathname == '/home/social'}>
+      <TabBarContentWrapper as={Link} to="/home/social">
+        <TabBarIcon isActive={location.pathname === '/home/social'}>
           <Home />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == 'home/social'}>
+        <TabBarLabel isActive={location.pathname === '/home/social'}>
           홈
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/matching">
-        <TabBarIcon isActive={location.pathname == '/matching'}>
+      <TabBarContentWrapper as={Link} to="/matching">
+        <TabBarIcon isActive={location.pathname === '/matching'}>
           <MatchingIcon />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/matching'}>
+        <TabBarLabel isActive={location.pathname === '/matching'}>
           매칭하기
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/matching/dashboard">
-        <TabBarIcon isActive={location.pathname == '/matching/dashboard'}>
+      <TabBarContentWrapper as={Link} to="/matching/dashboard">
+        <TabBarIcon isActive={location.pathname === '/matching/dashboard'}>
           <CurrentMatching />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/matching/dashboard'}>
+        <TabBarLabel isActive={location.pathname === '/matching/dashboard'}>
           매칭현황
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/elderly">
-        <TabBarIcon isActive={location.pathname == '/elderly'}>
+      <TabBarContentWrapper as={Link} to="/elderly">
+        <TabBarIcon isActive={location.pathname === '/elderly'}>
           <Mypage />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/elderly'}>
+        <TabBarLabel isActive={location.pathname === '/elderly'}>
           어르신 목록
         </TabBarLabel>
       </TabBarContentWrapper>
