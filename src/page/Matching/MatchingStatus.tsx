@@ -39,7 +39,7 @@ const MatchingStatus = () => {
                     <LabelTitle>매칭결과</LabelTitle>
                     <LabelDetail>30건</LabelDetail>
                   </Label>
-                  <LabelApply>지원자가 1명 있어요!</LabelApply>
+                  <LabelApply>지원자가 9명 있어요!</LabelApply>
                 </LabelWrapper>
               </InfoWrapper>
               <PersonImg>
@@ -52,19 +52,19 @@ const MatchingStatus = () => {
             <PersonWrapper>
               <InfoWrapper>
                 <NameWrapper>
-                  <Name>김옥자</Name>
+                  <Name>김경섭</Name>
                   <AgeGenderWrapper>
-                    <Detail>65세</Detail>
+                    <Detail>72세</Detail>
                     <Border />
-                    <Detail>여</Detail>
+                    <Detail>남</Detail>
                   </AgeGenderWrapper>
                 </NameWrapper>
                 <LabelWrapper>
                   <Label>
                     <LabelTitle>매칭결과</LabelTitle>
-                    <LabelDetail>30건</LabelDetail>
+                    <LabelDetail>12건</LabelDetail>
                   </Label>
-                  <LabelApply>지원자가 1명 있어요!</LabelApply>
+                  <LabelApply>지원자가 5명 있어요!</LabelApply>
                 </LabelWrapper>
               </InfoWrapper>
               <PersonImg>
@@ -77,9 +77,9 @@ const MatchingStatus = () => {
             <PersonWrapper>
               <InfoWrapper>
                 <NameWrapper>
-                  <Name>김옥자</Name>
+                  <Name>박순자</Name>
                   <AgeGenderWrapper>
-                    <Detail>65세</Detail>
+                    <Detail>81세</Detail>
                     <Border />
                     <Detail>여</Detail>
                   </AgeGenderWrapper>
@@ -87,9 +87,34 @@ const MatchingStatus = () => {
                 <LabelWrapper>
                   <Label>
                     <LabelTitle>매칭결과</LabelTitle>
-                    <LabelDetail>30건</LabelDetail>
+                    <LabelDetail>8건</LabelDetail>
                   </Label>
-                  <LabelApply>지원자가 1명 있어요!</LabelApply>
+                  <LabelApply>지원자가 2명 있어요!</LabelApply>
+                </LabelWrapper>
+              </InfoWrapper>
+              <PersonImg>
+                <ElderList />
+              </PersonImg>
+            </PersonWrapper>
+          </CardContainer>
+
+          <CardContainer>
+            <PersonWrapper>
+              <InfoWrapper>
+                <NameWrapper>
+                  <Name>김미정</Name>
+                  <AgeGenderWrapper>
+                    <Detail>68세</Detail>
+                    <Border />
+                    <Detail>여</Detail>
+                  </AgeGenderWrapper>
+                </NameWrapper>
+                <LabelWrapper>
+                  <Label>
+                    <LabelTitle>매칭결과</LabelTitle>
+                    <LabelDetail>15건</LabelDetail>
+                  </Label>
+                  <LabelApply>지원자가 3명 있어요!</LabelApply>
                 </LabelWrapper>
               </InfoWrapper>
               <PersonImg>

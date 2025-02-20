@@ -3,42 +3,42 @@ import { ReactComponent as Home } from '@/assets/icons/tabbar/Home.svg';
 import { ReactComponent as Task } from '@/assets/icons/tabbar/Task.svg';
 import { ReactComponent as Recruite } from '@/assets/icons/tabbar/Recuite.svg';
 import { ReactComponent as Mypage } from '@/assets/icons/tabbar/Mypage.svg';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const TabBar = () => {
   const location = useLocation();
 
   return (
     <TabBarWrapper>
-      <TabBarContentWrapper href="/home/caregiver">
-        <TabBarIcon isActive={location.pathname == '/home/caregiver'}>
+      <TabBarContentWrapper as={Link} to="/home/caregiver">
+        <TabBarIcon isActive={location.pathname === '/home/caregiver'}>
           <Home />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/home/caregiver'}>
+        <TabBarLabel isActive={location.pathname === '/home/caregiver'}>
           홈
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/work">
-        <TabBarIcon isActive={location.pathname == '/work'}>
+      <TabBarContentWrapper as={Link} to="/work">
+        <TabBarIcon isActive={location.pathname === '/work'}>
           <Task />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/work'}>
+        <TabBarLabel isActive={location.pathname === '/work'}>
           일자리
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/apply">
-        <TabBarIcon isActive={location.pathname == '/apply'}>
+      <TabBarContentWrapper as={Link} to="/apply">
+        <TabBarIcon isActive={location.pathname === '/apply'}>
           <Recruite />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/apply'}>
+        <TabBarLabel isActive={location.pathname === '/apply'}>
           지원현황
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/mypage">
-        <TabBarIcon isActive={location.pathname == '/mypage'}>
+      <TabBarContentWrapper as={Link} to="/mypage">
+        <TabBarIcon isActive={location.pathname === '/mypage'}>
           <Mypage />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/mypage'}>
+        <TabBarLabel isActive={location.pathname === '/mypage'}>
           마이페이지
         </TabBarLabel>
       </TabBarContentWrapper>
