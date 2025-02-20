@@ -25,7 +25,6 @@ const ChatButton = (matchingId: string, date: string) => {
         },
       );
       console.log(response);
-      alert('채팅방 생성');
       navigate('/chatList');
     } catch (e) {
       console.log('채팅방 생성(채용하기) 에러: ', e);
