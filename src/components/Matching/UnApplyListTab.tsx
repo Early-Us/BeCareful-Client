@@ -1,17 +1,24 @@
 import { TabContentMatching } from '@/components/Matching/TabContentMatching';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 interface Caregiver {
+  caregiverId: number;
   profileImageUrl: string;
   name: string;
   resumeTitle: string;
 }
 
 interface UnApplyListTabProps {
+  recruitmentId: number;
   caregivers: Caregiver[];
 }
 
-export const UnApplyListTab = ({ caregivers }: UnApplyListTabProps) => {
+export const UnApplyListTab = ({
+  recruitmentId,
+  caregivers,
+}: UnApplyListTabProps) => {
+  const navigate = useNavigate();
   return (
     <Container>
       {caregivers.map((caregiver, index) => (
@@ -21,6 +28,11 @@ export const UnApplyListTab = ({ caregivers }: UnApplyListTabProps) => {
           profileImageUrl={caregiver.profileImageUrl}
           caregiverName={caregiver.name}
           careerTitle={caregiver.resumeTitle}
+          onClick={() =>
+            navigate(
+              `/matching/${recruitmentId}/caregiver/${caregiver.caregiverId}`,
+            )
+          }
         />
       ))}
     </Container>

@@ -21,6 +21,7 @@ import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
 import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import { ApplyDetailPage } from '@/page/Apply/ApplyDetailPage';
+import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
 
 function App() {
   return (
@@ -60,6 +61,11 @@ function App() {
         path="/matching/info/:recruitmentId"
         element={<MatchingInformationPage />}
       />
+      <Route
+        path="/matching/:recruitmentId/caregiver/:caregiverId"
+        element={<CareGiverInfoPage />}
+      />
+      <Route path="/matching/caregiver" element={<CareGiverInfoPage />} />
     </Routes>
   );
 }

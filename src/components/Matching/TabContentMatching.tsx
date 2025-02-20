@@ -5,6 +5,7 @@ interface TabContentMatchingProps {
   profileImageUrl?: string;
   caregiverName: string;
   careerTitle: string;
+  onClick?: () => void;
 }
 
 export const TabContentMatching = ({
@@ -12,9 +13,10 @@ export const TabContentMatching = ({
   profileImageUrl,
   caregiverName,
   careerTitle,
+  onClick,
 }: TabContentMatchingProps) => {
   return (
-    <TabContainer>
+    <TabContainer onClick={onClick}>
       <LeftContainer>
         <ProfileImage src={profileImageUrl} alt={`${caregiverName}의 프로필`} />
       </LeftContainer>

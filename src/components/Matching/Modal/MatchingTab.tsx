@@ -4,17 +4,20 @@ import { UnApplyListTab } from '@/components/Matching/UnApplyListTab';
 import styled from 'styled-components';
 
 interface Caregiver {
+  caregiverId: number;
   profileImageUrl: string;
   name: string;
   resumeTitle: string;
 }
 
 interface MatchingTabProps {
+  recruitmentId: number;
   appliedCaregivers: Caregiver[];
   unAppliedCaregivers: Caregiver[];
 }
 
 export const MatchingTab = ({
+  recruitmentId,
   appliedCaregivers,
   unAppliedCaregivers,
 }: MatchingTabProps) => {
@@ -24,11 +27,21 @@ export const MatchingTab = ({
         tabs={[
           {
             name: '매칭 리스트',
-            content: <UnApplyListTab caregivers={unAppliedCaregivers} />,
+            content: (
+              <UnApplyListTab
+                caregivers={unAppliedCaregivers}
+                recruitmentId={recruitmentId}
+              />
+            ),
           },
           {
             name: '지원 리스트',
-            content: <ApplyListTab caregivers={appliedCaregivers} />,
+            content: (
+              <ApplyListTab
+                caregivers={appliedCaregivers}
+                recruitmentId={recruitmentId}
+              />
+            ),
           },
         ]}
       />

@@ -8,6 +8,7 @@ import { MatchingTab } from '@/components/Matching/Modal/MatchingTab';
 
 interface Caregiver {
   profileImageUrl: string;
+  caregiverId: number;
   name: string;
   resumeTitle: string;
 }
@@ -79,6 +80,7 @@ export const MatchingInformationPage = () => {
           <GapContainer />
           <TabContainer>
             <MatchingTab
+              recruitmentId={Number(recruitmentId)}
               appliedCaregivers={elderData.appliedCaregivers}
               unAppliedCaregivers={elderData.unAppliedCaregivers}
             />
