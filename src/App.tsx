@@ -22,6 +22,7 @@ import ElderlyPage from './page/Elderly/ElderlyPage';
 import EdlerlyCreatePage from './page/Elderly/ElderlyCreatePage';
 import ChatListPage from './page/Chat/ChatListPage';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
+import MatchingStatus from './page/Matching/MatchingStatus';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
       <Route path="/elderly/create" element={<EdlerlyCreatePage />} />
 
       <Route path="/matching" element={<MatchingApplyPage />} />
+      <Route path="/matching/dashboard" element={<MatchingStatus />} />
 
       <Route path="/chatList" element={<ChatListPage />} />
       <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
