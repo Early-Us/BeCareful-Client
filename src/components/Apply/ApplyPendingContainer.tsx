@@ -25,7 +25,7 @@ interface ApplyData {
   matchingStatus: '미지원' | '합격' | '불합격';
 }
 
-export const ApplyPendingContainer = () => {
+export const ApplyFailContainer = () => {
   const [applyData, setApplyData] = useState<ApplyData[]>([]);
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ export const ApplyPendingContainer = () => {
             Authorization: `Bearer ${accessToken}`,
           },
           params: {
-            recruitmentStatus: '불합격',
+            recruitmentStatus: '지원',
           },
         },
       );

@@ -25,7 +25,7 @@ interface ApplyData {
   matchingStatus: '미지원' | '합격' | '불합격';
 }
 
-export const ApplyFailContainer = () => {
+export const ApplyPendingContainer = () => {
   const [applyData, setApplyData] = useState<ApplyData[]>([]);
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
   const navigate = useNavigate();
@@ -71,10 +71,10 @@ export const ApplyFailContainer = () => {
         const { recruitmentInfo, matchingStatus } = apply;
         const chipState =
           matchingStatus === '합격'
-            ? 'pending'
+            ? 'pass'
             : matchingStatus === '미지원'
-              ? 'pass'
-              : 'fail';
+              ? 'fail'
+              : 'pending';
 
         return (
           <ApplyCard

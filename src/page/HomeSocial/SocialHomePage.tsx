@@ -147,7 +147,9 @@ const SocialHomePage = () => {
           <TitleWrapper>
             <TitleLabel>매칭 통계</TitleLabel>
             <TitleDetailWrapper>
-              <TitleDetail onClick={() => (window.location.href = '/matching')}>
+              <TitleDetail
+                onClick={() => (window.location.href = '/matching/dashboard')}
+              >
                 자세히 보기
               </TitleDetail>
               <TitleDetailImg>
