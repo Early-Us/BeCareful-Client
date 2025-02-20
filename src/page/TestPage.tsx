@@ -18,7 +18,6 @@ import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
 import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
 
 import { CheckBox } from '../components/common/CheckBox/CheckBox';
-import WorkApply from '@/components/MyPage/WorkApply';
 
 export const TestPage = () => {
   const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
@@ -178,16 +177,6 @@ export const TestPage = () => {
         label=""
         select="선택"
         guide="이용약관"
-      />
-
-      <WorkApply
-        fix={'2025.02.14'}
-        apply={false}
-        caretype={'식사보조'}
-        day={'화, 수, 토'}
-        time={'오전, 오후'}
-        pay={20200}
-        location={'동대문구 전체'}
       />
     </div>
   );

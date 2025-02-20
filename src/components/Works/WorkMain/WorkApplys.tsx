@@ -1,16 +1,15 @@
 import styled from 'styled-components';
-
-import { useState } from 'react';
-import { Toggle } from '@/components/common/Toggle/Toggle';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Toggle } from '@/components/common/Toggle/Toggle';
 
-interface WorkApplyProps {
+interface WorkApplysProps {
   fix: string;
-  apply: boolean;
+  apply: boolean | undefined;
   caretype: string;
-  day: string;
-  time: string;
-  pay: string;
+  day: string | undefined;
+  time: string | undefined;
+  pay: number;
   location: string;
 }
 
@@ -22,31 +21,58 @@ const WorkApplys = ({
   time,
   pay,
   location,
-}: WorkApplyProps) => {
-  const [isToggleChecked, setIsToggleChecked] = useState(apply);
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
-  const handleToggleChange = async () => {
-    const newCheckedState = !isToggleChecked;
-    setIsToggleChecked(newCheckedState);
+}: WorkApplysProps) => {
+  const [isToggleChecked, setIsToggleChecked] = useState<boolean>(false);
 
-    if (newCheckedState) {
-      try {
-        const response = await axios.post(
-          `${apiUrl}/caregiver/work-application/active`,
-          {
-            headers: {
-              Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
-            },
-          },
-        );
-        if (response.status === 200) {
-          console.log('일자라 신청 성공');
-        }
-      } catch (error) {
-        console.error('일자리 신청 실패(WorkApply.tsx):', error);
-      }
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+
+  useEffect(() => {
+    const savedStatus = localStorage.getItem('applyStatus');
+    if (savedStatus !== null) {
+      setIsToggleChecked(JSON.parse(savedStatus));
+    } else {
+      setIsToggleChecked(apply || false);
     }
+  }, [apply]);
+
+  const postData = async () => {
+    let accessToken;
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    try {
+      const endpoint = isToggleChecked
+        ? '/caregiver/work-applicatioin/active'
+        : '/caregiver/work-applicatioin/inactive';
+
+      const response = await axios.post(
+        `${apiBaseURL}${endpoint}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      console.log(response);
+      console.log(isToggleChecked ? '신청' : '신청취소');
+    } catch (e) {
+      console.log(
+        `요양보호사 일자리 신청 토글 ${isToggleChecked ? 'active' : 'inactive'} 에러: `,
+        e,
+      );
+    }
+
+    localStorage.setItem('applyStatus', JSON.stringify(isToggleChecked));
   };
+
+  useEffect(() => {
+    postData();
+  }, [isToggleChecked]);
 
   return (
     <Container>
@@ -59,7 +85,10 @@ const WorkApplys = ({
           <Title>일자리 신청서</Title>
         </TitleWrapper>
         <ToggleWrapper>
-          <Toggle checked={isToggleChecked} onChange={handleToggleChange} />
+          <Toggle
+            checked={isToggleChecked}
+            onChange={() => setIsToggleChecked((prev) => !prev)}
+          />
           <ToggleLabel>{isToggleChecked ? '신청중' : '미신청'}</ToggleLabel>
         </ToggleWrapper>
       </TitlesWrapper>
@@ -78,7 +107,7 @@ const WorkApplys = ({
         </LabelWrapper>
         <LabelWrapper>
           <LabelTitle>희망급여</LabelTitle>
-          <LabelDetail>{pay}</LabelDetail>
+          <LabelDetail>{pay}원</LabelDetail>
         </LabelWrapper>
         <LabelWrapper>
           <LabelTitle>근무지역</LabelTitle>

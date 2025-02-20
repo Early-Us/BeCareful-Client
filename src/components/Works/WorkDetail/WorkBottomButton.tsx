@@ -6,8 +6,13 @@ import { TuneConditionModal } from '@/components/Works/WorkModal/TuneConditionMo
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { AfterTuneModal } from '@/components/Works/WorkModal/AfterTuneModal';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export const WorkBottomButton = () => {
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const { recruitmentId } = useParams<{ recruitmentId: string }>();
+
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const openApplyModal = () => setIsApplyModalOpen(true);
   const closeApplyModal = () => setIsApplyModalOpen(false);
@@ -44,13 +49,33 @@ export const WorkBottomButton = () => {
     openRealRefuseModal();
   };
 
+  const handleApplyClick = async () => {
+    if (!recruitmentId) return;
+
+    try {
+      await axios.post(
+        `${apiUrl}/recruitment/${recruitmentId}/apply`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+          },
+        },
+      );
+      openApplyModal(); // Open the success modal on successful response
+    } catch (error) {
+      console.error('Error applying for the job:', error);
+      alert('지원 실패! 다시 시도해주세요.');
+    }
+  };
+
   return (
     <ButtonContainer>
       <Button variant="white" height="52px" onClick={openRefuseModal}>
         거절하기
       </Button>
 
-      <Button variant="blue" height="52px" onClick={openApplyModal}>
+      <Button variant="blue" height="52px" onClick={handleApplyClick}>
         지원하기
       </Button>
       {isApplyModalOpen && (

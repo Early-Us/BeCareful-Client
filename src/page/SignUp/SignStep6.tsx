@@ -88,7 +88,7 @@ export const Step6 = ({
       {street && (
         <CardContainer>
           <PlainInputBox
-            width="320px"
+            width=""
             state="default"
             placeholder="상세 주소 입력"
             guide=""
@@ -104,16 +104,16 @@ export const Step6 = ({
         </CardContainer>
       )}
 
-      <ButtonContainer>
-        <Button
-          variant={detail.length > 0 && street ? 'blue' : 'disabled'}
-          height="52px"
-          onClick={onNext}
-          disabled={!(street && detail.length > 0)}
-        >
-          다음 단계로 이동
-        </Button>
-      </ButtonContainer>
+      <Border />
+      <Button
+        variant={detail.length > 0 && street ? 'blue' : 'disabled'}
+        height="52px"
+        onClick={onNext}
+        disabled={!(street && detail.length > 0)}
+        style={{ margin: '20px 0px' }}
+      >
+        다음 단계로 이동
+      </Button>
     </StepWrapper>
   );
 };
@@ -151,21 +151,19 @@ const Header = styled.div`
   color: ${({ theme }) => theme.colors.gray900};
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
-  box-sizing: border-box;
-  width: 100%;
-`;
-
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 20px 20px 0px 20px;
+  box-sizing: border-box;
+  width: 100%;
+`;
+
+const Border = styled.div`
+  width: 100vw;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  margin-left: -20px;
+  margin-top: 387px;
 `;

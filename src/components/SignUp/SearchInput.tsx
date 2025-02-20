@@ -37,7 +37,8 @@ const SearchContainer = styled.div`
   align-items: center;
   gap: 8px;
   padding: 15px 16px;
-  width: 290px;
+  width: 100%;
+  box-sizing: border-box;
 
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray300};

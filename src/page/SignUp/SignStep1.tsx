@@ -19,6 +19,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
   const [genderInput, setGenderInput] = useState('');
   const apiUrl = import.meta.env.VITE_APP_API_URL;
   const [, setAuthButtonText] = useState('인증번호 전송');
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     if (remainingTime === 0) {
@@ -37,12 +38,26 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
       }
     }
   };
+  const handleBirthDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setFormData({ ...formData, birthDate: value });
+  };
 
   useEffect(() => {
     if (remainingTime === 0) {
       alert('인증번호 유효 시간이 초과되었습니다.');
     }
   }, [remainingTime]);
+
+  useEffect(() => {
+    const isValid =
+      formData.name.trim() !== '' &&
+      formData.birthDate.length === 6 &&
+      genderInput.length === 1 &&
+      formData.phoneNumber.length >= 10;
+
+    setIsFormValid(isValid);
+  }, [formData, genderInput]);
 
   const navigate = useNavigate();
 
@@ -79,9 +94,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
             placeholder="주민등록번호"
             guide=""
             value={formData.birthDate}
-            onChange={(e) =>
-              setFormData({ ...formData, birthDate: e.target.value })
-            }
+            onChange={handleBirthDateChange}
           />
           -
           <SecretInputBox
@@ -178,18 +191,19 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           </InputInner>
         </ResidentWrapper>
       )}
-      <ButtonContainer>
-        <Button
-          variant="blue"
-          height="52px"
-          onClick={() => {
-            console.log('현재 입력된 formData:', formData);
-            if (onNext) onNext();
-          }}
-        >
-          다음 단계로 이동
-        </Button>
-      </ButtonContainer>
+      <Border />
+      <Button
+        variant="blue"
+        height="52px"
+        onClick={() => {
+          console.log('현재 입력된 formData:', formData);
+          if (onNext) onNext();
+        }}
+        style={{ margin: '20px 0px' }}
+        disabled={!isFormValid}
+      >
+        다음 단계로 이동
+      </Button>
     </StepWrapper>
   );
 };
@@ -267,18 +281,6 @@ const ResidentWrapper = styled.div`
   flex-grow: 1;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
-  box-sizing: border-box;
-  width: 100%;
-`;
-
 const InputInner = styled.div`
   display: flex;
   justify-content: space-between;
@@ -302,4 +304,12 @@ const CircleWrapper = styled.div`
   width: 50%;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Border = styled.div`
+  width: 100vw;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  margin-left: -20px;
+  margin-top: 202px;
 `;

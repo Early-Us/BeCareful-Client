@@ -1,8 +1,11 @@
+import { useState } from 'react';
+import axios from 'axios';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { SocialStepProps } from '@/type/SocialSignUp';
 import { SocialSearchInput } from '@/components/SocialSignUp/SearchInputRight';
 import { Button } from '@/components/common/Button/Button';
+import { institutionData } from '@/components/SocialSignUp/institutionData';
 
 export const SocialStep3 = ({
   formSocialData,
@@ -10,7 +13,45 @@ export const SocialStep3 = ({
   onPrevious,
   onNext,
 }: SocialStepProps) => {
-  console.log(formSocialData, setFormSocialData);
+  const [, setSelectedInstitution] = useState('');
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+
+  const handleInstitutionSelect = (institutionName: string) => {
+    const institution = institutionData.find(
+      (inst) => inst.institutionName === institutionName,
+    );
+    if (institution) {
+      setSelectedInstitution(institutionName);
+      setFormSocialData((prev) => ({
+        ...prev,
+        institutionId: institution.institutionId,
+      }));
+    }
+  };
+
+  const handleNextStep = async () => {
+    if (!formSocialData.institutionId) {
+      alert('기관을 선택해주세요.');
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `${apiUrl}/nursingInstitution/${formSocialData.institutionId}/exists`,
+      );
+      console.log('API 응답:', response.data);
+
+      if (response.data === true) {
+        setFormSocialData((prev) => ({ ...prev, isAgreedToTerms: true }));
+        onNext(7);
+      } else {
+        onNext();
+      }
+    } catch (error) {
+      console.error('(socialsignstep3)', error);
+      alert('기관 정보를 확인하는 중 오류가 발생했습니다.');
+    }
+  };
 
   return (
     <StepWrapper>
@@ -24,21 +65,17 @@ export const SocialStep3 = ({
         </span>
       </Header>
       <SearchContainer>
-        <SocialSearchInput />
+        <SocialSearchInput onInstitutionSelect={handleInstitutionSelect} />
       </SearchContainer>
-      <ButtonContainer>
-        <Button
-          variant={'blue'}
-          height="52px"
-          onClick={() => {
-            if (onNext) {
-              onNext();
-            }
-          }}
-        >
-          다음 단계로 이동
-        </Button>
-      </ButtonContainer>
+      <Border />
+      <Button
+        variant={'blue'}
+        height="52px"
+        onClick={handleNextStep}
+        style={{ margin: '20px 0px' }}
+      >
+        다음 단계로 이동
+      </Button>
     </StepWrapper>
   );
 };
@@ -87,14 +124,10 @@ const SearchContainer = styled.div`
   flex-direction: column;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
-  box-sizing: border-box;
-  width: 100%;
+const Border = styled.div`
+  width: 100vw;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  margin-left: -20px;
+  margin-top: 390px;
 `;
