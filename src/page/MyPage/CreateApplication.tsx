@@ -196,7 +196,7 @@ const CreateApplication = () => {
             <ArrowLeft />
           </NavLeft>
         }
-        center={<NavCenter>신청서 등록</NavCenter>}
+        center={<NavCenter>신청서 등록하기</NavCenter>}
         color="white"
       />
 
@@ -303,10 +303,15 @@ const CreateApplication = () => {
               )}
             </AreasWrapper>
             <Button
-              variant="blue"
+              variant={
+                selectedCity && selectedGu && selectedDong ? 'blue' : 'disabled'
+              }
               width=""
               height="52px"
               onClick={handleSelectBtn}
+              disabled={
+                selectedCity && selectedGu && selectedDong ? false : true
+              }
             >
               선택하기
             </Button>
@@ -442,7 +447,7 @@ const CreateApplication = () => {
             navigate('/mypage');
           }}
         >
-          경력서 등록하기
+          신청서 등록하기
         </Button>
       </LastWrapper>
     </Container>
@@ -576,6 +581,7 @@ const Border = styled.div`
 `;
 
 const LastWrapper = styled.div`
+  background: ${({ theme }) => theme.colors.white};
   margin-top: 24px;
 `;
 

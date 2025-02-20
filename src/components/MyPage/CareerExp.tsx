@@ -5,6 +5,8 @@ import { InputBox } from '../common/InputBox/InputBox';
 import { CareerDropdown } from './CareerDropdown';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as Add } from '@/assets/icons/ButtonPlus.svg';
+import { ReactComponent as Delete } from '@/assets/icons/ButtonMinus.svg';
 
 interface Experience {
   workInstitution: string;
@@ -12,11 +14,12 @@ interface Experience {
 }
 
 interface CareerExpProps {
+  edit: boolean;
   title: string;
   careerDetails?: Experience[];
 }
 
-export const CareerExp = ({ title, careerDetails }: CareerExpProps) => {
+export const CareerExp = ({ edit, title, careerDetails }: CareerExpProps) => {
   const navigate = useNavigate();
 
   const [experiences, setExperiences] = useState<Experience[]>([
@@ -124,9 +127,15 @@ export const CareerExp = ({ title, careerDetails }: CareerExpProps) => {
       ))}
 
       <ButtonWrapper>
-        <AddButton onClick={addExp}>추가</AddButton>
+        <AddButton onClick={addExp}>
+          <Add />
+          경력 추가하기
+        </AddButton>
         {experiences.length > 1 && (
-          <DeleteButton onClick={deleteExp}>삭제</DeleteButton>
+          <DeleteButton onClick={deleteExp}>
+            <Delete />
+            경력 삭제하기
+          </DeleteButton>
         )}
       </ButtonWrapper>
 
@@ -134,9 +143,7 @@ export const CareerExp = ({ title, careerDetails }: CareerExpProps) => {
         <>
           <Border />
           <Button
-            variant={
-              experiences[0].workInstitution === '' ? 'disabled' : 'blue'
-            }
+            variant={experiences[0].workInstitution ? 'blue' : 'disabled'}
             width=""
             height="52px"
             style={{ margin: '20px 0px' }}
@@ -144,8 +151,9 @@ export const CareerExp = ({ title, careerDetails }: CareerExpProps) => {
               putData();
               navigate('/mypage');
             }}
+            disabled={experiences[0]?.workInstitution ? false : true}
           >
-            경력서 등록하기
+            경력서 수정하기
           </Button>
         </>
       ) : (
@@ -159,9 +167,7 @@ export const CareerExp = ({ title, careerDetails }: CareerExpProps) => {
         >
           <Border />
           <Button
-            variant={
-              experiences[0].workInstitution === '' ? 'disabled' : 'blue'
-            }
+            variant={experiences[0]?.workInstitution ? 'blue' : 'disabled'}
             width=""
             height="52px"
             style={{ marginTop: '20px' }}
@@ -169,8 +175,9 @@ export const CareerExp = ({ title, careerDetails }: CareerExpProps) => {
               putData();
               navigate('/mypage');
             }}
+            disabled={experiences[0]?.workInstitution ? false : true}
           >
-            경력서 등록하기
+            {edit ? '경력서 수정하기' : '경력서 등록하기'}
           </Button>
         </div>
       )}
@@ -233,7 +240,7 @@ const ButtonWrapper = styled.div`
 
 const DeleteButton = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-radius: 12px;
   background: ${({ theme }) => theme.colors.subOrange};

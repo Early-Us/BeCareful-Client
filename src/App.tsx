@@ -22,6 +22,11 @@ import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import { ApplyDetailPage } from '@/page/Apply/ApplyDetailPage';
 import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
+import ElderlyPage from './page/Elderly/ElderlyPage';
+import EdlerlyCreatePage from './page/Elderly/ElderlyCreatePage';
+import ChatListPage from './page/Chat/ChatListPage';
+import ChatRoomPage from './page/Chat/ChatRoomPage';
+import MatchingStatus from './page/Matching/MatchingStatus';
 
 function App() {
   return (
@@ -55,6 +60,9 @@ function App() {
 
       <Route path="/home/social" element={<SocialHomePage />} />
 
+      <Route path="/elderly" element={<ElderlyPage />} />
+      <Route path="/elderly/create" element={<EdlerlyCreatePage />} />
+
       <Route path="/matching" element={<MatchingApplyPage />} />
       <Route path="/matching/elder-apply" element={<MatchingElderPage />} />
       <Route
@@ -66,6 +74,10 @@ function App() {
         element={<CareGiverInfoPage />}
       />
       <Route path="/matching/caregiver" element={<CareGiverInfoPage />} />
+      <Route path="/matching/dashboard" element={<MatchingStatus />} />
+
+      <Route path="/chatList" element={<ChatListPage />} />
+      <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
     </Routes>
   );
 }

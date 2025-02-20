@@ -1,4 +1,4 @@
-export const Area = {
+export const AreaSocial = {
   city: [
     {
       name: '서울',
@@ -6,7 +6,6 @@ export const Area = {
         {
           name: '강남구',
           dong: [
-            '전체',
             '개포동',
             '개포1동',
             '개포2동',
@@ -43,7 +42,6 @@ export const Area = {
         {
           name: '강동구',
           dong: [
-            '전체',
             '강일동',
             '고덕동',
             '고덕1동',
@@ -75,7 +73,6 @@ export const Area = {
         {
           name: '강북구',
           dong: [
-            '전체',
             '미아동',
             '미아1동',
             '미아2동',
@@ -98,7 +95,6 @@ export const Area = {
         {
           name: '강서구',
           dong: [
-            '전체',
             '미아동',
             '미아1동',
             '미아2동',
@@ -121,7 +117,6 @@ export const Area = {
         {
           name: '관악구',
           dong: [
-            '전체',
             '남현동',
             '봉천동',
             '봉천본동',
@@ -158,7 +153,6 @@ export const Area = {
         {
           name: '광진구',
           dong: [
-            '전체',
             '광장동',
             '구의동',
             '구의1동',
@@ -182,7 +176,6 @@ export const Area = {
         {
           name: '구로구',
           dong: [
-            '전체',
             '가리봉동',
             '개봉동',
             '개봉1동',
@@ -211,7 +204,6 @@ export const Area = {
         {
           name: '금천구',
           dong: [
-            '전체',
             '가산동',
             '독산동',
             '독산제1동',
@@ -229,7 +221,6 @@ export const Area = {
         {
           name: '노원구',
           dong: [
-            '전체',
             '공릉동',
             '공릉1동',
             '공릉2동',
@@ -259,7 +250,6 @@ export const Area = {
         {
           name: '도봉구',
           dong: [
-            '전체',
             '도봉동',
             '방학동',
             '방학1동',
@@ -279,7 +269,6 @@ export const Area = {
         {
           name: '동대문구',
           dong: [
-            '전체',
             '경희궁동',
             '신설동',
             '용두동',
@@ -308,7 +297,6 @@ export const Area = {
         {
           name: '동작구',
           dong: [
-            '전체',
             '노량진동',
             '노량진1동',
             '노량진2동',
@@ -333,7 +321,6 @@ export const Area = {
         {
           name: '마포구',
           dong: [
-            '전체',
             '공덕동',
             '공덕1동',
             '공덕2동',
@@ -369,7 +356,6 @@ export const Area = {
         {
           name: '서대문구',
           dong: [
-            '전체',
             '연희동',
             '연희1동',
             '연희2동',
@@ -397,7 +383,6 @@ export const Area = {
         {
           name: '서초구',
           dong: [
-            '전체',
             '방배동',
             '방배1동',
             '방배2동',
@@ -424,7 +409,6 @@ export const Area = {
         {
           name: '성동구',
           dong: [
-            '전체',
             '성수동',
             '성수1동',
             '성수2동',
@@ -448,7 +432,6 @@ export const Area = {
         {
           name: '성북구',
           dong: [
-            '전체',
             '삼선동',
             '삼선1동',
             '삼선2동',
@@ -478,7 +461,6 @@ export const Area = {
         {
           name: '송파구',
           dong: [
-            '전체',
             '가락동',
             '가락1동',
             '가락2동',
@@ -508,7 +490,6 @@ export const Area = {
         {
           name: '양천구',
           dong: [
-            '전체',
             '목동',
             '목동1동',
             '목동2동',
@@ -533,7 +514,6 @@ export const Area = {
         {
           name: '영등포구',
           dong: [
-            '전체',
             '영등포동',
             '영등포1동',
             '영등포2동',
@@ -563,7 +543,6 @@ export const Area = {
         {
           name: '용산구',
           dong: [
-            '전체',
             '남영동',
             '남영1동',
             '남영2동',
@@ -593,7 +572,6 @@ export const Area = {
         {
           name: '은평구',
           dong: [
-            '전체',
             '불광동',
             '불광1동',
             '불광2동',
@@ -623,7 +601,6 @@ export const Area = {
         {
           name: '종로구',
           dong: [
-            '전체',
             '청운효자동',
             '사직동',
             '통의동',
@@ -651,7 +628,6 @@ export const Area = {
         {
           name: '중구',
           dong: [
-            '전체',
             '회현동',
             '회현1동',
             '회현2동',
@@ -679,7 +655,6 @@ export const Area = {
         {
           name: '중랑구',
           dong: [
-            '전체',
             '상봉동',
             '상봉1동',
             '상봉2동',
@@ -712,7 +687,6 @@ export const Area = {
         {
           name: '가평군',
           dong: [
-            '전체',
             '가평읍',
             '청평읍',
             '상면',
@@ -726,7 +700,6 @@ export const Area = {
         {
           name: '고양시',
           dong: [
-            '전체',
             '행신동',
             '행신1동',
             '행신2동',
@@ -768,7 +741,6 @@ export const Area = {
         {
           name: '광명시',
           dong: [
-            '전체',
             '광명동',
             '광명1동',
             '광명2동',
@@ -788,7 +760,6 @@ export const Area = {
         {
           name: '광주시',
           dong: [
-            '전체',
             '광남동',
             '광남1동',
             '광남2동',
@@ -804,7 +775,6 @@ export const Area = {
         {
           name: '구리시',
           dong: [
-            '전체',
             '교문동',
             '교문1동',
             '교문2동',
@@ -822,7 +792,6 @@ export const Area = {
         {
           name: '군포시',
           dong: [
-            '전체',
             '군포1동',
             '군포2동',
             '금정동',
@@ -842,7 +811,6 @@ export const Area = {
         {
           name: '김포시',
           dong: [
-            '전체',
             '김포1동',
             '김포2동',
             '김포3동',
@@ -865,7 +833,6 @@ export const Area = {
         {
           name: '남양주시',
           dong: [
-            '전체',
             '진접읍',
             '진접1동',
             '진접2동',
@@ -890,7 +857,6 @@ export const Area = {
         {
           name: '동두천시',
           dong: [
-            '전체',
             '동두천1동',
             '동두천2동',
             '동두천3동',
@@ -908,7 +874,6 @@ export const Area = {
         {
           name: '부천시',
           dong: [
-            '전체',
             '원미동',
             '원미1동',
             '원미2동',
@@ -932,7 +897,6 @@ export const Area = {
         {
           name: '성남시',
           dong: [
-            '전체',
             '수내동',
             '수내1동',
             '수내2동',
@@ -989,7 +953,6 @@ export const Area = {
         {
           name: '수원시',
           dong: [
-            '전체',
             '영통동',
             '영통1동',
             '영통2동',
@@ -1009,7 +972,6 @@ export const Area = {
         {
           name: '시흥시',
           dong: [
-            '전체',
             '시흥동',
             '시흥1동',
             '시흥2동',
@@ -1032,7 +994,6 @@ export const Area = {
         {
           name: '안산시',
           dong: [
-            '전체',
             '고잔동',
             '고잔1동',
             '고잔2동',
@@ -1053,7 +1014,6 @@ export const Area = {
         {
           name: '안성시',
           dong: [
-            '전체',
             '안성동',
             '안성1동',
             '안성2동',
@@ -1074,7 +1034,6 @@ export const Area = {
         {
           name: '안양시',
           dong: [
-            '전체',
             '평촌동',
             '평촌1동',
             '평촌2동',
@@ -1110,7 +1069,6 @@ export const Area = {
         {
           name: '양주시',
           dong: [
-            '전체',
             '양주동',
             '양주1동',
             '양주2동',
@@ -1131,7 +1089,6 @@ export const Area = {
         {
           name: '오산시',
           dong: [
-            '전체',
             '여주동',
             '여주1동',
             '여주2동',
@@ -1149,7 +1106,6 @@ export const Area = {
         {
           name: '용인시',
           dong: [
-            '전체',
             '기흥동',
             '기흥1동',
             '기흥2동',
@@ -1171,7 +1127,6 @@ export const Area = {
         {
           name: '의정부시',
           dong: [
-            '전체',
             '의정부1동',
             '의정부2동',
             '의정부3동',
@@ -1187,11 +1142,10 @@ export const Area = {
             '송산2동',
           ],
         },
-        { name: '이천시', dong: ['전체'] },
+        { name: '이천시', dong: [] },
         {
           name: '파주시',
           dong: [
-            '전체',
             '파주동',
             '파주1동',
             '파주2동',
@@ -1214,7 +1168,6 @@ export const Area = {
         {
           name: '계양구',
           dong: [
-            '전체',
             '계양동',
             '계양1동',
             '계양2동',
@@ -1238,7 +1191,6 @@ export const Area = {
         {
           name: '미추홀구',
           dong: [
-            '전체',
             '주안동',
             '주안1동',
             '주안2동',
@@ -1261,7 +1213,6 @@ export const Area = {
         {
           name: '남동구',
           dong: [
-            '전체',
             '남동동',
             '남동1동',
             '남동2동',
@@ -1282,7 +1233,6 @@ export const Area = {
         {
           name: '동구',
           dong: [
-            '전체',
             '송림동',
             '송림1동',
             '송림2동',
@@ -1303,7 +1253,6 @@ export const Area = {
         {
           name: '부평구',
           dong: [
-            '전체',
             '부평동',
             '부평1동',
             '부평2동',
@@ -1324,7 +1273,6 @@ export const Area = {
         {
           name: '서구',
           dong: [
-            '전체',
             '가정동',
             '가정1동',
             '가정2동',
@@ -1345,7 +1293,6 @@ export const Area = {
         {
           name: '연수구',
           dong: [
-            '전체',
             '연수동',
             '연수1동',
             '연수2동',
@@ -1366,7 +1313,6 @@ export const Area = {
         {
           name: '중구',
           dong: [
-            '전체',
             '인천동',
             '인천1동',
             '인천2동',
@@ -1384,7 +1330,6 @@ export const Area = {
         {
           name: '강화군',
           dong: [
-            '전체',
             '강화읍',
             '강화1동',
             '강화2동',
@@ -1411,7 +1356,6 @@ export const Area = {
         {
           name: '옹진군',
           dong: [
-            '전체',
             '영흥면',
             '영흥1동',
             '영흥2동',
@@ -1434,7 +1378,6 @@ export const Area = {
         {
           name: '대덕구',
           dong: [
-            '전체',
             '법동',
             '법1동',
             '법2동',
@@ -1458,7 +1401,6 @@ export const Area = {
         {
           name: '동구',
           dong: [
-            '전체',
             '가양동',
             '가양1동',
             '가양2동',
@@ -1479,7 +1421,6 @@ export const Area = {
         {
           name: '서구',
           dong: [
-            '전체',
             '가수원동',
             '가수원1동',
             '가수원2동',
@@ -1504,7 +1445,6 @@ export const Area = {
         {
           name: '유성구',
           dong: [
-            '전체',
             '봉명동',
             '봉명1동',
             '봉명2동',
@@ -1528,7 +1468,6 @@ export const Area = {
         {
           name: '중구',
           dong: [
-            '전체',
             '선화동',
             '선화1동',
             '선화2동',
@@ -1557,7 +1496,6 @@ export const Area = {
         {
           name: '남구',
           dong: [
-            '전체',
             '대명동',
             '대명1동',
             '대명2동',
@@ -1579,7 +1517,6 @@ export const Area = {
         {
           name: '달서구',
           dong: [
-            '전체',
             '본리동',
             '본리1동',
             '본리2동',
@@ -1603,7 +1540,6 @@ export const Area = {
         {
           name: '동구',
           dong: [
-            '전체',
             '신천동',
             '신천1동',
             '신천2동',
@@ -1627,7 +1563,6 @@ export const Area = {
         {
           name: '북구',
           dong: [
-            '전체',
             '침산동',
             '침산1동',
             '침산2동',
@@ -1651,7 +1586,6 @@ export const Area = {
         {
           name: '서구',
           dong: [
-            '전체',
             '평리동',
             '평리1동',
             '평리2동',
@@ -1675,7 +1609,6 @@ export const Area = {
         {
           name: '수성구',
           dong: [
-            '전체',
             '범어동',
             '범어1동',
             '범어2동',
@@ -1699,7 +1632,6 @@ export const Area = {
         {
           name: '중구',
           dong: [
-            '전체',
             '동인동',
             '동인1동',
             '동인2동',
@@ -1723,7 +1655,6 @@ export const Area = {
         {
           name: '달성군',
           dong: [
-            '전체',
             '화원읍',
             '화원1동',
             '화원2동',
@@ -1752,7 +1683,6 @@ export const Area = {
         {
           name: '강서구',
           dong: [
-            '전체',
             '가락동',
             '가락1동',
             '가락2동',
@@ -1773,7 +1703,6 @@ export const Area = {
         {
           name: '금정구',
           dong: [
-            '전체',
             '구서동',
             '구서1동',
             '구서2동',
@@ -1794,7 +1723,6 @@ export const Area = {
         {
           name: '남구',
           dong: [
-            '전체',
             '대연동',
             '대연1동',
             '대연2동',
@@ -1815,7 +1743,6 @@ export const Area = {
         {
           name: '동구',
           dong: [
-            '전체',
             '좌천동',
             '좌천1동',
             '좌천2동',
@@ -1836,7 +1763,6 @@ export const Area = {
         {
           name: '동래구',
           dong: [
-            '전체',
             '온천동',
             '온천1동',
             '온천2동',
@@ -1857,7 +1783,6 @@ export const Area = {
         {
           name: '부산진구',
           dong: [
-            '전체',
             '부전동',
             '부전1동',
             '부전2동',
@@ -1878,7 +1803,6 @@ export const Area = {
         {
           name: '북구',
           dong: [
-            '전체',
             '덕천동',
             '덕천1동',
             '덕천2동',
@@ -1899,7 +1823,6 @@ export const Area = {
         {
           name: '사상구',
           dong: [
-            '전체',
             '괘법동',
             '괘법1동',
             '괘법2동',
@@ -1920,7 +1843,6 @@ export const Area = {
         {
           name: '사하구',
           dong: [
-            '전체',
             '하단동',
             '하단1동',
             '하단2동',
@@ -1941,7 +1863,6 @@ export const Area = {
         {
           name: '서구',
           dong: [
-            '전체',
             '서대신동',
             '서대신1동',
             '서대신2동',
@@ -1962,7 +1883,6 @@ export const Area = {
         {
           name: '수영구',
           dong: [
-            '전체',
             '민락동',
             '민락1동',
             '민락2동',
@@ -1983,7 +1903,6 @@ export const Area = {
         {
           name: '연제구',
           dong: [
-            '전체',
             '연산동',
             '연산1동',
             '연산2동',
@@ -2000,7 +1919,6 @@ export const Area = {
         {
           name: '영도구',
           dong: [
-            '전체',
             '영선동',
             '영선1동',
             '영선2동',
@@ -2021,7 +1939,6 @@ export const Area = {
         {
           name: '중구',
           dong: [
-            '전체',
             '중앙동',
             '중앙1동',
             '중앙2동',
@@ -2042,7 +1959,6 @@ export const Area = {
         {
           name: '해운대구',
           dong: [
-            '전체',
             '해운대동',
             '해운대1동',
             '해운대2동',
@@ -2063,7 +1979,6 @@ export const Area = {
         {
           name: '기장군',
           dong: [
-            '전체',
             '기장읍',
             '기장1동',
             '기장2동',
@@ -2086,7 +2001,6 @@ export const Area = {
         {
           name: '남구',
           dong: [
-            '전체',
             '달동',
             '달1동',
             '달2동',
@@ -2107,7 +2021,6 @@ export const Area = {
         {
           name: '동구',
           dong: [
-            '전체',
             '방어동',
             '방어1동',
             '방어2동',
@@ -2128,7 +2041,6 @@ export const Area = {
         {
           name: '북구',
           dong: [
-            '전체',
             '천곡동',
             '천곡1동',
             '천곡2동',
@@ -2149,7 +2061,6 @@ export const Area = {
         {
           name: '중구',
           dong: [
-            '전체',
             '성남동',
             '성남1동',
             '성남2동',
@@ -2170,7 +2081,6 @@ export const Area = {
         {
           name: '울주군',
           dong: [
-            '전체',
             '범서읍',
             '범서1동',
             '범서2동',
@@ -2196,7 +2106,6 @@ export const Area = {
         {
           name: '광산구',
           dong: [
-            '전체',
             '송정동',
             '송정1동',
             '송정2동',
@@ -2220,7 +2129,6 @@ export const Area = {
         {
           name: '남구',
           dong: [
-            '전체',
             '주월동',
             '주월1동',
             '주월2동',
@@ -2241,7 +2149,6 @@ export const Area = {
         {
           name: '동구',
           dong: [
-            '전체',
             '학동',
             '학1동',
             '학2동',
@@ -2262,7 +2169,6 @@ export const Area = {
         {
           name: '북구',
           dong: [
-            '전체',
             '문흥동',
             '문흥1동',
             '문흥2동',
@@ -2283,7 +2189,6 @@ export const Area = {
         {
           name: '서구',
           dong: [
-            '전체',
             '화정동',
             '화정1동',
             '화정2동',
@@ -2306,170 +2211,170 @@ export const Area = {
     {
       name: '강원도',
       gu: [
-        { name: '강릉시', dong: ['전체'] },
-        { name: '동해시', dong: ['전체'] },
-        { name: '삼척시', dong: ['전체'] },
-        { name: '속초시', dong: ['전체'] },
-        { name: '원주시', dong: ['전체'] },
-        { name: '춘천시', dong: ['전체'] },
-        { name: '태백시', dong: ['전체'] },
-        { name: '고성군', dong: ['전체'] },
-        { name: '양구군', dong: ['전체'] },
-        { name: '양양군', dong: ['전체'] },
-        { name: '영월군', dong: ['전체'] },
-        { name: '인제군', dong: ['전체'] },
-        { name: '정선군', dong: ['전체'] },
-        { name: '철원군', dong: ['전체'] },
-        { name: '평창군', dong: ['전체'] },
-        { name: '홍천군', dong: ['전체'] },
-        { name: '화천군', dong: ['전체'] },
-        { name: '횡성군', dong: ['전체'] },
+        { name: '강릉시', dong: [] },
+        { name: '동해시', dong: [] },
+        { name: '삼척시', dong: [] },
+        { name: '속초시', dong: [] },
+        { name: '원주시', dong: [] },
+        { name: '춘천시', dong: [] },
+        { name: '태백시', dong: [] },
+        { name: '고성군', dong: [] },
+        { name: '양구군', dong: [] },
+        { name: '양양군', dong: [] },
+        { name: '영월군', dong: [] },
+        { name: '인제군', dong: [] },
+        { name: '정선군', dong: [] },
+        { name: '철원군', dong: [] },
+        { name: '평창군', dong: [] },
+        { name: '홍천군', dong: [] },
+        { name: '화천군', dong: [] },
+        { name: '횡성군', dong: [] },
       ],
     },
     {
       name: '충청북도',
       gu: [
-        { name: '제천시', dong: ['전체'] },
-        { name: '청주시', dong: ['전체'] },
-        { name: '충주시', dong: ['전체'] },
-        { name: '괴산군', dong: ['전체'] },
-        { name: '단양군', dong: ['전체'] },
-        { name: '보은군', dong: ['전체'] },
-        { name: '영동군', dong: ['전체'] },
-        { name: '옥천군', dong: ['전체'] },
-        { name: '음성군', dong: ['전체'] },
-        { name: '증평군', dong: ['전체'] },
-        { name: '진천군', dong: ['전체'] },
-        { name: '청원군', dong: ['전체'] },
+        { name: '제천시', dong: [] },
+        { name: '청주시', dong: [] },
+        { name: '충주시', dong: [] },
+        { name: '괴산군', dong: [] },
+        { name: '단양군', dong: [] },
+        { name: '보은군', dong: [] },
+        { name: '영동군', dong: [] },
+        { name: '옥천군', dong: [] },
+        { name: '음성군', dong: [] },
+        { name: '증평군', dong: [] },
+        { name: '진천군', dong: [] },
+        { name: '청원군', dong: [] },
       ],
     },
 
     {
       name: '충청남도',
       gu: [
-        { name: '계룡시', dong: ['전체'] },
-        { name: '공주시', dong: ['전체'] },
-        { name: '논산시', dong: ['전체'] },
-        { name: '보령시', dong: ['전체'] },
-        { name: '서산시', dong: ['전체'] },
-        { name: '아산시', dong: ['전체'] },
-        { name: '천안시', dong: ['전체'] },
-        { name: '금산군', dong: ['전체'] },
-        { name: '당진군', dong: ['전체'] },
-        { name: '부여군', dong: ['전체'] },
-        { name: '서천군', dong: ['전체'] },
-        { name: '연기군', dong: ['전체'] },
-        { name: '예산군', dong: ['전체'] },
-        { name: '청양군', dong: ['전체'] },
-        { name: '태안군', dong: ['전체'] },
-        { name: '홍성군', dong: ['전체'] },
+        { name: '계룡시', dong: [] },
+        { name: '공주시', dong: [] },
+        { name: '논산시', dong: [] },
+        { name: '보령시', dong: [] },
+        { name: '서산시', dong: [] },
+        { name: '아산시', dong: [] },
+        { name: '천안시', dong: [] },
+        { name: '금산군', dong: [] },
+        { name: '당진군', dong: [] },
+        { name: '부여군', dong: [] },
+        { name: '서천군', dong: [] },
+        { name: '연기군', dong: [] },
+        { name: '예산군', dong: [] },
+        { name: '청양군', dong: [] },
+        { name: '태안군', dong: [] },
+        { name: '홍성군', dong: [] },
       ],
     },
 
     {
       name: '경상북도',
       gu: [
-        { name: '경산시', dong: ['전체'] },
-        { name: '경주시', dong: ['전체'] },
-        { name: '구미시', dong: ['전체'] },
-        { name: '김천시', dong: ['전체'] },
-        { name: '문경시', dong: ['전체'] },
-        { name: '상주시', dong: ['전체'] },
-        { name: '안동시', dong: ['전체'] },
-        { name: '영주시', dong: ['전체'] },
-        { name: '영천시', dong: ['전체'] },
-        { name: '포항시', dong: ['전체'] },
-        { name: '고령군', dong: ['전체'] },
-        { name: '군위군', dong: ['전체'] },
-        { name: '봉화군', dong: ['전체'] },
-        { name: '성주군', dong: ['전체'] },
-        { name: '영덕군', dong: ['전체'] },
-        { name: '영양군', dong: ['전체'] },
-        { name: '예천군', dong: ['전체'] },
-        { name: '울릉군', dong: ['전체'] },
-        { name: '울진군', dong: ['전체'] },
-        { name: '의성군', dong: ['전체'] },
-        { name: '청도군', dong: ['전체'] },
-        { name: '청송군', dong: ['전체'] },
-        { name: '칠곡군', dong: ['전체'] },
+        { name: '경산시', dong: [] },
+        { name: '경주시', dong: [] },
+        { name: '구미시', dong: [] },
+        { name: '김천시', dong: [] },
+        { name: '문경시', dong: [] },
+        { name: '상주시', dong: [] },
+        { name: '안동시', dong: [] },
+        { name: '영주시', dong: [] },
+        { name: '영천시', dong: [] },
+        { name: '포항시', dong: [] },
+        { name: '고령군', dong: [] },
+        { name: '군위군', dong: [] },
+        { name: '봉화군', dong: [] },
+        { name: '성주군', dong: [] },
+        { name: '영덕군', dong: [] },
+        { name: '영양군', dong: [] },
+        { name: '예천군', dong: [] },
+        { name: '울릉군', dong: [] },
+        { name: '울진군', dong: [] },
+        { name: '의성군', dong: [] },
+        { name: '청도군', dong: [] },
+        { name: '청송군', dong: [] },
+        { name: '칠곡군', dong: [] },
       ],
     },
     {
       name: '경상남도',
       gu: [
-        { name: '거제시', dong: ['전체'] },
-        { name: '김해시', dong: ['전체'] },
-        { name: '마산시', dong: ['전체'] },
-        { name: '밀양시', dong: ['전체'] },
-        { name: '사천시', dong: ['전체'] },
-        { name: '양산시', dong: ['전체'] },
-        { name: '진주시', dong: ['전체'] },
-        { name: '진해시', dong: ['전체'] },
-        { name: '창원시', dong: ['전체'] },
-        { name: '통영시', dong: ['전체'] },
-        { name: '거창군', dong: ['전체'] },
-        { name: '고성군', dong: ['전체'] },
-        { name: '남해군', dong: ['전체'] },
-        { name: '산청군', dong: ['전체'] },
-        { name: '의령군', dong: ['전체'] },
-        { name: '창녕군', dong: ['전체'] },
-        { name: '하동군', dong: ['전체'] },
-        { name: '함안군', dong: ['전체'] },
-        { name: '함양군', dong: ['전체'] },
-        { name: '합천군', dong: ['전체'] },
+        { name: '거제시', dong: [] },
+        { name: '김해시', dong: [] },
+        { name: '마산시', dong: [] },
+        { name: '밀양시', dong: [] },
+        { name: '사천시', dong: [] },
+        { name: '양산시', dong: [] },
+        { name: '진주시', dong: [] },
+        { name: '진해시', dong: [] },
+        { name: '창원시', dong: [] },
+        { name: '통영시', dong: [] },
+        { name: '거창군', dong: [] },
+        { name: '고성군', dong: [] },
+        { name: '남해군', dong: [] },
+        { name: '산청군', dong: [] },
+        { name: '의령군', dong: [] },
+        { name: '창녕군', dong: [] },
+        { name: '하동군', dong: [] },
+        { name: '함안군', dong: [] },
+        { name: '함양군', dong: [] },
+        { name: '합천군', dong: [] },
       ],
     },
     {
       name: '전라북도',
       gu: [
-        { name: '군산시', dong: ['전체'] },
-        { name: '김제시', dong: ['전체'] },
-        { name: '남원시', dong: ['전체'] },
-        { name: '익산시', dong: ['전체'] },
-        { name: '전주시', dong: ['전체'] },
-        { name: '정읍시', dong: ['전체'] },
-        { name: '고창군', dong: ['전체'] },
-        { name: '무주군', dong: ['전체'] },
-        { name: '부안군', dong: ['전체'] },
-        { name: '순창군', dong: ['전체'] },
-        { name: '완주군', dong: ['전체'] },
-        { name: '임실군', dong: ['전체'] },
-        { name: '장수군', dong: ['전체'] },
-        { name: '진안군', dong: ['전체'] },
+        { name: '군산시', dong: [] },
+        { name: '김제시', dong: [] },
+        { name: '남원시', dong: [] },
+        { name: '익산시', dong: [] },
+        { name: '전주시', dong: [] },
+        { name: '정읍시', dong: [] },
+        { name: '고창군', dong: [] },
+        { name: '무주군', dong: [] },
+        { name: '부안군', dong: [] },
+        { name: '순창군', dong: [] },
+        { name: '완주군', dong: [] },
+        { name: '임실군', dong: [] },
+        { name: '장수군', dong: [] },
+        { name: '진안군', dong: [] },
       ],
     },
     {
       name: '전라남도',
       gu: [
-        { name: '광양시', dong: ['전체'] },
-        { name: '나주시', dong: ['전체'] },
-        { name: '목포시', dong: ['전체'] },
-        { name: '순천시', dong: ['전체'] },
-        { name: '여수시', dong: ['전체'] },
-        { name: '강진군', dong: ['전체'] },
-        { name: '고흥군', dong: ['전체'] },
-        { name: '곡성군', dong: ['전체'] },
-        { name: '구례군', dong: ['전체'] },
-        { name: '담양군', dong: ['전체'] },
-        { name: '무안군', dong: ['전체'] },
-        { name: '보성군', dong: ['전체'] },
-        { name: '신안군', dong: ['전체'] },
-        { name: '영광군', dong: ['전체'] },
-        { name: '영암군', dong: ['전체'] },
-        { name: '완도군', dong: ['전체'] },
-        { name: '장성군', dong: ['전체'] },
-        { name: '장흥군', dong: ['전체'] },
-        { name: '진도군', dong: ['전체'] },
-        { name: '함평군', dong: ['전체'] },
-        { name: '해남군', dong: ['전체'] },
-        { name: '화순군', dong: ['전체'] },
+        { name: '광양시', dong: [] },
+        { name: '나주시', dong: [] },
+        { name: '목포시', dong: [] },
+        { name: '순천시', dong: [] },
+        { name: '여수시', dong: [] },
+        { name: '강진군', dong: [] },
+        { name: '고흥군', dong: [] },
+        { name: '곡성군', dong: [] },
+        { name: '구례군', dong: [] },
+        { name: '담양군', dong: [] },
+        { name: '무안군', dong: [] },
+        { name: '보성군', dong: [] },
+        { name: '신안군', dong: [] },
+        { name: '영광군', dong: [] },
+        { name: '영암군', dong: [] },
+        { name: '완도군', dong: [] },
+        { name: '장성군', dong: [] },
+        { name: '장흥군', dong: [] },
+        { name: '진도군', dong: [] },
+        { name: '함평군', dong: [] },
+        { name: '해남군', dong: [] },
+        { name: '화순군', dong: [] },
       ],
     },
     {
       name: '제주도',
       gu: [
-        { name: '서귀포시', dong: ['전체'] },
-        { name: '제주시', dong: ['전체'] },
+        { name: '서귀포시', dong: [] },
+        { name: '제주시', dong: [] },
       ],
     },
   ],

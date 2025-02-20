@@ -1,47 +1,100 @@
 import styled from 'styled-components';
-import { Button } from '../common/Button/Button';
 import { useState } from 'react';
+import axios from 'axios';
 
-const HomeWorkCard = () => {
+interface WorkCardProps {
+  id: number;
+  name: string;
+  age: number;
+  gender: string;
+  profileImgUrl: string;
+  workDays: string;
+  workAddress: string;
+  careTypes: string;
+  healthCondition: string;
+  institutionName: string;
+  note: string;
+}
+
+const HomeWorkCard = ({
+  id,
+  name,
+  age,
+  gender,
+  profileImgUrl,
+  workDays,
+  workAddress,
+  careTypes,
+  healthCondition,
+  institutionName,
+  note,
+}: WorkCardProps) => {
   const [textCount, setTextCount] = useState(0);
-  const [memoContent, setMemoContent] = useState('');
+  const [memoContent, setMemoContent] = useState(note);
+
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const putData = async () => {
+    let accessToken;
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    try {
+      const response = await axios.put(
+        `${apiBaseURL}/caregiver/my/completed-matching-list/${id}`,
+        {
+          note: memoContent,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      console.log(response);
+    } catch (e) {
+      console.log('홈 나의 일자리 메모 저장 에러: ', e);
+    }
+  };
 
   return (
     <CardContainer>
       <PersonWrapper>
         <InfoWrapper>
           <NameWrapper>
-            <Name>김옥자</Name>
+            <Name>{name}</Name>
             <AgeGenderWrapper>
-              <Detail>65세</Detail>
+              <Detail>{age}세</Detail>
               <Border />
-              <Detail>여</Detail>
+              <Detail>{gender}</Detail>
             </AgeGenderWrapper>
           </NameWrapper>
           <LabelWrapper>
             <Label>
               <LabelTitle>근무시간</LabelTitle>
-              <LabelDetail>목,일</LabelDetail>
+              <LabelDetail>{workDays}</LabelDetail>
             </Label>
             <Label>
               <LabelTitle>근무장소</LabelTitle>
-              <LabelDetail>감길동</LabelDetail>
+              <LabelDetail>{workAddress}</LabelDetail>
             </Label>
             <Label>
               <LabelTitle>케어항목</LabelTitle>
-              <LabelDetail>이동보조, 식사보조</LabelDetail>
+              <LabelDetail>{careTypes}</LabelDetail>
             </Label>
             <Label>
               <LabelTitle>건강상태</LabelTitle>
-              <LabelDetail>당뇨, 신장질환</LabelDetail>
+              <LabelDetail>{healthCondition}</LabelDetail>
             </Label>
             <Label>
               <LabelTitle>기관이름</LabelTitle>
-              <LabelDetail>사랑행복주간보호센터</LabelDetail>
+              <LabelDetail>{institutionName}</LabelDetail>
             </Label>
           </LabelWrapper>
         </InfoWrapper>
-        <PersonImg />
+        <PersonImg src={profileImgUrl} />
       </PersonWrapper>
       <MemoWrapper>
         <MemoLabel htmlFor="memo">메모</MemoLabel>
@@ -59,10 +112,8 @@ const HomeWorkCard = () => {
           <MemoCount>{textCount}/200</MemoCount>
         </MemoFieldWrapper>
         <Button
-          variant="blue2"
-          width=""
-          height="36px"
           onClick={() => {
+            putData();
             console.log(memoContent);
           }}
         >
@@ -160,8 +211,6 @@ const PersonImg = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 12px;
-
-  border: 1px solid;
 `;
 
 const MemoWrapper = styled.div`
@@ -218,4 +267,14 @@ const MemoCount = styled.label`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   right: 16px;
   bottom: 16px;
+`;
+
+const Button = styled.button`
+  background-color: ${({ theme }) => theme.colors.subBlue};
+  color: ${({ theme }) => theme.colors.mainBlue};
+  height: 36px;
+  border-radius: 12px;
+  line-height: 1.4;
+  font-size: ${({ theme }) => theme.typography.fontSize.body4};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;

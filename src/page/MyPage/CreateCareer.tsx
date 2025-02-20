@@ -11,8 +11,8 @@ const CreateCareer = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const tabData = [
-    { name: '신입', content: <CareerNew title={title} /> },
-    { name: '경력', content: <CareerExp title={title} /> },
+    { name: '신입', content: <CareerNew edit={false} title={title} /> },
+    { name: '경력', content: <CareerExp edit={false} title={title} /> },
   ];
 
   return (
