@@ -1,11 +1,40 @@
 import { NavBar } from '@/components/common/NavBar';
 import { SocialTabBar } from '@/components/common/SocialTabBar';
 import { ElderlyCard } from '@/components/Elderly/ElderlyCard';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+interface ElderlyInfo {
+  elderlyId: number;
+  name: string;
+  age: number;
+  gender: string;
+  profileImageUrl: string;
+  careLevel: string;
+  caregiverNum: number;
+  isMatching: boolean;
+}
+
 const ElderlyPage = () => {
   const navigate = useNavigate();
+  const [datas, setDatas] = useState<ElderlyInfo[]>([]);
+
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const getData = async () => {
+    try {
+      const response = await axios.get(`${apiBaseURL}/elderly/list`);
+      console.log(response.data);
+      setDatas(response.data);
+    } catch (e) {
+      console.log('어르신 목록 get 에러: ', e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  });
 
   return (
     <Container>
@@ -32,47 +61,17 @@ const ElderlyPage = () => {
       />
 
       <MainContent>
-        <Counting>총 20명</Counting>
-        <ElderlyCard
-          isMatching={false}
-          name="가나다"
-          age="65"
-          gender="여"
-          careLevel="4등급"
-          caregiver={2}
-        />
-        <ElderlyCard
-          isMatching={true}
-          name="가나다"
-          age="70"
-          gender="여"
-          careLevel="등급없음"
-          caregiver={0}
-        />
-        <ElderlyCard
-          isMatching={true}
-          name="가나다"
-          age="68"
-          gender="남"
-          careLevel="인지등급"
-          caregiver={2}
-        />
-        <ElderlyCard
-          isMatching={false}
-          name="가나다"
-          age="65"
-          gender="여"
-          careLevel="2등급"
-          caregiver={3}
-        />
-        <ElderlyCard
-          isMatching={true}
-          name="가나다"
-          age="68"
-          gender="남"
-          careLevel="5등급"
-          caregiver={0}
-        />
+        <Counting>총 {datas.length}명</Counting>
+        {datas.map((data) => (
+          <ElderlyCard
+            isMatching={data.isMatching}
+            name={data.name}
+            age={data.age}
+            gender={data.gender === 'FEMALE' ? '여' : '남'}
+            careLevel={data.careLevel}
+            caregiver={data.caregiverNum}
+          />
+        ))}
       </MainContent>
       <SocialTabBar />
     </Container>

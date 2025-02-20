@@ -4,7 +4,7 @@ import { ReactComponent as ElderList } from '@/assets/icons/elderly/ElderList.sv
 interface ElderlyCardProps {
   isMatching: boolean;
   name: string;
-  age: string;
+  age: number;
   gender: string;
   careLevel: string;
   caregiver: number;
