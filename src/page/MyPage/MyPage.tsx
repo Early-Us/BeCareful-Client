@@ -81,8 +81,10 @@ const MyPage = () => {
     if (localStorage.getItem('isAutoLogin')) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('isAutoLogin');
+      localStorage.removeItem('role');
     } else {
       localStorage.removeItem('isAutoLogin');
+      localStorage.removeItem('role');
     }
   };
 

@@ -20,6 +20,8 @@ import SocialHomePage from './page/HomeSocial/SocialHomePage';
 import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
 import ElderlyPage from './page/Elderly/ElderlyPage';
 import EdlerlyCreatePage from './page/Elderly/ElderlyCreatePage';
+import ChatListPage from './page/Chat/ChatListPage';
+import ChatRoomPage from './page/Chat/ChatRoomPage';
 
 function App() {
   return (
@@ -56,6 +58,9 @@ function App() {
       <Route path="/elderly/create" element={<EdlerlyCreatePage />} />
 
       <Route path="/matching" element={<MatchingApplyPage />} />
+
+      <Route path="/chatList" element={<ChatListPage />} />
+      <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
     </Routes>
   );
 }
