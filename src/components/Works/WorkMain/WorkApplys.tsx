@@ -89,7 +89,9 @@ const WorkApplys = ({
             checked={isToggleChecked}
             onChange={() => setIsToggleChecked((prev) => !prev)}
           />
-          <ToggleLabel>{isToggleChecked ? '신청중' : '미신청'}</ToggleLabel>
+          <ToggleLabel checked={isToggleChecked ?? false}>
+            {isToggleChecked ? '신청중' : '미신청'}
+          </ToggleLabel>
         </ToggleWrapper>
       </TitlesWrapper>
       <LabelsWrapper>
@@ -165,8 +167,9 @@ const ToggleWrapper = styled.div`
   gap: 4px;
 `;
 
-const ToggleLabel = styled.div`
-  color: ${({ theme }) => theme.colors.gray500};
+const ToggleLabel = styled.div<{ checked: boolean }>`
+  color: ${({ theme, checked }) =>
+    checked ? theme.colors.mainBlue : theme.colors.gray500};
   font-size: ${({ theme }) => theme.typography.fontSize.body3};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   text-align: center;
