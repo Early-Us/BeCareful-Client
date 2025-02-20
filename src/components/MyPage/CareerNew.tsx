@@ -5,11 +5,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 interface CareerNewProps {
+  edit: boolean;
   title: string;
   introduce?: string;
 }
 
-export const CareerNew = ({ title, introduce }: CareerNewProps) => {
+export const CareerNew = ({ edit, title, introduce }: CareerNewProps) => {
   const navigate = useNavigate();
 
   const [textCount, setTextCount] = useState(0);
@@ -84,8 +85,9 @@ export const CareerNew = ({ title, introduce }: CareerNewProps) => {
             putData();
             navigate('/mypage');
           }}
+          disabled={memoContent ? false : true}
         >
-          경력서 등록하기
+          {edit ? '경력서 수정하기' : '경력서 등록하기'}
         </Button>
       </ButtonWrapper>
     </Container>
@@ -132,13 +134,13 @@ const MemoField = styled.textarea`
   box-sizing: border-box;
 
   color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
+  font-size: ${({ theme }) => theme.typography.fontSize.body1};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   letter-spacing: -0.4px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray300};
-    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-size: ${({ theme }) => theme.typography.fontSize.body1};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     letter-spacing: -0.4px;
   }
@@ -170,6 +172,7 @@ const Border = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
+  background: ${({ theme }) => theme.colors.white};
   position: absolute;
   bottom: 20px;
   right: 20px;

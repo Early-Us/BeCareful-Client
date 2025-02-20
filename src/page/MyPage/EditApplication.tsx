@@ -88,6 +88,8 @@ const CreateApplication = () => {
     setIsModalOpen(false);
   };
 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   // 근무 지역
   const [selectedArea, setSelectedArea] = useState<Area[]>([]);
   const [selectedCity, setSelectedCity] = useState('');
@@ -247,7 +249,7 @@ const CreateApplication = () => {
             <ArrowLeft />
           </NavLeft>
         }
-        center={<NavCenter>신청서 등록</NavCenter>}
+        center={<NavCenter>신청서 수정하기</NavCenter>}
         color="white"
       />
 
@@ -491,12 +493,43 @@ const CreateApplication = () => {
           style={{ margin: '20px 0px' }}
           onClick={() => {
             putData();
-            navigate('/mypage');
+            setIsEditModalOpen(!isEditModalOpen);
           }}
         >
-          경력서 등록하기
+          신청서 수정하기
         </Button>
       </LastWrapper>
+
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+        <Modal2Wrapper>
+          <ModalXImg
+            onClick={() => {
+              setIsEditModalOpen(!isEditModalOpen);
+            }}
+          >
+            <ModalClose />
+          </ModalXImg>
+          <ModalLabelWrapper>
+            <ModalTitleLabel>신청서 수정이 완료되었어요!</ModalTitleLabel>
+            <ModalDetailLabel>
+              입력하신 조건으로 수정되었습니다.
+              <br />
+              새로운 조건에 맞는 공고가 표시됩니다.
+            </ModalDetailLabel>
+          </ModalLabelWrapper>
+          <Button
+            variant="blue"
+            width=""
+            height="52px"
+            onClick={() => {
+              setIsEditModalOpen(!isEditModalOpen);
+              navigate('/mypage');
+            }}
+          >
+            확인
+          </Button>
+        </Modal2Wrapper>
+      </Modal>
     </Container>
   );
 };
@@ -628,6 +661,7 @@ const Border = styled.div`
 `;
 
 const LastWrapper = styled.div`
+  background: ${({ theme }) => theme.colors.white};
   margin-top: 24px;
 `;
 
@@ -735,4 +769,44 @@ const AreaArea = styled.div<{ color: boolean }>`
   &:hover {
     color: ${({ theme }) => theme.colors.mainBlue};
   }
+`;
+
+const Modal2Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  background: ${({ theme }) => theme.colors.white};
+  height: 156px;
+  width: 272px;
+  border-radius: 12px;
+  padding: 56px 20px 20px 20px;
+`;
+
+const ModalXImg = styled.div`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+`;
+
+const ModalLabelWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const ModalTitleLabel = styled.label`
+  color: ${({ theme }) => theme.colors.gray900};
+  font-size: ${({ theme }) => theme.typography.fontSize.title3};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  text-align: center;
+`;
+
+const ModalDetailLabel = styled.label`
+  color: ${({ theme }) => theme.colors.gray500};
+  font-size: ${({ theme }) => theme.typography.fontSize.body2};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  text-align: center;
 `;

@@ -31,6 +31,10 @@ const CaregiverLogin = () => {
         },
       );
 
+      if (localStorage.getItem('role')) {
+        localStorage.removeItem('role');
+      }
+
       const token = response.data.accessToken;
       if (isAutoLoginChecked) {
         localStorage.setItem('accessToken', token);

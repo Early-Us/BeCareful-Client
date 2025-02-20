@@ -42,3 +42,5 @@ export const ChatButton = ({ matchingId, date }: ChatButtonProps) => {
     </Button>
   );
 };
+
+export default ChatButton;

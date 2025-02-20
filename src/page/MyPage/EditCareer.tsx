@@ -18,11 +18,13 @@ const EditCareer = () => {
   const tabData = [
     {
       name: '신입',
-      content: <CareerNew title={title} introduce={introduce} />,
+      content: <CareerNew edit={true} title={title} introduce={introduce} />,
     },
     {
       name: '경력',
-      content: <CareerExp title={title} careerDetails={careerDetails} />,
+      content: (
+        <CareerExp edit={true} title={title} careerDetails={careerDetails} />
+      ),
     },
   ];
 
@@ -66,7 +68,7 @@ const EditCareer = () => {
             <ArrowLeft />
           </NavLeft>
         }
-        center={<NavCenter>경력서 등록</NavCenter>}
+        center={<NavCenter>경력서 수정</NavCenter>}
         color="white"
       />
 

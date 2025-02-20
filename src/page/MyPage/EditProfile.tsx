@@ -4,7 +4,7 @@ import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/common/Button/Button';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InputBox } from '@/components/common/InputBox/InputBox';
 import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';
 import { CareGiverQualificationCard } from '@/components/common/QualificationCard/CaregiverQualificationCard';
@@ -12,6 +12,7 @@ import { NursingQualificationCard } from '@/components/common/QualificationCard/
 import { SocialQualificationCard } from '@/components/common/QualificationCard/SocialQualificationCard';
 import { Modal } from '@/components/SignUp/SignUpModal';
 import { Toggle } from '@/components/common/Toggle/Toggle';
+import axios from 'axios';
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -92,27 +93,58 @@ const EditProfile = () => {
   };
 
   // const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [newCheck, setNewCheck] = useState('');
+  // const [newPassword, setNewPassword] = useState('');
+  // const [newCheck, setNewCheck] = useState('');
   // const [isMatch, setIsMatch] = useState(true);
-  const [, setIsMatch] = useState(true);
-  const isValidPassword = (password: string) => {
-    const regex =
-      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
-    return regex.test(password);
+  // const [, setIsMatch] = useState(true);
+  // const isValidPassword = (password: string) => {
+  //   const regex =
+  //     /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+  //   return regex.test(password);
+  // };
+
+  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   setNewPassword(value);
+  //   setIsMatch(value === newCheck);
+  // };
+
+  // const handleCheckChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   setNewCheck(value);
+  //   setIsMatch(newPassword === value);
+  // };
+
+  const [profileImgURL, setProfileImgURL] = useState('');
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const getData = async () => {
+    let accessToken;
+
+    if (localStorage.getItem('isAutoLogin')) {
+      accessToken = localStorage.getItem('accessToken');
+    } else {
+      accessToken = sessionStorage.getItem('accessToken');
+    }
+
+    try {
+      const response = await axios.get(`${apiBaseURL}/caregiver/my`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      setProfileImgURL(response.data.profileImageUrl);
+      setIsCarChecked(response.data.isHavingCar);
+      setIsEduChecked(response.data.isCompleteDementiaEducation);
+      console.log(response.data);
+    } catch (e) {
+      console.log('마이페이지 에러: ', e);
+    }
   };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setNewPassword(value);
-    setIsMatch(value === newCheck);
-  };
-
-  const handleCheckChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setNewCheck(value);
-    setIsMatch(newPassword === value);
-  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Container>
@@ -131,7 +163,7 @@ const EditProfile = () => {
       />
 
       <ProfileImgWrapper>
-        <ProfileImg />
+        <ProfileImg src={profileImgURL} />
       </ProfileImgWrapper>
 
       <ResidentWrapper>
@@ -142,6 +174,7 @@ const EditProfile = () => {
           width="60%"
           guide=""
           placeholder="휴대전화 번호"
+          type="tel"
         />
         <Button
           variant="blue2"
@@ -204,7 +237,7 @@ const EditProfile = () => {
 
       <Border />
 
-      <Password>
+      {/* <Password>
         <PasswordTitle>비밀번호 변경</PasswordTitle>
         <InputBox
           label="현재 비밀번호"
@@ -247,18 +280,20 @@ const EditProfile = () => {
           placeholder="새 비밀번호 재입력"
           onChange={handleCheckChange}
         />
-      </Password>
+      </Password> */}
 
       <Border />
       <Button
-        variant={
-          isValidPassword(newPassword) && newPassword === newCheck
-            ? 'blue'
-            : 'disabled'
-        }
+        // variant={
+        //   isValidPassword(newPassword) && newPassword === newCheck
+        //     ? 'blue'
+        //     : 'disabled'
+        // }
+        variant="blue"
         width=""
         height="52px"
         style={{ margin: '20px 0px' }}
+        onClick={() => navigate('/mypage')}
       >
         프로필 수정하기
       </Button>
@@ -299,7 +334,7 @@ const ProfileImgWrapper = styled.div`
   justify-content: center;
 `;
 
-const ProfileImg = styled.div`
+const ProfileImg = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -341,16 +376,16 @@ const ToggleLabel = styled.label`
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `;
 
-const Password = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
-  margin-bottom: 64px;
-`;
+// const Password = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+//   margin-top: 24px;
+//   margin-bottom: 64px;
+// `;
 
-const PasswordTitle = styled.label`
-  color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.title4};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-`;
+// const PasswordTitle = styled.label`
+//   color: ${({ theme }) => theme.colors.gray900};
+//   font-size: ${({ theme }) => theme.typography.fontSize.title4};
+//   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+// `;
