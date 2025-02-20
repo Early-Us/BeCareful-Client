@@ -1,6 +1,6 @@
 import { NavBar } from '@/components/common/NavBar';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
@@ -10,7 +10,6 @@ import { ReactComponent as Institution } from '@/assets/icons/socailHome/Institu
 import { ReactComponent as ArrowDetail } from '@/assets/icons/socailHome/ArrowDetail.svg';
 import { ReactComponent as CaregiverDefault } from '@/assets/icons/socailHome/CaregiverDefault.svg';
 import { ReactComponent as ElderlyDefault } from '@/assets/icons/socailHome/ElderlyDefault.svg';
-import { ReactComponent as ElderlyDefaultBig } from '@/assets/icons/socailHome/ElderlyDefaultBig.svg';
 import { ReactComponent as CareGiver } from '@/assets/icons/socailHome/CareGiver.svg';
 import { ReactComponent as Applyer } from '@/assets/icons/socailHome/Applyer.svg';
 import { ReactComponent as Applying } from '@/assets/icons/socailHome/Applying.svg';
@@ -18,8 +17,31 @@ import { JobLevelBox } from '@/components/HomeSocial/JobLevelBox';
 import { Button } from '@/components/common/Button/Button';
 import { SocialTabBar } from '@/components/common/SocialTabBar';
 
+interface ElderlyInfo {
+  name: string;
+  age: number;
+  gender: string;
+  profileImageUrl: string;
+}
+
+interface SocialWorkerInfo {
+  socialWorkerName: string;
+  socialWorkerRank: string;
+  institutionName: string;
+  elderlyCount: number;
+  socialWorkerCount: number;
+  matchingProcessingCount: number;
+  recentlyMatchedCount: number;
+  matchingCompletedCount: number;
+  appliedCaregiverCount: number;
+  averageAppliedCaregiver: number;
+  averageApplyingRate: number;
+  matchingElderlyList: ElderlyInfo[];
+}
+
 const SocialHomePage = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState<SocialWorkerInfo>();
 
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
   const getData = async () => {
@@ -31,14 +53,15 @@ const SocialHomePage = () => {
     }
 
     try {
-      const response = await axios.get(`${apiBaseURL}/caregiver/my`, {
+      const response = await axios.get(`${apiBaseURL}/socialworker/home`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
       console.log(response.data);
+      setData(response.data);
     } catch (e) {
-      console.log('사회복지사 마이페이지 에러: ', e);
+      console.log('사회복지사 홈 에러: ', e);
     }
   };
 
@@ -52,7 +75,7 @@ const SocialHomePage = () => {
         left={
           <NavLeft
             onClick={() => {
-              navigate('/home');
+              navigate('/home/social');
             }}
           >
             <Logo />
@@ -73,15 +96,17 @@ const SocialHomePage = () => {
             <Institution />
           </ProfileImg>
           <InfoPerson>
-            <TitleLabel>김미정</TitleLabel>
-            <JobLevelBox rank="SOCIALWORKER" />
+            <TitleLabel>{data?.socialWorkerName}</TitleLabel>
+            {data?.socialWorkerRank && (
+              <JobLevelBox rank={data.socialWorkerRank} />
+            )}
           </InfoPerson>
         </Info>
       </InfoWrapper>
 
       <HomeContainer>
         <SectionWrapper>
-          <TitleLabel>남산실버복지센터</TitleLabel>
+          <TitleLabel>{data?.institutionName}</TitleLabel>
           <InstitutionWrapper>
             <InstitutionDetailWrapper>
               <InstitutionDetail>
@@ -92,7 +117,7 @@ const SocialHomePage = () => {
                   <Label16500>어르신</Label16500>
                 </InstitutionLabel>
                 <InstitutionCount>
-                  <Label16700 color="blue">58</Label16700>
+                  <Label16700 color="blue">{data?.elderlyCount}</Label16700>
                   <Label16700 color="">명</Label16700>
                 </InstitutionCount>
               </InstitutionDetail>
@@ -105,7 +130,9 @@ const SocialHomePage = () => {
                   <Label16500>요양보호사</Label16500>
                 </InstitutionLabel>
                 <InstitutionCount>
-                  <Label16700 color="blue">58</Label16700>
+                  <Label16700 color="blue">
+                    {data?.socialWorkerCount}
+                  </Label16700>
                   <Label16700 color="">명</Label16700>
                 </InstitutionCount>
               </InstitutionDetail>
@@ -134,7 +161,7 @@ const SocialHomePage = () => {
               <MatchingStatusLabel>
                 <BoxTitle>진행중</BoxTitle>
                 <BoxNumberWrapper>
-                  <BoxNumber>0</BoxNumber>
+                  <BoxNumber>{data?.matchingProcessingCount}</BoxNumber>
                   <BoxUnit>건</BoxUnit>
                 </BoxNumberWrapper>
               </MatchingStatusLabel>
@@ -144,7 +171,7 @@ const SocialHomePage = () => {
               <MatchingStatusLabel>
                 <BoxTitle>최근 완료</BoxTitle>
                 <BoxNumberWrapper>
-                  <BoxNumber>0</BoxNumber>
+                  <BoxNumber>{data?.recentlyMatchedCount}</BoxNumber>
                   <BoxUnit>건</BoxUnit>
                 </BoxNumberWrapper>
               </MatchingStatusLabel>
@@ -154,7 +181,7 @@ const SocialHomePage = () => {
               <MatchingStatusLabel>
                 <BoxTitle>전체 매칭</BoxTitle>
                 <BoxNumberWrapper>
-                  <BoxNumber>0</BoxNumber>
+                  <BoxNumber>{data?.matchingCompletedCount}</BoxNumber>
                   <BoxUnit>건</BoxUnit>
                 </BoxNumberWrapper>
               </MatchingStatusLabel>
@@ -168,7 +195,7 @@ const SocialHomePage = () => {
             <MatchingStatusLabel>
               <BoxTitle>현재 지원한 요양보호사</BoxTitle>
               <BoxNumberWrapper>
-                <BoxNumber>12</BoxNumber>
+                <BoxNumber>{data?.appliedCaregiverCount}</BoxNumber>
                 <BoxUnit>명</BoxUnit>
               </BoxNumberWrapper>
             </MatchingStatusLabel>
@@ -185,7 +212,7 @@ const SocialHomePage = () => {
                   지원자
                 </BoxTitle>
                 <BoxNumberWrapper>
-                  <BoxNumber>4</BoxNumber>
+                  <BoxNumber>{data?.averageAppliedCaregiver}</BoxNumber>
                   <BoxUnit>명</BoxUnit>
                 </BoxNumberWrapper>
               </MatchingStatusLabel>
@@ -201,7 +228,7 @@ const SocialHomePage = () => {
                   지원률
                 </BoxTitle>
                 <BoxNumberWrapper>
-                  <BoxNumber>72</BoxNumber>
+                  <BoxNumber>{data?.averageApplyingRate}</BoxNumber>
                   <BoxUnit>%</BoxUnit>
                 </BoxNumberWrapper>
               </MatchingStatusLabel>
@@ -225,45 +252,19 @@ const SocialHomePage = () => {
             </TitleDetailWrapper>
           </TitleWrapper>
           <StatusRowWrapper>
-            <ElderlyList>
-              <ElderlImg>
-                <ElderlyDefaultBig />
-              </ElderlImg>
-              <NameWrapper>
-                <Name>김옥자</Name>
-                <AgeGenderWrapper>
-                  <Detail>65세</Detail>
-                  <Border2 />
-                  <Detail>여</Detail>
-                </AgeGenderWrapper>
-              </NameWrapper>
-            </ElderlyList>
-            <ElderlyList>
-              <ElderlImg>
-                <ElderlyDefaultBig />
-              </ElderlImg>
-              <NameWrapper>
-                <Name>김옥자</Name>
-                <AgeGenderWrapper>
-                  <Detail>65세</Detail>
-                  <Border2 />
-                  <Detail>여</Detail>
-                </AgeGenderWrapper>
-              </NameWrapper>
-            </ElderlyList>
-            <ElderlyList>
-              <ElderlImg>
-                <ElderlyDefaultBig />
-              </ElderlImg>
-              <NameWrapper>
-                <Name>김옥자</Name>
-                <AgeGenderWrapper>
-                  <Detail>65세</Detail>
-                  <Border2 />
-                  <Detail>여</Detail>
-                </AgeGenderWrapper>
-              </NameWrapper>
-            </ElderlyList>
+            {data?.matchingElderlyList.map((elderly) => (
+              <ElderlyList>
+                <ElderlImg src={elderly.profileImageUrl} />
+                <NameWrapper>
+                  <Name>{elderly.name}</Name>
+                  <AgeGenderWrapper>
+                    <Detail>{elderly.age}세</Detail>
+                    <Border2 />
+                    <Detail>{elderly.gender === 'FEMALE' ? '여' : '남'}</Detail>
+                  </AgeGenderWrapper>
+                </NameWrapper>
+              </ElderlyList>
+            ))}
           </StatusRowWrapper>
         </SectionWrapper>
       </HomeContainer>
@@ -362,6 +363,7 @@ const TitleDetailImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
 `;
 
 const SectionWrapper = styled.div`
@@ -533,9 +535,10 @@ const ElderlyList = styled.div`
   gap: 10px;
 `;
 
-const ElderlImg = styled.div`
+const ElderlImg = styled.img`
   width: 56px;
   height: 56px;
+  border-radius: 50%;
 `;
 
 const NameWrapper = styled.div`

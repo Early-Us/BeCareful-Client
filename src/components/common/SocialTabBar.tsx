@@ -26,19 +26,19 @@ export const SocialTabBar = () => {
           매칭하기
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/matching-dashboard">
-        <TabBarIcon isActive={location.pathname == '/matching-dashboard'}>
+      <TabBarContentWrapper href="/matching/dashboard">
+        <TabBarIcon isActive={location.pathname == '/matching/dashboard'}>
           <CurrentMatching />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/matching-dashboard'}>
+        <TabBarLabel isActive={location.pathname == '/matching/dashboard'}>
           매칭현황
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper href="/elderlist">
-        <TabBarIcon isActive={location.pathname == '/elderlist'}>
+      <TabBarContentWrapper href="/elderly">
+        <TabBarIcon isActive={location.pathname == '/elderly'}>
           <Mypage />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname == '/elderlist'}>
+        <TabBarLabel isActive={location.pathname == '/elderly'}>
           어르신 목록
         </TabBarLabel>
       </TabBarContentWrapper>
