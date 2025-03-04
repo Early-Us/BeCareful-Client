@@ -83,7 +83,7 @@ const SocialHomePage = () => {
         }
         // right={<NavRight>{chatNew ? <ChatNew /> : <Chat />}</NavRight>}
         right={
-          <NavRight>
+          <NavRight onClick={() => navigate('/chatlist/social')}>
             <Chat />
           </NavRight>
         }
@@ -245,7 +245,7 @@ const SocialHomePage = () => {
           <TitleWrapper>
             <TitleLabel>매칭 대기중인 어르신</TitleLabel>
             <TitleDetailWrapper>
-              <TitleDetail onClick={() => (window.location.href = '/erderly')}>
+              <TitleDetail onClick={() => (window.location.href = '/elderly')}>
                 자세히 보기
               </TitleDetail>
               <TitleDetailImg>
@@ -254,7 +254,7 @@ const SocialHomePage = () => {
             </TitleDetailWrapper>
           </TitleWrapper>
           <StatusRowWrapper>
-            {data?.matchingElderlyList.map((elderly) => (
+            {data?.matchingElderlyList.slice(0, 3).map((elderly) => (
               <ElderlyList>
                 <ElderlImg src={elderly.profileImageUrl} />
                 <NameWrapper>

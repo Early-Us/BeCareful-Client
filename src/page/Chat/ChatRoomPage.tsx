@@ -132,7 +132,7 @@ const ChatRoomPage = () => {
       <ChattingTitleWrapper>
         <TitlePersonWrapper>
           <TitleImg />
-          <TitleLabel color="">{data?.elderlyName}</TitleLabel>
+          <TitleLabel color="">{data?.elderlyName} 어르신</TitleLabel>
         </TitlePersonWrapper>
         <TitleLabel
           color="blue"

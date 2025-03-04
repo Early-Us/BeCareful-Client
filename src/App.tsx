@@ -27,6 +27,7 @@ import EdlerlyCreatePage from './page/Elderly/ElderlyCreatePage';
 import ChatListPage from './page/Chat/ChatListPage';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
 import MatchingStatus from './page/Matching/MatchingStatus';
+import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 
 function App() {
   return (
@@ -76,7 +77,8 @@ function App() {
       <Route path="/matching/caregiver" element={<CareGiverInfoPage />} />
       <Route path="/matching/dashboard" element={<MatchingStatus />} />
 
-      <Route path="/chatList" element={<ChatListPage />} />
+      <Route path="/chatList/social" element={<ChatListPage />} />
+      <Route path="/chatList/caregiver" element={<ChatListCaregiver />} />
       <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
     </Routes>
   );
