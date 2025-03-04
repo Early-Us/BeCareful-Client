@@ -43,7 +43,7 @@ export const RecruitmentList = () => {
         <EmptyCard />
       ) : (
         recruitments.map((recruitment, index) => (
-          <Link to={`/work-detail/${recruitment.recruitmentId}`} key={index}>
+          <Link to={`/work/${recruitment.recruitmentId}`} key={index}>
             <RecruitCard {...recruitment} />
           </Link>
         ))

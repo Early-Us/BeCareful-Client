@@ -27,8 +27,8 @@ export const SignUpPage = () => {
   return (
     <FormWrapper>
       <SignUpPageContainer>
-        <IconContainer onClick={() => navigate('/login')}>
-          <IconArrowLeft />
+        <IconContainer>
+          <IconArrowLeft onClick={() => navigate('/login')} />
         </IconContainer>
         <Header>
           환영합니다!
@@ -46,16 +46,16 @@ export const SignUpPage = () => {
             <SocialCard pressed={pressed === 'social'} />
           </div>
         </CardContainer>
-        <ButtonContainer>
-          <Button
-            variant={pressed ? 'blue' : 'disabled'}
-            height="52px"
-            onClick={handleNextStep}
-            disabled={!pressed}
-          >
-            다음 단계로 이동
-          </Button>
-        </ButtonContainer>
+        <Border />
+        <Button
+          variant={pressed ? 'blue' : 'disabled'}
+          height="52px"
+          onClick={handleNextStep}
+          disabled={!pressed}
+          style={{ margin: '20px 0px' }}
+        >
+          다음 단계로 이동
+        </Button>
       </SignUpPageContainer>
     </FormWrapper>
   );
@@ -76,8 +76,6 @@ const SignUpPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-bottom: 135px;
-  // margin: 24px 16px auto 16px;
 `;
 
 const IconContainer = styled.div`
@@ -112,21 +110,17 @@ const CardContainer = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   padding: 20px 20px 0px 20px;
   flex-direction: column;
   gap: 20px;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  padding: 20px;
-  background-color: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
-  box-sizing: border-box;
-  width: 100%;
+const Border = styled.div`
+  width: 100vw;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  margin-left: -20px;
+  margin-top: 185px;
 `;

@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { Button } from '@/components/common/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 interface ApplyModalProps {
   width: string;
@@ -8,6 +9,14 @@ interface ApplyModalProps {
 }
 
 export const ApplyModal = ({ width, onClose }: ApplyModalProps) => {
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate('/work');
+  };
+  const handleButtonsClick = () => {
+    navigate('/apply');
+  };
+
   return (
     <Overlay>
       <ModalContent width={width}>
@@ -27,11 +36,11 @@ export const ApplyModal = ({ width, onClose }: ApplyModalProps) => {
           </span>
         </ModalMiddleContainer>
         <ModalBottomContainer>
-          <Button variant="blue2" height="52px">
+          <Button variant="blue2" height="52px" onClick={handleButtonClick}>
             다른 일자리 보기
           </Button>
 
-          <Button variant="blue" height="52px">
+          <Button variant="blue" height="52px" onClick={handleButtonsClick}>
             지원 내역 보기
           </Button>
         </ModalBottomContainer>

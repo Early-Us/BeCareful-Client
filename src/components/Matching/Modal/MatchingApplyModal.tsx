@@ -1,32 +1,46 @@
 import { styled } from 'styled-components';
+import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { Button } from '@/components/common/Button/Button';
+import { ElderData } from '@/type/Matching';
 import { useNavigate } from 'react-router-dom';
 
-interface RealRefuseModalProps {
+interface MatchingApplyModalProps {
   width: string;
   onClose: () => void;
+  data: ElderData;
 }
 
-export const RealRefuseModal = ({ width }: RealRefuseModalProps) => {
+export const MatchingApplyModal = ({
+  width,
+  onClose,
+  data,
+}: MatchingApplyModalProps) => {
   const navigate = useNavigate();
-  const handleButtonClick = () => {
-    navigate('/work');
+  const handleApply = () => {
+    navigate('/matching/elder-apply');
   };
-
+  console.log(data);
   return (
     <Overlay>
       <ModalContent width={width}>
-        <ModalTopContainer></ModalTopContainer>
+        <ModalTopContainer>
+          <ModalCloseButton onClick={onClose}>
+            <ModalClose />
+          </ModalCloseButton>
+        </ModalTopContainer>
         <ModalMiddleContainer>
-          <span>일자리가 목록에서 삭제되었어요</span>
+          <span>일자리 매칭 등록하기</span>
           <span className="highlight">
-            이선혜님께 맞는 다른 일자리를 찾아볼게요!
-            {/*TODO: 이선혜님 -> 유저 이름으로 변경*/}
+            해당 어르신의 매칭 조건을 등록하시겠습니까?
           </span>
         </ModalMiddleContainer>
         <ModalBottomContainer>
-          <Button variant="blue" height="52px" onClick={handleButtonClick}>
-            다른 일자리 보러가기
+          <Button variant="blue2" height="52px" onClick={onClose}>
+            취소
+          </Button>
+
+          <Button variant="blue" height="52px" onClick={handleApply}>
+            등록하기
           </Button>
         </ModalBottomContainer>
       </ModalContent>
@@ -60,9 +74,8 @@ const ModalContent = styled.div<{ width: string }>`
 
 const ModalTopContainer = styled.div`
   display: flex;
-
-  height: 40px;
-
+  padding: 16px 20px;
+  justify-content: flex-end;
   align-items: center;
 `;
 
@@ -92,4 +105,8 @@ const ModalBottomContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+`;
+
+const ModalCloseButton = styled.div`
+  cursor: pointer;
 `;

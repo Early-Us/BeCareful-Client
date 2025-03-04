@@ -11,6 +11,7 @@ interface ApplyCardProps {
   workingHours: string;
   hourlyRate: string;
   chipState: 'pass' | 'fail' | 'pending';
+  onClick?: () => void;
 }
 
 export const ApplyCard = ({
@@ -22,9 +23,10 @@ export const ApplyCard = ({
   workingHours,
   hourlyRate,
   chipState,
+  onClick,
 }: ApplyCardProps) => {
   return (
-    <CardContainer>
+    <CardContainer onClick={onClick}>
       <ApplyChip state={chipState} />
       <CardTopContainer>
         <CardTopHeader>

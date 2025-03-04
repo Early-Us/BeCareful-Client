@@ -1,12 +1,18 @@
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { ReactComponent as MessageIcon } from '@/assets/icons/works/MessageIcon.svg';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const WorkHeader = () => {
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate('/work');
+  };
+
   return (
     <HeaderContainer>
       {/*TODO: 라우팅해야함*/}
-      <IconArrowLeft />
+      <IconArrowLeft onClick={handleButtonClick} />
       <MessageIcon />
     </HeaderContainer>
   );

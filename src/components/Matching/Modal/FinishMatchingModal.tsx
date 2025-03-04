@@ -1,32 +1,70 @@
 import { styled } from 'styled-components';
+import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { Button } from '@/components/common/Button/Button';
+
 import { useNavigate } from 'react-router-dom';
 
-interface RealRefuseModalProps {
+interface FinishMatchingApplyModalProps {
   width: string;
   onClose: () => void;
+  data: {
+    elderlyId: number;
+    title: string;
+    workDays: string[];
+    workStartTime: string;
+    workEndTime: string;
+    careTypes: string[];
+    workSalaryType: string;
+    workSalaryAmount: number;
+    description: string;
+  } | null;
 }
 
-export const RealRefuseModal = ({ width }: RealRefuseModalProps) => {
+export const FinishMatchingApplyModal = ({
+  width,
+  onClose,
+  data,
+  recruitmentId,
+}: FinishMatchingApplyModalProps & { recruitmentId: string | null }) => {
   const navigate = useNavigate();
-  const handleButtonClick = () => {
-    navigate('/work');
+  const handleCancel = () => {
+    navigate('/matching/elder-apply');
   };
 
+  const handleApply = () => {
+    if (recruitmentId) {
+      navigate(`/matching/info/${recruitmentId}`);
+    }
+  };
+  console.log('Recruitment ID:', recruitmentId);
+
+  console.log(data);
   return (
     <Overlay>
       <ModalContent width={width}>
-        <ModalTopContainer></ModalTopContainer>
+        <ModalTopContainer>
+          <ModalCloseButton onClick={onClose}>
+            <ModalClose />
+          </ModalCloseButton>
+        </ModalTopContainer>
         <ModalMiddleContainer>
-          <span>일자리가 목록에서 삭제되었어요</span>
+          <span>
+            현재 입력하신 조건으로
+            <br />
+            매칭을 시작할까요?
+          </span>
           <span className="highlight">
-            이선혜님께 맞는 다른 일자리를 찾아볼게요!
-            {/*TODO: 이선혜님 -> 유저 이름으로 변경*/}
+            적합한 요양보호사를 리스트를 확인하고 <br />
+            해당 보호사님께 지원 공고를 보냅니다.
           </span>
         </ModalMiddleContainer>
         <ModalBottomContainer>
-          <Button variant="blue" height="52px" onClick={handleButtonClick}>
-            다른 일자리 보러가기
+          <Button variant="blue2" height="52px" onClick={handleCancel}>
+            취소
+          </Button>
+
+          <Button variant="blue" height="52px" onClick={handleApply}>
+            확인
           </Button>
         </ModalBottomContainer>
       </ModalContent>
@@ -60,9 +98,8 @@ const ModalContent = styled.div<{ width: string }>`
 
 const ModalTopContainer = styled.div`
   display: flex;
-
-  height: 40px;
-
+  padding: 16px 20px;
+  justify-content: flex-end;
   align-items: center;
 `;
 
@@ -92,4 +129,8 @@ const ModalBottomContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+`;
+
+const ModalCloseButton = styled.div`
+  cursor: pointer;
 `;

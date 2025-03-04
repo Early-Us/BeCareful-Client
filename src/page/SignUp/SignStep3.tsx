@@ -106,18 +106,18 @@ export const Step3 = ({
         </CardWrapper>
       )}
 
-      <ButtonContainer>
-        <Button
-          variant="blue"
-          height="52px"
-          onClick={() => {
-            console.log('현재 입력된 formData:', formData);
-            if (onNext) onNext();
-          }}
-        >
-          다음 단계로 이동
-        </Button>
-      </ButtonContainer>
+      <Border />
+      <Button
+        variant="blue"
+        height="52px"
+        onClick={() => {
+          console.log('현재 입력된 formData:', formData);
+          if (onNext) onNext();
+        }}
+        style={{ margin: '20px 0px' }}
+      >
+        다음 단계로 이동
+      </Button>
     </StepWrapper>
   );
 };
@@ -128,7 +128,6 @@ const StepWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-bottom: 135px;
 `;
 
 const IconContainer = styled.div`
@@ -178,15 +177,10 @@ const ButtonContent = styled.div`
   gap: 8px;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
-  box-sizing: border-box;
-  background-color: ${({ theme }) => theme.colors.white};
-  width: 100%;
+const Border = styled.div`
+  width: 100vw;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  margin-left: -20px;
+  margin-top: 185px;
 `;

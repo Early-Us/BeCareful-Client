@@ -2,7 +2,12 @@ import { Button } from '@/components/common/Button/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const ChatButton = (matchingId: string, date: string) => {
+interface ChatButtonProps {
+  matchingId: string;
+  date: string;
+}
+
+export const ChatButton = ({ matchingId, date }: ChatButtonProps) => {
   const navigate = useNavigate();
 
   const apiBaseURL = import.meta.env.VITE_APP_API_URL;
@@ -31,7 +36,11 @@ const ChatButton = (matchingId: string, date: string) => {
     }
   };
 
-  return <Button onClick={postHire}>채용하기</Button>;
+  return (
+    <Button onClick={postHire} height={'52px'}>
+      채용하기
+    </Button>
+  );
 };
 
 export default ChatButton;
