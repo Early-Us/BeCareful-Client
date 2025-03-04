@@ -83,7 +83,7 @@ const SocialHomePage = () => {
         }
         // right={<NavRight>{chatNew ? <ChatNew /> : <Chat />}</NavRight>}
         right={
-          <NavRight>
+          <NavRight onClick={() => navigate('/chatlist/social')}>
             <Chat />
           </NavRight>
         }

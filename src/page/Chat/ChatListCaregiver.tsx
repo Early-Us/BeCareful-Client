@@ -7,16 +7,12 @@ import { useNavigate } from 'react-router-dom';
 
 interface ChatListProps {
   matchingId: number;
-  imageUrl: string;
-  caregiverName: string;
+  nursingInstitutionName: string;
   recentChat: string;
   time: string;
-  elderlyName: string;
-  elderlyAge: number;
-  gender: string;
 }
 
-const ChatListPage = () => {
+const ChatListCaregiver = () => {
   const navigate = useNavigate();
 
   const [chatList, setChatList] = useState<ChatListProps[]>([]);
@@ -30,33 +26,16 @@ const ChatListPage = () => {
       accessToken = sessionStorage.getItem('accessToken');
     }
 
-    if (localStorage.getItem('role') === 'socialworker') {
-      try {
-        const response = await axios.get(
-          `${apiBaseURL}/socialworker/chat/list`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        );
-        console.log(response.data.chatroomInfoList);
-        setChatList(response.data.chatroomInfoList);
-      } catch (e) {
-        console.log('사회복지사 채팅방 리스트 get 에러: ', e);
-      }
-    } else {
-      try {
-        const response = await axios.get(`${apiBaseURL}/caregiver/chat/list`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        console.log(response.data.chatroomInfoList);
-        setChatList(response.data.chatroomInfoList);
-      } catch (e) {
-        console.log('요양보호사 채팅방 리스트 get 에러: ', e);
-      }
+    try {
+      const response = await axios.get(`${apiBaseURL}/caregiver/chat/list`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(response.data.chatroomInfoList);
+      setChatList(response.data.chatroomInfoList);
+    } catch (e) {
+      console.log('요양보호사 채팅방 리스트 get 에러: ', e);
     }
   };
 
@@ -86,17 +65,10 @@ const ChatListPage = () => {
             key={chat.matchingId}
           >
             <ChatList>
-              <ProfileImg src={chat.imageUrl} />
+              {/* <ProfileImg src={chat.imageUrl} /> */}
               <ChatInfo>
-                <Name>{chat.caregiverName} 요양보호사</Name>
+                <Name>{chat.nursingInstitutionName} 요양보호사</Name>
                 <ChatRecent>{chat.recentChat}</ChatRecent>
-                <Person>
-                  <Label>{chat.elderlyName}</Label>
-                  <Border />
-                  <Label>{chat.elderlyAge}</Label>
-                  <Border />
-                  <Label>{chat.gender === 'FEMALE' ? '여' : '남'}</Label>
-                </Person>
               </ChatInfo>
             </ChatList>
             <Label>{chat.time}</Label>
@@ -106,7 +78,7 @@ const ChatListPage = () => {
   );
 };
 
-export default ChatListPage;
+export default ChatListCaregiver;
 
 const Container = styled.div`
   margin: auto 20px;
@@ -139,11 +111,11 @@ const ChatList = styled.div`
   gap: 8px;
 `;
 
-const ProfileImg = styled.img`
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-`;
+// const ProfileImg = styled.img`
+//   width: 48px;
+//   height: 48px;
+//   border-radius: 12px;
+// `;
 
 const ChatInfo = styled.div`
   display: flex;
@@ -163,19 +135,8 @@ const ChatRecent = styled.label`
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
 `;
 
-const Person = styled.label`
-  display: flex;
-  gap: 4px;
-`;
-
 const Label = styled.label`
   color: ${({ theme }) => theme.colors.gray500};
   font-size: ${({ theme }) => theme.typography.fontSize.body4};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-`;
-
-const Border = styled.div`
-  width: 1px;
-  height: 12px;
-  background: ${({ theme }) => theme.colors.gray50};
 `;
