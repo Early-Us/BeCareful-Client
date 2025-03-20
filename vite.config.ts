@@ -1,22 +1,51 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import svgr from '@svgr/rollup';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  plugins: [react(), svgr()],
+  base: '/',
+  plugins: [
+    react(),
+    svgr(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['icons/logo.png', 'favicon.svg', 'robots.txt'],
+      manifest: {
+        name: '돌봄PWA',
+        short_name: '돌봄다리',
+        description: '돌봄PWA!',
+        theme_color: '#ffffff',
+        background_color: '#ffffff',
+        display: 'standalone',
+        icons: [
+          {
+            src: '/icons/logo.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: '/icons/logo.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: '/icons/logo.png',
+            sizes: '180x180',
+            type: 'image/png',
+          },
+        ],
+      },
+    }),
+  ] as PluginOption[],
   resolve: {
     alias: {
       '@': '/src',
     },
   },
-  /*
+  /* 로컬테스트
   server: {
-    proxy: {
-      '/apis': {
-        target: 'http://apis.data.go.kr',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/apis/, ''),
-      },
-    },
+    host: '0.0.0.0',
+    port: 5173,
   },*/
 });
