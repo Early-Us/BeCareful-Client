@@ -1,0 +1,14 @@
+{
+  "name": "돌봄PWA",
+  "short_name": "돌봄다리",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "lang": "en",
+  "scope": "/",
+  "description": "돌봄PWA!",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/icons/logo.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}
