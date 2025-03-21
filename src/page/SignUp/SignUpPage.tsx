@@ -46,16 +46,16 @@ export const SignUpPage = () => {
             <SocialCard pressed={pressed === 'social'} />
           </div>
         </CardContainer>
-        <Border />
-        <Button
-          variant={pressed ? 'blue' : 'disabled'}
-          height="52px"
-          onClick={handleNextStep}
-          disabled={!pressed}
-          style={{ margin: '20px 0px' }}
-        >
-          다음 단계로 이동
-        </Button>
+        <ButtonContainer>
+          <Button
+            variant={pressed ? 'blue' : 'disabled'}
+            height="52px"
+            onClick={handleNextStep}
+            disabled={!pressed}
+          >
+            다음 단계로 이동
+          </Button>
+        </ButtonContainer>
       </SignUpPageContainer>
     </FormWrapper>
   );
@@ -115,9 +115,15 @@ const CardContainer = styled.div`
   gap: 20px;
 `;
 
-const Border = styled.div`
-  width: 100vw;
-  height: 1px;
-  background: ${({ theme }) => theme.colors.gray50};
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
+  box-sizing: border-box;
+  width: 100%;
   margin-top: 185px;
 `;
