@@ -153,8 +153,6 @@ const FormWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  margin: 24px 16px auto 16px;
 `;
 
 export default SignUpForm;

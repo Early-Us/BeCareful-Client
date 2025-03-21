@@ -117,6 +117,7 @@ const StepWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 24px 16px auto 16px;
 `;
 
 const IconContainer = styled.div`
@@ -164,7 +165,7 @@ const ButtonContainer = styled.div`
   position: fixed;
   bottom: 0;
   padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   box-sizing: border-box;
   width: 100%;
 `;

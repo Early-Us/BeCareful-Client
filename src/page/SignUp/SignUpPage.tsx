@@ -83,7 +83,6 @@ const IconContainer = styled.div`
   justify-content: flex-start;
   box-sizing: border-box;
   align-items: center;
-  padding: 0px 20px;
   height: 56px;
   width: 100%;
 `;
@@ -92,10 +91,9 @@ const Header = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 8px;
   align-items: flex-start;
   box-sizing: border-box;
-  padding: 16px 20px 0px 20px;
+  padding: 16px 20px 0px 0px;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
@@ -112,7 +110,7 @@ const CardContainer = styled.div`
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: 20px 20px 0px 20px;
+  margin-top: 20px;
   flex-direction: column;
   gap: 20px;
 `;
@@ -121,6 +119,5 @@ const Border = styled.div`
   width: 100vw;
   height: 1px;
   background: ${({ theme }) => theme.colors.gray50};
-  margin-left: -20px;
   margin-top: 185px;
 `;
