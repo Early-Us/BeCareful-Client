@@ -4,7 +4,7 @@ import LoginPage from './page/Login/LoginPage';
 import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import HomePage from './page/Home/HomePage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
-import SignUpForm from '@/page/SignUp/SignUpForm';
+
 import MyPage from './page/MyPage/MyPage';
 import SplashPage from './page/SplashPage';
 import EditProfile from './page/MyPage/EditProfile';
@@ -28,6 +28,7 @@ import ChatListPage from './page/Chat/ChatListPage';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
 import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
+import { SignUpForm } from '@/components/SignUp/SignUpForm';
 
 function App() {
   return (
