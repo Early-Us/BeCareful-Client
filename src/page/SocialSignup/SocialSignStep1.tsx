@@ -4,9 +4,8 @@ import { SocialStepProps } from '@/type/SocialSignUp';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
 import { Button } from '@/components/common/Button/Button';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { handleVerifyAuthNumber } from '@/page/SignUp/Step1Function';
+import { usePhoneVerification } from '@/hooks/usePhoneVerification';
 import { useNavigate } from 'react-router-dom';
 
 export const SocialStep1 = ({
@@ -14,23 +13,27 @@ export const SocialStep1 = ({
   setFormSocialData,
   onNext,
 }: SocialStepProps) => {
-  const [authNumber, setAuthNumber] = useState('');
-  const [showVerificationInput, setShowVerificationInput] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(180);
-  const [, setAuthSent] = useState(false);
   const [genderInput, setGenderInput] = useState('');
   const apiUrl = import.meta.env.VITE_APP_API_URL;
-  const [, setAuthButtonText] = useState('인증번호 전송');
+  const navigate = useNavigate();
+
+  const {
+    authNumber,
+    setAuthNumber,
+    remainingTime,
+    showVerificationInput,
+    sendAuthNumber,
+    verifyAuthNumber,
+  } = usePhoneVerification(apiUrl);
 
   useEffect(() => {
     if (remainingTime === 0) {
-      setAuthButtonText('재전송');
+      alert('인증번호 유효 시간이 초과되었습니다.');
     }
   }, [remainingTime]);
 
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-
     if (/^[0-9]{0,1}$/.test(value)) {
       setGenderInput(value);
       if (value === '1' || value === '3') {
@@ -41,45 +44,6 @@ export const SocialStep1 = ({
     }
   };
 
-  useEffect(() => {
-    if (remainingTime === 0) {
-      alert('인증번호 유효 시간이 초과되었습니다.');
-    }
-  }, [remainingTime]);
-
-  const handleSendAuthNumber = async (
-    phoneNumber: string,
-    setShowVerificationInput: React.Dispatch<React.SetStateAction<boolean>>,
-    setAuthSent: React.Dispatch<React.SetStateAction<boolean>>,
-    setRemainingTime: React.Dispatch<React.SetStateAction<number>>,
-    setAuthButtonText: React.Dispatch<React.SetStateAction<string>>,
-    apiUrl: string,
-  ) => {
-    try {
-      await axios.post(`${apiUrl}/sms/send-auth-number`, { phoneNumber });
-
-      setShowVerificationInput(true);
-      setAuthSent(true);
-      setAuthButtonText('인증번호 전송');
-      setRemainingTime(180);
-
-      const timer = setInterval(() => {
-        setRemainingTime((prevTime) => {
-          if (prevTime <= 1) {
-            clearInterval(timer);
-            return 0;
-          }
-          return prevTime - 1;
-        });
-      }, 1000);
-    } catch (error) {
-      console.error('인증번호 전송 실패:', error);
-      alert('인증번호 전송에 실패했습니다.');
-    }
-  };
-
-  const navigate = useNavigate();
-
   return (
     <StepWrapper>
       <IconContainer onClick={() => navigate('/signup')}>
@@ -87,12 +51,12 @@ export const SocialStep1 = ({
       </IconContainer>
 
       <Header>기본 정보를 입력하세요</Header>
+
       <NameContainer>
         <div className="name">
           <span>이름</span>
           <span className="highlight">*</span>
         </div>
-
         <PlainInputBox
           state="default"
           placeholder="이름"
@@ -102,8 +66,9 @@ export const SocialStep1 = ({
           onChange={(e) =>
             setFormSocialData({ ...formSocialData, name: e.target.value })
           }
-        ></PlainInputBox>
+        />
       </NameContainer>
+
       <NameContainer>
         <div className="name">
           <span>주민등록번호</span>
@@ -122,7 +87,7 @@ export const SocialStep1 = ({
                 birthDate: e.target.value,
               })
             }
-          ></PlainInputBox>
+          />
           <span>-</span>
           <SecretInputBox
             state="default"
@@ -132,7 +97,7 @@ export const SocialStep1 = ({
             value={genderInput}
             masked={true}
             onChange={handleGenderChange}
-          ></SecretInputBox>
+          />
           <CircleWrapper>
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index} />
@@ -140,6 +105,7 @@ export const SocialStep1 = ({
           </CircleWrapper>
         </ResidentInputContainer>
       </NameContainer>
+
       <NameContainer>
         <div className="name">
           <span>휴대전화</span>
@@ -163,25 +129,14 @@ export const SocialStep1 = ({
             variant="blue2"
             width="40%"
             height="54px"
-            style={{
-              minWidth: '120px',
-              flexShrink: 0,
-            }}
-            onClick={() =>
-              handleSendAuthNumber(
-                formSocialData.phoneNumber,
-                setShowVerificationInput,
-                setAuthSent,
-                setRemainingTime,
-                setAuthButtonText,
-                apiUrl,
-              )
-            }
+            style={{ minWidth: '120px', flexShrink: 0 }}
+            onClick={() => sendAuthNumber(formSocialData.phoneNumber)}
           >
-            인증번호 전송
+            {remainingTime === 0 ? '재전송' : '인증번호 전송'}
           </Button>
         </ResidentWrapper>
       </NameContainer>
+
       {showVerificationInput && (
         <ResidentWrapper>
           <InputInner>
@@ -194,12 +149,7 @@ export const SocialStep1 = ({
               onChange={(e) => setAuthNumber(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleVerifyAuthNumber(
-                    formSocialData.phoneNumber,
-                    authNumber,
-                    apiUrl,
-                    onNext,
-                  );
+                  verifyAuthNumber(formSocialData.phoneNumber, onNext);
                 }
               }}
               suffix={
@@ -222,18 +172,18 @@ export const SocialStep1 = ({
         </ResidentWrapper>
       )}
 
-      <Border />
-      <Button
-        variant="blue"
-        height="52px"
-        onClick={() => {
-          console.log('현재 입력된 formSocialData:', formSocialData);
-          if (onNext) onNext();
-        }}
-        style={{ margin: '20px 0px' }}
-      >
-        다음 단계로 이동
-      </Button>
+      <ButtonContainer>
+        <Button
+          variant="blue"
+          height="52px"
+          onClick={() => {
+            console.log('현재 입력된 formSocialData:', formSocialData);
+            if (onNext) onNext();
+          }}
+        >
+          다음 단계로 이동
+        </Button>
+      </ButtonContainer>
     </StepWrapper>
   );
 };
@@ -243,6 +193,7 @@ const StepWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 24px 16px auto 16px;
 `;
 
 const IconContainer = styled.div`
@@ -337,10 +288,15 @@ const InputInner = styled.div`
   padding: 0px 20px;
 `;
 
-const Border = styled.div`
-  width: 100vw;
-  height: 1px;
-  background: ${({ theme }) => theme.colors.gray50};
-  margin-left: -20px;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
+  box-sizing: border-box;
+  width: 100%;
   margin-top: 185px;
 `;

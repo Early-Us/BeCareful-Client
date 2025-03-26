@@ -1,47 +1,27 @@
 import { StepProps } from '@/type/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
-import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
-import { Button } from '@/components/common/Button/Button';
-import { useState, useEffect } from 'react';
-import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
-import {
-  handleSendAuthNumber,
-  handleVerifyAuthNumber,
-} from '@/page/SignUp/Step1Function';
+import { useEffect, useState } from 'react';
+import { usePhoneVerification } from '@/hooks/usePhoneVerification';
 import { useNavigate } from 'react-router-dom';
+import { SignUpNameInput } from '@/components/SignUp/Step1/SignUpNameInput';
+import { SignUpIdInput } from '@/components/SignUp/Step1/SingUpIdInput';
+import { SignUpPhoneVerificationInput } from '@/components/SignUp/Step1/SignUpPhoneVerificationInput';
 
 export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
-  const [authNumber, setAuthNumber] = useState('');
-  const [showVerificationInput, setShowVerificationInput] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(180);
-  const [, setAuthSent] = useState(false);
   const [genderInput, setGenderInput] = useState('');
   const apiUrl = import.meta.env.VITE_APP_API_URL;
-  const [, setAuthButtonText] = useState('인증번호 전송');
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (remainingTime === 0) {
-      setAuthButtonText('재전송');
-    }
-  }, [remainingTime]);
-  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    if (/^[0-9]{0,1}$/.test(value)) {
-      setGenderInput(value);
-      if (value === '1' || value === '3') {
-        setFormData({ ...formData, gender: 'MALE' });
-      } else if (value === '2' || value === '4') {
-        setFormData({ ...formData, gender: 'FEMALE' });
-      }
-    }
-  };
-  const handleBirthDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '');
-    setFormData({ ...formData, birthDate: value });
-  };
+  const {
+    authNumber,
+    setAuthNumber,
+    remainingTime,
+    showVerificationInput,
+    sendAuthNumber,
+    verifyAuthNumber,
+  } = usePhoneVerification(apiUrl);
 
   useEffect(() => {
     if (remainingTime === 0) {
@@ -59,7 +39,22 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
     setIsFormValid(isValid);
   }, [formData, genderInput]);
 
-  const navigate = useNavigate();
+  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^[0-9]{0,1}$/.test(value)) {
+      setGenderInput(value);
+      if (value === '1' || value === '3') {
+        setFormData({ ...formData, gender: 'MALE' });
+      } else if (value === '2' || value === '4') {
+        setFormData({ ...formData, gender: 'FEMALE' });
+      }
+    }
+  };
+
+  const handleBirthDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setFormData({ ...formData, birthDate: value });
+  };
 
   return (
     <StepWrapper>
@@ -68,142 +63,44 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
       </IconContainer>
 
       <Header>기본 정보를 입력하세요</Header>
-      <InputWrapper>
-        <div>
-          <span>이름</span>
-          <span className="highlight"> *</span>
-        </div>
-        <PlainInputBox
-          width="100%"
-          state="default"
-          placeholder="이름"
-          guide=""
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-      </InputWrapper>
-      <InputWrapper>
-        <div>
-          <span>주민등록번호</span>
-          <span className="highlight"> *</span>
-        </div>
-        <ResidentWrapper>
-          <PlainInputBox
-            width="45%"
-            state="default"
-            placeholder="주민등록번호"
-            guide=""
-            value={formData.birthDate}
-            onChange={handleBirthDateChange}
-          />
-          -
-          <SecretInputBox
-            width="25%"
-            state="default"
-            placeholder=""
-            guide=""
-            value={genderInput}
-            masked={true}
-            onChange={handleGenderChange}
-          />
-          <CircleWrapper>
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} />
-            ))}
-          </CircleWrapper>
-        </ResidentWrapper>
-      </InputWrapper>
-      <InputWrapper>
-        <div>
-          <span>휴대전화</span>
-          <span className="highlight"> *</span>
-        </div>
-        <PassWordWrapper>
-          <PlainInputBox
-            width="60%"
-            state="default"
-            placeholder="휴대전화 번호"
-            guide=""
-            value={formData.phoneNumber}
-            onChange={(e) =>
-              setFormData({ ...formData, phoneNumber: e.target.value })
-            }
-          />
-          <Button
-            variant="blue2"
-            width="40%"
-            height="56px"
-            style={{
-              minWidth: '120px',
-              flexShrink: 0,
-            }}
-            onClick={() =>
-              handleSendAuthNumber(
-                formData.phoneNumber,
-                setShowVerificationInput,
-                setAuthSent,
-                setRemainingTime,
-                setAuthButtonText,
-                apiUrl,
-              )
-            }
-          >
-            인증번호 전송
-          </Button>
-        </PassWordWrapper>
-      </InputWrapper>
-      {showVerificationInput && (
-        <ResidentWrapper>
-          <InputInner>
-            <PlainInputBox
-              width="100%"
-              state="default"
-              placeholder="인증번호 입력"
-              guide=""
-              value={authNumber}
-              onChange={(e) => setAuthNumber(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleVerifyAuthNumber(
-                    formData.phoneNumber,
-                    authNumber,
-                    apiUrl,
-                    onNext,
-                  );
-                }
-              }}
-              suffix={
-                <span
-                  style={{
-                    position: 'absolute',
-                    right: '42px',
-                    top: '22px',
-                    whiteSpace: 'nowrap',
-                    color: 'red',
-                    fontSize: '14px',
-                  }}
-                >
-                  남은시간 {Math.floor(remainingTime / 60)}:
-                  {(remainingTime % 60).toString().padStart(2, '0')}
-                </span>
-              }
-            />
-          </InputInner>
-        </ResidentWrapper>
-      )}
-      <Border />
-      <Button
-        variant="blue"
-        height="52px"
-        onClick={() => {
-          console.log('현재 입력된 formData:', formData);
-          if (onNext) onNext();
-        }}
-        style={{ margin: '20px 0px' }}
-        disabled={!isFormValid}
-      >
-        다음 단계로 이동
-      </Button>
+
+      <SignUpNameInput
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+      />
+
+      <SignUpIdInput
+        birthDate={formData.birthDate}
+        genderInput={genderInput}
+        onBirthDateChange={handleBirthDateChange}
+        onGenderChange={handleGenderChange}
+      />
+
+      <SignUpPhoneVerificationInput
+        phoneNumber={formData.phoneNumber}
+        onPhoneChange={(e) =>
+          setFormData({ ...formData, phoneNumber: e.target.value })
+        }
+        authNumber={authNumber}
+        setAuthNumber={setAuthNumber}
+        remainingTime={remainingTime}
+        showVerificationInput={showVerificationInput}
+        onSendAuth={() => sendAuthNumber(formData.phoneNumber)}
+        onVerify={() => verifyAuthNumber(formData.phoneNumber, onNext)}
+      />
+
+      <ButtonContainer>
+        <button
+          className="next-button"
+          onClick={() => {
+            console.log('현재 입력된 formData:', formData);
+            if (onNext) onNext();
+          }}
+          disabled={!isFormValid}
+        >
+          다음 단계로 이동
+        </button>
+      </ButtonContainer>
     </StepWrapper>
   );
 };
@@ -214,6 +111,7 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  margin: 24px 16px auto 16px;
 `;
 
 const IconContainer = styled.div`
@@ -244,72 +142,31 @@ const Header = styled.div`
   }
 `;
 
-const InputWrapper = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 16px 20px 0px 20px;
-
-  gap: 8px;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   box-sizing: border-box;
-
-  font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.gray900};
-
-  .highlight {
-    font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-    color: ${({ theme }) => theme.colors.mainBlue};
-  }
-`;
-
-const PassWordWrapper = styled.div`
-  display: flex;
-  gap: 8px;
-  justify-content: space-between;
-  align-items: flex-end;
-`;
-
-const ResidentWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  width: 100%;
-  flex-grow: 1;
-`;
-
-const InputInner = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
 
-  margin-top: 12px;
-  padding: 0px 20px;
-`;
-
-const CircleWrapper = styled.div`
-  display: flex;
-  margin-left: 8px;
-  gap: 4px;
-  & > div {
-    width: 10px;
-    height: 10px;
-    background-color: ${({ theme }) => theme.colors.gray600};
-    border-radius: 50%;
+  .next-button {
+    width: 100%;
+    height: 52px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: ${({ theme }) => theme.colors.mainBlue};
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
   }
-  width: 50%;
-  justify-content: space-between;
-  align-items: center;
-`;
 
-const Border = styled.div`
-  width: 100vw;
-  height: 1px;
-  background: ${({ theme }) => theme.colors.gray50};
-  margin-left: -20px;
-  margin-top: 202px;
+  .next-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;

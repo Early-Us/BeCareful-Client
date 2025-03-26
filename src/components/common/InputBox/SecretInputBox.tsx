@@ -29,7 +29,7 @@ export const SecretInputBox = ({
           state={state}
           value={value}
           onChange={onChange}
-          masked={masked}
+          $masked={masked}
         />
         {masked && (
           <MaskOverlay>
@@ -66,7 +66,7 @@ const InputContainer = styled.div`
   width: 100%;
 `;
 
-const InputDefault = styled.input<{ state: string; masked?: boolean }>`
+const InputDefault = styled.input<{ state: string; $masked?: boolean }>`
   height: 52px;
   padding: 15px 16px;
   box-sizing: border-box;
@@ -79,12 +79,12 @@ const InputDefault = styled.input<{ state: string; masked?: boolean }>`
   width: 100%;
   position: relative;
   background: ${({ theme }) => theme.colors.white};
-  color: ${({ masked, theme }) =>
-    masked ? 'transparent' : theme.colors.gray900};
+  color: ${({ $masked, theme }) =>
+    $masked ? 'transparent' : theme.colors.gray900};
   font-size: ${({ theme }) => theme.typography.fontSize.body1};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   letter-spacing: -0.4px;
-  caret-color: ${({ theme }) => theme.colors.mainBlue};
+  caret-color: transparent;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray300};

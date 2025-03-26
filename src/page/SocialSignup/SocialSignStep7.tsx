@@ -122,13 +122,13 @@ const StepWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 24px 16px auto 16px;
 `;
 
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0px 20px;
   box-sizing: border-box;
   height: 56px;
   width: 100%;
@@ -165,7 +165,7 @@ const TopText = styled.div`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.mainBlue};
   white-space: nowrap;
-  //padding: 16px 20px;
+  padding: 16px 20px;
 `;
 
 const ButtonContainer = styled.div`
@@ -175,7 +175,7 @@ const ButtonContainer = styled.div`
   position: fixed;
   bottom: 0;
   padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   box-sizing: border-box;
   width: 100%;
 `;

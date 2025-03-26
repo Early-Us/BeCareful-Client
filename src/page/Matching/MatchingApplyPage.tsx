@@ -66,33 +66,39 @@ export const MatchingApplyPage = () => {
   };
 
   return (
-    <div>
-      <TopContainer>매칭 등록하기</TopContainer>
-      <SearchContainer>
-        <MatchingSearchBox placeholder="검색할 이름을 입력해주세요." />
-      </SearchContainer>
-      <CardContainer>
-        {elderList.map((elder) => (
-          <ElderCard key={elder.elderlyId} {...elder} onClick={openModal} />
-        ))}
-      </CardContainer>
-      {isModalOpen && modalData && (
-        <MatchingApplyModal
-          width="312px"
-          onClose={closeModal}
-          data={modalData}
-        />
-      )}
+    <>
+      <Container>
+        <TopContainer>매칭 등록하기</TopContainer>
+        <SearchContainer>
+          <MatchingSearchBox placeholder="검색할 이름을 입력해주세요." />
+        </SearchContainer>
+        <CardContainer>
+          {elderList.map((elder) => (
+            <ElderCard key={elder.elderlyId} {...elder} onClick={openModal} />
+          ))}
+        </CardContainer>
+        {isModalOpen && modalData && (
+          <MatchingApplyModal
+            width="312px"
+            onClose={closeModal}
+            data={modalData}
+          />
+        )}
+      </Container>
+
       <SocialTabBar />
-    </div>
+    </>
   );
 };
-
+const Container = styled.div`
+  margin-bottom: 107px;
+  margin: auto 20px;
+`;
 const TopContainer = styled.div`
   display: flex;
   width: 100%;
   height: 56px;
-  padding: 0 20px;
+
   justify-content: space-between;
   align-items: center;
 
@@ -104,7 +110,7 @@ const TopContainer = styled.div`
 const SearchContainer = styled.div`
   display: flex;
   width: 100%;
-  padding: 12px 20px 0px 20px;
+  padding: 12px 20px 0px 0px;
 `;
 
 const CardContainer = styled.div`
@@ -113,8 +119,7 @@ const CardContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  //box-sizing: border-box;
   width: 100%;
   gap: 8px;
-  padding: 16px 20px 0px 20px;
+  padding: 16px 20px 0px 0px;
 `;
