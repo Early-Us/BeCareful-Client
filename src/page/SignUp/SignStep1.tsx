@@ -3,45 +3,25 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { styled } from 'styled-components';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 import { Button } from '@/components/common/Button/Button';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
-import {
-  handleSendAuthNumber,
-  handleVerifyAuthNumber,
-} from '@/page/SignUp/Step1Function';
+import { usePhoneVerification } from '@/hooks/usePhoneVerification';
 import { useNavigate } from 'react-router-dom';
 
 export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
-  const [authNumber, setAuthNumber] = useState('');
-  const [showVerificationInput, setShowVerificationInput] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(180);
-  const [, setAuthSent] = useState(false);
   const [genderInput, setGenderInput] = useState('');
   const apiUrl = import.meta.env.VITE_APP_API_URL;
-  const [, setAuthButtonText] = useState('인증번호 전송');
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (remainingTime === 0) {
-      setAuthButtonText('재전송');
-    }
-  }, [remainingTime]);
-  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    if (/^[0-9]{0,1}$/.test(value)) {
-      setGenderInput(value);
-      if (value === '1' || value === '3') {
-        setFormData({ ...formData, gender: 'MALE' });
-      } else if (value === '2' || value === '4') {
-        setFormData({ ...formData, gender: 'FEMALE' });
-      }
-    }
-  };
-  const handleBirthDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '');
-    setFormData({ ...formData, birthDate: value });
-  };
+  const {
+    authNumber,
+    setAuthNumber,
+    remainingTime,
+    showVerificationInput,
+    sendAuthNumber,
+    verifyAuthNumber,
+  } = usePhoneVerification(apiUrl);
 
   useEffect(() => {
     if (remainingTime === 0) {
@@ -59,7 +39,22 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
     setIsFormValid(isValid);
   }, [formData, genderInput]);
 
-  const navigate = useNavigate();
+  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^[0-9]{0,1}$/.test(value)) {
+      setGenderInput(value);
+      if (value === '1' || value === '3') {
+        setFormData({ ...formData, gender: 'MALE' });
+      } else if (value === '2' || value === '4') {
+        setFormData({ ...formData, gender: 'FEMALE' });
+      }
+    }
+  };
+
+  const handleBirthDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setFormData({ ...formData, birthDate: value });
+  };
 
   return (
     <StepWrapper>
@@ -68,6 +63,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
       </IconContainer>
 
       <Header>기본 정보를 입력하세요</Header>
+
       <InputWrapper>
         <div>
           <span>이름</span>
@@ -82,6 +78,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
       </InputWrapper>
+
       <InputWrapper>
         <div>
           <span>주민등록번호</span>
@@ -113,6 +110,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           </CircleWrapper>
         </ResidentWrapper>
       </InputWrapper>
+
       <InputWrapper>
         <div>
           <span>휴대전화</span>
@@ -133,25 +131,14 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
             variant="blue2"
             width="40%"
             height="56px"
-            style={{
-              minWidth: '120px',
-              flexShrink: 0,
-            }}
-            onClick={() =>
-              handleSendAuthNumber(
-                formData.phoneNumber,
-                setShowVerificationInput,
-                setAuthSent,
-                setRemainingTime,
-                setAuthButtonText,
-                apiUrl,
-              )
-            }
+            style={{ minWidth: '120px', flexShrink: 0 }}
+            onClick={() => sendAuthNumber(formData.phoneNumber)}
           >
-            인증번호 전송
+            {remainingTime === 0 ? '재전송' : '인증번호 전송'}
           </Button>
         </PassWordWrapper>
       </InputWrapper>
+
       {showVerificationInput && (
         <ResidentWrapper>
           <InputInner>
@@ -164,12 +151,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
               onChange={(e) => setAuthNumber(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleVerifyAuthNumber(
-                    formData.phoneNumber,
-                    authNumber,
-                    apiUrl,
-                    onNext,
-                  );
+                  verifyAuthNumber(formData.phoneNumber, onNext);
                 }
               }}
               suffix={
