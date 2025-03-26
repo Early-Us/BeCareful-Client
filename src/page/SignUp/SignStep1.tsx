@@ -1,12 +1,12 @@
 import { StepProps } from '@/type/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
-import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
-import { Button } from '@/components/common/Button/Button';
 import { useEffect, useState } from 'react';
-import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
 import { usePhoneVerification } from '@/hooks/usePhoneVerification';
 import { useNavigate } from 'react-router-dom';
+import { SignUpNameInput } from '@/components/SignUp/Step1/SignUpNameInput';
+import { SignUpIdInput } from '@/components/SignUp/Step1/SingUpIdInput';
+import { SignUpPhoneVerificationInput } from '@/components/SignUp/Step1/SignUpPhoneVerificationInput';
 
 export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
   const [genderInput, setGenderInput] = useState('');
@@ -64,120 +64,34 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
 
       <Header>기본 정보를 입력하세요</Header>
 
-      <InputWrapper>
-        <div>
-          <span>이름</span>
-          <span className="highlight"> *</span>
-        </div>
-        <PlainInputBox
-          width="100%"
-          state="default"
-          placeholder="이름"
-          guide=""
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-      </InputWrapper>
+      <SignUpNameInput
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+      />
 
-      <InputWrapper>
-        <div>
-          <span>주민등록번호</span>
-          <span className="highlight"> *</span>
-        </div>
-        <ResidentWrapper>
-          <PlainInputBox
-            width="45%"
-            state="default"
-            placeholder="주민등록번호"
-            guide=""
-            value={formData.birthDate}
-            onChange={handleBirthDateChange}
-          />
-          -
-          <SecretInputBox
-            width="25%"
-            state="default"
-            placeholder=""
-            guide=""
-            value={genderInput}
-            masked={true}
-            onChange={handleGenderChange}
-          />
-          <CircleWrapper>
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} />
-            ))}
-          </CircleWrapper>
-        </ResidentWrapper>
-      </InputWrapper>
+      <SignUpIdInput
+        birthDate={formData.birthDate}
+        genderInput={genderInput}
+        onBirthDateChange={handleBirthDateChange}
+        onGenderChange={handleGenderChange}
+      />
 
-      <InputWrapper>
-        <div>
-          <span>휴대전화</span>
-          <span className="highlight"> *</span>
-        </div>
-        <PassWordWrapper>
-          <PlainInputBox
-            width="60%"
-            state="default"
-            placeholder="휴대전화 번호"
-            guide=""
-            value={formData.phoneNumber}
-            onChange={(e) =>
-              setFormData({ ...formData, phoneNumber: e.target.value })
-            }
-          />
-          <Button
-            variant="blue2"
-            width="40%"
-            height="56px"
-            style={{ minWidth: '120px', flexShrink: 0 }}
-            onClick={() => sendAuthNumber(formData.phoneNumber)}
-          >
-            {remainingTime === 0 ? '재전송' : '인증번호 전송'}
-          </Button>
-        </PassWordWrapper>
-      </InputWrapper>
-
-      {showVerificationInput && (
-        <ResidentWrapper>
-          <InputInner>
-            <PlainInputBox
-              width="100%"
-              state="default"
-              placeholder="인증번호 입력"
-              guide=""
-              value={authNumber}
-              onChange={(e) => setAuthNumber(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  verifyAuthNumber(formData.phoneNumber, onNext);
-                }
-              }}
-              suffix={
-                <span
-                  style={{
-                    position: 'absolute',
-                    right: '42px',
-                    top: '22px',
-                    whiteSpace: 'nowrap',
-                    color: 'red',
-                    fontSize: '14px',
-                  }}
-                >
-                  남은시간 {Math.floor(remainingTime / 60)}:
-                  {(remainingTime % 60).toString().padStart(2, '0')}
-                </span>
-              }
-            />
-          </InputInner>
-        </ResidentWrapper>
-      )}
+      <SignUpPhoneVerificationInput
+        phoneNumber={formData.phoneNumber}
+        onPhoneChange={(e) =>
+          setFormData({ ...formData, phoneNumber: e.target.value })
+        }
+        authNumber={authNumber}
+        setAuthNumber={setAuthNumber}
+        remainingTime={remainingTime}
+        showVerificationInput={showVerificationInput}
+        onSendAuth={() => sendAuthNumber(formData.phoneNumber)}
+        onVerify={() => verifyAuthNumber(formData.phoneNumber, onNext)}
+      />
 
       <ButtonContainer>
-        <Button
-          variant="blue"
-          height="52px"
+        <button
+          className="next-button"
           onClick={() => {
             console.log('현재 입력된 formData:', formData);
             if (onNext) onNext();
@@ -185,7 +99,7 @@ export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
           disabled={!isFormValid}
         >
           다음 단계로 이동
-        </Button>
+        </button>
       </ButtonContainer>
     </StepWrapper>
   );
@@ -228,69 +142,6 @@ const Header = styled.div`
   }
 `;
 
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 16px 20px 0px 20px;
-  align-self: stretch;
-
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-
-  font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.gray900};
-
-  .highlight {
-    font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-    color: ${({ theme }) => theme.colors.mainBlue};
-  }
-`;
-
-const PassWordWrapper = styled.div`
-  display: flex;
-  gap: 8px;
-  justify-content: space-between;
-  align-items: flex-end;
-`;
-
-const ResidentWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  width: 100%;
-  flex-grow: 1;
-`;
-
-const InputInner = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-
-  margin-top: 12px;
-  padding: 0px 20px;
-`;
-
-const CircleWrapper = styled.div`
-  display: flex;
-  margin-left: 8px;
-  gap: 4px;
-  & > div {
-    width: 10px;
-    height: 10px;
-    background-color: ${({ theme }) => theme.colors.gray600};
-    border-radius: 50%;
-  }
-  width: 50%;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -301,4 +152,21 @@ const ButtonContainer = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   box-sizing: border-box;
   width: 100%;
+
+  .next-button {
+    width: 100%;
+    height: 52px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: ${({ theme }) => theme.colors.mainBlue};
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .next-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
