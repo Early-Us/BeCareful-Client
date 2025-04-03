@@ -7,11 +7,11 @@ import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { Toggle } from '@/components/common/Toggle/Toggle';
 
-import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
-import { SocialCard } from '@/components/SignUp/SocialCard';
-import { BooleanNoCard } from '@/components/SignUp/BooleanNoCard';
-import { BooleanYesCard } from '@/components/SignUp/BooleanYesCard';
-import { AgreeCard } from '@/components/SignUp/AgreeCard';
+import { CareGiverCard } from '@/components/SignUp/deprecated/CareGiverCard';
+import { SocialCard } from '@/components/SignUp/deprecated/SocialCard';
+import { BooleanNoCard } from '@/components/SignUp/deprecated/BooleanNoCard';
+import { BooleanYesCard } from '@/components/SignUp/deprecated/BooleanYesCard';
+import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
 
 import { ApplyChip } from '@/components/common/ApplyCard/ApplyChip';
 import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';

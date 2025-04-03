@@ -3,7 +3,7 @@ import { StepProps } from '@/type/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { SearchInput } from '@/components/SignUp/SearchInput';
+import { SearchInput } from '@/components/SignUp/deprecated/SearchInput';
 
 import { useEffect, useState } from 'react';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';

@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { useState } from 'react';
-import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
-import { SocialCard } from '@/components/SignUp/SocialCard';
+import { CareGiverCard } from '@/components/SignUp/deprecated/CareGiverCard';
+import { SocialCard } from '@/components/SignUp/deprecated/SocialCard';
 import { Button } from '@/components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 

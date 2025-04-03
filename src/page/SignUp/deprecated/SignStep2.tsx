@@ -1,24 +1,24 @@
+import { SignUpFormData, StepProps } from '@/type/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
-import { SocialSignUpFormData, SocialStepProps } from '@/type/SocialSignUp';
-import { useEffect, useState } from 'react';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
-import { AgreeCard } from '@/components/SignUp/AgreeCard';
-import { CheckBox } from '@/components/common/CheckBox/CheckBox';
+import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
 import { ReactComponent as ChevronRight } from '@/assets/icons/signup/ChevronRight.svg';
+import { CheckBox } from '@/components/common/CheckBox/CheckBox';
 import { Button } from '@/components/common/Button/Button';
+import { useEffect, useState } from 'react';
 
-export const SocialStep2 = ({
-  formSocialData,
-  setFormSocialData,
-  onPrevious,
+export const Step2 = ({
+  formData,
+  setFormData,
   onNext,
-}: SocialStepProps) => {
+  onPrevious,
+}: StepProps) => {
   const {
     isAgreedToTerms,
     isAgreedToCollectPersonalInfo,
     isAgreedToReceiveMarketingInfo,
-  } = formSocialData;
+  } = formData;
 
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isRequiredChecked, setIsRequiredChecked] = useState(false);
@@ -41,15 +41,15 @@ export const SocialStep2 = ({
   ]);
 
   const handleCheckboxChange = (
-    key: keyof SocialSignUpFormData,
+    key: keyof SignUpFormData,
     checked: boolean,
   ) => {
-    setFormSocialData({ ...formSocialData, [key]: checked });
+    setFormData({ ...formData, [key]: checked });
   };
 
   const handleAllAgree = (checked: boolean) => {
-    setFormSocialData({
-      ...formSocialData,
+    setFormData({
+      ...formData,
       isAgreedToTerms: checked,
       isAgreedToCollectPersonalInfo: checked,
       isAgreedToReceiveMarketingInfo: checked,
@@ -64,7 +64,7 @@ export const SocialStep2 = ({
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
-    setFormSocialData({ ...formSocialData, password: newPassword });
+    setFormData({ ...formData, password: newPassword });
 
     if (!validatePassword(newPassword)) {
       setPasswordError('영문, 숫자, 특수문자를 포함한 8자리 이상 입력하세요.');
@@ -79,7 +79,7 @@ export const SocialStep2 = ({
     const newConfirmPassword = e.target.value;
     setPasswordConfirm(newConfirmPassword);
 
-    if (newConfirmPassword !== formSocialData.password) {
+    if (newConfirmPassword !== formData.password) {
       setConfirmError('비밀번호가 일치하지 않습니다.');
     } else {
       setConfirmError('');
@@ -87,9 +87,7 @@ export const SocialStep2 = ({
   };
 
   const isFormValid =
-    isRequiredChecked &&
-    validatePassword(formSocialData.password) &&
-    !confirmError;
+    isRequiredChecked && validatePassword(formData.password) && !confirmError;
 
   return (
     <StepWrapper>
@@ -97,6 +95,7 @@ export const SocialStep2 = ({
         <IconArrowLeft />
       </IconContainer>
       <Header>비밀번호를 입력하세요</Header>
+
       <InputWrapper>
         <div>
           <span>비밀번호</span>
@@ -107,10 +106,11 @@ export const SocialStep2 = ({
           state="default"
           placeholder="영문, 숫자, 특수문자를 포함한 8자리 이상"
           guide={passwordError}
-          value={formSocialData.password}
+          value={formData.password}
           onChange={handlePasswordChange}
         />
       </InputWrapper>
+
       <InputWrapper>
         <div>
           <span>비밀번호 재입력</span>
@@ -125,6 +125,7 @@ export const SocialStep2 = ({
           onChange={handlePasswordConfirmChange}
         />
       </InputWrapper>
+
       <AgreeWrapper>
         <AgreeCard
           pressed={isAllChecked}
@@ -176,14 +177,14 @@ export const SocialStep2 = ({
           </AgreeCheck>
         </AgreeCheckContainer>
       </AgreeWrapper>
+
       <ButtonContainer>
-        {' '}
         <Button
           variant={isFormValid ? 'blue' : 'disabled'}
           height="52px"
           onClick={() => {
-            console.log('현재 입력된 formSocialData:', formSocialData);
-            if (isFormValid && onNext()) onNext();
+            console.log('현재 입력된 formData:', formData);
+            if (isFormValid && onNext) onNext();
           }}
           disabled={!isFormValid}
         >
@@ -193,6 +194,7 @@ export const SocialStep2 = ({
     </StepWrapper>
   );
 };
+
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -205,23 +207,30 @@ const StepWrapper = styled.div`
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+  box-sizing: border-box;
   align-items: center;
   padding: 0px 20px;
-  box-sizing: border-box;
   height: 56px;
   width: 100%;
 `;
 
 const Header = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 16px 20px 0px 20px;
+  gap: 8px;
+
   align-items: flex-start;
+  padding: 16px 20px 0px 20px;
   box-sizing: border-box;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.gray900};
+
+  .highlight {
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -282,6 +291,6 @@ const ButtonContainer = styled.div`
   padding: 20px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   box-sizing: border-box;
-  width: 100%;
   margin-top: 80px;
+  width: 100%;
 `;

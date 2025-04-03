@@ -10,7 +10,7 @@ import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';
 import { CareGiverQualificationCard } from '@/components/common/QualificationCard/CaregiverQualificationCard';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { SocialQualificationCard } from '@/components/common/QualificationCard/SocialQualificationCard';
-import { Modal } from '@/components/SignUp/SignUpModal';
+import { Modal } from '@/components/SignUp/deprecated/SignUpModal';
 import { Toggle } from '@/components/common/Toggle/Toggle';
 import axios from 'axios';
 
