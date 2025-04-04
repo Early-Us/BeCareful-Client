@@ -28,7 +28,7 @@ import ChatListPage from './page/Chat/ChatListPage';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
 import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
-import { SignUpForm } from '@/components/SignUp/deprecated/SignUpForm';
+import { OrganizationSignUpPage } from '@/page/SignUp/OrganizationSignUpPage';
 
 function App() {
   return (
@@ -40,7 +40,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
 
       <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/signup/caregiver" element={<SignUpForm />} />
+      <Route path="/signup/organization" element={<OrganizationSignUpPage />} />
 
       <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />
