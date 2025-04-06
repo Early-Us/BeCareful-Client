@@ -7,8 +7,6 @@ import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { Toggle } from '@/components/common/Toggle/Toggle';
 
-import { CareGiverCard } from '@/components/SignUp/deprecated/CareGiverCard';
-import { SocialCard } from '@/components/SignUp/deprecated/SocialCard';
 import { BooleanNoCard } from '@/components/SignUp/deprecated/BooleanNoCard';
 import { BooleanYesCard } from '@/components/SignUp/deprecated/BooleanYesCard';
 import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
@@ -18,6 +16,8 @@ import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
 import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
 
 import { CheckBox } from '../components/common/CheckBox/CheckBox';
+import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
+import { InstitutionCard } from '@/components/SignUp/InstitutionCard';
 
 export const TestPage = () => {
   const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
@@ -63,7 +63,7 @@ export const TestPage = () => {
       <AgreeCard pressed={false} text="네, 소유하고 있습ㅇㅇ니다." />
       <div onClick={handleCardClick}>
         <CareGiverCard pressed={pressed} />
-        <SocialCard pressed={pressed} />
+        <InstitutionCard pressed={pressed} />
       </div>
 
       <ApplyChip state={'pass'} />

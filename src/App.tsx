@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './page/Login/LoginPage';
 import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import HomePage from './page/Home/HomePage';
-import { SignUpPage } from '@/page/SignUp/deprecated/SignUpPage';
 
 import MyPage from './page/MyPage/MyPage';
 import SplashPage from './page/SplashPage';
@@ -29,6 +28,7 @@ import ChatRoomPage from './page/Chat/ChatRoomPage';
 import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
+import { SignUpPage } from '@/page/SignUp/SignUpPage';
 
 function App() {
   return (
