@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
 import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar';
 
 export const Step1SelectRole = () => {
   const { goToNext } = useSignUpContext();
@@ -11,6 +12,7 @@ export const Step1SelectRole = () => {
       <IconContainer>
         <IconArrowLeft />
       </IconContainer>
+      <ProgressBar percent={20} />
       <HeaderSection>
         <Title>
           소속된 기관에서
