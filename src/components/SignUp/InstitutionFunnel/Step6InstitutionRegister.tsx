@@ -5,7 +5,6 @@ import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpCo
 
 interface StepProps {
   onComplete: () => void;
-  //goToPrev: () => void;
 }
 
 export const Step6InstitutionRegister = ({ onComplete }: StepProps) => {
@@ -23,7 +22,7 @@ export const Step6InstitutionRegister = ({ onComplete }: StepProps) => {
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button onClick={onComplete} height={'52px'}>
+        <Button onClick={onComplete} height={'52px'} variant="blue">
           회원 가입 진행하기
         </Button>
       </ButtonContainer>

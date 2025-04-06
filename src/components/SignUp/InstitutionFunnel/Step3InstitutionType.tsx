@@ -1,13 +1,43 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 
 interface StepProps {
   goToNext: () => void;
   goToPrev: () => void;
+  institutionFormData: InstitutionFormData;
+  setInstitutionFormData: React.Dispatch<
+    React.SetStateAction<InstitutionFormData>
+  >;
 }
 
-export const Step3InstitutionType = ({ goToNext, goToPrev }: StepProps) => {
+export const Step3InstitutionType = ({
+  goToNext,
+  goToPrev,
+  institutionFormData,
+  setInstitutionFormData,
+}: StepProps) => {
+  const handleTypeSelect = (type: string) => {
+    setInstitutionFormData((prev) => {
+      const alreadySelected = prev.institutionType.includes(type);
+
+      if (alreadySelected) {
+        return {
+          ...prev,
+          institutionType: prev.institutionType.filter((t) => t !== type),
+        };
+      } else {
+        return {
+          ...prev,
+          institutionType: [...prev.institutionType, type],
+        };
+      }
+    });
+  };
+
+  const isInstitutionTypeValid = institutionFormData.institutionType.length > 0;
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -19,19 +49,48 @@ export const Step3InstitutionType = ({ goToNext, goToPrev }: StepProps) => {
         <SubText>복수 선택이 가능해요.</SubText>
       </HeaderSection>
       <CardContainer>
-        <CheckCard pressed text="방문 요양" />
-        <CheckCard text="방문 목욕" />
-        <CheckCard text="방문 간호" />
-        <CheckCard text="주야간 보호" />
-        <CheckCard text="단기 보호" />
-        <CheckCard text="복지 용구" />
+        <CheckCard
+          pressed={institutionFormData.institutionType.includes('방문 요양')}
+          text="방문 요양"
+          onClick={() => handleTypeSelect('방문 요양')}
+        />
+        <CheckCard
+          pressed={institutionFormData.institutionType.includes('방문 목욕')}
+          text="방문 목욕"
+          onClick={() => handleTypeSelect('방문 목욕')}
+        />
+        <CheckCard
+          pressed={institutionFormData.institutionType.includes('방문 간호')}
+          text="방문 간호"
+          onClick={() => handleTypeSelect('방문 간호')}
+        />
+        <CheckCard
+          pressed={institutionFormData.institutionType.includes('주야간 보호')}
+          text="주야간 보호"
+          onClick={() => handleTypeSelect('주야간 보호')}
+        />
+        <CheckCard
+          pressed={institutionFormData.institutionType.includes('단기 보호')}
+          onClick={() => handleTypeSelect('단기 보호')}
+          text="단기 보호"
+        />
+        <CheckCard
+          pressed={institutionFormData.institutionType.includes('복지 용구')}
+          onClick={() => handleTypeSelect('복지 용구')}
+          text="복지 용구"
+        />
       </CardContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height={'52px'} variant="blue2">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={goToNext}
+          height="52px"
+          variant={isInstitutionTypeValid ? 'blue' : 'gray'}
+          disabled={!isInstitutionTypeValid}
+        >
           다음
         </Button>
       </ButtonContainer>

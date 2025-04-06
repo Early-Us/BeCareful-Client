@@ -1,23 +1,36 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { useState } from 'react';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
-interface StepProps {
+import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
+
+interface Step4Props {
   goToNext: () => void;
   goToPrev: () => void;
+  institutionFormData: InstitutionFormData;
+  setInstitutionFormData: React.Dispatch<
+    React.SetStateAction<InstitutionFormData>
+  >;
 }
 
-interface NameInputProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+export const Step4InstitutionContact = ({
+  goToNext,
+  goToPrev,
+  institutionFormData,
+  setInstitutionFormData,
+}: Step4Props) => {
+  const handleInstitutionPhoneChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { value } = e.target;
+    setInstitutionFormData((prev) => ({
+      ...prev,
+      institutionPhone: value,
+    }));
+  };
 
-export const Step4InstitutionContact = (
-  { goToNext, goToPrev }: StepProps,
-  { value, onChange }: NameInputProps,
-) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [institutionName, setInstitutionName] = useState('');
+  const isInstitutionPhoneValid =
+    institutionFormData.institutionPhone.length > 0;
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -28,22 +41,30 @@ export const Step4InstitutionContact = (
         </Title>
         <SubText>기관 대표 전화번호를 입력해 주세요.</SubText>
       </HeaderSection>
+
       <SearchContainer>
         <PlainInputBox
           width="100%"
           state="default"
           placeholder="기관 연락처 입력"
           guide=""
-          value={value}
-          onChange={onChange}
+          value={institutionFormData.institutionPhone}
+          onChange={handleInstitutionPhoneChange}
         />
       </SearchContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height="52px" variant="blue2">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={() => {
+            goToNext();
+          }}
+          height="52px"
+          variant={isInstitutionPhoneValid ? 'blue' : 'gray'}
+          disabled={!isInstitutionPhoneValid}
+        >
           다음
         </Button>
       </ButtonContainer>

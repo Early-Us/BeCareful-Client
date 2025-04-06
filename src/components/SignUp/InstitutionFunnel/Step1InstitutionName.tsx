@@ -1,15 +1,29 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
-import { useState } from 'react';
+import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
+
 interface StepProps {
   goToNext: () => void;
-  goToPrev: () => void;
+  onCancel?: () => void;
+  institutionFormData: InstitutionFormData;
+  setInstitutionFormData: React.Dispatch<
+    React.SetStateAction<InstitutionFormData>
+  >;
 }
 
-export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [institutionName, setInstitutionName] = useState('');
+export const Step1InstitutionName = ({
+  goToNext,
+  onCancel,
+  institutionFormData,
+  setInstitutionFormData,
+}: StepProps) => {
+  const handleInstitutionNameChange = (name: string) => {
+    setInstitutionFormData((prev) => ({ ...prev, institutionName: name }));
+  };
+
+  const isInstitutionNameValid = institutionFormData.institutionName.length > 0;
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -20,14 +34,21 @@ export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
         <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
       </HeaderSection>
       <SearchContainer>
-        <InstitutionSearchInput onInstitutionSelect={setInstitutionName} />
+        <InstitutionSearchInput
+          onInstitutionSelect={handleInstitutionNameChange}
+        />
       </SearchContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={onCancel} height={'52px'} variant="blue2">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={goToNext}
+          height="52px"
+          variant={isInstitutionNameValid ? 'blue' : 'gray'}
+          disabled={!isInstitutionNameValid}
+        >
           다음
         </Button>
       </ButtonContainer>

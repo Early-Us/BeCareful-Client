@@ -1,31 +1,37 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as ProfileImage } from '@/assets/icons/signup/SocialProfileImage.svg';
-import { useState } from 'react';
+import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 
 interface StepProps {
   goToNext: () => void;
   goToPrev: () => void;
+  institutionFormData: InstitutionFormData;
+  setInstitutionFormData: React.Dispatch<
+    React.SetStateAction<InstitutionFormData>
+  >;
 }
 
-export const Step5UploadPhoto = ({ goToNext, goToPrev }: StepProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [profileImage, setProfileImage] = useState<File | null>(null);
-  const handleProfileImageChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0] || null;
+export const Step5UploadPhoto = ({
+  goToNext,
+  goToPrev,
+  institutionFormData,
+  setInstitutionFormData,
+}: StepProps) => {
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
     if (file) {
-      setProfileImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
+        const imageUrl = reader.result as string;
+        setInstitutionFormData((prev) => ({
+          ...prev,
+          institutionImageUrl: imageUrl,
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   return (
     <StepWrapper>
@@ -36,6 +42,7 @@ export const Step5UploadPhoto = ({ goToNext, goToPrev }: StepProps) => {
         </Title>
         <SubText>소속된 기관의 대표 사진을 업로드해 주세요.(선택)</SubText>
       </HeaderSection>
+
       <ProfileContainer>
         <ProfileImageWrapper>
           <ProfileImageInput
@@ -44,18 +51,22 @@ export const Step5UploadPhoto = ({ goToNext, goToPrev }: StepProps) => {
             onChange={handleProfileImageChange}
           />
 
-          {previewImage ? (
-            <ProfileImageDisplay src={previewImage} alt="Profile" />
+          {institutionFormData.institutionImageUrl ? (
+            <ProfileImageDisplay
+              src={institutionFormData.institutionImageUrl}
+              alt="Profile"
+            />
           ) : (
             <ProfileImage />
           )}
         </ProfileImageWrapper>
       </ProfileContainer>
+
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height="52px" variant="blue2">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button onClick={goToNext} height="52px" variant="blue">
           다음
         </Button>
       </ButtonContainer>

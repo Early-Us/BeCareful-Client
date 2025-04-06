@@ -1,23 +1,35 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { useState } from 'react';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
+import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 interface StepProps {
   goToNext: () => void;
   goToPrev: () => void;
+  institutionFormData: InstitutionFormData;
+  setInstitutionFormData: React.Dispatch<
+    React.SetStateAction<InstitutionFormData>
+  >;
 }
 
-interface NameInputProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+export const Step2InstitutionOpen = ({
+  goToNext,
+  goToPrev,
+  institutionFormData,
+  setInstitutionFormData,
+}: StepProps) => {
+  const handleInstitutionOpenDateChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { value } = e.target;
+    setInstitutionFormData((prev) => ({
+      ...prev,
+      institutionOpenDate: value,
+    }));
+  };
 
-export const Step2InstitutionOpen = (
-  { goToNext, goToPrev }: StepProps,
-  { value, onChange }: NameInputProps,
-) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [institutionName, setInstitutionName] = useState('');
+  const isInstitutionOpenDateValid = /^\d{4}$/.test(
+    institutionFormData.institutionOpenDate ?? '',
+  );
   return (
     <StepWrapper>
       <HeaderSection>
@@ -34,16 +46,23 @@ export const Step2InstitutionOpen = (
           state="default"
           placeholder="기관 개소 연도 입력"
           guide=""
-          value={value}
-          onChange={onChange}
+          value={institutionFormData.institutionOpenDate}
+          onChange={handleInstitutionOpenDateChange}
         />
       </SearchContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height={'52px'} variant="blue2">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={() => {
+            goToNext();
+          }}
+          height={'52px'}
+          variant={isInstitutionOpenDateValid ? 'blue' : 'gray'}
+          disabled={!isInstitutionOpenDateValid}
+        >
           다음
         </Button>
       </ButtonContainer>

@@ -11,9 +11,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface InstitutionFunnelProps {
   onDone: () => void;
+  onCancel?: () => void;
 }
 
-export const InstitutionFunnel = ({ onDone }: InstitutionFunnelProps) => {
+export interface InstitutionFormData {
+  institutionName: string;
+  institutionOpenDate: string;
+  institutionType: string[];
+  institutionPhone: string;
+  institutionImageUrl?: string | null;
+}
+
+export const InstitutionFunnel = ({
+  onDone,
+  onCancel,
+}: InstitutionFunnelProps) => {
+  const [institutionFormData, setInstitutionFormData] =
+    useState<InstitutionFormData>({
+      institutionName: '',
+      institutionOpenDate: '',
+      institutionType: [],
+      institutionPhone: '',
+      institutionImageUrl: null,
+    });
+
   const [currentStep, setCurrentStep] = useState(0);
   const { setIsInstitutionFunnel } = useSignUpContext();
   const isLastStep = currentStep === 5;
@@ -27,12 +48,40 @@ export const InstitutionFunnel = ({ onDone }: InstitutionFunnelProps) => {
   }, [setIsInstitutionFunnel]);
 
   const steps = [
-    <Step1InstitutionName goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step2InstitutionOpen goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step3InstitutionType goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step4InstitutionContact goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step5UploadPhoto goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step6InstitutionRegister onComplete={onDone} />,
+    <Step1InstitutionName
+      goToNext={goToNext}
+      onCancel={onCancel}
+      institutionFormData={institutionFormData}
+      setInstitutionFormData={setInstitutionFormData}
+    />,
+    <Step2InstitutionOpen
+      goToNext={goToNext}
+      goToPrev={goToPrev}
+      institutionFormData={institutionFormData}
+      setInstitutionFormData={setInstitutionFormData}
+    />,
+    <Step3InstitutionType
+      goToNext={goToNext}
+      goToPrev={goToPrev}
+      institutionFormData={institutionFormData}
+      setInstitutionFormData={setInstitutionFormData}
+    />,
+    <Step4InstitutionContact
+      goToNext={goToNext}
+      goToPrev={goToPrev}
+      institutionFormData={institutionFormData}
+      setInstitutionFormData={setInstitutionFormData}
+    />,
+    <Step5UploadPhoto
+      goToNext={goToNext}
+      goToPrev={goToPrev}
+      institutionFormData={institutionFormData}
+      setInstitutionFormData={setInstitutionFormData}
+    />,
+    <Step6InstitutionRegister
+      onComplete={onDone}
+      //institutionFormData={institutionFormData}
+    />,
   ];
 
   const stepPercents = [20, 40, 60, 80, 100, 100];
