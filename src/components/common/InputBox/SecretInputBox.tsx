@@ -21,23 +21,14 @@ export const SecretInputBox = ({
 }: SecretInputBoxProps) => {
   return (
     <InputWrapper width={width}>
-      <InputFieldLabelWrapper></InputFieldLabelWrapper>
       <InputContainer>
         <InputDefault
-          type="text"
+          type={masked ? 'password' : 'text'}
           placeholder={placeholder}
           state={state}
           value={value}
           onChange={onChange}
-          $masked={masked}
         />
-        {masked && (
-          <MaskOverlay>
-            {value.split('').map((_, index) => (
-              <MaskDot key={index} />
-            ))}
-          </MaskOverlay>
-        )}
       </InputContainer>
       {guide && (
         <InputGuideWrapper>
@@ -52,13 +43,7 @@ const InputWrapper = styled.div<{ width: string }>`
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: ${({ width }) => (width ? width : '100%')};
-`;
-
-const InputFieldLabelWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
+  width: ${({ width }) => width || '100%'};
 `;
 
 const InputContainer = styled.div`
@@ -66,11 +51,10 @@ const InputContainer = styled.div`
   width: 100%;
 `;
 
-const InputDefault = styled.input<{ state: string; $masked?: boolean }>`
+const InputDefault = styled.input<{ state: string }>`
   height: 52px;
   padding: 15px 16px;
   box-sizing: border-box;
-
   text-align: left;
   align-items: center;
 
@@ -79,45 +63,27 @@ const InputDefault = styled.input<{ state: string; $masked?: boolean }>`
   width: 100%;
   position: relative;
   background: ${({ theme }) => theme.colors.white};
-  color: ${({ $masked, theme }) =>
-    $masked ? 'transparent' : theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.body1};
+  color: ${({ theme }) => theme.colors.gray900};
+  font-size: 40px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   letter-spacing: -0.4px;
-  caret-color: transparent;
+  caret-color: ${({ theme }) => theme.colors.gray900};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray300};
-    font-size: ${({ theme }) => theme.typography.fontSize.body1};
+    font-size: 40px;
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     letter-spacing: -0.4px;
   }
 
   &:hover {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
   }
 
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
     outline: none;
   }
-`;
-
-const MaskOverlay = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-  display: flex;
-  gap: 4px;
-  pointer-events: none;
-`;
-
-const MaskDot = styled.div`
-  width: 10px;
-  height: 10px;
-  background-color: ${({ theme }) => theme.colors.gray900};
-  border-radius: 50%;
 `;
 
 const InputGuideWrapper = styled.div`

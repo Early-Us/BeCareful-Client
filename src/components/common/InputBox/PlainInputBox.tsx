@@ -23,7 +23,6 @@ export const PlainInputBox = ({
 }: PlainInputBoxProps) => {
   return (
     <InputWrapper width={width}>
-      <InputFieldLabelWrapper></InputFieldLabelWrapper>
       <InputDefault
         type="text"
         placeholder={placeholder}
@@ -53,12 +52,6 @@ const InputWrapper = styled.div<{ width: string }>`
   flex-direction: column;
   gap: 6px;
   width: ${({ width }) => (width ? width : '100%')};
-`;
-
-const InputFieldLabelWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
 `;
 
 const InputDefault = styled.input<{ state: string }>`
@@ -91,11 +84,11 @@ const InputDefault = styled.input<{ state: string }>`
   }
 
   &:hover {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
   }
 
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
     outline: none;
     caret-color: ${({ theme }) => theme.colors.mainBlue};
   }
