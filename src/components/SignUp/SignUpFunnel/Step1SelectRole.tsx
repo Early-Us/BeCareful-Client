@@ -6,9 +6,13 @@ import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
 import { useNavigate } from 'react-router-dom';
 
 export const Step1SelectRole = () => {
-  const { goToNext, formData, setFormData } = useSignUpContext();
+  const { goToNext, setStep, formData, setFormData } = useSignUpContext();
   const handleRoleChange = (selectedRole: string) => {
     setFormData((prev) => ({ ...prev, institutionRole: selectedRole }));
+
+    if (selectedRole === '사회복지사') {
+      setStep(2);
+    }
   };
 
   const navigate = useNavigate();
