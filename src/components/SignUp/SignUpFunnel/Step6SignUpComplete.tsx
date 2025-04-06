@@ -19,7 +19,7 @@ export const Step6SignUpComplete = () => {
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height={'52px'} variant="blue">
           돌봄다리 시작하기
         </Button>
       </ButtonContainer>

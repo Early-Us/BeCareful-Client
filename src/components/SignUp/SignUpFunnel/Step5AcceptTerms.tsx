@@ -4,31 +4,39 @@ import { Button } from '@/components/common/Button/Button';
 import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
 import { CheckBox } from '@/components/common/CheckBox/CheckBox';
 import { ReactComponent as ChevronRight } from '@/assets/icons/signup/ChevronRight.svg';
-import { useState } from 'react';
-export const Step5AcceptTerms = () => {
-  const { goToNext, goToPrev } = useSignUpContext();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isAgreedToTerms, setIsAgreedToTerms] = useState(false);
-  const [isAgreedToCollectPersonalInfo, setIsAgreedToCollectPersonalInfo] =
-    useState(false);
-  const [isAgreedToReceiveMarketingInfo, setIsAgreedToReceiveMarketingInfo] =
-    useState(false);
 
-  const handleCheckboxChange = (field: string, value: boolean) => {
-    switch (field) {
-      case 'isAgreedToTerms':
-        setIsAgreedToTerms(value);
-        break;
-      case 'isAgreedToCollectPersonalInfo':
-        setIsAgreedToCollectPersonalInfo(value);
-        break;
-      case 'isAgreedToReceiveMarketingInfo':
-        setIsAgreedToReceiveMarketingInfo(value);
-        break;
-      default:
-        break;
-    }
+type AgreeField =
+  | 'isAgreedToTerms'
+  | 'isAgreedToCollectPersonalInfo'
+  | 'isAgreedToReceiveMarketingInfo';
+
+export const Step5AcceptTerms = () => {
+  const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
+
+  const handleCheckboxChange = (field: AgreeField) => (checked: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: checked,
+    }));
   };
+
+  const handleAgreeAll = () => {
+    const allChecked =
+      formData.isAgreedToTerms &&
+      formData.isAgreedToCollectPersonalInfo &&
+      formData.isAgreedToReceiveMarketingInfo;
+    setFormData((prev) => ({
+      ...prev,
+      isAgreedToTerms: !allChecked,
+      isAgreedToCollectPersonalInfo: !allChecked,
+      isAgreedToReceiveMarketingInfo: !allChecked,
+    }));
+  };
+
+  const isAllAgreed =
+    formData.isAgreedToTerms &&
+    formData.isAgreedToCollectPersonalInfo &&
+    formData.isAgreedToReceiveMarketingInfo;
 
   return (
     <StepWrapper>
@@ -39,15 +47,17 @@ export const Step5AcceptTerms = () => {
         </Title>
       </HeaderSection>
       <AgreeWrapper>
-        <AgreeCard pressed={true} text="전체 동의" />
+        <AgreeCard
+          pressed={isAllAgreed}
+          text="전체 동의"
+          onClick={handleAgreeAll}
+        />
         <AgreeCheckContainer>
           <AgreeCheck>
             <CheckBox
-              id="2"
-              checked={true}
-              onChange={(checked) =>
-                handleCheckboxChange('isAgreedToTerms', checked)
-              }
+              id="1"
+              checked={formData.isAgreedToTerms}
+              onChange={handleCheckboxChange('isAgreedToTerms')}
               borderRadius=""
               label=""
               select="필수"
@@ -58,10 +68,8 @@ export const Step5AcceptTerms = () => {
           <AgreeCheck>
             <CheckBox
               id="2"
-              checked={isAgreedToCollectPersonalInfo}
-              onChange={(checked) =>
-                handleCheckboxChange('isAgreedToCollectPersonalInfo', checked)
-              }
+              checked={formData.isAgreedToCollectPersonalInfo}
+              onChange={handleCheckboxChange('isAgreedToCollectPersonalInfo')}
               borderRadius=""
               label=""
               select="필수"
@@ -72,10 +80,8 @@ export const Step5AcceptTerms = () => {
           <AgreeCheck>
             <CheckBox
               id="3"
-              checked={isAgreedToReceiveMarketingInfo}
-              onChange={(checked) =>
-                handleCheckboxChange('isAgreedToReceiveMarketingInfo', checked)
-              }
+              checked={formData.isAgreedToReceiveMarketingInfo}
+              onChange={handleCheckboxChange('isAgreedToReceiveMarketingInfo')}
               borderRadius=""
               label=""
               select="선택"
@@ -87,10 +93,25 @@ export const Step5AcceptTerms = () => {
       </AgreeWrapper>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height="52px">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={() => {
+            goToNext();
+          }}
+          height="52px"
+          variant={
+            formData.isAgreedToTerms && formData.isAgreedToCollectPersonalInfo
+              ? 'blue'
+              : 'gray'
+          }
+          disabled={
+            !(
+              formData.isAgreedToTerms && formData.isAgreedToCollectPersonalInfo
+            )
+          }
+        >
           다음
         </Button>
       </ButtonContainer>

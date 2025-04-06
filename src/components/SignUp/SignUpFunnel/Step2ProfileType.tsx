@@ -5,7 +5,11 @@ import { Button } from '@/components/common/Button/Button';
 import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
 
 export const Step2ProfileType = () => {
-  const { goToNext, goToPrev } = useSignUpContext();
+  const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
+  const handleTypeChange = (selectedType: string) => {
+    setFormData((prev) => ({ ...prev, profileType: selectedType }));
+  };
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -17,15 +21,32 @@ export const Step2ProfileType = () => {
       </HeaderSection>
 
       <CardContainer>
-        <CheckCard pressed text="회장 입니다." />
-        <CheckCard text="임원진 입니다." />
-        <CheckCard text="회원 입니다." />
+        <CheckCard
+          pressed={formData.profileType === '회장'}
+          text="회장 입니다."
+          onClick={() => handleTypeChange('회장')}
+        />
+        <CheckCard
+          pressed={formData.profileType === '임원진'}
+          text="임원진 입니다."
+          onClick={() => handleTypeChange('임원진')}
+        />
+        <CheckCard
+          pressed={formData.profileType === '회원'}
+          text="회원 입니다."
+          onClick={() => handleTypeChange('회원')}
+        />
       </CardContainer>
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height={'52px'} variant="blue2">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={goToNext}
+          disabled={!formData.profileType}
+          variant={formData.profileType ? 'blue' : 'gray'}
+          height={'52px'}
+        >
           다음
         </Button>
       </ButtonContainer>

@@ -1,75 +1,83 @@
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-
-import { useState } from 'react';
 import { NameInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/NameInput';
 import { NicknameInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/NicknameInput';
-
 import { PhoneNumberInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/PhoneNumberInput';
 import { ResidentIdInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/ResidentIdInput';
+import { useNicknameValidation } from '@/hooks/useNicknameValidation';
 
 export const Step4BasicInfo = () => {
-  const { goToNext, goToPrev } = useSignUpContext();
-  const [name, setName] = useState('');
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const [nickname, setNickname] = useState('');
+  const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
+  const { message, state, checkNickname, resetMessage } =
+    useNicknameValidation();
 
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
+  const handleChange =
+    (field: keyof typeof formData) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
+
+      if (field === 'nickname') {
+        resetMessage();
+      }
+    };
 
   const handleCheckDuplicate = () => {
-    if (nickname === 'dolda1') {
-      alert('이미 사용 중인 닉네임입니다.');
-    } else {
-      alert('사용 가능한 닉네임입니다.');
-    }
+    checkNickname(formData.nickname);
   };
 
-  const [birthDate, setBirthDate] = useState('');
-  const [genderInput, setGenderInput] = useState('');
-
-  const handleBirthDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBirthDate(e.target.value);
-  };
-
-  const handleGenderInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGenderInput(e.target.value);
-  };
+  const isFormValid =
+    formData.name.trim() &&
+    formData.nickname.trim() &&
+    formData.birthDate.trim() &&
+    formData.residentId.trim() &&
+    formData.phoneNumber.trim();
 
   return (
     <StepWrapper>
       <HeaderSection>
         <Title>담당자 기본 정보를 입력하세요.</Title>
       </HeaderSection>
-      <NameInput value={name} onChange={handleChangeName} />
+
+      <NameInput value={formData.name} onChange={handleChange('name')} />
       <NicknameInput
-        value={nickname}
-        onChange={handleNicknameChange}
+        value={formData.nickname}
+        onChange={handleChange('nickname')}
         onCheckDuplicate={handleCheckDuplicate}
       />
+      {message && (
+        <ValidationMessage state={state}>{message}</ValidationMessage>
+      )}
       <ResidentIdInput
-        birthDate={birthDate}
-        genderInput={genderInput}
-        onBirthDateChange={handleBirthDateChange}
-        onGenderChange={handleGenderInputChange}
+        birthDate={formData.birthDate}
+        genderInput={formData.residentId}
+        onBirthDateChange={handleChange('birthDate')}
+        onGenderChange={handleChange('residentId')}
       />
-      <PhoneNumberInput value={name} onChange={handleChangeName} />
+      <PhoneNumberInput
+        value={formData.phoneNumber}
+        onChange={handleChange('phoneNumber')} //TODO: api 연결하면 수정불가로 바뀜
+      />
+
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height="52px">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={goToNext}
+          height="52px"
+          variant={isFormValid ? 'blue' : 'gray'}
+          disabled={!isFormValid}
+        >
           다음
         </Button>
       </ButtonContainer>
     </StepWrapper>
   );
 };
-
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -108,4 +116,18 @@ const ButtonContainer = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   box-sizing: border-box;
   width: 100%;
+`;
+
+const ValidationMessage = styled.p<{ state: 'default' | 'error' }>`
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 20px;
+
+  font-size: ${({ theme }) => theme.typography.fontSize.body3};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  margin-top: 8px;
+  color: ${({ theme, state }) =>
+    state === 'error' ? theme.colors.mainOrange : theme.colors.mainBlue};
 `;

@@ -3,9 +3,19 @@ import { styled } from 'styled-components';
 
 import { Button } from '@/components/common/Button/Button';
 import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+import { useNavigate } from 'react-router-dom';
 
 export const Step1SelectRole = () => {
-  const { goToNext } = useSignUpContext();
+  const { goToNext, formData, setFormData } = useSignUpContext();
+  const handleRoleChange = (selectedRole: string) => {
+    setFormData((prev) => ({ ...prev, institutionRole: selectedRole }));
+  };
+
+  const navigate = useNavigate();
+  const goToPrev = () => {
+    navigate(-1);
+  };
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -17,15 +27,32 @@ export const Step1SelectRole = () => {
       </HeaderSection>
 
       <CardContainer>
-        <CheckCard pressed text="센터장 입니다." />
-        <CheckCard text="대표 입니다." />
-        <CheckCard text="사회복지사 입니다." />
+        <CheckCard
+          pressed={formData.institutionRole === '센터장'}
+          text="센터장 입니다."
+          onClick={() => handleRoleChange('센터장')}
+        />
+        <CheckCard
+          pressed={formData.institutionRole === '대표'}
+          text="대표 입니다."
+          onClick={() => handleRoleChange('대표')}
+        />
+        <CheckCard
+          pressed={formData.institutionRole === '사회복지사'}
+          text="사회복지사 입니다."
+          onClick={() => handleRoleChange('사회복지사')}
+        />
       </CardContainer>
       <ButtonContainer>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button onClick={goToPrev} height={'52px'} variant="blue2">
           이전
         </Button>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button
+          onClick={goToNext}
+          disabled={!formData.institutionRole}
+          variant={formData.institutionRole ? 'blue' : 'gray'}
+          height="52px"
+        >
           다음
         </Button>
       </ButtonContainer>

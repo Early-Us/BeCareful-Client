@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ReactComponent as SearchIcon } from '@/assets/icons/signup/SearchIcon.svg';
 import { styled } from 'styled-components';
 
-const DUMMY_INSTITUTIONS = ['기관1', '기관2', '기관3', '기관있음'];
+const DUMMY_INSTITUTIONS = ['기관1', '기관2', '기관3', '기관있음']; //TODO 나중에 API로 변경
 
 export const InstitutionSearchInput = ({
   onInstitutionSelect,
@@ -27,7 +27,7 @@ export const InstitutionSearchInput = ({
       setShowDropdown(true);
     }
     onInstitutionSelect(searchTerm);
-  }, [searchTerm, onInstitutionSelect]);
+  }, [searchTerm]);
 
   const handleSelect = (name: string) => {
     setSearchTerm(name);

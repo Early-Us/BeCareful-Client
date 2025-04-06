@@ -29,9 +29,26 @@ export const Step3InstitutionName = () => {
     goToNext();
   };
 
+  const handleRegisterCancel = () => {
+    setIsRegisteringInstitution(false);
+    goToPrev();
+  };
+
+  const handleClickRegisterInstitution = () => {
+    setIsRegisteringInstitution(true);
+  };
+
+  const isInstitutionNameValid = institutionName.trim().length > 0; //TODO: api 연결하면 존재하는 기관만 넘어감
+
   if (isRegisteringInstitution) {
-    return <InstitutionFunnel onDone={handleRegisterComplete} />;
+    return (
+      <InstitutionFunnel
+        onDone={handleRegisterComplete}
+        onCancel={handleRegisterCancel}
+      />
+    );
   }
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -45,12 +62,27 @@ export const Step3InstitutionName = () => {
       <SearchContainer>
         <InstitutionSearchInput onInstitutionSelect={setInstitutionName} />
       </SearchContainer>
+      <SearchContainer>
+        <AskText>
+          <span className="highlight">* 소속된 기관이 검색되지 않나요?</span>
+          <br />
+          <span className="bold" onClick={handleClickRegisterInstitution}>
+            이곳
+          </span>
+          을 클릭해 기관을 등록해 보세요.
+        </AskText>
+      </SearchContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
+        <Button onClick={goToPrev} height={'52px'} variant="blue2">
           이전
         </Button>
-        <Button onClick={handleCheckInstitution} height={'52px'}>
+        <Button
+          onClick={handleCheckInstitution}
+          height="52px"
+          variant={isInstitutionNameValid ? 'blue' : 'gray'}
+          disabled={!isInstitutionNameValid}
+        >
           다음
         </Button>
       </ButtonContainer>
@@ -110,4 +142,21 @@ const SearchContainer = styled.div`
   padding: 20px 20px 0px 20px;
   box-sizing: border-box;
   flex-direction: column;
+`;
+
+const AskText = styled.p`
+  font-size: ${({ theme }) => theme.typography.fontSize.body2};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.gray500};
+
+  .highlight {
+    color: ${({ theme }) => theme.colors.mainBlue};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  }
+  .bold {
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    color: ${({ theme }) => theme.colors.gray600};
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
