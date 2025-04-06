@@ -1,6 +1,5 @@
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
-import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
 
@@ -8,9 +7,6 @@ export const Step6SignUpComplete = () => {
   const { goToPrev } = useSignUpContext();
   return (
     <StepWrapper>
-      <IconContainer>
-        <IconArrowLeft />
-      </IconContainer>
       <HeaderSection>
         <Title>
           기관 회원 가입이 완료되었습니다.
@@ -37,7 +33,6 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin: 24px 0 auto 0;
 `;
 
 const HeaderSection = styled.header`
@@ -57,16 +52,6 @@ const Title = styled.h1`
   .highlight {
     color: ${({ theme }) => theme.colors.mainBlue};
   }
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  align-items: center;
-  padding: 0px 20px;
-  height: 56px;
-  width: 100%;
 `;
 
 const ButtonContainer = styled.div`

@@ -1,10 +1,11 @@
 import { InstitutionFunnel } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { useState } from 'react';
-import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
+
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
+
 export const Step3InstitutionName = () => {
   const { goToNext, goToPrev } = useSignUpContext();
 
@@ -33,9 +34,6 @@ export const Step3InstitutionName = () => {
   }
   return (
     <StepWrapper>
-      <IconContainer>
-        <IconArrowLeft />
-      </IconContainer>
       <HeaderSection>
         <Title>
           소속된 기관명을 입력하세요
@@ -43,6 +41,7 @@ export const Step3InstitutionName = () => {
         </Title>
         <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
       </HeaderSection>
+
       <SearchContainer>
         <InstitutionSearchInput onInstitutionSelect={setInstitutionName} />
       </SearchContainer>
@@ -65,7 +64,6 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin: 24px 0 auto 0;
 `;
 
 const HeaderSection = styled.header`
@@ -91,16 +89,6 @@ const SubText = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.body2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme }) => theme.colors.gray500};
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  align-items: center;
-  padding: 0px 20px;
-  height: 56px;
-  width: 100%;
 `;
 
 const ButtonContainer = styled.div`

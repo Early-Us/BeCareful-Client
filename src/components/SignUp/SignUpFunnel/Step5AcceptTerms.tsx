@@ -1,6 +1,5 @@
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
-import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
 import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
 import { CheckBox } from '@/components/common/CheckBox/CheckBox';
@@ -33,9 +32,6 @@ export const Step5AcceptTerms = () => {
 
   return (
     <StepWrapper>
-      <IconContainer>
-        <IconArrowLeft />
-      </IconContainer>
       <HeaderSection>
         <Title>
           이용약관에 동의하시겠습니까?
@@ -128,16 +124,6 @@ const Title = styled.h1`
   .highlight {
     color: ${({ theme }) => theme.colors.mainBlue};
   }
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  align-items: center;
-  padding: 0px 20px;
-  height: 56px;
-  width: 100%;
 `;
 
 const ButtonContainer = styled.div`

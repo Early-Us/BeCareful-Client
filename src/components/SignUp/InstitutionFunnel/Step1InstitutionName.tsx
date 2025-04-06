@@ -1,4 +1,3 @@
-import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
@@ -13,9 +12,6 @@ export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
   const [institutionName, setInstitutionName] = useState('');
   return (
     <StepWrapper>
-      <IconContainer>
-        <IconArrowLeft />
-      </IconContainer>
       <HeaderSection>
         <Title>
           소속된 기관을 등록하세요
@@ -45,7 +41,6 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin: 24px 0 auto 0;
 `;
 
 const HeaderSection = styled.header`
@@ -71,16 +66,6 @@ const SubText = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.body2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ theme }) => theme.colors.gray500};
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  align-items: center;
-  padding: 0px 20px;
-  height: 56px;
-  width: 100%;
 `;
 
 const ButtonContainer = styled.div`

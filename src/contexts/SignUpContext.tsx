@@ -1,17 +1,28 @@
 import { useFunnel } from '@/hooks/useFunnel';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 
-const SingUpContext = createContext<ReturnType<typeof useFunnel> | null>(null);
+interface SignUpContextType extends ReturnType<typeof useFunnel> {
+  isInstitutionFunnel: boolean;
+  setIsInstitutionFunnel: (value: boolean) => void;
+}
+
+const SignUpContext = createContext<SignUpContextType | null>(null);
 
 export const SignUpProvider = ({ children }: { children: React.ReactNode }) => {
   const funnel = useFunnel(0);
+  const [isInstitutionFunnel, setIsInstitutionFunnel] = useState(false);
+
   return (
-    <SingUpContext.Provider value={funnel}>{children}</SingUpContext.Provider>
+    <SignUpContext.Provider
+      value={{ ...funnel, isInstitutionFunnel, setIsInstitutionFunnel }}
+    >
+      {children}
+    </SignUpContext.Provider>
   );
 };
 
 export const useSignUpContext = () => {
-  const context = useContext(SingUpContext);
+  const context = useContext(SignUpContext);
   if (!context) {
     throw new Error('signupcontext.tsx error');
   }
