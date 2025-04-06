@@ -2,10 +2,10 @@ import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
 
-export const Step1SelectRole = () => {
-  const { goToNext } = useSignUpContext();
+export const Step6SignUpComplete = () => {
+  const { goToPrev } = useSignUpContext();
   return (
     <StepWrapper>
       <IconContainer>
@@ -13,23 +13,18 @@ export const Step1SelectRole = () => {
       </IconContainer>
       <HeaderSection>
         <Title>
-          소속된 기관에서
+          기관 회원 가입이 완료되었습니다.
           <br />
-          현재 직급을 알려주세요<span className="highlight"> *</span>
+          <span className="highlight">지금 바로 서비스를 시작해보세요!</span>
         </Title>
       </HeaderSection>
+      <SignUpCompleteContainer>
+        <SignUpComplete />
+      </SignUpCompleteContainer>
 
-      <CardContainer>
-        <CheckCard pressed text="센터장 입니다." />
-        <CheckCard text="대표 입니다." />
-        <CheckCard text="사회복지사 입니다." />
-      </CardContainer>
       <ButtonContainer>
-        <Button onClick={goToNext} height={'52px'}>
-          이전
-        </Button>
-        <Button onClick={goToNext} height={'52px'}>
-          다음
+        <Button onClick={goToPrev} height={'52px'}>
+          돌봄다리 시작하기
         </Button>
       </ButtonContainer>
     </StepWrapper>
@@ -87,11 +82,15 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const CardContainer = styled.div`
+const SignUpCompleteContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  padding: 20px 20px 0px 20px;
-  box-sizing: border-box;
-  gap: 8px;
   width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 188px;
+  z-index: 3;
+  svg {
+    width: 240px;
+    height: auto;
+  }
 `;

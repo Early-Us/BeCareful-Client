@@ -4,8 +4,8 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { Button } from '@/components/common/Button/Button';
 import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
 
-export const Step1SelectRole = () => {
-  const { goToNext } = useSignUpContext();
+export const Step2ProfileType = () => {
+  const { goToNext, goToPrev } = useSignUpContext();
   return (
     <StepWrapper>
       <IconContainer>
@@ -18,14 +18,13 @@ export const Step1SelectRole = () => {
           현재 직급을 알려주세요<span className="highlight"> *</span>
         </Title>
       </HeaderSection>
-
       <CardContainer>
-        <CheckCard pressed text="센터장 입니다." />
-        <CheckCard text="대표 입니다." />
-        <CheckCard text="사회복지사 입니다." />
+        <CheckCard pressed text="회장 입니다." />
+        <CheckCard text="임원진 입니다." />
+        <CheckCard text="회원입니다. 입니다." />
       </CardContainer>
       <ButtonContainer>
-        <Button onClick={goToNext} height={'52px'}>
+        <Button onClick={goToPrev} height={'52px'}>
           이전
         </Button>
         <Button onClick={goToNext} height={'52px'}>
