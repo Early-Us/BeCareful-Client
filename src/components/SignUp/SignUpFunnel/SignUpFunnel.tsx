@@ -10,6 +10,8 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar';
 import { styled } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SignUpModal } from '@/components/SignUp/SingUpModal';
+import { useState } from 'react';
 
 const steps = [
   Step1SelectRole,
@@ -26,9 +28,18 @@ export const SignUpFunnel = () => {
   const StepComponent = steps[currentStep];
   const percent = stepPercents[currentStep];
   const isLastStep = currentStep === 5;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleClickBack = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
-      <IconContainer>
+      <IconContainer onClick={handleClickBack}>
         <IconArrowLeft />
       </IconContainer>
       {!isInstitutionFunnel && !isLastStep && <ProgressBar percent={percent} />}
@@ -43,6 +54,13 @@ export const SignUpFunnel = () => {
           <StepComponent />
         </motion.div>
       </AnimatePresence>
+      {isModalOpen && (
+        <SignUpModal
+          width="312px"
+          onClose={handleCloseModal}
+          recruitmentId={null}
+        />
+      )}
     </div>
   );
 };
