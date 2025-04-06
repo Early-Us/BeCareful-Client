@@ -1,14 +1,22 @@
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
 import { useState } from 'react';
+import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 interface StepProps {
   goToNext: () => void;
   goToPrev: () => void;
 }
 
-export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
+interface NameInputProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const Step4InstitutionContact = (
+  { goToNext, goToPrev }: StepProps,
+  { value, onChange }: NameInputProps,
+) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [institutionName, setInstitutionName] = useState('');
   return (
@@ -18,13 +26,21 @@ export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
       </IconContainer>
       <HeaderSection>
         <Title>
-          소속된 기관을 등록하세요
+          소속된 기관의 <br />
+          연락처를 입력하세요.
           <span className="highlight"> *</span>
         </Title>
-        <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
+        <SubText>기관 대표 전화번호를 입력해 주세요.</SubText>
       </HeaderSection>
       <SearchContainer>
-        <InstitutionSearchInput onInstitutionSelect={setInstitutionName} />
+        <PlainInputBox
+          width="100%"
+          state="default"
+          placeholder="기관 연락처 입력"
+          guide=""
+          value={value}
+          onChange={onChange}
+        />
       </SearchContainer>
 
       <ButtonContainer>

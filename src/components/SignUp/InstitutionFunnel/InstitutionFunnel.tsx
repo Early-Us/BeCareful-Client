@@ -1,8 +1,10 @@
 import { Step1InstitutionName } from '@/components/SignUp/InstitutionFunnel/Step1InstitutionName';
-import { Step2InstitutionType } from '@/components/SignUp/InstitutionFunnel/Step2InstitutionType';
-import { Step3ContactInfo } from '@/components/SignUp/InstitutionFunnel/Step3ContactInfo';
-import { Step4UploadPhoto } from '@/components/SignUp/InstitutionFunnel/Step4UploadPhoto';
-import { Step5InstitutionRegister } from '@/components/SignUp/InstitutionFunnel/Step5InstitutionRegister';
+
+import { Step4InstitutionContact } from '@/components/SignUp/InstitutionFunnel/Step4InstitutionContact';
+import { Step2InstitutionOpen } from '@/components/SignUp/InstitutionFunnel/Step2InstitutionOpen';
+import { Step3InstitutionType } from '@/components/SignUp/InstitutionFunnel/Step3InstitutionType';
+import { Step5UploadPhoto } from '@/components/SignUp/InstitutionFunnel/Step5UploadPhoto';
+import { Step6InstitutionRegister } from '@/components/SignUp/InstitutionFunnel/Step6InstitutionRegister';
 import { useState } from 'react';
 
 interface InstitutionFunnelProps {
@@ -17,10 +19,11 @@ export const InstitutionFunnel = ({ onDone }: InstitutionFunnelProps) => {
 
   const steps = [
     <Step1InstitutionName goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step2InstitutionType goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step3ContactInfo goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step4UploadPhoto goToNext={goToNext} goToPrev={goToPrev} />,
-    <Step5InstitutionRegister onComplete={onDone} goToPrev={goToPrev} />,
+    <Step2InstitutionOpen goToNext={goToNext} goToPrev={goToPrev} />,
+    <Step3InstitutionType goToNext={goToNext} goToPrev={goToPrev} />,
+    <Step4InstitutionContact goToNext={goToNext} goToPrev={goToPrev} />,
+    <Step5UploadPhoto goToNext={goToNext} goToPrev={goToPrev} />,
+    <Step6InstitutionRegister onComplete={onDone} />,
   ];
 
   return <div>{steps[currentStep]}</div>;

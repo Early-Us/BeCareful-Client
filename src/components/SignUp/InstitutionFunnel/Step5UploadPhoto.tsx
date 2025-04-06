@@ -1,16 +1,33 @@
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
+import { ReactComponent as ProfileImage } from '@/assets/icons/signup/SocialProfileImage.svg';
 import { useState } from 'react';
+
 interface StepProps {
   goToNext: () => void;
   goToPrev: () => void;
 }
 
-export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
+export const Step5UploadPhoto = ({ goToNext, goToPrev }: StepProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [institutionName, setInstitutionName] = useState('');
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const handleProfileImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0] || null;
+    if (file) {
+      setProfileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
   return (
     <StepWrapper>
       <IconContainer>
@@ -18,15 +35,26 @@ export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
       </IconContainer>
       <HeaderSection>
         <Title>
-          소속된 기관을 등록하세요
+          소속된 기관의 사진을 등록하세요.
           <span className="highlight"> *</span>
         </Title>
-        <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
+        <SubText>소속된 기관의 대표 사진을 업로드해 주세요.(선택)</SubText>
       </HeaderSection>
-      <SearchContainer>
-        <InstitutionSearchInput onInstitutionSelect={setInstitutionName} />
-      </SearchContainer>
+      <ProfileContainer>
+        <ProfileImageWrapper>
+          <ProfileImageInput
+            type="file"
+            accept="image/*"
+            onChange={handleProfileImageChange}
+          />
 
+          {previewImage ? (
+            <ProfileImageDisplay src={previewImage} alt="Profile" />
+          ) : (
+            <ProfileImage />
+          )}
+        </ProfileImageWrapper>
+      </ProfileContainer>
       <ButtonContainer>
         <Button onClick={goToPrev} height={'52px'}>
           이전
@@ -96,10 +124,31 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const SearchContainer = styled.div`
+const ProfileContainer = styled.div`
   display: flex;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
   padding: 20px 20px 0px 20px;
-  box-sizing: border-box;
-  flex-direction: column;
+`;
+
+const ProfileImageWrapper = styled.div`
+  position: relative;
+`;
+
+const ProfileImageInput = styled.input`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+`;
+
+const ProfileImageDisplay = styled.img`
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid ${({ theme }) => theme.colors.gray300};
 `;

@@ -1,16 +1,14 @@
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
-import { useState } from 'react';
+import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+
 interface StepProps {
   goToNext: () => void;
   goToPrev: () => void;
 }
 
-export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [institutionName, setInstitutionName] = useState('');
+export const Step3InstitutionType = ({ goToNext, goToPrev }: StepProps) => {
   return (
     <StepWrapper>
       <IconContainer>
@@ -18,14 +16,20 @@ export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
       </IconContainer>
       <HeaderSection>
         <Title>
-          소속된 기관을 등록하세요
+          소속된 기관의 <br />
+          시설 유형을 선택하세요.
           <span className="highlight"> *</span>
         </Title>
-        <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
+        <SubText>복수 선택이 가능해요.</SubText>
       </HeaderSection>
-      <SearchContainer>
-        <InstitutionSearchInput onInstitutionSelect={setInstitutionName} />
-      </SearchContainer>
+      <CardContainer>
+        <CheckCard pressed text="방문 요양" />
+        <CheckCard text="방문 목욕" />
+        <CheckCard text="방문 간호" />
+        <CheckCard text="주야간 보호" />
+        <CheckCard text="단기 보호" />
+        <CheckCard text="복지 용구" />
+      </CardContainer>
 
       <ButtonContainer>
         <Button onClick={goToPrev} height={'52px'}>
@@ -96,10 +100,11 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const SearchContainer = styled.div`
+const CardContainer = styled.div`
   display: flex;
-  width: 100%;
+  flex-direction: column;
   padding: 20px 20px 0px 20px;
   box-sizing: border-box;
-  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 `;

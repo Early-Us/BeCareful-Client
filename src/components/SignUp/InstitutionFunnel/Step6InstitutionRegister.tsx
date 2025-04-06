@@ -1,16 +1,14 @@
-import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
+import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
-import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
-import { useState } from 'react';
+import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
+
 interface StepProps {
-  goToNext: () => void;
-  goToPrev: () => void;
+  onComplete: () => void;
+  //goToPrev: () => void;
 }
 
-export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [institutionName, setInstitutionName] = useState('');
+export const Step6InstitutionRegister = ({ onComplete }: StepProps) => {
   return (
     <StepWrapper>
       <IconContainer>
@@ -18,21 +16,18 @@ export const Step1InstitutionName = ({ goToNext, goToPrev }: StepProps) => {
       </IconContainer>
       <HeaderSection>
         <Title>
-          소속된 기관을 등록하세요
-          <span className="highlight"> *</span>
+          기관 등록이 완료되었습니다.
+          <br />
+          <span className="highlight">이어서 회원가입을 진행해 보세요!</span>
         </Title>
-        <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
       </HeaderSection>
-      <SearchContainer>
-        <InstitutionSearchInput onInstitutionSelect={setInstitutionName} />
-      </SearchContainer>
+      <SignUpCompleteContainer>
+        <SignUpComplete />
+      </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'}>
-          이전
-        </Button>
-        <Button onClick={goToNext} height={'52px'}>
-          다음
+        <Button onClick={onComplete} height={'52px'}>
+          회원 가입 진행하기
         </Button>
       </ButtonContainer>
     </StepWrapper>
@@ -67,12 +62,6 @@ const Title = styled.h1`
   }
 `;
 
-const SubText = styled.p`
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme }) => theme.colors.gray500};
-`;
-
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -96,10 +85,15 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const SearchContainer = styled.div`
+const SignUpCompleteContainer = styled.div`
   display: flex;
   width: 100%;
-  padding: 20px 20px 0px 20px;
-  box-sizing: border-box;
-  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 188px;
+  z-index: 3;
+  svg {
+    width: 240px;
+    height: auto;
+  }
 `;
