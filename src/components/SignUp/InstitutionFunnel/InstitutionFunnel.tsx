@@ -7,6 +7,7 @@ import { Step6InstitutionRegister } from '@/components/SignUp/InstitutionFunnel/
 import { useEffect, useState } from 'react';
 import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar'; // ProgressBar import
 import { useSignUpContext } from '@/contexts/SignUpContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface InstitutionFunnelProps {
   onDone: () => void;
@@ -41,7 +42,17 @@ export const InstitutionFunnel = ({ onDone }: InstitutionFunnelProps) => {
   return (
     <div>
       {!isLastStep && <ProgressBar percent={percent} />}
-      {steps[currentStep]}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0.5 }}
+          transition={{ duration: 0.35, ease: 'easeInOut' }}
+        >
+          {steps[currentStep]}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

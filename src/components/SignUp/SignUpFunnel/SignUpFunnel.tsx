@@ -9,6 +9,7 @@ import { useSignUpContext } from '@/contexts/SignUpContext';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar';
 import { styled } from 'styled-components';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const steps = [
   Step1SelectRole,
@@ -18,7 +19,7 @@ const steps = [
   Step5AcceptTerms,
   Step6SignUpComplete,
 ];
-const stepPercents = [20, 40, 60, 80, 90, 100];
+const stepPercents = [20, 40, 60, 80, 100, 100];
 
 export const SignUpFunnel = () => {
   const { currentStep, isInstitutionFunnel } = useSignUpContext();
@@ -31,8 +32,17 @@ export const SignUpFunnel = () => {
         <IconArrowLeft />
       </IconContainer>
       {!isInstitutionFunnel && !isLastStep && <ProgressBar percent={percent} />}
-
-      <StepComponent />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0.5 }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
+        >
+          <StepComponent />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

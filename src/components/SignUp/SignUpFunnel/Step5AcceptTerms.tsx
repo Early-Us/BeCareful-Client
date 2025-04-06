@@ -104,7 +104,6 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin: 24px 0 auto 0;
 `;
 
 const HeaderSection = styled.header`
