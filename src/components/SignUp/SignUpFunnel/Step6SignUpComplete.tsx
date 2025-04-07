@@ -68,14 +68,18 @@ const ButtonContainer = styled.div`
 `;
 
 const SignUpCompleteContainer = styled.div`
+  position: fixed;
+  bottom: 80px;
+  right: 0;
   display: flex;
-  width: 100%;
-  justify-content: flex-end;
   align-items: center;
-  margin-top: 188px;
+  justify-content: flex-end;
+  width: auto;
   z-index: 3;
+
   svg {
     width: 240px;
     height: auto;
+    display: block;
   }
 `;

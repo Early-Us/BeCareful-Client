@@ -110,7 +110,7 @@ const Header = styled.div`
 const CardContainer = styled.div`
   display: flex;
   width: 100%;
-  align-items: center;
+  align-items: stretchs;
   justify-content: center;
   box-sizing: border-box;
   margin-top: 20px;
