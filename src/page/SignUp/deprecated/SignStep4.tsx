@@ -1,23 +1,21 @@
+import { StepProps } from '@/type/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
-import { SocialStepProps } from '@/type/SocialSignUp';
-import { BooleanYesCard } from '@/components/SignUp/BooleanYesCard';
-import { BooleanNoCard } from '@/components/SignUp/BooleanNoCard';
-import { useState } from 'react';
 import { Button } from '@/components/common/Button/Button';
+import { BooleanNoCard } from '@/components/SignUp/deprecated/BooleanNoCard';
+import { BooleanYesCard } from '@/components/SignUp/deprecated/BooleanYesCard';
+import { useState } from 'react';
 
-export const SocialStep6 = ({
-  formSocialData,
-  setFormSocialData,
-  onPrevious,
+export const Step4 = ({
+  formData,
+  setFormData,
   onNext,
-}: SocialStepProps) => {
-  console.log(formSocialData, setFormSocialData);
-
+  onPrevious,
+}: StepProps) => {
   const [selectedCard, setSelectedCard] = useState<'yes' | 'no' | null>(null);
   const handleCardSelect = (cardType: 'yes' | 'no') => {
     setSelectedCard(cardType);
-    setFormSocialData((prev) => ({
+    setFormData((prev) => ({
       ...prev,
       isHavingCar: cardType === 'yes',
     }));
@@ -28,19 +26,16 @@ export const SocialStep6 = ({
       <IconContainer onClick={onPrevious}>
         <IconArrowLeft />
       </IconContainer>
-      <Header>
-        소속된 기관에서 <br />
-        현재 직급을 알려주세요
-      </Header>
+      <Header>차량을 소유하고 계신가요?</Header>
       <CardContainer>
         <BooleanYesCard
           pressed={selectedCard === 'yes'}
-          text="센터장 입니다."
+          text="네, 소유하고 있습니다."
           onClick={() => handleCardSelect('yes')}
         />
         <BooleanNoCard
           pressed={selectedCard === 'no'}
-          text="사회복지사 입니다."
+          text="아니오, 가지고 있지 않습니다."
           onClick={() => handleCardSelect('no')}
         />
       </CardContainer>
@@ -50,7 +45,7 @@ export const SocialStep6 = ({
           height="52px"
           onClick={() => {
             if (selectedCard && onNext) {
-              console.log('현재 입력된 formData:', formSocialData);
+              console.log('현재 입력된 formData:', formData);
               onNext();
             }
           }}
@@ -74,32 +69,26 @@ const StepWrapper = styled.div`
 const IconContainer = styled.div`
   display: flex;
   justify-content: flex-start;
+  box-sizing: border-box;
   align-items: center;
   padding: 0px 20px;
-  box-sizing: border-box;
   height: 56px;
   width: 100%;
 `;
 
 const Header = styled.div`
   display: flex;
-  padding: 16px 20px 0px 20px;
-  box-sizing: border-box;
+  flex-direction: column;
   width: 100%;
-  align-items: center;
+  gap: 8px;
+
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: 16px 20px 0px 20px;
 
   font-size: ${({ theme }) => theme.typography.fontSize.title2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   color: ${({ theme }) => theme.colors.gray900};
-`;
-
-const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px 20px 0px 20px;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
 `;
 
 const ButtonContainer = styled.div`
@@ -112,4 +101,13 @@ const ButtonContainer = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.gray50};
   box-sizing: border-box;
   width: 100%;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 0px 20px;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
 `;

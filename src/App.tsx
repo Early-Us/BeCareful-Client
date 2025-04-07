@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './page/Login/LoginPage';
 import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import HomePage from './page/Home/HomePage';
-import { SignUpPage } from '@/page/SignUp/SignUpPage';
 
 import MyPage from './page/MyPage/MyPage';
 import SplashPage from './page/SplashPage';
@@ -15,7 +14,7 @@ import EditApplication from './page/MyPage/EditApplication';
 import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { ApplyPage } from '@/page/Apply/ApplyPage';
-import SocialSignUpForm from '@/page/SocialSignup/SocialSignUpForm';
+
 import SocialHomePage from './page/HomeSocial/SocialHomePage';
 import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
 import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
@@ -28,7 +27,8 @@ import ChatListPage from './page/Chat/ChatListPage';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
 import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
-import { SignUpForm } from '@/components/SignUp/SignUpForm';
+import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
+import { SignUpPage } from '@/page/SignUp/SignUpPage';
 
 function App() {
   return (
@@ -40,8 +40,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
 
       <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/signup/caregiver" element={<SignUpForm />} />
-      <Route path="/signup/social" element={<SocialSignUpForm />} />
+      <Route path="/signup/institution" element={<InstitutionSignUpPage />} />
 
       <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />

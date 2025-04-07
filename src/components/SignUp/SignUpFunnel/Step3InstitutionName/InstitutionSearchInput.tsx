@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-
 import { ReactComponent as SearchIcon } from '@/assets/icons/signup/SearchIcon.svg';
 import { styled } from 'styled-components';
-import { institutionData } from '@/components/SocialSignUp/institutionData';
 
-export const SocialSearchInput = ({
+const DUMMY_INSTITUTIONS = ['기관1', '기관2', '기관3', '기관있음']; //TODO 나중에 API로 변경
+
+export const InstitutionSearchInput = ({
   onInstitutionSelect,
 }: {
   onInstitutionSelect: (name: string) => void;
@@ -16,16 +16,17 @@ export const SocialSearchInput = ({
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    if (searchTerm.length > 0) {
-      const results = institutionData
-        .map((inst) => inst.institutionName)
-        .filter((name) => name.includes(searchTerm));
-      setFilteredInstitutions(results);
-      setShowDropdown(true);
-    } else {
+    if (searchTerm.trim() === '') {
       setFilteredInstitutions([]);
       setShowDropdown(false);
+    } else {
+      const filtered = DUMMY_INSTITUTIONS.filter((name) =>
+        name.includes(searchTerm),
+      );
+      setFilteredInstitutions(filtered);
+      setShowDropdown(true);
     }
+    onInstitutionSelect(searchTerm);
   }, [searchTerm]);
 
   const handleSelect = (name: string) => {
@@ -38,7 +39,7 @@ export const SocialSearchInput = ({
     <Wrapper>
       <SearchContainer>
         <StyledInput
-          placeholder="기관명을 입력하세요"
+          placeholder="기관명 검색"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -79,7 +80,7 @@ const SearchContainer = styled.div`
 
   &:hover,
   &:focus-within {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
   }
 `;
 
@@ -89,11 +90,11 @@ const StyledInput = styled.input`
   outline: none;
   background: transparent;
   color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
+  font-size: ${({ theme }) => theme.typography.fontSize.body1};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.gray500};
+    color: ${({ theme }) => theme.colors.gray300};
     font-size: ${({ theme }) => theme.typography.fontSize.body1};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   }

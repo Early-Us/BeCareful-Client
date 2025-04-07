@@ -4,9 +4,9 @@ import { styled } from 'styled-components';
 import { useEffect, useState } from 'react';
 import { usePhoneVerification } from '@/hooks/usePhoneVerification';
 import { useNavigate } from 'react-router-dom';
-import { SignUpNameInput } from '@/components/SignUp/Step1/SignUpNameInput';
-import { SignUpIdInput } from '@/components/SignUp/Step1/SingUpIdInput';
-import { SignUpPhoneVerificationInput } from '@/components/SignUp/Step1/SignUpPhoneVerificationInput';
+import { SignUpNameInput } from '@/components/SignUp/deprecated/Step1/SignUpNameInput';
+import { SignUpIdInput } from '@/components/SignUp/deprecated/Step1/SingUpIdInput';
+import { SignUpPhoneVerificationInput } from '@/components/SignUp/deprecated/Step1/SignUpPhoneVerificationInput';
 
 export const Step1 = ({ formData, setFormData, onNext }: StepProps) => {
   const [genderInput, setGenderInput] = useState('');

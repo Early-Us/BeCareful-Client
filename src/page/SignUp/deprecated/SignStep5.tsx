@@ -2,8 +2,8 @@ import { StepProps } from '@/type/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
-import { BooleanNoCard } from '@/components/SignUp/BooleanNoCard';
-import { BooleanYesCard } from '@/components/SignUp/BooleanYesCard';
+import { BooleanNoCard } from '@/components/SignUp/deprecated/BooleanNoCard';
+import { BooleanYesCard } from '@/components/SignUp/deprecated/BooleanYesCard';
 import { useState } from 'react';
 
 export const Step5 = ({
