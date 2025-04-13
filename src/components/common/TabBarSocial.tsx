@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as Home } from '@/assets/icons/tabbar/Home.svg';
 import { ReactComponent as MatchingIcon } from '@/assets/icons/matching/MatchingIcon.svg';
-import { ReactComponent as CurrentMatching } from '@/assets/icons/matching/CurrentMatching.svg';
+import { ReactComponent as Community } from '@/assets/icons/tabbar/Community.svg';
 import { ReactComponent as Mypage } from '@/assets/icons/tabbar/Mypage.svg';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -26,12 +26,12 @@ export const SocialTabBar = () => {
           매칭하기
         </TabBarLabel>
       </TabBarContentWrapper>
-      <TabBarContentWrapper as={Link} to="/matching/dashboard">
-        <TabBarIcon isActive={location.pathname === '/matching/dashboard'}>
-          <CurrentMatching />
+      <TabBarContentWrapper as={Link} to="/community">
+        <TabBarIcon isActive={location.pathname === '/community'}>
+          <Community />
         </TabBarIcon>
-        <TabBarLabel isActive={location.pathname === '/matching/dashboard'}>
-          매칭현황
+        <TabBarLabel isActive={location.pathname === '/community'}>
+          커뮤니티
         </TabBarLabel>
       </TabBarContentWrapper>
       <TabBarContentWrapper as={Link} to="/elderly">
@@ -39,7 +39,7 @@ export const SocialTabBar = () => {
           <Mypage />
         </TabBarIcon>
         <TabBarLabel isActive={location.pathname === '/elderly'}>
-          어르신 목록
+          마이페이지
         </TabBarLabel>
       </TabBarContentWrapper>
     </TabBarWrapper>
@@ -56,6 +56,7 @@ const TabBarWrapper = styled.div`
   position: fixed;
   bottom: 0;
   background: ${({ theme }) => theme.colors.white};
+  z-index: 1;
 `;
 
 const TabBarContentWrapper = styled.a`
@@ -74,6 +75,12 @@ const TabBarIcon = styled.div<{ isActive: boolean }>`
   height: 24px;
   path {
     fill: ${({ theme, isActive }) =>
+      isActive ? theme.colors.mainBlue : theme.colors.gray200};
+  }
+
+  rect,
+  circle {
+    stroke: ${({ theme, isActive }) =>
       isActive ? theme.colors.mainBlue : theme.colors.gray200};
   }
 `;
