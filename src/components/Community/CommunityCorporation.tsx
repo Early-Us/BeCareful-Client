@@ -1,4 +1,4 @@
-import PostDetail from '@/components/Community/PostDetail';
+import PostOverview from '@/components/Community/PostOverview';
 import { Notice } from '@/type/Notice';
 import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
 import { useEffect, useState } from 'react';
@@ -21,7 +21,7 @@ const CommunityCorporation = () => {
       <NoticeList>
         {noticeData.map((notice) => (
           <>
-            <PostDetail
+            <PostOverview
               key={notice.id}
               id={notice.id}
               profileImgUrl={notice.profileImgUrl}
@@ -37,7 +37,7 @@ const CommunityCorporation = () => {
             <Border />
           </>
         ))}
-        <PostDetail
+        <PostOverview
           key="0"
           id={0}
           profileImgUrl=""
@@ -52,7 +52,7 @@ const CommunityCorporation = () => {
         />
         <Border />
 
-        <PostDetail
+        <PostOverview
           key="1"
           id={1}
           profileImgUrl=""
@@ -67,7 +67,7 @@ const CommunityCorporation = () => {
         />
         <Border />
 
-        <PostDetail
+        <PostOverview
           key="2"
           id={2}
           profileImgUrl=""
@@ -82,7 +82,7 @@ const CommunityCorporation = () => {
         />
         <Border />
 
-        <PostDetail
+        <PostOverview
           key="3"
           id={3}
           profileImgUrl=""

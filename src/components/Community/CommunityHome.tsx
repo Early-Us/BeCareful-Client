@@ -1,4 +1,4 @@
-import PostDetail from '@/components/Community/PostDetail';
+import PostOverview from '@/components/Community/PostOverview';
 import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
 import { Notice } from '@/type/Notice';
 import styled from 'styled-components';
@@ -33,7 +33,7 @@ const CommunityHome = () => {
         >
           <SwiperSlide>
             <NoticeList>
-              <PostDetail
+              <PostOverview
                 key="0"
                 id={0}
                 profileImgUrl=""
@@ -50,7 +50,7 @@ const CommunityHome = () => {
           </SwiperSlide>
           <SwiperSlide>
             <NoticeList>
-              <PostDetail
+              <PostOverview
                 key="0"
                 id={0}
                 profileImgUrl=""
@@ -67,7 +67,7 @@ const CommunityHome = () => {
           </SwiperSlide>
           <SwiperSlide>
             <NoticeList>
-              <PostDetail
+              <PostOverview
                 key="0"
                 id={0}
                 profileImgUrl=""
@@ -102,7 +102,7 @@ const CommunityHome = () => {
             <NoticeList>
               {noticeData.map((notice) => (
                 <>
-                  <PostDetail
+                  <PostOverview
                     key={notice.id}
                     id={notice.id}
                     profileImgUrl={notice.profileImgUrl}
@@ -118,7 +118,7 @@ const CommunityHome = () => {
                   <Border />
                 </>
               ))}
-              <PostDetail
+              <PostOverview
                 key="0"
                 id={0}
                 profileImgUrl=""
@@ -132,7 +132,7 @@ const CommunityHome = () => {
                 postImgUrl=""
               />
               <Border />
-              <PostDetail
+              <PostOverview
                 key="1"
                 id={1}
                 profileImgUrl=""
@@ -146,7 +146,7 @@ const CommunityHome = () => {
                 postImgUrl=""
               />
               <Border />
-              <PostDetail
+              <PostOverview
                 key="2"
                 id={2}
                 profileImgUrl=""
@@ -160,7 +160,7 @@ const CommunityHome = () => {
                 postImgUrl=""
               />
               <Border />
-              <PostDetail
+              <PostOverview
                 key="3"
                 id={3}
                 profileImgUrl=""
@@ -174,7 +174,7 @@ const CommunityHome = () => {
                 postImgUrl=""
               />
               <Border />
-              <PostDetail
+              <PostOverview
                 key="4"
                 id={4}
                 profileImgUrl=""
@@ -200,7 +200,7 @@ const CommunityHome = () => {
             <NoticeList>
               {noticeData.map((notice) => (
                 <>
-                  <PostDetail
+                  <PostOverview
                     key={notice.id}
                     id={notice.id}
                     profileImgUrl={notice.profileImgUrl}
@@ -216,7 +216,7 @@ const CommunityHome = () => {
                   <Border />
                 </>
               ))}
-              <PostDetail
+              <PostOverview
                 key="0"
                 id={0}
                 profileImgUrl=""
@@ -231,7 +231,7 @@ const CommunityHome = () => {
               />
               <Border />
 
-              <PostDetail
+              <PostOverview
                 key="1"
                 id={1}
                 profileImgUrl=""
@@ -246,7 +246,7 @@ const CommunityHome = () => {
               />
               <Border />
 
-              <PostDetail
+              <PostOverview
                 key="2"
                 id={2}
                 profileImgUrl=""
@@ -261,7 +261,7 @@ const CommunityHome = () => {
               />
               <Border />
 
-              <PostDetail
+              <PostOverview
                 key="3"
                 id={3}
                 profileImgUrl=""
@@ -276,7 +276,7 @@ const CommunityHome = () => {
               />
               <Border />
 
-              <PostDetail
+              <PostOverview
                 key="4"
                 id={4}
                 profileImgUrl=""

@@ -1,7 +1,7 @@
 import { Notice } from '@/type/Notice';
 import styled from 'styled-components';
 
-const PostDetail = ({
+const PostOverview = ({
   profileImgUrl,
   nickname,
   position,
@@ -44,7 +44,7 @@ const PostDetail = ({
   );
 };
 
-export default PostDetail;
+export default PostOverview;
 
 const Container = styled.div`
   height: 100px;
