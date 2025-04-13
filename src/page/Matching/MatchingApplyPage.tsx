@@ -7,7 +7,7 @@ import { MatchingApplyModal } from '@/components/Matching/Modal/MatchingApplyMod
 import { ElderData } from '@/type/Matching';
 import axios from 'axios';
 
-import { SocialTabBar } from '@/components/common/SocialTabBar';
+import { SocialTabBar } from '@/components/common/TabBarSocial';
 
 import { styled } from 'styled-components';
 
