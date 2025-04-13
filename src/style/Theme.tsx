@@ -19,6 +19,7 @@ const theme = {
     positive: '#12bd45',
     negative: '#ff3d00',
     white: '#ffffff',
+    black: '000000',
   },
   typography: {
     fontFamily: 'Pretandard Variable',
