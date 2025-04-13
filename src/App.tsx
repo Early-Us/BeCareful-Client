@@ -29,6 +29,7 @@ import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
+import CommunityPage from './page/Community/CommunityPage';
 
 function App() {
   return (
@@ -80,6 +81,8 @@ function App() {
       <Route path="/chatList/social" element={<ChatListPage />} />
       <Route path="/chatList/caregiver" element={<ChatListCaregiver />} />
       <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
+
+      <Route path="/community" element={<CommunityPage />} />
     </Routes>
   );
 }
