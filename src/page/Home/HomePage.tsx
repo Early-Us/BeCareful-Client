@@ -1,7 +1,7 @@
 import { TabBar } from '@/components/common/TabBar';
 import axios from 'axios';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
-import { ReactComponent as Chat } from '@/assets/icons/home/Chat.svg';
+import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 // import { ReactComponent as ChatNew } from '@/assets/icons/home/ChatNew.svg';
 import { ReactComponent as Person } from '@/assets/icons/home/HomePerson.svg';
 import { NavBar } from '@/components/common/NavBar';

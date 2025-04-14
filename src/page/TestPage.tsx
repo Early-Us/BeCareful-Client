@@ -18,6 +18,9 @@ import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
 import { CheckBox } from '../components/common/CheckBox/CheckBox';
 import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
 import { InstitutionCard } from '@/components/SignUp/InstitutionCard';
+import ModalLimit from '@/components/common/Modal/ModalLimit';
+import Modal from '@/components/common/Modal/Modal';
+import ModalButtons from '@/components/common/Modal/ModalButtons';
 
 export const TestPage = () => {
   const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
@@ -52,6 +55,9 @@ export const TestPage = () => {
   const handleCardClick = () => {
     setPressed(!pressed);
   };
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isButtonModalOpen, setIsButtonModalOpen] = useState(false);
 
   return (
     <div>
@@ -178,6 +184,31 @@ export const TestPage = () => {
         select="선택"
         guide="이용약관"
       />
+
+      <button onClick={() => setIsEditModalOpen(true)}>모달 오픈</button>
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+        <ModalLimit
+          title="사진이 크기 제한을 초과해요."
+          detail={
+            '사진 1장당 최대 크기는 30MB입니다.\n사진은 최대 100장까지 첨부 가능합니다.'
+          }
+          onClose={() => setIsEditModalOpen(false)}
+        />
+      </Modal>
+
+      <button onClick={() => setIsButtonModalOpen(true)}>모달 오픈</button>
+      <Modal
+        isOpen={isButtonModalOpen}
+        onClose={() => setIsButtonModalOpen(false)}
+      >
+        <ModalButtons
+          title="페이지에서 나가시겠습니까?"
+          detail="지금까지 작성한 내용이 모두 사라집니다."
+          left="나가기"
+          right="계속 작성하기"
+          onClose={() => setIsButtonModalOpen(false)}
+        />
+      </Modal>
     </div>
   );
 };

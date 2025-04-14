@@ -2,7 +2,7 @@ import { NavBar } from '@/components/common/NavBar';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as ElderList } from '@/assets/icons/elderly/ElderList.svg';
-import { SocialTabBar } from '@/components/common/SocialTabBar';
+import { SocialTabBar } from '@/components/common/TabBarSocial';
 
 const MatchingStatus = () => {
   const navigate = useNavigate();
