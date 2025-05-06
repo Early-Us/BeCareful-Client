@@ -30,6 +30,7 @@ import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import CommunityPage from './page/Community/CommunityPage';
+import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Route path="/test" element={<TestPage />} />
 
       <Route path="/" element={<SplashPage />} />
+      <Route path="/onboarding" element={<OnboardingPage />} />
 
       <Route path="/login" element={<LoginPage />} />
 

@@ -20,7 +20,7 @@ const SplashPage = () => {
           navigate('/home/social');
         }
       } else {
-        navigate('/login');
+        navigate('/onboarding');
       }
     };
 
