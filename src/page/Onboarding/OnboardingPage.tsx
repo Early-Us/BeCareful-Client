@@ -49,6 +49,7 @@ const ButtonContainer = styled.div`
 `;
 
 const TopText = styled.h1`
+  padding-bottom: 9px;
   color: ${({ theme }) => theme.colors.gray900};
   font-size: 26px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
@@ -63,5 +64,5 @@ const BottomText = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.body1};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 
-  margin-top: 16px;
+  margin-top: 15px;
 `;
