@@ -2,6 +2,7 @@ import { defineConfig, type PluginOption } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import svgr from '@svgr/rollup';
 import { VitePWA } from 'vite-plugin-pwa';
+import fs from 'fs';
 
 export default defineConfig({
   base: '/',
@@ -46,9 +47,12 @@ export default defineConfig({
       '@': '/src',
     },
   },
-  /* 로컬테스트
   server: {
     host: '0.0.0.0',
     port: 5173,
-  },*/
+    https: {
+      key: fs.readFileSync('./localhost-key.pem'),
+      cert: fs.readFileSync('./localhost.pem'),
+    },
+  },
 });
