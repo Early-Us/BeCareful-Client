@@ -2,8 +2,13 @@ import styled from 'styled-components';
 import { ReactComponent as Kakao } from '@/assets/icons/onboarding/Kakao.svg';
 
 export const KakaoButton = () => {
+  const handleClick = () => {
+    window.location.href =
+      'https://blaybus.everdu.com/oauth2/authorization/kakao';
+  };
+
   return (
-    <KakaoContainer>
+    <KakaoContainer onClick={handleClick}>
       <Kakao />
       <ButtonText>카카오로 시작하기</ButtonText>
     </KakaoContainer>
