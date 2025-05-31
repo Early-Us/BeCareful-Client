@@ -37,6 +37,8 @@ export const InstitutionFunnel = ({
       openYear: 0,
       facilityTypeList: [],
       phoneNumber: '',
+      streetAddress: '-',
+      detailAddress: '-',
       profileImageUrl: null,
     });
 
@@ -85,7 +87,7 @@ export const InstitutionFunnel = ({
     />,
     <Step6InstitutionRegister
       onComplete={onDone}
-      //institutionFormData={institutionFormData}
+      institutionFormData={institutionFormData}
     />,
   ];
 

@@ -1,4 +1,5 @@
 import { axiosInstance } from '@/api/axiosInstance';
+import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 
 export const uploadInstitutionProfileImage = async (
   file: File,
@@ -13,4 +14,12 @@ export const uploadInstitutionProfileImage = async (
     formData,
   );
   return data.profileImageUrl;
+};
+
+export const registerInstitution = async (formData: InstitutionFormData) => {
+  const response = await axiosInstance.post(
+    '/nursingInstitution/for-guest/register',
+    formData,
+  );
+  return response.data;
 };
