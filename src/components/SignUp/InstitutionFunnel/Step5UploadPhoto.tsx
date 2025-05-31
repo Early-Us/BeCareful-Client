@@ -26,7 +26,7 @@ export const Step5UploadPhoto = ({
         const imageUrl = reader.result as string;
         setInstitutionFormData((prev) => ({
           ...prev,
-          institutionImageUrl: imageUrl,
+          profileImageUrl: imageUrl,
         }));
       };
       reader.readAsDataURL(file);
@@ -51,9 +51,9 @@ export const Step5UploadPhoto = ({
             onChange={handleProfileImageChange}
           />
 
-          {institutionFormData.institutionImageUrl ? (
+          {institutionFormData.profileImageUrl ? (
             <ProfileImageDisplay
-              src={institutionFormData.institutionImageUrl}
+              src={institutionFormData.profileImageUrl}
               alt="Profile"
             />
           ) : (

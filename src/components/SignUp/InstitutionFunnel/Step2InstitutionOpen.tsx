@@ -21,15 +21,18 @@ export const Step2InstitutionOpen = ({
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { value } = e.target;
+    const parsedValue = value === '' ? 0 : parseInt(value, 10);
+
     setInstitutionFormData((prev) => ({
       ...prev,
-      institutionOpenDate: value,
+      openYear: parsedValue,
     }));
   };
 
   const isInstitutionOpenDateValid = /^\d{4}$/.test(
-    institutionFormData.institutionOpenDate ?? '',
+    String(institutionFormData.openYear),
   );
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -46,7 +49,11 @@ export const Step2InstitutionOpen = ({
           state="default"
           placeholder="기관 개소 연도 입력"
           guide=""
-          value={institutionFormData.institutionOpenDate}
+          value={
+            institutionFormData.openYear === 0
+              ? ''
+              : String(institutionFormData.openYear)
+          }
           onChange={handleInstitutionOpenDateChange}
         />
       </SearchContainer>
