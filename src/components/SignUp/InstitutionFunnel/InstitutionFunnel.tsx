@@ -1,13 +1,15 @@
 import { Step1InstitutionName } from '@/components/SignUp/InstitutionFunnel/Step1InstitutionName';
 import { Step2InstitutionOpen } from '@/components/SignUp/InstitutionFunnel/Step2InstitutionOpen';
-import { Step3InstitutionType } from '@/components/SignUp/InstitutionFunnel/Step3InstitutionType';
+
 import { Step4InstitutionContact } from '@/components/SignUp/InstitutionFunnel/Step4InstitutionContact';
 import { Step5UploadPhoto } from '@/components/SignUp/InstitutionFunnel/Step5UploadPhoto';
 import { Step6InstitutionRegister } from '@/components/SignUp/InstitutionFunnel/Step6InstitutionRegister';
 import { useEffect, useState } from 'react';
-import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar'; // ProgressBar import
+import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar';
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Step3InstitutionType } from '@/components/SignUp/InstitutionFunnel/Step3InstitutionType';
+import { getRandomAddress } from '@/utils/randomAddress';
 
 interface InstitutionFunnelProps {
   onDone: () => void;
@@ -16,10 +18,13 @@ interface InstitutionFunnelProps {
 
 export interface InstitutionFormData {
   institutionName: string;
-  institutionOpenDate: string;
-  institutionType: string[];
-  institutionPhone: string;
-  institutionImageUrl?: string | null;
+  institutionCode: string;
+  openYear: number;
+  facilityTypeList: string[];
+  phoneNumber: string;
+  streetAddress?: string;
+  detailAddress?: string;
+  profileImageUrl?: string | null;
 }
 
 export const InstitutionFunnel = ({
@@ -27,14 +32,19 @@ export const InstitutionFunnel = ({
   onCancel,
 }: InstitutionFunnelProps) => {
   const [institutionFormData, setInstitutionFormData] =
-    useState<InstitutionFormData>({
-      institutionName: '',
-      institutionOpenDate: '',
-      institutionType: [],
-      institutionPhone: '',
-      institutionImageUrl: null,
+    useState<InstitutionFormData>(() => {
+      const { street, detail } = getRandomAddress();
+      return {
+        institutionName: '',
+        institutionCode: '',
+        openYear: 0,
+        facilityTypeList: [],
+        phoneNumber: '',
+        streetAddress: street,
+        detailAddress: detail,
+        profileImageUrl: null,
+      };
     });
-
   const [currentStep, setCurrentStep] = useState(0);
   const { setIsInstitutionFunnel } = useSignUpContext();
   const isLastStep = currentStep === 5;
@@ -80,7 +90,7 @@ export const InstitutionFunnel = ({
     />,
     <Step6InstitutionRegister
       onComplete={onDone}
-      //institutionFormData={institutionFormData}
+      institutionFormData={institutionFormData}
     />,
   ];
 

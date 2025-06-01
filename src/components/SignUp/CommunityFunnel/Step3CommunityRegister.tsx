@@ -2,24 +2,25 @@ import { styled } from 'styled-components';
 
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
-import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { registerInstitution } from '@/api/institutionFunnel';
+
+import { CommunityFormData } from '@/components/SignUp/CommunityFunnel/CommunityFunnel';
+import { registerAssociation } from '@/api/communityFunnel';
 
 interface StepProps {
   onComplete: () => void;
-  institutionFormData: InstitutionFormData;
+  communityFormData: CommunityFormData;
 }
-export const Step6InstitutionRegister = ({
+export const Step3CommunityRegister = ({
   onComplete,
-  institutionFormData,
+  communityFormData,
 }: StepProps) => {
   const handleRegister = async () => {
     try {
-      await registerInstitution(institutionFormData);
+      await registerAssociation(communityFormData);
       onComplete();
     } catch (error) {
-      console.error('기관 등록 실패:', error);
-      console.log(institutionFormData);
+      console.error('커뮤니티 등록 실패:', error);
+      console.log(communityFormData);
     }
   };
 
@@ -27,9 +28,11 @@ export const Step6InstitutionRegister = ({
     <StepWrapper>
       <HeaderSection>
         <Title>
-          기관 등록이 완료되었습니다.
+          /협회명/ {/*TOOD*/}
           <br />
-          <span className="highlight">이어서 회원가입을 진행해 보세요!</span>
+          커뮤니티가 만들어졌어요!
+          <br />
+          <span className="highlight">회원을 초대해 보세요.</span>
         </Title>
       </HeaderSection>
       <SignUpCompleteContainer>
@@ -37,8 +40,11 @@ export const Step6InstitutionRegister = ({
       </SignUpCompleteContainer>
 
       <ButtonContainer>
+        <Button onClick={handleRegister} height={'52px'} variant="blue2">
+          커뮤니티 둘러보기
+        </Button>
         <Button onClick={handleRegister} height={'52px'} variant="blue">
-          회원 가입 진행하기
+          회원 초대하기
         </Button>
       </ButtonContainer>
     </StepWrapper>

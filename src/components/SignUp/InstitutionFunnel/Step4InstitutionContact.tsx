@@ -24,12 +24,11 @@ export const Step4InstitutionContact = ({
     const { value } = e.target;
     setInstitutionFormData((prev) => ({
       ...prev,
-      institutionPhone: value,
+      phoneNumber: value,
     }));
   };
 
-  const isInstitutionPhoneValid =
-    institutionFormData.institutionPhone.length > 0;
+  const isInstitutionPhoneValid = institutionFormData.phoneNumber.length > 0;
 
   return (
     <StepWrapper>
@@ -48,7 +47,7 @@ export const Step4InstitutionContact = ({
           state="default"
           placeholder="기관 연락처 입력"
           guide=""
-          value={institutionFormData.institutionPhone}
+          value={institutionFormData.phoneNumber}
           onChange={handleInstitutionPhoneChange}
         />
       </SearchContainer>

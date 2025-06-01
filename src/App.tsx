@@ -33,6 +33,9 @@ import CommunityPage from './page/Community/CommunityPage';
 import CommunityPost from './components/Community/CommunityPost';
 import LandingPage from './page/LandingPage/LandingPage';
 import CommunitySplashPage from './page/CommunitySplashPage';
+import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
+import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
+import { CommunitySignUpPage } from '@/page/SignUp/CommunitySignUpPage';
 
 function App() {
   return (
@@ -44,6 +47,7 @@ function App() {
       <Route path="splash/community" element={<CommunitySplashPage />} />
 
       <Route path="/" element={<SplashPage />} />
+      <Route path="/onboarding" element={<OnboardingPage />} />
 
       <Route path="/login" element={<LoginPage />} />
 
@@ -59,6 +63,8 @@ function App() {
       <Route path="/career/edit" element={<EditCareer />} />
       <Route path="/application/create" element={<CreateApplication />} />
       <Route path="/application/edit" element={<EditApplication />} />
+      <Route path="/community/create" element={<CommunityCreatePage />} />
+      <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
       <Route path="/work" element={<WorkMainPage />} />
       <Route path="/apply" element={<ApplyPage />} />
