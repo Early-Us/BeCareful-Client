@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { ReactComponent as Dots } from '@/assets/icons/community/Dots.svg';
 import { ReactComponent as Eye } from '@/assets/icons/community/Eye.svg';
@@ -37,6 +37,12 @@ const CommunityPost = (/*{ boardType }: PostProps*/) => {
     }
     setIsDeleteSheetOpen(false);
   };
+
+  useEffect(() => {
+    setBoard('공단 공지');
+    setIsMust(true);
+    setIsMyPost(false);
+  }, []);
 
   return (
     <Container>
@@ -593,53 +599,6 @@ const SectionBorder = styled.div`
   height: 1px;
   background: ${({ theme }) => theme.colors.gray50};
   margin: 0px -20px;
-`;
-
-const SheetContainer = styled.div<{ isOpen: boolean }>`
-  z-index: 1;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 320px;
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-  padding: 60px 20px 0 20px;
-
-  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
-  gap: 24px;
-  flex-direction: column;
-  align-items: flex-start;
-
-  label {
-    color: ${({ theme }) => theme.colors.gray900};
-    font-size: ${({ theme }) => theme.typography.fontSize.title2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-    line-height: 140%;
-  }
-
-  .buttons {
-    display: flex;
-    gap: 30px;
-  }
-
-  button {
-    height: 82px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: space-between;
-    align-items: center;
-    color: ${({ theme }) => theme.colors.gray900};
-    font-size: ${({ theme }) => theme.typography.fontSize.body1};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  }
-
-  svg {
-    width: 50px;
-    height: 50px;
-  }
 `;
 
 const Buttons = styled.div`
