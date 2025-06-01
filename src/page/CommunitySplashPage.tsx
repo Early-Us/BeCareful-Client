@@ -5,7 +5,7 @@ import { ReactComponent as Search } from '@/assets/icons/Search.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as Plus } from '@/assets/icons/ButtonPlus.svg';
 import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 
@@ -14,6 +14,10 @@ const CommunitySplashPage = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
 
   return (
     <Container>
