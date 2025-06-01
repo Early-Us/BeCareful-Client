@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
 
 import { Button } from '@/components/common/Button/Button';
@@ -26,23 +26,6 @@ export const SignUpPage = () => {
       }
     }
   };
-
-  useEffect(() => {
-    function getCookie(name: string) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift();
-      return null;
-    }
-
-    const name = decodeURIComponent(getCookie('Name') || '');
-    const nickname = decodeURIComponent(getCookie('Nickname') || '');
-    const phone = getCookie('PhoneNumber');
-    const birth = getCookie('BirthYymmdd');
-    const gender = getCookie('BirthGenderCode');
-
-    console.log({ name, nickname, phone, birth, gender });
-  }, []);
 
   return (
     <FormWrapper>

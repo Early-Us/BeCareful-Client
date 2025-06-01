@@ -9,6 +9,7 @@ import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar';
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Step3InstitutionType } from '@/components/SignUp/InstitutionFunnel/Step3InstitutionType';
+import { getRandomAddress } from '@/utils/randomAddress';
 
 interface InstitutionFunnelProps {
   onDone: () => void;
@@ -31,17 +32,19 @@ export const InstitutionFunnel = ({
   onCancel,
 }: InstitutionFunnelProps) => {
   const [institutionFormData, setInstitutionFormData] =
-    useState<InstitutionFormData>({
-      institutionName: '',
-      institutionCode: '',
-      openYear: 0,
-      facilityTypeList: [],
-      phoneNumber: '',
-      streetAddress: '-',
-      detailAddress: '-',
-      profileImageUrl: null,
+    useState<InstitutionFormData>(() => {
+      const { street, detail } = getRandomAddress();
+      return {
+        institutionName: '',
+        institutionCode: '',
+        openYear: 0,
+        facilityTypeList: [],
+        phoneNumber: '',
+        streetAddress: street,
+        detailAddress: detail,
+        profileImageUrl: null,
+      };
     });
-
   const [currentStep, setCurrentStep] = useState(0);
   const { setIsInstitutionFunnel } = useSignUpContext();
   const isLastStep = currentStep === 5;

@@ -1,9 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as ArrowRightCircle } from '@/assets/icons/home/ArrowRightCircle.svg';
+import { useState } from 'react';
+import Modal from '@/components/common/Modal/Modal';
+import ModalButtons from '@/components/common/Modal/ModalButtons';
 
 export const HomeMainContent = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <SectionWrapper>
@@ -13,7 +17,7 @@ export const HomeMainContent = () => {
       </ScheduleWrapper>
 
       <ButtonsWrapper>
-        <ApplyButton light onClick={() => navigate('/community/create')}>
+        <ApplyButton light onClick={() => navigate('/community/signup')}>
           <ApplyWrapper>
             <Label>커뮤니티</Label>
             <ApplyTitle>만들기</ApplyTitle>
@@ -26,7 +30,7 @@ export const HomeMainContent = () => {
           </ChangeWrapper>
         </ApplyButton>
 
-        <ApplyButton onClick={() => navigate('/community/join')}>
+        <ApplyButton onClick={() => setIsModalOpen(true)}>
           <ApplyWrapper>
             <Label>커뮤니티</Label>
             <ApplyTitle>가입하기</ApplyTitle>
@@ -38,6 +42,14 @@ export const HomeMainContent = () => {
             </Arrow>
           </ChangeWrapper>
         </ApplyButton>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <ModalButtons
+            onClose={() => setIsModalOpen(false)}
+            title="커뮤니티 만들기 권한이 없습니다."
+            detail="협회 임원진/회원은 커뮤니티를 가입해주세요!"
+            right="커뮤니티 가입하기"
+          />
+        </Modal>
       </ButtonsWrapper>
     </SectionWrapper>
   );
