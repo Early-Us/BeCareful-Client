@@ -6,7 +6,7 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   detail: string;
-  left: string;
+  left?: string;
   right: string;
 }
 
@@ -27,19 +27,9 @@ const ModalButtons = ({ onClose, title, detail, left, right }: ModalProps) => {
           ))}
         </ModalDetailLabel>
       </ModalLabelWrapper>
-      <ModalButtonWrapper>
-        <Left
-          onClick={() => {
-            onClose();
-          }}
-        >
-          {left}
-        </Left>
-        <Right
-          onClick={() => {
-            onClose();
-          }}
-        >
+      <ModalButtonWrapper single={!left}>
+        {left && <Left onClick={onClose}>{left}</Left>}
+        <Right single={!left} onClick={onClose}>
           {right}
         </Right>
       </ModalButtonWrapper>
@@ -89,11 +79,10 @@ const ModalDetailLabel = styled.label`
   line-height: 140%;
   text-align: center;
 `;
-
-const ModalButtonWrapper = styled.div`
+const ModalButtonWrapper = styled.div<{ single?: boolean }>`
   width: 100%;
   display: flex;
-  gap: 8px;
+  gap: ${({ single }) => (single ? 0 : '8px')};
 `;
 
 const Left = styled.button`
@@ -107,8 +96,8 @@ const Left = styled.button`
   text-align: center;
 `;
 
-const Right = styled.button`
-  width: 100%;
+const Right = styled.button<{ single?: boolean }>`
+  width: ${({ single }) => (single ? '100%' : '100%')};
   height: 52px;
   border-radius: 12px;
   background: ${({ theme }) => theme.colors.mainBlue};

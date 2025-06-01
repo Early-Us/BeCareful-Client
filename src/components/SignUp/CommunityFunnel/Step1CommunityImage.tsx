@@ -1,32 +1,27 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 
-import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { uploadInstitutionProfileImage } from '@/api/institutionFunnel';
 import { ProfileImageUploader } from '@/components/SignUp/InstitutionFunnel/Step5UploadPhoto/ProfileImageUploader';
+import { CommunityFormData } from '@/components/SignUp/CommunityFunnel/CommunityFunnel';
+import { uploadAssociationProfileImage } from '@/api/communityFunnel';
 
 interface StepProps {
   goToNext: () => void;
   goToPrev: () => void;
-  institutionFormData: InstitutionFormData;
-  setInstitutionFormData: React.Dispatch<
-    React.SetStateAction<InstitutionFormData>
-  >;
+  communityFormData: CommunityFormData;
+  setCommunityFormData: React.Dispatch<React.SetStateAction<CommunityFormData>>;
 }
 
-export const Step5UploadPhoto = ({
+export const Step1CommunityImage = ({
   goToNext,
   goToPrev,
-  institutionFormData,
-  setInstitutionFormData,
+  communityFormData,
+  setCommunityFormData,
 }: StepProps) => {
   const handleImageUpload = async (file: File) => {
     try {
-      const imageUrl = await uploadInstitutionProfileImage(
-        file,
-        institutionFormData.institutionName,
-      );
-      setInstitutionFormData((prev) => ({
+      const imageUrl = await uploadAssociationProfileImage(file);
+      setCommunityFormData((prev) => ({
         ...prev,
         profileImageUrl: imageUrl,
       }));
@@ -39,22 +34,22 @@ export const Step5UploadPhoto = ({
     <StepWrapper>
       <HeaderSection>
         <Title>
-          소속된 기관의 사진을 등록하세요.
+          협회 대문 사진을 등록해 주세요.
           <span className="highlight"> *</span>
         </Title>
-        <SubText>소속된 기관의 대표 사진을 업로드해 주세요.(선택)</SubText>
+        <SubText>소속된 협회의 대표 사진을 업로드해 주세요. (선택)</SubText>
       </HeaderSection>
 
       <ProfileContainer>
         <ProfileImageUploader
-          imageUrl={institutionFormData.profileImageUrl}
+          imageUrl={communityFormData.profileImageUrl}
           onChange={handleImageUpload}
         />
       </ProfileContainer>
 
       <ButtonContainer>
         <Button onClick={goToPrev} height="52px" variant="blue2">
-          이전
+          나가기
         </Button>
         <Button onClick={goToNext} height="52px" variant="blue">
           다음
