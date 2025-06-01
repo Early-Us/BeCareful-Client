@@ -31,6 +31,7 @@ import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import CommunityPage from './page/Community/CommunityPage';
 import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
+import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
       <Route path="/career/edit" element={<EditCareer />} />
       <Route path="/application/create" element={<CreateApplication />} />
       <Route path="/application/edit" element={<EditApplication />} />
+      <Route path="/community/create" element={<CommunityCreatePage />} />
 
       <Route path="/work" element={<WorkMainPage />} />
       <Route path="/apply" element={<ApplyPage />} />
