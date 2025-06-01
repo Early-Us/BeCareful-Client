@@ -1,57 +1,55 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
-import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
+import { CommunityFormData } from '@/components/SignUp/CommunityFunnel/CommunityFunnel';
+import { CommunitySearchInput } from '@/components/SignUp/CommunityFunnel/CommunitySearchInput';
 
 interface StepProps {
   goToNext: () => void;
   onCancel?: () => void;
-  institutionFormData: InstitutionFormData;
-  setInstitutionFormData: React.Dispatch<
-    React.SetStateAction<InstitutionFormData>
-  >;
+  communityFormData: CommunityFormData;
+  setCommunityFormData: React.Dispatch<React.SetStateAction<CommunityFormData>>;
 }
 
-export const Step1InstitutionName = ({
+export const Step2CommunityName = ({
   goToNext,
   onCancel,
-  institutionFormData,
-  setInstitutionFormData,
+  communityFormData,
+  setCommunityFormData,
 }: StepProps) => {
-  const handleInstitutionNameChange = (name: string) => {
-    setInstitutionFormData((prev) => ({ ...prev, institutionName: name }));
-  };
-  const handleInstitutionCodeChange = (code: string) => {
-    setInstitutionFormData((prev) => ({ ...prev, institutionCode: code }));
+  const handleCommunityNameChange = (name: string) => {
+    setCommunityFormData((prev) => ({ ...prev, name }));
   };
 
-  const isInstitutionNameValid = institutionFormData.institutionName.length > 0;
+  const handleCommunityCodeChange = (codeStr: string) => {
+    const code = parseInt(codeStr, 10);
+    if (!isNaN(code)) {
+      setCommunityFormData((prev) => ({ ...prev, establishedYear: code }));
+    }
+  };
+
+  const isCommunityNameValid = communityFormData.name.length > 0;
 
   return (
     <StepWrapper>
       <HeaderSection>
         <Title>
-          소속된 기관을 등록하세요
+          협회명을 입력하세요.
           <span className="highlight"> *</span>
         </Title>
-        <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
+        <SubText>소속된 협회의 정확한 명칭을 검색해 주세요.</SubText>
       </HeaderSection>
       <SearchContainer>
-        <InstitutionSearchInput
-          onInstitutionSelect={handleInstitutionNameChange}
-        />
+        <CommunitySearchInput onCommunitySelect={handleCommunityNameChange} />
       </SearchContainer>
       <Header2Section>
         <Title>
-          소속된 기관 코드를 입력하세요.
+          협회 설립일을 입력하세요.
           <span className="highlight"> *</span>
         </Title>
-        <SubText>소속된 기관의 코드를 등록해 주세요.</SubText>
+        <SubText>소속된 협회의 설립일을 입력해주세요.</SubText>
       </Header2Section>
       <SearchContainer>
-        <InstitutionSearchInput
-          onInstitutionSelect={handleInstitutionCodeChange}
-        />
+        <CommunitySearchInput onCommunitySelect={handleCommunityCodeChange} />
       </SearchContainer>
       <ButtonContainer>
         <Button onClick={onCancel} height={'52px'} variant="blue2">
@@ -60,10 +58,10 @@ export const Step1InstitutionName = ({
         <Button
           onClick={goToNext}
           height="52px"
-          variant={isInstitutionNameValid ? 'blue' : 'gray'}
-          disabled={!isInstitutionNameValid}
+          variant={isCommunityNameValid ? 'blue' : 'gray'}
+          disabled={!isCommunityNameValid}
         >
-          다음
+          커뮤니티 생성하기
         </Button>
       </ButtonContainer>
     </StepWrapper>
