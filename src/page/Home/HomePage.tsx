@@ -8,8 +8,6 @@ import { NavBar } from '@/components/common/NavBar';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { HomeMainContent } from '@/components/Home/HomeMainContent';
-
 interface SceheduleData {
   workStartTime: string;
   workEndTime: string;
@@ -19,7 +17,6 @@ interface SceheduleData {
   seniorCareType: string[];
   workLocation: string;
 }
-
 interface CaregiverData {
   name: string;
   applicationCount: number;
@@ -27,14 +24,13 @@ interface CaregiverData {
   workScheduleList: SceheduleData[];
   isWorking: boolean;
 }
-
 const HomePage = () => {
   const navigate = useNavigate();
 
   // 새로운 채팅 존재 여부
   // const [chatNew, setChatNew] = useState(false);
   const [data, setData] = useState<CaregiverData>();
-  const [apply, setApply] = useState(false);
+  const [, setApply] = useState(false);
 
   const getTodayDate = () => {
     const today = new Date();
@@ -132,13 +128,7 @@ const HomePage = () => {
           <Person />
         </PersonWrapper>
       </MainWrapper>
-      <HomeMainContent
-        matching={data ? data.isWorking : false}
-        schedule={data ? data.workScheduleList : []}
-        apply={apply}
-        notice={data ? data.applicationCount : 0}
-        status={data ? data.recruitmentCount : 0}
-      />
+
       <TabBar />
     </Container>
   );
