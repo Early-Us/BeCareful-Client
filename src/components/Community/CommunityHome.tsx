@@ -8,8 +8,47 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-const CommunityHome = () => {
+interface CommunityHomeProps {
+  onTabChange: (tabName: string) => void;
+}
+
+const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
   const [noticeData, setNoticeData] = useState<Notice[]>([]);
+
+  /*
+  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
+  const getImportantPostInfo = async () => {
+    try {
+      const response = await axios.get(
+        `${apiBaseURL}/community/post/important`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      setNoticeData([]);
+    } catch (e) {
+      console.log('사회복지사 채팅방 리스트 get 에러: ', e);
+    }
+  };
+
+  const getPostInfo = async () => {
+    try {
+      const response = await axios.get(
+        `${apiBaseURL}/community/post/important`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      setChatList(response.data.chatroomInfoList);
+    } catch (e) {
+      console.log('사회복지사 채팅방 리스트 get 에러: ', e);
+    }
+  };
+  */
 
   useEffect(() => {
     setNoticeData([]);
@@ -187,7 +226,9 @@ const CommunityHome = () => {
                 date="2025-04-07"
                 postImgUrl=""
               />
-              <PlusButton>더보기</PlusButton>
+              <PlusButton onClick={() => onTabChange('협회 공지')}>
+                더보기
+              </PlusButton>
             </NoticeList>
           </SwiperSlide>
 
@@ -290,7 +331,9 @@ const CommunityHome = () => {
                 postImgUrl=""
               />
 
-              <PlusButton>더보기</PlusButton>
+              <PlusButton onClick={() => onTabChange('공단 공지')}>
+                더보기
+              </PlusButton>
             </NoticeList>
           </SwiperSlide>
         </Swiper>

@@ -30,11 +30,18 @@ import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import CommunityPage from './page/Community/CommunityPage';
+import CommunityPost from './components/Community/CommunityPost';
+import LandingPage from './page/LandingPage/LandingPage';
+import CommunitySplashPage from './page/CommunitySplashPage';
 
 function App() {
   return (
     <Routes>
       <Route path="/test" element={<TestPage />} />
+
+      <Route path="/landing" element={<LandingPage />} />
+
+      <Route path="splash/community" element={<CommunitySplashPage />} />
 
       <Route path="/" element={<SplashPage />} />
 
@@ -83,6 +90,7 @@ function App() {
       <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
 
       <Route path="/community" element={<CommunityPage />} />
+      <Route path="/community/:postId" element={<CommunityPost />} />
     </Routes>
   );
 }
