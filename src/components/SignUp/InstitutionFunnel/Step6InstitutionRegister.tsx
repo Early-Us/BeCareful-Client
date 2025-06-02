@@ -6,20 +6,20 @@ import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/Insti
 import { registerInstitution } from '@/api/institutionFunnel';
 
 interface StepProps {
-  onComplete: () => void;
+  onComplete: (newInstitutionId: number) => void;
   institutionFormData: InstitutionFormData;
 }
+
 export const Step6InstitutionRegister = ({
   onComplete,
   institutionFormData,
 }: StepProps) => {
   const handleRegister = async () => {
     try {
-      await registerInstitution(institutionFormData);
-      onComplete();
+      const newInstitutionId = await registerInstitution(institutionFormData);
+      onComplete(newInstitutionId);
     } catch (error) {
       console.error('기관 등록 실패:', error);
-      console.log(institutionFormData);
     }
   };
 
@@ -37,7 +37,7 @@ export const Step6InstitutionRegister = ({
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button onClick={handleRegister} height={'52px'} variant="blue">
+        <Button onClick={handleRegister} height="52px" variant="blue">
           회원 가입 진행하기
         </Button>
       </ButtonContainer>

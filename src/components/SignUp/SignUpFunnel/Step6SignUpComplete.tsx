@@ -2,9 +2,47 @@ import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
+import { useEffect, useState } from 'react';
+import { signUpMember } from '@/api/signupFunnel';
 
 export const Step6SignUpComplete = () => {
-  const { goToPrev } = useSignUpContext();
+  const { formData } = useSignUpContext();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (formData.nursingInstitutionId == null) {
+      setError('기관이 선택되지 않았습니다.');
+      return;
+    }
+
+    try {
+      await signUpMember({
+        nursingInstitutionId: formData.nursingInstitutionId,
+        realName: formData.realName,
+        nickName: formData.nickName,
+        birthYymmdd: formData.birthYymmdd,
+        genderCode: formData.genderCode,
+        phoneNumber: formData.phoneNumber,
+        institutionRank: formData.institutionRank,
+        isAgreedToTerms: formData.isAgreedToTerms,
+        isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
+        isAgreedToReceiveMarketingInfo: formData.isAgreedToReceiveMarketingInfo,
+      });
+
+      setIsSubmitted(true);
+    } catch (e) {
+      console.error('회원가입 요청 실패', e);
+      setError('회원가입 중 문제가 발생했습니다.');
+    }
+  };
+
+  useEffect(() => {
+    if (!isSubmitted) {
+      handleSubmit();
+    }
+  }, [isSubmitted]);
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -14,12 +52,19 @@ export const Step6SignUpComplete = () => {
           <span className="highlight">지금 바로 서비스를 시작해보세요!</span>
         </Title>
       </HeaderSection>
+
       <SignUpCompleteContainer>
         <SignUpComplete />
       </SignUpCompleteContainer>
 
+      {error && <ErrorText>{error}</ErrorText>}
+
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'} variant="blue">
+        <Button
+          onClick={() => (window.location.href = '/community/create')}
+          height="52px"
+          variant="blue"
+        >
           돌봄다리 시작하기
         </Button>
       </ButtonContainer>
@@ -82,4 +127,10 @@ const SignUpCompleteContainer = styled.div`
     height: auto;
     display: block;
   }
+`;
+
+const ErrorText = styled.div`
+  margin: 12px 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.body3};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;

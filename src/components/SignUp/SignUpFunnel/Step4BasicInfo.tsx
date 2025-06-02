@@ -7,34 +7,51 @@ import { PhoneNumberInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInf
 import { ResidentIdInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/ResidentIdInput';
 import { useNicknameValidation } from '@/hooks/useNicknameValidation';
 
+const getGenderCode = (char: string): number => {
+  if (char === '1' || char === '3') return 1;
+  if (char === '2' || char === '4') return 2;
+  return 0;
+};
+
 export const Step4BasicInfo = () => {
   const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
   const { message, state, checkNickname, resetMessage } =
     useNicknameValidation();
 
   const handleChange =
-    (field: keyof typeof formData) =>
+    (field: 'realName' | 'nickName' | 'birthYymmdd' | 'phoneNumber') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFormData((prev) => ({
         ...prev,
         [field]: e.target.value,
       }));
 
-      if (field === 'nickname') {
+      if (field === 'nickName') {
         resetMessage();
       }
     };
 
   const handleCheckDuplicate = () => {
-    checkNickname(formData.nickname);
+    checkNickname(formData.nickName);
+  };
+
+  const handleBirthAndGenderChange = (
+    birthDate: string,
+    genderChar: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      birthYymmdd: birthDate,
+      genderCode: getGenderCode(genderChar),
+    }));
   };
 
   const isFormValid =
-    formData.name.trim() &&
-    formData.nickname.trim() &&
-    formData.birthDate.trim() &&
-    formData.residentId.trim() &&
-    formData.phoneNumber.trim();
+    formData.realName.trim().length > 0 &&
+    formData.nickName.trim().length > 0 &&
+    formData.birthYymmdd.trim().length === 6 &&
+    (formData.genderCode === 1 || formData.genderCode === 2) &&
+    formData.phoneNumber.trim().length > 0;
 
   return (
     <StepWrapper>
@@ -42,24 +59,36 @@ export const Step4BasicInfo = () => {
         <Title>담당자 기본 정보를 입력하세요.</Title>
       </HeaderSection>
 
-      <NameInput value={formData.name} onChange={handleChange('name')} />
+      <NameInput
+        value={formData.realName}
+        onChange={handleChange('realName')}
+      />
       <NicknameInput
-        value={formData.nickname}
-        onChange={handleChange('nickname')}
+        value={formData.nickName}
+        onChange={handleChange('nickName')}
         onCheckDuplicate={handleCheckDuplicate}
       />
       {message && (
         <ValidationMessage state={state}>{message}</ValidationMessage>
       )}
       <ResidentIdInput
-        birthDate={formData.birthDate}
-        genderInput={formData.residentId}
-        onBirthDateChange={handleChange('birthDate')}
-        onGenderChange={handleChange('residentId')}
+        birthDate={formData.birthYymmdd}
+        genderInput={
+          formData.genderCode > 0 ? formData.genderCode.toString() : ''
+        }
+        onBirthDateChange={(e) =>
+          handleBirthAndGenderChange(
+            e.target.value,
+            formData.genderCode.toString(),
+          )
+        }
+        onGenderChange={(e) =>
+          handleBirthAndGenderChange(formData.birthYymmdd, e.target.value)
+        }
       />
       <PhoneNumberInput
         value={formData.phoneNumber}
-        onChange={handleChange('phoneNumber')} //TODO: api 연결하면 수정불가로 바뀜
+        onChange={handleChange('phoneNumber')}
       />
 
       <ButtonContainer>
@@ -78,6 +107,7 @@ export const Step4BasicInfo = () => {
     </StepWrapper>
   );
 };
+
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -141,6 +141,7 @@ const ButtonContainer = styled.div`
   padding: 20px;
   gap: 8px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray50};
+  background-color: ${({ theme }) => theme.colors.white};
   box-sizing: border-box;
   width: 100%;
 `;
@@ -148,7 +149,7 @@ const ButtonContainer = styled.div`
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 20px 0px 20px;
+  padding: 20px 20px 55px 20px;
   box-sizing: border-box;
   gap: 8px;
   width: 100%;

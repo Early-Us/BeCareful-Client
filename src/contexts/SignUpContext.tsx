@@ -2,18 +2,22 @@ import { useFunnel } from '@/hooks/useFunnel';
 import { createContext, useContext, useState } from 'react';
 
 export interface SignUpFormData {
-  institutionRole: string;
-  profileType: string;
-  institutionName: string;
-  name: string;
-  nickname: string;
-  residentId: string;
-  birthDate: string;
+  nursingInstitutionId: number | null;
+  realName: string;
+  nickName: string;
+  birthYymmdd: string;
+  genderCode: number;
   phoneNumber: string;
+  institutionRank:
+    | 'CENTER_DIRECTOR'
+    | 'REPRESENTATIVE'
+    | 'SOCIAL_WORKER'
+    | 'none';
   isAgreedToTerms: boolean;
   isAgreedToCollectPersonalInfo: boolean;
   isAgreedToReceiveMarketingInfo: boolean;
 }
+
 interface SignUpContextType extends ReturnType<typeof useFunnel> {
   formData: SignUpFormData;
   setFormData: React.Dispatch<React.SetStateAction<SignUpFormData>>;
@@ -27,14 +31,13 @@ export const SignUpProvider = ({ children }: { children: React.ReactNode }) => {
   const funnel = useFunnel(0);
 
   const [formData, setFormData] = useState<SignUpFormData>({
-    institutionRole: '',
-    profileType: '',
-    institutionName: '',
-    name: '',
-    nickname: '',
-    residentId: '',
-    birthDate: '',
+    nursingInstitutionId: null,
+    realName: '',
+    nickName: '',
+    birthYymmdd: '',
+    genderCode: 0,
     phoneNumber: '',
+    institutionRank: 'none',
     isAgreedToTerms: false,
     isAgreedToCollectPersonalInfo: false,
     isAgreedToReceiveMarketingInfo: false,
