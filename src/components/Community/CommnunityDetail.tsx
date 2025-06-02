@@ -1,16 +1,13 @@
 import PostOverview from '@/components/Community/PostOverview';
-import { Notice } from '@/type/Notice';
 import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { CommunityDefault } from '@/data/Community';
 
 interface CommunityDetailProps {
   boardType: string;
 }
 
 const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
-  const [noticeData, setNoticeData] = useState<Notice[]>([]);
-
   //   const formatBoardType = (key: string): string => {
   //     const mapping: Record<string, string> = {
   //       '협회 공지': 'association-notice',
@@ -22,10 +19,6 @@ const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
   //     return mapping[key] ?? key;
   //   };
 
-  useEffect(() => {
-    setNoticeData([]);
-  }, []);
-
   return (
     <Container>
       <Title>
@@ -34,83 +27,25 @@ const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
       </Title>
 
       <NoticeList>
-        {noticeData.map((notice) => (
+        {CommunityDefault.map((notice) => (
           <>
             <PostOverview
-              key={notice.id}
-              id={notice.id}
-              profileImgUrl={notice.profileImgUrl}
-              nickname={notice.nickname}
-              position={notice.position}
-              isMust={notice.isMust}
-              isNew={notice.isNew}
-              isReaded={notice.isReaded}
+              key={notice.postId}
+              id={notice.postId}
+              profileImgUrl={notice.author.institutionImageUrl.profileDefultImg}
+              nickname={notice.author.authorName}
+              position={notice.author.authorInstitutionRank}
+              isMust={notice.isImportant}
+              isNew={true}
+              // isNew={new Date(notice.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)} // 7일 이내 게시물에 대해 true 설정
+              isReaded={false}
               title={notice.title}
-              date={notice.date}
-              postImgUrl={notice.postImgUrl}
+              date={notice.createdAt.substring(0, 10)}
+              postImgUrl={notice.thumbnailUrl}
             />
             <Border />
           </>
         ))}
-        <PostOverview
-          key="0"
-          id={0}
-          profileImgUrl=""
-          nickname="이름"
-          position="임원진"
-          isMust={true}
-          isNew={true}
-          isReaded={true}
-          title="제목을 엄청나게 길게 써보고 싶어서 주저리주저리 잘 먹히려나 모르겠다 에구궁제목을 엄청나게 길게 써보고 싶어서 주저리주저리 잘 먹히려나 모르겠다 에구궁"
-          date="2025-04-12"
-          postImgUrl=""
-        />
-        <Border />
-
-        <PostOverview
-          key="1"
-          id={1}
-          profileImgUrl=""
-          nickname="이름3"
-          position="회장"
-          isMust={true}
-          isNew={false}
-          isReaded={true}
-          title="제목"
-          date="2025-04-09"
-          postImgUrl=""
-        />
-        <Border />
-
-        <PostOverview
-          key="2"
-          id={2}
-          profileImgUrl=""
-          nickname="이름2"
-          position="센터장"
-          isMust={false}
-          isNew={true}
-          isReaded={false}
-          title="제목"
-          date="2025-04-10"
-          postImgUrl=""
-        />
-        <Border />
-
-        <PostOverview
-          key="3"
-          id={3}
-          profileImgUrl=""
-          nickname="이름3"
-          position="회장"
-          isMust={false}
-          isNew={false}
-          isReaded={false}
-          title="제목"
-          date="2025-04-09"
-          postImgUrl=""
-        />
-        <Border />
       </NoticeList>
     </Container>
   );
