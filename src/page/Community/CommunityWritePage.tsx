@@ -6,7 +6,9 @@ import { ReactComponent as ChevronDown } from '@/assets/icons/community/ChevronD
 import { ReactComponent as Photo } from '@/assets/icons/community/Photo.svg';
 import { ReactComponent as File } from '@/assets/icons/community/File.svg';
 import { ReactComponent as LinkIcon } from '@/assets/icons/community/LinkIcon.svg';
+import { ReactComponent as Check } from '@/assets/icons/matching/CircleCheck.svg';
 import { useState } from 'react';
+import BottomSheet from '@/components/Community/BottomSheet';
 
 interface WritingProp {
   boardType: string;
@@ -16,19 +18,26 @@ interface WritingProp {
 const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleSheet = () => {
-    setIsOpen((prev) => !prev);
+    if (!isOpen) {
+      setTempBoard(board);
+    }
+    setIsOpen(!isOpen);
   };
+  // 메인으로 표시될 게시판 유형 상태
   const [board, setBoard] = useState(
     boardType === '전체' ? '게시판 선택' : boardType,
   );
-  const handleBoardSelect = (board: string) => {
-    setBoard(board);
+  // 시트 내에서 임시로 선택된 게시판 유형 상태
+  const [tempBoard, setTempBoard] = useState(board);
+
+  const handleSheetConfirm = () => {
+    setBoard(tempBoard);
     setIsOpen(false);
   };
 
-  const [isToggleChecked, setIsToggleChecked] = useState(true);
+  const [isMustToggle, setIsMustToggle] = useState(true);
   const handleToggleChange = () => {
-    setIsToggleChecked((prevChecked) => !prevChecked);
+    setIsMustToggle((prevChecked) => !prevChecked);
   };
 
   const [title, setTitle] = useState('');
@@ -87,19 +96,36 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
         <label>{board}</label>
         <ChevronDown />
       </BoardSelect>
-      <SheetContainer isOpen={isOpen}>
-        <Option onClick={() => handleBoardSelect('협회 공지')}>
+      <BottomSheet
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="게시판 유형을 선택해주세요."
+        titleStar={true}
+      >
+        <SheetButton
+          active={tempBoard === '협회 공지'}
+          onClick={() => setTempBoard('협회 공지')}
+        >
+          <Check />
           협회 공지
-        </Option>
-        <Option onClick={() => handleBoardSelect('공단 공지')}>
+        </SheetButton>
+        <SheetButton
+          active={tempBoard === '공단 공지'}
+          onClick={() => setTempBoard('공단 공지')}
+        >
+          <Check />
           공단 공지
-        </Option>
-      </SheetContainer>
+        </SheetButton>
+        <Buttons>
+          <CancleButton onClick={() => setIsOpen(false)}>취소</CancleButton>
+          <CheckButton onClick={handleSheetConfirm}>확인</CheckButton>
+        </Buttons>
+      </BottomSheet>
 
       <MustSelect>
         <label>필독 여부</label>
-        <ToggleContainer onClick={handleToggleChange}>
-          <ToggleLabel checked={isToggleChecked}></ToggleLabel>
+        <ToggleContainer onClick={() => handleToggleChange()}>
+          <ToggleLabel checked={isMustToggle}></ToggleLabel>
         </ToggleContainer>
       </MustSelect>
 
@@ -116,9 +142,12 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
       />
 
       <NavBottom>
-        <Photo />
-        <File />
-        <LinkIcon />
+        <Border />
+        <div>
+          <Photo />
+          <File />
+          <LinkIcon />
+        </div>
       </NavBottom>
     </Container>
   );
@@ -204,26 +233,73 @@ const BoardSelect = styled.div`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
-const SheetContainer = styled.div<{ isOpen: boolean }>`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 300px; /* 고정 높이 */
-  background: white;
-  border-radius: 20px 20px 0 0; /* 상단에만 border-radius */
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
-  padding: 20px;
-`;
-
-const Option = styled.div`
+const SheetButton = styled.div<{ active: boolean }>`
+  height: 32px;
   padding: 10px;
   cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid
+    ${({ theme, active }) =>
+      active ? theme.colors.mainBlue : theme.colors.gray100};
+  background: ${({ theme, active }) =>
+    active ? theme.colors.subBlue : theme.colors.white};
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: ${({ theme, active }) =>
+    active ? theme.colors.mainBlue : theme.colors.gray900};
+  font-weight: ${({ theme, active }) =>
+    active
+      ? theme.typography.fontWeight.bold
+      : theme.typography.fontWeight.medium};
+
+  path {
+    fill: ${({ theme, active }) => (active ? theme.colors.mainBlue : '')};
+  }
 
   &:hover {
-    background: #f0f0f0; /* 호버 시 배경색 변경 */
+    background: ${({ theme }) => theme.colors.subBlue};
+    border-color: ${({ theme }) => theme.colors.mainBlue};
+
+    path {
+      fill: ${({ theme }) => theme.colors.mainBlue};
+    }
   }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding-top: 85px;
+`;
+
+const CancleButton = styled.button`
+  display: flex;
+  height: 52px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  font-size: ${({ theme }) => theme.typography.fontSize.body1};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+
+  background: ${({ theme }) => theme.colors.subBlue};
+  color: ${({ theme }) => theme.colors.mainBlue};
+`;
+
+const CheckButton = styled.button`
+  display: flex;
+  height: 52px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  font-size: ${({ theme }) => theme.typography.fontSize.body1};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+
+  background: ${({ theme }) => theme.colors.mainBlue};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 const MustSelect = styled.div`
@@ -287,7 +363,7 @@ const Title = styled.textarea`
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.gray800};
+    color: ${({ theme }) => theme.colors.gray300};
   }
 `;
 
@@ -307,14 +383,29 @@ const Content = styled.textarea`
   }
 `;
 
+const Border = styled.div`
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+`;
+
 const NavBottom = styled.div`
-  height: 45px;
+  height: 44px;
   display: flex;
-  gap: 18px;
-  align-items: center;
-  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
+  flex-direction: column;
+  gap: 10px;
   position: fixed;
   bottom: 0;
-  left: 20px;
-  right: 20px;
+  left: 0;
+  right: 0;
+
+  div {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  svg {
+    cursor: pointer;
+  }
 `;

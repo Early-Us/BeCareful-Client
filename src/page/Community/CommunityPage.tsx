@@ -4,15 +4,18 @@ import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as Plus } from '@/assets/icons/ButtonPlus.svg';
 import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
 import { useState } from 'react';
-import CommunityCorporation from '@/components/Community/CommunityCorporation';
-import CommunityAssociation from '@/components/Community/CommunityAssociation';
 import CommunityHome from '@/components/Community/CommunityHome';
 import CommunityWritePage from './CommunityWritePage';
 import { SocialTabBar } from '@/components/common/TabBarSocial';
+import CommnunityDetail from '@/components/Community/CommnunityDetail';
 
 const CommunityPage = () => {
   const [activeTab, setActiveTab] = useState('전체');
   const [isWriting, setIsWriting] = useState(false);
+
+  const handleTabChange = (tabName: string) => {
+    setActiveTab(tabName);
+  };
 
   return (
     <>
@@ -42,24 +45,31 @@ const CommunityPage = () => {
           </Association>
 
           <CommunityTabs>
-            {/* {['전체', '협회 공지', '공단공지', '정보 공유', '참여 신청'].map( */}
-            {['전체', '협회 공지', '공단 공지'].map((tab) => (
-              <Tab
-                key={tab}
-                active={activeTab === tab}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </Tab>
-            ))}
+            {['전체', '협회 공지', '공단공지', '정보 공유', '참여 신청'].map(
+              (tab) => (
+                // {['전체', '협회 공지', '공단 공지'].map((tab) => (
+                <Tab
+                  key={tab}
+                  active={activeTab === tab}
+                  onClick={() => handleTabChange(tab)}
+                >
+                  {tab}
+                </Tab>
+              ),
+            )}
           </CommunityTabs>
 
-          {activeTab == '전체' ? (
-            <CommunityHome />
+          {/* {activeTab == '전체' ? (
+            <CommunityHome onTabChange={handleTabChange} />
           ) : activeTab == '협회 공지' ? (
             <CommunityAssociation />
           ) : (
             <CommunityCorporation />
+          )} */}
+          {activeTab == '전체' ? (
+            <CommunityHome onTabChange={handleTabChange} />
+          ) : (
+            <CommnunityDetail boardType={activeTab} />
           )}
 
           <Button onClick={() => setIsWriting(true)}>
