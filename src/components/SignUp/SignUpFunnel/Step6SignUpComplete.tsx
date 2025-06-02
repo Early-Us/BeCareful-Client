@@ -8,11 +8,9 @@ import { signUpMember } from '@/api/signupFunnel';
 export const Step6SignUpComplete = () => {
   const { formData } = useSignUpContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     if (formData.nursingInstitutionId == null) {
-      setError('기관이 선택되지 않았습니다.');
       return;
     }
 
@@ -33,7 +31,6 @@ export const Step6SignUpComplete = () => {
       setIsSubmitted(true);
     } catch (e) {
       console.error('회원가입 요청 실패', e);
-      setError('회원가입 중 문제가 발생했습니다.');
     }
   };
 
@@ -56,8 +53,6 @@ export const Step6SignUpComplete = () => {
       <SignUpCompleteContainer>
         <SignUpComplete />
       </SignUpCompleteContainer>
-
-      {error && <ErrorText>{error}</ErrorText>}
 
       <ButtonContainer>
         <Button
@@ -127,10 +122,4 @@ const SignUpCompleteContainer = styled.div`
     height: auto;
     display: block;
   }
-`;
-
-const ErrorText = styled.div`
-  margin: 12px 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.body3};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
