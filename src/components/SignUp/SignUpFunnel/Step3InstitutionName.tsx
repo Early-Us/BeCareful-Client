@@ -5,26 +5,46 @@ import { useState } from 'react';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
+import { searchInstitution } from '@/api/signupFunnel';
 
 export const Step3InstitutionName = () => {
-  const { goToNext, goToPrev } = useSignUpContext();
+  const { goToNext, goToPrev, setFormData } = useSignUpContext();
 
   const [institutionName, setInstitutionName] = useState('');
-  const [, setInstitutionExists] = useState<null | boolean>(null);
   const [isRegisteringInstitution, setIsRegisteringInstitution] =
     useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleCheckInstitution = () => {
-    if (institutionName === '기관있음') {
-      setInstitutionExists(true);
-      goToNext();
-    } else {
-      setInstitutionExists(false);
-      setIsRegisteringInstitution(true);
+  const handleCheckInstitution = async () => {
+    if (!institutionName.trim()) return;
+
+    setIsLoading(true);
+
+    try {
+      const resultList = await searchInstitution(institutionName.trim());
+
+      if (resultList.length > 0) {
+        const selected = resultList[0];
+        setFormData((prev) => ({
+          ...prev,
+          nursingInstitutionId: selected.institutionId,
+        }));
+        goToNext();
+      } else {
+        setIsRegisteringInstitution(true);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleRegisterComplete = () => {
+  const handleRegisterComplete = (newInstitutionId: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      nursingInstitutionId: newInstitutionId,
+    }));
     setIsRegisteringInstitution(false);
     goToNext();
   };
@@ -38,7 +58,7 @@ export const Step3InstitutionName = () => {
     setIsRegisteringInstitution(true);
   };
 
-  const isInstitutionNameValid = institutionName.trim().length > 0; //TODO: api 연결하면 존재하는 기관만 넘어감
+  const isInstitutionNameValid = institutionName.trim().length > 0;
 
   if (isRegisteringInstitution) {
     return (
@@ -53,8 +73,7 @@ export const Step3InstitutionName = () => {
     <StepWrapper>
       <HeaderSection>
         <Title>
-          소속된 기관명을 입력하세요
-          <span className="highlight"> *</span>
+          소속된 기관명을 입력하세요<span className="highlight"> *</span>
         </Title>
         <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
       </HeaderSection>
@@ -74,16 +93,16 @@ export const Step3InstitutionName = () => {
       </SearchContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'} variant="blue2">
+        <Button onClick={goToPrev} height="52px" variant="blue2">
           이전
         </Button>
         <Button
           onClick={handleCheckInstitution}
           height="52px"
           variant={isInstitutionNameValid ? 'blue' : 'gray'}
-          disabled={!isInstitutionNameValid}
+          disabled={!isInstitutionNameValid || isLoading}
         >
-          다음
+          {isLoading ? '검색 중...' : '다음'}
         </Button>
       </ButtonContainer>
     </StepWrapper>

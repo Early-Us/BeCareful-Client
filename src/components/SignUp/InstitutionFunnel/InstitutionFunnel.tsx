@@ -12,7 +12,7 @@ import { Step3InstitutionType } from '@/components/SignUp/InstitutionFunnel/Step
 import { getRandomAddress } from '@/utils/randomAddress';
 
 interface InstitutionFunnelProps {
-  onDone: () => void;
+  onDone: (newInstitutionId: number) => void;
   onCancel?: () => void;
 }
 

@@ -2,9 +2,44 @@ import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
+import { useEffect, useState } from 'react';
+import { signUpMember } from '@/api/signupFunnel';
 
 export const Step6SignUpComplete = () => {
-  const { goToPrev } = useSignUpContext();
+  const { formData } = useSignUpContext();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async () => {
+    if (formData.nursingInstitutionId == null) {
+      return;
+    }
+
+    try {
+      await signUpMember({
+        nursingInstitutionId: formData.nursingInstitutionId,
+        realName: formData.realName,
+        nickName: formData.nickName,
+        birthYymmdd: formData.birthYymmdd,
+        genderCode: formData.genderCode,
+        phoneNumber: formData.phoneNumber,
+        institutionRank: formData.institutionRank,
+        isAgreedToTerms: formData.isAgreedToTerms,
+        isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
+        isAgreedToReceiveMarketingInfo: formData.isAgreedToReceiveMarketingInfo,
+      });
+
+      setIsSubmitted(true);
+    } catch (e) {
+      console.error('회원가입 요청 실패', e);
+    }
+  };
+
+  useEffect(() => {
+    if (!isSubmitted) {
+      handleSubmit();
+    }
+  }, [isSubmitted]);
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -14,12 +49,17 @@ export const Step6SignUpComplete = () => {
           <span className="highlight">지금 바로 서비스를 시작해보세요!</span>
         </Title>
       </HeaderSection>
+
       <SignUpCompleteContainer>
         <SignUpComplete />
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'} variant="blue">
+        <Button
+          onClick={() => (window.location.href = '/community/create')}
+          height="52px"
+          variant="blue"
+        >
           돌봄다리 시작하기
         </Button>
       </ButtonContainer>

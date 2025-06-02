@@ -16,10 +16,12 @@ export const uploadInstitutionProfileImage = async (
   return data.profileImageUrl;
 };
 
-export const registerInstitution = async (formData: InstitutionFormData) => {
+export const registerInstitution = async (
+  formData: InstitutionFormData,
+): Promise<number> => {
   const response = await axiosInstance.post(
     '/nursingInstitution/for-guest/register',
     formData,
   );
-  return response.data;
+  return response.data.institutionId;
 };
