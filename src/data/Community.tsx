@@ -165,7 +165,7 @@ export const CommunityDefault = [
   },
   {
     postId: 2,
-    title: '균형 잡힌 식단을 위한 가이드',
+    title: '노인요양시설 전문요양실 시범사업 운영 지침 변경사항',
     isImportant: false,
     thumbnailUrl: '',
     createdAt: '2025-05-28T14:30:00Z',
@@ -178,8 +178,8 @@ export const CommunityDefault = [
   },
   {
     postId: 3,
-    title: '스트레스 해소를 위한 효과적인 방법',
-    isImportant: false,
+    title: '2025년 상반기 요양보호사 역량 강화 교육 일정',
+    isImportant: true,
     thumbnailUrl: '',
     createdAt: '2025-05-20T09:00:00Z',
     author: {
@@ -191,8 +191,8 @@ export const CommunityDefault = [
   },
   {
     postId: 4,
-    title: '정기적인 건강 검진의 중요성',
-    isImportant: true,
+    title: '어르신 인지 기능 향상 프로그램 운영 사례 공유',
+    isImportant: false,
     thumbnailUrl: '',
     createdAt: '2025-05-15T16:00:00Z',
     author: {
@@ -204,7 +204,7 @@ export const CommunityDefault = [
   },
   {
     postId: 5,
-    title: '수면 부족의 위험성과 해결책',
+    title: '요양보호사 처우 개선 및 복지 증진 방안 논의',
     isImportant: false,
     thumbnailUrl: '',
     createdAt: '2025-05-10T11:00:00Z',
@@ -217,40 +217,40 @@ export const CommunityDefault = [
   },
   {
     postId: 6,
-    title: '디지털 기기 사용 시간 줄이기',
-    isImportant: false,
-    thumbnailUrl: '',
-    createdAt: '2025-05-05T13:00:00Z',
-    author: {
-      authorId: 106,
-      authorName: '홍성민',
-      authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
-    },
-  },
-  {
-    postId: 7,
-    title: '올바른 자세 유지하는 방법',
+    title: '2025년 노인요양시설 평가 기준 및 절차 안내',
     isImportant: true,
-    thumbnailUrl: '',
-    createdAt: '2025-04-30T15:00:00Z',
-    author: {
-      authorId: 107,
-      authorName: '안서연',
-      authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
-    },
-  },
-  {
-    postId: 8,
-    title: '마음 챙김 명상 시작하기',
-    isImportant: false,
     thumbnailUrl: '',
     createdAt: '2025-04-25T10:30:00Z',
     author: {
       authorId: 108,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
+      institutionImageUrl: { profileDefultImg },
+    },
+  },
+  {
+    postId: 7,
+    title: '비상 상황 대비 매뉴얼 개정 및 숙지 요청',
+    isImportant: true,
+    thumbnailUrl: '',
+    createdAt: '2025-04-20T14:00:00Z',
+    author: {
+      authorId: 108,
+      authorName: '이승현',
+      authorInstitutionRank: 'REPRESENTATIVE',
+      institutionImageUrl: { profileDefultImg },
+    },
+  },
+  {
+    postId: 8,
+    title: '2025 노인요양시설 내 정문 요양실 시범사업 참여기관 신청 안내',
+    isImportant: true,
+    thumbnailUrl: '',
+    createdAt: '2025-06-02T10:00:00Z',
+    author: {
+      authorId: 101,
+      authorName: '김민지',
+      authorInstitutionRank: 'CENTER_DIRECTOR',
       institutionImageUrl: { profileDefultImg },
     },
   },
