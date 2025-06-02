@@ -19,6 +19,14 @@ const PostOverview = ({
     return text;
   };
 
+  const authorRankForamt = (authorRank: string) => {
+    if (authorRank === 'CENTER_DIRECTOR') {
+      return '임원진';
+    } else {
+      return '협회장';
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -26,7 +34,7 @@ const PostOverview = ({
           <img className="writer-img" src={profileImgUrl} />
           <label>{nickname}</label>
           <label>·</label>
-          <label>{position}</label>
+          <label>{authorRankForamt(position)}</label>
         </Writer>
         <Title isReaded={isReaded}>
           <label>
@@ -57,7 +65,6 @@ const Container = styled.div`
   .profile-img {
     min-width: 72px;
     height: 72px;
-    border: 1px solid gray;
   }
 `;
 
@@ -78,8 +85,6 @@ const Writer = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-
-    border: 1px solid gray;
   }
 
   label {
@@ -97,7 +102,7 @@ const Title = styled.div<{ isReaded: boolean }>`
 
   label {
     color: ${({ theme, isReaded }) =>
-      isReaded ? theme.colors.black : theme.colors.gray300};
+      isReaded ? theme.colors.gray300 : theme.colors.black};
     font-size: ${({ theme }) => theme.typography.fontSize.title5};
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     line-height: 140%;
