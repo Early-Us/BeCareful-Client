@@ -1,11 +1,11 @@
 import { InstitutionFunnel } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 import { useSignUpContext } from '@/contexts/SignUpContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
-import { searchInstitution } from '@/api/signupFunnel';
+import { useSearchInstitution } from '@/api/signupFunnel';
 
 export const Step3InstitutionName = () => {
   const { goToNext, goToPrev, setFormData } = useSignUpContext();
@@ -13,18 +13,18 @@ export const Step3InstitutionName = () => {
   const [institutionName, setInstitutionName] = useState('');
   const [isRegisteringInstitution, setIsRegisteringInstitution] =
     useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [searchTrigger, setSearchTrigger] = useState(false);
 
-  const handleCheckInstitution = async () => {
-    if (!institutionName.trim()) return;
+  const { isLoading, refetch } = useSearchInstitution(institutionName.trim());
 
-    setIsLoading(true);
+  useEffect(() => {
+    if (!searchTrigger) return;
 
-    try {
-      const resultList = await searchInstitution(institutionName.trim());
+    refetch().then(({ data }) => {
+      if (!data) return;
 
-      if (resultList.length > 0) {
-        const selected = resultList[0];
+      if (data.length > 0) {
+        const selected = data[0];
         setFormData((prev) => ({
           ...prev,
           nursingInstitutionId: selected.institutionId,
@@ -33,11 +33,14 @@ export const Step3InstitutionName = () => {
       } else {
         setIsRegisteringInstitution(true);
       }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
+
+      setSearchTrigger(false);
+    });
+  }, [searchTrigger]);
+
+  const handleCheckInstitution = () => {
+    if (!institutionName.trim()) return;
+    setSearchTrigger(true);
   };
 
   const handleRegisterComplete = (newInstitutionId: number) => {

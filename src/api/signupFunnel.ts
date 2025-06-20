@@ -1,4 +1,5 @@
 import { axiosInstance } from '@/api/axiosInstance';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export interface SignUpPayload {
   nursingInstitutionId: number;
@@ -22,6 +23,10 @@ export const signUpMember = async (payload: SignUpPayload) => {
   return data;
 };
 
+export const useSignUpMember = () => {
+  return useMutation({ mutationFn: signUpMember });
+};
+
 export const searchInstitution = async (name: string) => {
   const { data } = await axiosInstance.get(
     '/nursingInstitution/for-guest/search',
@@ -30,4 +35,12 @@ export const searchInstitution = async (name: string) => {
     },
   );
   return data.nursingInstitutionSimpleInfoList;
+};
+
+export const useSearchInstitution = (name: string) => {
+  return useQuery({
+    queryKey: ['searchInstitution', name],
+    queryFn: () => searchInstitution(name),
+    enabled: false,
+  });
 };

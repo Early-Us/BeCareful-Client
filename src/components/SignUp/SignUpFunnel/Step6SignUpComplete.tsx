@@ -2,20 +2,16 @@ import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
-import { useEffect, useState } from 'react';
-import { signUpMember } from '@/api/signupFunnel';
+import { useEffect } from 'react';
+import { useSignUpMember } from '@/api/signupFunnel';
 
 export const Step6SignUpComplete = () => {
   const { formData } = useSignUpContext();
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { mutate } = useSignUpMember();
 
-  const handleSubmit = async () => {
-    if (formData.nursingInstitutionId == null) {
-      return;
-    }
-
-    try {
-      await signUpMember({
+  useEffect(() => {
+    if (formData.nursingInstitutionId != null) {
+      mutate({
         nursingInstitutionId: formData.nursingInstitutionId,
         realName: formData.realName,
         nickName: formData.nickName,
@@ -27,19 +23,8 @@ export const Step6SignUpComplete = () => {
         isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
         isAgreedToReceiveMarketingInfo: formData.isAgreedToReceiveMarketingInfo,
       });
-
-      setIsSubmitted(true);
-    } catch (e) {
-      console.error('회원가입 요청 실패', e);
     }
-  };
-
-  useEffect(() => {
-    if (!isSubmitted) {
-      handleSubmit();
-    }
-  }, [isSubmitted]);
-
+  }, []);
   return (
     <StepWrapper>
       <HeaderSection>

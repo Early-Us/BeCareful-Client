@@ -1,7 +1,7 @@
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
 import { useNavigate } from 'react-router-dom';
 
 const mapToInstitutionRank = (kor: string) => {

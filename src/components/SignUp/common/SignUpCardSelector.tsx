@@ -1,5 +1,5 @@
-import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
-import { InstitutionCard } from '@/components/SignUp/InstitutionCard';
+import { CareGiverCard } from '@/components/SignUp/common/CareGiverCard';
+import { InstitutionCard } from '@/components/SignUp/common/InstitutionCard';
 import { styled } from 'styled-components';
 
 export type CardType = 'caregiver' | 'institution';

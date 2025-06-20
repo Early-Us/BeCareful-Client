@@ -10,7 +10,7 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar';
 import { styled } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SignUpModal } from '@/components/SignUp/SingUpModal';
+import { SignUpModal } from '@/components/SignUp/common/SingUpModal';
 import { useState } from 'react';
 
 const steps = [

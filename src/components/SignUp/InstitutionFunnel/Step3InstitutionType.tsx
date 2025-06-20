@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 
 interface StepProps {
