@@ -13,7 +13,7 @@ export const ErrorPage = () => {
         variant="blue"
         width="300px"
         height="48px"
-        onClick={() => navigate('/')}
+        onClick={() => navigate(-1)}
       >
         홈으로 이동
       </Button>
