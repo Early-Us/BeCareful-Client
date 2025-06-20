@@ -9,7 +9,7 @@ import {
   CardType,
   SignUpCardSelector,
 } from '@/components/SignUp/common/SignUpCardSelector';
-import { useGetGuestInfo } from '@/hooks/useGetGuestInfo';
+import { useGetGuestInfo } from '@/hooks/SignUp/useGetGuestInfo';
 
 export const SignUpPage = () => {
   const [cardPressed, setCardPressed] = useState<CardType | null>(null);

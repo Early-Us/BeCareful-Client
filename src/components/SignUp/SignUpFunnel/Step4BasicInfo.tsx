@@ -5,7 +5,7 @@ import { NameInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/NameI
 import { NicknameInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/NicknameInput';
 import { PhoneNumberInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/PhoneNumberInput';
 import { ResidentIdInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/ResidentIdInput';
-import { useNicknameValidation } from '@/hooks/useNicknameValidation';
+import { useNicknameValidation } from '@/hooks/SignUp/useNicknameValidation';
 
 const getGenderCode = (char: string): number => {
   if (char === '1' || char === '3') return 1;
