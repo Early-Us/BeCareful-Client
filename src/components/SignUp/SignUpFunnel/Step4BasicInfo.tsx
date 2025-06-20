@@ -94,7 +94,7 @@ export const Step4BasicInfo = () => {
       />
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height="52px">
+        <Button onClick={goToPrev} height="52px" variant="blue2">
           이전
         </Button>
         <Button

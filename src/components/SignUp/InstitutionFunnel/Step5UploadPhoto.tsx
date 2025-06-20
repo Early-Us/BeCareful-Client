@@ -2,8 +2,9 @@ import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { uploadInstitutionProfileImage } from '@/api/institutionFunnel';
+
 import { ProfileImageUploader } from '@/components/SignUp/InstitutionFunnel/Step5UploadPhoto/ProfileImageUploader';
+import { useUploadInstitutionProfileImage } from '@/api/institutionFunnel';
 
 interface StepProps {
   goToNext: () => void;
@@ -20,19 +21,23 @@ export const Step5UploadPhoto = ({
   institutionFormData,
   setInstitutionFormData,
 }: StepProps) => {
-  const handleImageUpload = async (file: File) => {
-    try {
-      const imageUrl = await uploadInstitutionProfileImage(
-        file,
-        institutionFormData.institutionName,
-      );
-      setInstitutionFormData((prev) => ({
-        ...prev,
-        profileImageUrl: imageUrl,
-      }));
-    } catch (error) {
-      console.error('이미지 업로드 실패:', error);
-    }
+  const { mutate: uploadImage } = useUploadInstitutionProfileImage();
+
+  const handleImageUpload = (file: File) => {
+    uploadImage(
+      { file, name: institutionFormData.institutionName },
+      {
+        onSuccess: (url) => {
+          setInstitutionFormData((prev) => ({
+            ...prev,
+            profileImageUrl: url,
+          }));
+        },
+        onError: () => {
+          alert('이미지 업로드에 실패했습니다.');
+        },
+      },
+    );
   };
 
   return (
