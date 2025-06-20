@@ -1,6 +1,6 @@
 import { TestPage } from '@/page/TestPage';
 import { Route, Routes } from 'react-router-dom';
-import LoginPage from './page/Login/LoginPage';
+import LoginPage from './page/deprecated/Login/LoginPage';
 import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import HomePage from './page/Home/HomePage';
 

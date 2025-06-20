@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Kakao } from '@/assets/icons/onboarding/Kakao.svg';
+import { ReactComponent as KakaoIcon } from '@/assets/icons/onboarding/Kakao.svg';
 
 export const KakaoButton = () => {
   const handleClick = () => {
@@ -9,7 +9,7 @@ export const KakaoButton = () => {
 
   return (
     <KakaoContainer onClick={handleClick}>
-      <Kakao />
+      <KakaoIcon />
       <ButtonText>카카오로 시작하기</ButtonText>
     </KakaoContainer>
   );
