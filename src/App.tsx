@@ -36,11 +36,14 @@ import CommunitySplashPage from './page/CommunitySplashPage';
 import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
 import { CommunitySignUpPage } from '@/page/SignUp/CommunitySignUpPage';
+import { ErrorPage } from '@/page/Error/ErrorPage';
 
 function App() {
   return (
     <Routes>
       <Route path="/test" element={<TestPage />} />
+      <Route path="/error" element={<ErrorPage />} />
+      <Route path="*" element={<ErrorPage />} />
 
       <Route path="/landing" element={<LandingPage />} />
 
