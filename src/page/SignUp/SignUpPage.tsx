@@ -9,6 +9,7 @@ import {
   CardType,
   SignUpCardSelector,
 } from '@/components/SignUp/common/SignUpCardSelector';
+import { useGetGuestInfo } from '@/hooks/useGetGuestInfo';
 
 export const SignUpPage = () => {
   const [cardPressed, setCardPressed] = useState<CardType | null>(null);
@@ -18,6 +19,8 @@ export const SignUpPage = () => {
     if (!cardPressed) return;
     navigate(`/signup/${cardPressed}`);
   };
+
+  useGetGuestInfo();
 
   return (
     <PageLayout>

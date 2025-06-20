@@ -37,6 +37,7 @@ import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
 import { CommunitySignUpPage } from '@/page/SignUp/CommunitySignUpPage';
 import { ErrorPage } from '@/page/Error/ErrorPage';
+import { SignUpProvider } from '@/contexts/SignUpContext';
 
 function App() {
   return (
@@ -54,8 +55,23 @@ function App() {
 
       <Route path="/login" element={<LoginPage />} />
 
-      <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/signup/institution" element={<InstitutionSignUpPage />} />
+      <Route
+        path="/signup"
+        element={
+          <SignUpProvider>
+            <SignUpPage />
+          </SignUpProvider>
+        }
+      />
+
+      <Route
+        path="/signup/institution"
+        element={
+          <SignUpProvider>
+            <InstitutionSignUpPage />
+          </SignUpProvider>
+        }
+      />
 
       <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />
