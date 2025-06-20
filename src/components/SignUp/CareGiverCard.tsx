@@ -8,7 +8,7 @@ interface CareGiverCardProps {
 export const CareGiverCard = ({ pressed }: CareGiverCardProps) => {
   return (
     <RoleCardWrapper>
-      <RoleCardContainer pressed={pressed}>
+      <RoleCardContainer $pressed={pressed}>
         <IconContainer>
           <RedHeart />
         </IconContainer>
@@ -31,7 +31,7 @@ const RoleCardWrapper = styled.div`
   justify-content: center;
 `;
 
-const RoleCardContainer = styled.div<{ pressed: boolean }>`
+const RoleCardContainer = styled.div<{ $pressed: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -41,11 +41,11 @@ const RoleCardContainer = styled.div<{ pressed: boolean }>`
   box-sizing: border-box;
   border-radius: 12px;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
-  background-color: ${({ theme, pressed }) =>
-    pressed ? '#fff7f6' : theme.colors.white};
+  background-color: ${({ theme, $pressed }) =>
+    $pressed ? '#fff7f6' : theme.colors.white};
   border: 2px solid
-    ${({ theme, pressed }) =>
-      pressed ? theme.colors.mainOrange : theme.colors.gray50};
+    ${({ theme, $pressed }) =>
+      $pressed ? theme.colors.mainOrange : theme.colors.gray50};
 `;
 
 const RoleCardText = styled.div`

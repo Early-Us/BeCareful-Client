@@ -8,7 +8,7 @@ interface InstitutionCardProps {
 export const InstitutionCard = ({ pressed }: InstitutionCardProps) => {
   return (
     <RoleCardWrapper>
-      <RoleCardContainer pressed={pressed}>
+      <RoleCardContainer $pressed={pressed}>
         <IconContainer>
           <GreenCheck />
         </IconContainer>
@@ -30,7 +30,7 @@ const RoleCardWrapper = styled.div`
   justify-content: center;
 `;
 
-const RoleCardContainer = styled.div<{ pressed: boolean }>`
+const RoleCardContainer = styled.div<{ $pressed: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -40,11 +40,11 @@ const RoleCardContainer = styled.div<{ pressed: boolean }>`
   box-sizing: border-box;
   border-radius: 12px;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
-  background-color: ${({ theme, pressed }) =>
-    pressed ? '#f4fff6' : theme.colors.white};
+  background-color: ${({ theme, $pressed }) =>
+    $pressed ? '#f4fff6' : theme.colors.white};
   border: 2px solid
-    ${({ theme, pressed }) =>
-      pressed ? theme.colors.mainGreen : theme.colors.gray50};
+    ${({ theme, $pressed }) =>
+      $pressed ? theme.colors.mainGreen : theme.colors.gray50};
 `;
 
 const IconContainer = styled.div`
