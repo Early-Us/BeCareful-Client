@@ -44,3 +44,10 @@ export const useSearchInstitution = (name: string) => {
     enabled: false,
   });
 };
+
+export const checkNicknameDuplicate = async (nickname: string) => {
+  const { data } = await axiosInstance.get('/socialworker/check-nickname', {
+    params: { nickname },
+  });
+  return data;
+};

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   CardType,
   SignUpCardSelector,
-} from '@/components/SignUp/SignUpCardSelector';
+} from '@/components/SignUp/common/SignUpCardSelector';
 
 export const SignUpPage = () => {
   const [cardPressed, setCardPressed] = useState<CardType | null>(null);

@@ -17,6 +17,7 @@ export const Step4BasicInfo = () => {
   const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
   const { message, state, checkNickname, resetMessage } =
     useNicknameValidation();
+  const isNicknameValid = state === 'success';
 
   const handleChange =
     (field: 'realName' | 'nickName' | 'birthYymmdd' | 'phoneNumber') =>
@@ -51,7 +52,8 @@ export const Step4BasicInfo = () => {
     formData.nickName.trim().length > 0 &&
     formData.birthYymmdd.trim().length === 6 &&
     (formData.genderCode === 1 || formData.genderCode === 2) &&
-    formData.phoneNumber.trim().length > 0;
+    formData.phoneNumber.trim().length > 0 &&
+    isNicknameValid;
 
   return (
     <StepWrapper>
@@ -148,7 +150,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const ValidationMessage = styled.p<{ state: 'default' | 'error' }>`
+const ValidationMessage = styled.p<{ state: 'default' | 'error' | 'success' }>`
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
