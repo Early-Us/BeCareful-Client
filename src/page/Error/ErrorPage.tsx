@@ -15,7 +15,7 @@ export const ErrorPage = () => {
         height="48px"
         onClick={() => navigate(-1)}
       >
-        홈으로 이동
+        이전 화면으로 이동
       </Button>
     </PageLayout>
   );
