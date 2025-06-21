@@ -19,7 +19,7 @@ export interface SignUpPayload {
 }
 
 export const signUpMember = async (payload: SignUpPayload) => {
-  const { data } = await axiosInstance.post('/social/worker/signup', payload);
+  const { data } = await axiosInstance.post('/socialworker/signup', payload);
   return data;
 };
 

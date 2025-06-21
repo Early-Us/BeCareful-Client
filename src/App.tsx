@@ -83,6 +83,7 @@ function App() {
       <Route path="/application/create" element={<CreateApplication />} />
       <Route path="/application/edit" element={<EditApplication />} />
       <Route path="/community/create" element={<CommunityCreatePage />} />
+      <Route path="/home" element={<CommunityCreatePage />} />
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
       <Route path="/work" element={<WorkMainPage />} />

@@ -4,27 +4,50 @@ import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
 import { useEffect } from 'react';
 import { useSignUpMember } from '@/api/signupFunnel';
+import { useSetRecoilState } from 'recoil';
+import { currentUserInfo } from '@/recoil/currentUserInfo';
+import { useNavigate } from 'react-router-dom';
 
 export const Step6SignUpComplete = () => {
   const { formData } = useSignUpContext();
+  const setCurrentUser = useSetRecoilState(currentUserInfo);
   const { mutate } = useSignUpMember();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (formData.nursingInstitutionId != null) {
-      mutate({
-        nursingInstitutionId: formData.nursingInstitutionId,
-        realName: formData.realName,
-        nickName: formData.nickName,
-        birthYymmdd: formData.birthYymmdd,
-        genderCode: formData.genderCode,
-        phoneNumber: formData.phoneNumber,
-        institutionRank: formData.institutionRank,
-        isAgreedToTerms: formData.isAgreedToTerms,
-        isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
-        isAgreedToReceiveMarketingInfo: formData.isAgreedToReceiveMarketingInfo,
-      });
+      mutate(
+        {
+          nursingInstitutionId: formData.nursingInstitutionId,
+          realName: formData.realName,
+          nickName: formData.nickName,
+          birthYymmdd: formData.birthYymmdd,
+          genderCode: formData.genderCode,
+          phoneNumber: formData.phoneNumber,
+          institutionRank: formData.institutionRank,
+          isAgreedToTerms: formData.isAgreedToTerms,
+          isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
+          isAgreedToReceiveMarketingInfo:
+            formData.isAgreedToReceiveMarketingInfo,
+        },
+        {
+          onSuccess: () => {
+            setCurrentUser({
+              realName: formData.realName,
+              nickName: formData.nickName,
+              phoneNumber: formData.phoneNumber,
+              institutionRank: formData.institutionRank,
+            });
+            navigate('/community/create');
+          },
+          onError: (error) => {
+            throw error;
+          },
+        },
+      );
     }
   }, []);
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -40,11 +63,7 @@ export const Step6SignUpComplete = () => {
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button
-          onClick={() => (window.location.href = '/community/create')}
-          height="52px"
-          variant="blue"
-        >
+        <Button height="52px" variant="blue" disabled>
           돌봄다리 시작하기
         </Button>
       </ButtonContainer>
