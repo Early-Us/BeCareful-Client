@@ -41,12 +41,12 @@ export const Step6SignUpComplete = () => {
             navigate('/community/create');
           },
           onError: (error) => {
-            throw error;
+            console.error('회원가입 실패:', error); //TODO
           },
         },
       );
     }
-  }, []);
+  }, [formData, mutate]);
 
   return (
     <StepWrapper>
