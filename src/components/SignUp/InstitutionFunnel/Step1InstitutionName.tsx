@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { useEffect } from 'react';
 
 interface StepProps {
   goToNext: () => void;
@@ -27,28 +26,6 @@ export const Step1InstitutionName = ({
   };
 
   const isInstitutionNameValid = institutionFormData.institutionName.length > 0;
-
-  useEffect(() => {
-    setTimeout(() => {
-      function getCookie(name: string) {
-        const cookies = document.cookie.split(';');
-        for (const cookie of cookies) {
-          const [key, value] = cookie.trim().split('=');
-          if (key === name) return decodeURIComponent(value);
-        }
-        return null;
-      }
-
-      const name = getCookie('Name');
-      const nickname = getCookie('Nickname');
-      const phone = getCookie('PhoneNumber');
-      const birth = getCookie('BirthYymmdd');
-      const gender = getCookie('BirthGenderCode');
-      console.log(window.location.hostname);
-
-      console.log({ name, nickname, phone, birth, gender });
-    }, 0);
-  }, []);
 
   return (
     <StepWrapper>
