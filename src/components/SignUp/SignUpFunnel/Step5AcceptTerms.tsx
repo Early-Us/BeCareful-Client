@@ -4,6 +4,7 @@ import { Button } from '@/components/common/Button/Button';
 import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
 import { CheckBox } from '@/components/common/CheckBox/CheckBox';
 import { ReactComponent as ChevronRight } from '@/assets/icons/signup/ChevronRight.svg';
+import { AGREE_ITEMS } from '@/constants/signUpAgreeItems';
 
 type AgreeField =
   | 'isAgreedToTerms'
@@ -20,23 +21,23 @@ export const Step5AcceptTerms = () => {
     }));
   };
 
-  const handleAgreeAll = () => {
-    const allChecked =
-      formData.isAgreedToTerms &&
-      formData.isAgreedToCollectPersonalInfo &&
-      formData.isAgreedToReceiveMarketingInfo;
+  const setAllAgreed = (value: boolean) => {
     setFormData((prev) => ({
       ...prev,
-      isAgreedToTerms: !allChecked,
-      isAgreedToCollectPersonalInfo: !allChecked,
-      isAgreedToReceiveMarketingInfo: !allChecked,
+      isAgreedToTerms: value,
+      isAgreedToCollectPersonalInfo: value,
+      isAgreedToReceiveMarketingInfo: value,
     }));
   };
 
-  const isAllAgreed =
-    formData.isAgreedToTerms &&
-    formData.isAgreedToCollectPersonalInfo &&
-    formData.isAgreedToReceiveMarketingInfo;
+  const requiredAgreed =
+    formData.isAgreedToTerms && formData.isAgreedToCollectPersonalInfo;
+
+  const isAllAgreed = requiredAgreed && formData.isAgreedToReceiveMarketingInfo;
+
+  const handleAgreeAll = () => {
+    setAllAgreed(!isAllAgreed);
+  };
 
   return (
     <StepWrapper>
@@ -46,6 +47,7 @@ export const Step5AcceptTerms = () => {
           <span className="highlight"> *</span>
         </Title>
       </HeaderSection>
+
       <AgreeWrapper>
         <AgreeCard
           pressed={isAllAgreed}
@@ -53,42 +55,20 @@ export const Step5AcceptTerms = () => {
           onClick={handleAgreeAll}
         />
         <AgreeCheckContainer>
-          <AgreeCheck>
-            <CheckBox
-              id="1"
-              checked={formData.isAgreedToTerms}
-              onChange={handleCheckboxChange('isAgreedToTerms')}
-              borderRadius=""
-              label=""
-              select="필수"
-              guide="이용약관"
-            />
-            <ChevronRight />
-          </AgreeCheck>
-          <AgreeCheck>
-            <CheckBox
-              id="2"
-              checked={formData.isAgreedToCollectPersonalInfo}
-              onChange={handleCheckboxChange('isAgreedToCollectPersonalInfo')}
-              borderRadius=""
-              label=""
-              select="필수"
-              guide="개인정보 수집 및 이용 동의"
-            />
-            <ChevronRight />
-          </AgreeCheck>
-          <AgreeCheck>
-            <CheckBox
-              id="3"
-              checked={formData.isAgreedToReceiveMarketingInfo}
-              onChange={handleCheckboxChange('isAgreedToReceiveMarketingInfo')}
-              borderRadius=""
-              label=""
-              select="선택"
-              guide="마케팅 정보 수신 동의"
-            />
-            <ChevronRight />
-          </AgreeCheck>
+          {AGREE_ITEMS.map(({ key, id, select, guide }) => (
+            <AgreeCheck key={id}>
+              <CheckBox
+                id={id}
+                checked={formData[key]}
+                onChange={handleCheckboxChange(key)}
+                borderRadius=""
+                label=""
+                select={select}
+                guide={guide}
+              />
+              <ChevronRight />
+            </AgreeCheck>
+          ))}
         </AgreeCheckContainer>
       </AgreeWrapper>
 
@@ -97,20 +77,10 @@ export const Step5AcceptTerms = () => {
           이전
         </Button>
         <Button
-          onClick={() => {
-            goToNext();
-          }}
+          onClick={goToNext}
           height="52px"
-          variant={
-            formData.isAgreedToTerms && formData.isAgreedToCollectPersonalInfo
-              ? 'blue'
-              : 'gray'
-          }
-          disabled={
-            !(
-              formData.isAgreedToTerms && formData.isAgreedToCollectPersonalInfo
-            )
-          }
+          variant={requiredAgreed ? 'blue' : 'gray'}
+          disabled={!requiredAgreed}
         >
           다음
         </Button>

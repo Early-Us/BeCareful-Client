@@ -2,6 +2,10 @@ import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
+import {
+  FACILITY_TYPES,
+  FacilityType,
+} from '@/constants/institutionFacilityTypes';
 
 interface StepProps {
   goToNext: () => void;
@@ -18,21 +22,16 @@ export const Step3InstitutionType = ({
   institutionFormData,
   setInstitutionFormData,
 }: StepProps) => {
-  const handleTypeSelect = (type: string) => {
+  const handleTypeSelect = (type: FacilityType) => {
     setInstitutionFormData((prev) => {
       const alreadySelected = prev.facilityTypeList.includes(type);
 
-      if (alreadySelected) {
-        return {
-          ...prev,
-          facilityTypeList: prev.facilityTypeList.filter((t) => t !== type),
-        };
-      } else {
-        return {
-          ...prev,
-          facilityTypeList: [...prev.facilityTypeList, type],
-        };
-      }
+      return {
+        ...prev,
+        facilityTypeList: alreadySelected
+          ? prev.facilityTypeList.filter((t) => t !== type)
+          : [...prev.facilityTypeList, type],
+      };
     });
   };
 
@@ -50,36 +49,14 @@ export const Step3InstitutionType = ({
         <SubText>복수 선택이 가능해요.</SubText>
       </HeaderSection>
       <CardContainer>
-        <CheckCard
-          pressed={institutionFormData.facilityTypeList.includes('방문 요양')}
-          text="방문 요양"
-          onClick={() => handleTypeSelect('방문 요양')}
-        />
-        <CheckCard
-          pressed={institutionFormData.facilityTypeList.includes('방문 목욕')}
-          text="방문 목욕"
-          onClick={() => handleTypeSelect('방문 목욕')}
-        />
-        <CheckCard
-          pressed={institutionFormData.facilityTypeList.includes('방문 간호')}
-          text="방문 간호"
-          onClick={() => handleTypeSelect('방문 간호')}
-        />
-        <CheckCard
-          pressed={institutionFormData.facilityTypeList.includes('주야간 보호')}
-          text="주야간 보호"
-          onClick={() => handleTypeSelect('주야간 보호')}
-        />
-        <CheckCard
-          pressed={institutionFormData.facilityTypeList.includes('단기 보호')}
-          onClick={() => handleTypeSelect('단기 보호')}
-          text="단기 보호"
-        />
-        <CheckCard
-          pressed={institutionFormData.facilityTypeList.includes('복지 용구')}
-          onClick={() => handleTypeSelect('복지 용구')}
-          text="복지 용구"
-        />
+        {FACILITY_TYPES.map((type) => (
+          <CheckCard
+            key={type}
+            pressed={institutionFormData.facilityTypeList.includes(type)}
+            text={type}
+            onClick={() => handleTypeSelect(type)}
+          />
+        ))}
       </CardContainer>
 
       <ButtonContainer>

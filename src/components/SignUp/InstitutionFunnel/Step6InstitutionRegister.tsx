@@ -26,6 +26,7 @@ export const Step6InstitutionRegister = ({
       },
     });
   };
+
   return (
     <StepWrapper>
       <HeaderSection>
