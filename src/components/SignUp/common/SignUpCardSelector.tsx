@@ -27,7 +27,7 @@ export const SignUpCardSelector = ({ pressed, onSelect }: Props) => (
 const CardContainer = styled.div`
   display: flex;
   width: 100%;
-  align-items: stretchs;
+  align-items: stretch;
   justify-content: center;
   box-sizing: border-box;
   margin-top: 20px;
