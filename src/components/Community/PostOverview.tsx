@@ -1,4 +1,4 @@
-import { Notice } from '@/type/Notice';
+import { Notice } from '@/types/Notice';
 import styled from 'styled-components';
 
 const PostOverview = ({

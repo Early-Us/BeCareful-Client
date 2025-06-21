@@ -1,4 +1,4 @@
-import { SignUpFormData, StepProps } from '@/type/SignUp';
+import { SignUpFormData, StepProps } from '@/types/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';

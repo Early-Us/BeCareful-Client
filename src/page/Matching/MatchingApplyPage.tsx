@@ -4,7 +4,7 @@ import { MatchingSearchBox } from '@/components/Matching/MatchingSearchBox';
 
 import { MatchingApplyModal } from '@/components/Matching/Modal/MatchingApplyModal';
 
-import { ElderData } from '@/type/Matching';
+import { ElderData } from '@/types/Matching';
 import axios from 'axios';
 
 import { SocialTabBar } from '@/components/common/TabBarSocial';

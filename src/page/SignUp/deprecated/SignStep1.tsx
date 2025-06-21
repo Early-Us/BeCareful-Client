@@ -1,4 +1,4 @@
-import { StepProps } from '@/type/SignUp';
+import { StepProps } from '@/types/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { useEffect, useState } from 'react';
