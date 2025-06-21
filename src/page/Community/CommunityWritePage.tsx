@@ -50,9 +50,6 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
   const [title, setTitle] = useState('');
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
-    // const textarea = e.target;
-    // textarea.style.height = 'auto';
-    // textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
   // 게시글 내용
@@ -252,18 +249,6 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
     event.target.value = '';
   };
 
-  /*
-  // 첨부된 링크 상태 관리
-  const [links, setLinks] = useState<string[]>([]);
-  // 링크 첨부 버튼 클릭 핸들러
-  const handleLinkClick = () => {
-    const link = prompt('첨부할 링크 URL을 입력하세요:');
-    if (link) {
-      setLinks([...links, link]);
-      console.log('첨부된 링크:', link);
-    }
-  };
-  */
   // 링크 첨부
   const [originalUrl, setOriginalUrl] = useState('');
   const handleLinkClick = () => {
