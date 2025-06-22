@@ -12,7 +12,7 @@ import BottomSheet from '@/components/Community/BottomSheet';
 import Modal from '@/components/common/Modal/Modal';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
-import { postMedia, postPosting } from '@/api/community';
+import { usePostMediaMutation, usePostPostingMutation } from '@/api/community';
 import { BoardTypeMapping, MediaItem, PostRequest } from '@/types/Community';
 
 interface WritingProp {
@@ -63,7 +63,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
 
   // 내용이 다 채워져 있어야 작성 버튼 클릭 가능
   const isActive =
-    title.length > 0 && content.length > 0 && board != '게시판 선택';
+    title.length > 0 && content.length > 0 && board !== '게시판 선택';
 
   // limit modal
   const [modalTitle, setModalTitle] = useState('');
@@ -86,6 +86,11 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
   const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
   // 등록 모달
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  // 미디어 등록 api mutation
+  const { mutateAsync: postMediaMutate } = usePostMediaMutation();
+  // 게시글 작성 api mutation
+  const { mutateAsync: postPostingMutate } = usePostPostingMutation();
 
   // 사진 첨부
   const photoRef = useRef<HTMLInputElement>(null);
@@ -142,31 +147,41 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
       }
     }
 
-    const uploadedMedia: MediaItem[] = [];
-    try {
-      // 사진 파일
-      for (const file of newPhotosToUpload) {
-        try {
-          const uploadedFile = await postMedia(file, 'IMAGE');
-          if (uploadedFile) uploadedMedia.push(uploadedFile);
-        } catch (error) {
-          console.error('사진 파일 업로드 실패: ', error);
-        }
-      }
-      // 동영상 파일
-      for (const file of newVideosToUpload) {
-        try {
-          const uploadedFile = await postMedia(file, 'VIDEO');
-          if (uploadedFile) uploadedMedia.push(uploadedFile);
-        } catch (error) {
-          console.error('사진 파일 업로드 실패: ', error);
-        }
-      }
-    } catch (error) {
-      console.log('사진/비디오 업로드 중 오류 발생: ', error);
+    const uploadedMedia: Promise<MediaItem | null>[] = [];
+    // 유효성 검사를 통과한 사진/동영상 파일들에 대해 mutateAsync 호출 Promise 생성
+    for (const file of newPhotosToUpload) {
+      uploadedMedia.push(postMediaMutate({ file, fileTypeParam: 'IMAGE' }));
+    }
+    for (const file of newVideosToUpload) {
+      uploadedMedia.push(postMediaMutate({ file, fileTypeParam: 'VIDEO' }));
     }
 
-    event.target.value = '';
+    try {
+      const results = await Promise.allSettled(uploadedMedia);
+
+      const successfulUploads: MediaItem[] = [];
+      results.forEach((result) => {
+        if (result.status === 'fulfilled' && result.value) {
+          successfulUploads.push(result.value);
+        } else if (result.status === 'rejected') {
+          console.error('파일 업로드 실패:', result.reason);
+        }
+      });
+
+      // 성공적으로 업로드된 파일들만 상태에 추가
+      setPhotos((prev) => [
+        ...prev,
+        ...successfulUploads.filter((item) => item.fileType === 'IMAGE'),
+      ]);
+      setVideos((prev) => [
+        ...prev,
+        ...successfulUploads.filter((item) => item.fileType === 'VIDEO'),
+      ]);
+    } catch (error) {
+      console.error('사진/비디오 업로드 중 오류 발생: ', error);
+    } finally {
+      event.target.value = ''; // input value 초기화 (동일 파일 재선택 가능하도록)
+    }
   };
 
   // 파일 첨부
@@ -230,23 +245,32 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
     }
 
     // 유효한 파일이 있을 경우 상태 업데이트
-    const uploadedFiles: MediaItem[] = [];
-    try {
-      for (const file of newFilesToUpload) {
-        try {
-          const uploadedFile = await postMedia(file, 'FILE');
-          if (uploadedFile) uploadedFiles.push(uploadedFile);
-        } catch (error) {
-          console.log('파일 업로드 실패: ', error);
-        }
-      }
-      // 업로드 성공한 파일들만 추가
-      setAttachedFiles((prev) => [...prev, ...uploadedFiles]);
-    } catch (error) {
-      console.log('파일 업로드 중 오류 발생: ', error);
+    const uploadedFiles: Promise<MediaItem | null>[] = [];
+    for (const file of newFilesToUpload) {
+      uploadedFiles.push(postMediaMutate({ file, fileTypeParam: 'FILE' }));
     }
 
-    event.target.value = '';
+    try {
+      // 모든 업로드 Promise가 완료될 때까지 기다림
+      const results = await Promise.allSettled(uploadedFiles);
+
+      const successfulUploads: MediaItem[] = [];
+      results.forEach((result) => {
+        if (result.status === 'fulfilled' && result.value) {
+          successfulUploads.push(result.value);
+        } else if (result.status === 'rejected') {
+          console.error('파일 업로드 실패:', result.reason);
+          // 개별 파일 업로드 실패에 대한 사용자 피드백
+        }
+      });
+
+      // 업로드 성공한 파일들만 상태에 추가
+      setAttachedFiles((prev) => [...prev, ...successfulUploads]);
+    } catch (error) {
+      console.error('파일 업로드 중 오류 발생: ', error);
+    } finally {
+      event.target.value = '';
+    }
   };
 
   // 링크 첨부
@@ -302,7 +326,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
         // localStorage.removeItem(storageKey);
       }
     }
-  }, [boardType]);
+  }, [board]);
 
   const handleSubmit = async () => {
     try {
@@ -341,7 +365,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
         fileList,
       };
 
-      await postPosting(requestBoard, postData);
+      await postPostingMutate({ boardType: requestBoard, postData });
 
       const storageKey = getDraftStorageKey(board);
       localStorage.removeItem(storageKey);
@@ -482,6 +506,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           onClose={() => setIsSaveModalOpen(!isSaveModalOpen)}
           left="뒤로"
           right="계속 작성하기"
+          handleLeftBtnClick={() => setIsSaveModalOpen(!isSaveModalOpen)}
           handleRightBtnClick={() => setIsSaveModalOpen(!isSaveModalOpen)}
         />
       </Modal>
@@ -496,6 +521,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           onClose={() => setIsCloseModalOpen(!isCloseModalOpen)}
           left="계속 작성하기"
           right="나가기"
+          handleLeftBtnClick={() => setIsCloseModalOpen(!isCloseModalOpen)}
           handleRightBtnClick={onClose}
         />
       </Modal>
@@ -512,6 +538,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           onClose={() => setIsPostModalOpen(!isPostModalOpen)}
           left="취소"
           right="등록하기"
+          handleLeftBtnClick={() => setIsPostModalOpen(!isPostModalOpen)}
           handleRightBtnClick={handleSubmit}
         />
       </Modal>
