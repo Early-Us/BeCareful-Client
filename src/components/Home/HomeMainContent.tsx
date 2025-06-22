@@ -17,7 +17,13 @@ export const HomeMainContent = () => {
       </ScheduleWrapper>
 
       <ButtonsWrapper>
-        <ApplyButton light onClick={() => navigate('/community/signup')}>
+        <ApplyButton
+          light
+          onClick={() => {
+            navigate('/community/signup');
+            window.scrollTo(0, 0);
+          }}
+        >
           <ApplyWrapper>
             <Label>커뮤니티</Label>
             <ApplyTitle>만들기</ApplyTitle>
@@ -48,6 +54,11 @@ export const HomeMainContent = () => {
             title="커뮤니티 만들기 권한이 없습니다."
             detail="협회 임원진/회원은 커뮤니티를 가입해주세요!"
             right="커뮤니티 가입하기"
+            handleLeftBtnClick={() => setIsModalOpen(false)}
+            handleRightBtnClick={() => {
+              navigate('/community/signup');
+              window.scrollTo(0, 0);
+            }}
           />
         </Modal>
       </ButtonsWrapper>

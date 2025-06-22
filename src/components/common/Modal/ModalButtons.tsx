@@ -8,9 +8,19 @@ interface ModalProps {
   detail: string;
   left?: string;
   right: string;
+  handleLeftBtnClick: () => void;
+  handleRightBtnClick: () => void;
 }
 
-const ModalButtons = ({ onClose, title, detail, left, right }: ModalProps) => {
+const ModalButtons = ({
+  onClose,
+  title,
+  detail,
+  left,
+  right,
+  handleLeftBtnClick,
+  handleRightBtnClick,
+}: ModalProps) => {
   return (
     <ModalWrapper>
       <ModalXImg onClick={onClose}>
@@ -28,8 +38,8 @@ const ModalButtons = ({ onClose, title, detail, left, right }: ModalProps) => {
         </ModalDetailLabel>
       </ModalLabelWrapper>
       <ModalButtonWrapper single={!left}>
-        {left && <Left onClick={onClose}>{left}</Left>}
-        <Right single={!left} onClick={onClose}>
+        {left && <Left onClick={handleLeftBtnClick}>{left}</Left>}
+        <Right single={!left} onClick={handleRightBtnClick}>
           {right}
         </Right>
       </ModalButtonWrapper>
