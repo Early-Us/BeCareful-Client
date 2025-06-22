@@ -1,11 +1,13 @@
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import GlobalStyle from './style/GlobalStyle.tsx';
 import { ThemeProvider } from 'styled-components';
+import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import theme from './style/Theme.tsx';
+import theme from '@/style/Theme.tsx';
+import GlobalStyle from '@/style/GlobalStyle';
+import App from '@/App';
+import { ErrorPage } from '@/page/Error/ErrorPage';
 
 const queryClient = new QueryClient();
 
@@ -15,7 +17,9 @@ createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <BrowserRouter>
-          <App />
+          <ErrorBoundary fallback={<ErrorPage />}>
+            <App />
+          </ErrorBoundary>
         </BrowserRouter>
       </ThemeProvider>
     </QueryClientProvider>

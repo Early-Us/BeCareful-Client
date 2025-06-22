@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { Button } from '@/components/common/Button/Button';
-import { ElderData } from '@/type/Matching';
+import { ElderData } from '@/types/Matching';
 import { useNavigate } from 'react-router-dom';
 
 interface MatchingApplyModalProps {

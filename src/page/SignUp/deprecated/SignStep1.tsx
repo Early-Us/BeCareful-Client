@@ -1,8 +1,8 @@
-import { StepProps } from '@/type/SignUp';
+import { StepProps } from '@/types/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { styled } from 'styled-components';
 import { useEffect, useState } from 'react';
-import { usePhoneVerification } from '@/hooks/usePhoneVerification';
+import { usePhoneVerification } from '@/hooks/SignUp/usePhoneVerification';
 import { useNavigate } from 'react-router-dom';
 import { SignUpNameInput } from '@/components/SignUp/deprecated/Step1/SignUpNameInput';
 import { SignUpIdInput } from '@/components/SignUp/deprecated/Step1/SingUpIdInput';

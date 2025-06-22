@@ -2,43 +2,51 @@ import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
-import { useEffect, useState } from 'react';
-import { signUpMember } from '@/api/signupFunnel';
+import { useEffect } from 'react';
+import { useSignUpMember } from '@/api/signupFunnel';
+import { useSetRecoilState } from 'recoil';
+import { currentUserInfo } from '@/recoil/currentUserInfo';
+import { useNavigate } from 'react-router-dom';
 
 export const Step6SignUpComplete = () => {
   const { formData } = useSignUpContext();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = async () => {
-    if (formData.nursingInstitutionId == null) {
-      return;
-    }
-
-    try {
-      await signUpMember({
-        nursingInstitutionId: formData.nursingInstitutionId,
-        realName: formData.realName,
-        nickName: formData.nickName,
-        birthYymmdd: formData.birthYymmdd,
-        genderCode: formData.genderCode,
-        phoneNumber: formData.phoneNumber,
-        institutionRank: formData.institutionRank,
-        isAgreedToTerms: formData.isAgreedToTerms,
-        isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
-        isAgreedToReceiveMarketingInfo: formData.isAgreedToReceiveMarketingInfo,
-      });
-
-      setIsSubmitted(true);
-    } catch (e) {
-      console.error('회원가입 요청 실패', e);
-    }
-  };
+  const setCurrentUser = useSetRecoilState(currentUserInfo);
+  const { mutate } = useSignUpMember();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isSubmitted) {
-      handleSubmit();
+    if (formData.nursingInstitutionId != null) {
+      mutate(
+        {
+          nursingInstitutionId: formData.nursingInstitutionId,
+          realName: formData.realName,
+          nickName: formData.nickName,
+          birthYymmdd: formData.birthYymmdd,
+          genderCode: formData.genderCode,
+          phoneNumber: formData.phoneNumber,
+          institutionRank: formData.institutionRank,
+          isAgreedToTerms: formData.isAgreedToTerms,
+          isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
+          isAgreedToReceiveMarketingInfo:
+            formData.isAgreedToReceiveMarketingInfo,
+        },
+        {
+          onSuccess: () => {
+            setCurrentUser({
+              realName: formData.realName,
+              nickName: formData.nickName,
+              phoneNumber: formData.phoneNumber,
+              institutionRank: formData.institutionRank,
+            });
+            navigate('/community/create');
+          },
+          onError: (error) => {
+            console.error('회원가입 실패:', error); //TODO
+          },
+        },
+      );
     }
-  }, [isSubmitted]);
+  }, [formData, mutate]);
 
   return (
     <StepWrapper>
@@ -55,11 +63,7 @@ export const Step6SignUpComplete = () => {
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button
-          onClick={() => (window.location.href = '/community/create')}
-          height="52px"
-          variant="blue"
-        >
+        <Button height="52px" variant="blue" disabled>
           돌봄다리 시작하기
         </Button>
       </ButtonContainer>

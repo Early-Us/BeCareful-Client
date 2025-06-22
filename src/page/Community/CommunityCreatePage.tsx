@@ -8,9 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { SocialTabBar } from '@/components/common/TabBarSocial';
 import { getTodayDate } from '@/utils/getTodayDate';
 import { HomeMainContent } from '@/components/Home/HomeMainContent';
+import { useRecoilValue } from 'recoil';
+import { currentUserInfo } from '@/recoil/currentUserInfo';
 
 export const CommunityCreatePage = () => {
   const navigate = useNavigate();
+  const user = useRecoilValue(currentUserInfo);
 
   return (
     <Container>
@@ -34,8 +37,7 @@ export const CommunityCreatePage = () => {
       <MainWrapper>
         <LabelWrapper>
           <Name>
-            {/*{data?.name}님,*/}
-            닉네임
+            {user.nickName}님
             <br />
             협회 커뮤니티를 둘러보세요.
           </Name>

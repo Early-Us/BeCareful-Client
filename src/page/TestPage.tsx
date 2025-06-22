@@ -16,8 +16,8 @@ import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
 import { ApplyCard } from '@/components/common/ApplyCard/ApplyCard';
 
 import { CheckBox } from '../components/common/CheckBox/CheckBox';
-import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
-import { InstitutionCard } from '@/components/SignUp/InstitutionCard';
+import { CareGiverCard } from '@/components/SignUp/common/CareGiverCard';
+import { InstitutionCard } from '@/components/SignUp/common/InstitutionCard';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';

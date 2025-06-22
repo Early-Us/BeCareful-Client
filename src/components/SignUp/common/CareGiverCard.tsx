@@ -1,22 +1,24 @@
 import { styled } from 'styled-components';
-import { ReactComponent as GreenCheck } from '@/assets/icons/signup/GreenCheck.svg';
+import { ReactComponent as RedHeart } from '@/assets/icons/signup/RedHeart.svg';
 
-interface InstitutionCardProps {
+interface CareGiverCardProps {
   pressed: boolean;
 }
 
-export const InstitutionCard = ({ pressed }: InstitutionCardProps) => {
+export const CareGiverCard = ({ pressed }: CareGiverCardProps) => {
   return (
     <RoleCardWrapper>
-      <RoleCardContainer pressed={pressed}>
+      <RoleCardContainer $pressed={pressed}>
         <IconContainer>
-          <GreenCheck />
+          <RedHeart />
         </IconContainer>
+
         <RoleCardText>
           <RoleCardHeader>
-            <span className="highlight">기관 회원</span> <span>로 가입</span>
+            <span className="highlight">요양보호사</span> <span>로 가입</span>
           </RoleCardHeader>
-          <span>요양보호사를 매칭하고 돌봄 서비스를 관리합니다.</span>
+
+          <span>어르신을 직접 케어하고 돌봄 서비스를 제공합니다.</span>
         </RoleCardText>
       </RoleCardContainer>
     </RoleCardWrapper>
@@ -26,11 +28,10 @@ export const InstitutionCard = ({ pressed }: InstitutionCardProps) => {
 const RoleCardWrapper = styled.div`
   width: 100%;
   display: flex;
-
   justify-content: center;
 `;
 
-const RoleCardContainer = styled.div<{ pressed: boolean }>`
+const RoleCardContainer = styled.div<{ $pressed: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -40,16 +41,11 @@ const RoleCardContainer = styled.div<{ pressed: boolean }>`
   box-sizing: border-box;
   border-radius: 12px;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
-  background-color: ${({ theme, pressed }) =>
-    pressed ? '#f4fff6' : theme.colors.white};
+  background-color: ${({ theme, $pressed }) =>
+    $pressed ? '#fff7f6' : theme.colors.white};
   border: 2px solid
-    ${({ theme, pressed }) =>
-      pressed ? theme.colors.mainGreen : theme.colors.gray50};
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  margin-right: 16px;
+    ${({ theme, $pressed }) =>
+      $pressed ? theme.colors.mainOrange : theme.colors.gray50};
 `;
 
 const RoleCardText = styled.div`
@@ -75,11 +71,16 @@ const RoleCardHeader = styled.div`
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 
   .highlight {
-    color: ${({ theme }) => theme.colors.mainGreen};
+    color: ${({ theme }) => theme.colors.mainOrange};
   }
   span:nth-child(2) {
     color: ${({ theme }) => theme.colors.gray900};
     font-size: ${({ theme }) => theme.typography.fontSize.title4};
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   }
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  margin-right: 16px;
 `;

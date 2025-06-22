@@ -1,4 +1,4 @@
-import { useFunnel } from '@/hooks/useFunnel';
+import { useFunnel } from '@/hooks/SignUp/useFunnel';
 import { createContext, useContext, useState } from 'react';
 
 export interface SignUpFormData {

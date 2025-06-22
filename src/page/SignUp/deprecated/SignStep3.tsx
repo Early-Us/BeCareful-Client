@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SignUpFormData, StepProps } from '@/type/SignUp';
+import { SignUpFormData, StepProps } from '@/types/SignUp';
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';

@@ -6,7 +6,7 @@ import { Step4 } from '@/page/SignUp/deprecated/SignStep4';
 import { Step5 } from '@/page/SignUp/deprecated/SignStep5';
 import { Step6 } from '@/page/SignUp/deprecated/SignStep6';
 import { Step7 } from '@/page/SignUp/deprecated/SignStep7';
-import { useSignUpStep } from '@/hooks/useSignUpStep';
+import { useSignUpStep } from '@/hooks/SignUp/useSignUpStep';
 
 const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7];
 

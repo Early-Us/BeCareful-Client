@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SignUpFormData } from '@/type/SignUp';
+import { SignUpFormData } from '@/types/SignUp';
 import axios from 'axios';
 
 export const useSignUpStep = () => {

@@ -1,9 +1,8 @@
 import { TestPage } from '@/page/TestPage';
 import { Route, Routes } from 'react-router-dom';
-import LoginPage from './page/Login/LoginPage';
+import LoginPage from './page/deprecated/Login/LoginPage';
 import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import HomePage from './page/Home/HomePage';
-
 import MyPage from './page/MyPage/MyPage';
 import SplashPage from './page/SplashPage';
 import EditProfile from './page/MyPage/EditProfile';
@@ -14,7 +13,6 @@ import EditApplication from './page/MyPage/EditApplication';
 import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { ApplyPage } from '@/page/Apply/ApplyPage';
-
 import SocialHomePage from './page/HomeSocial/SocialHomePage';
 import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
 import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
@@ -36,11 +34,15 @@ import CommunitySplashPage from './page/CommunitySplashPage';
 import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
 import { CommunitySignUpPage } from '@/page/SignUp/CommunitySignUpPage';
+import { ErrorPage } from '@/page/Error/ErrorPage';
+import { SignUpProvider } from '@/contexts/SignUpContext';
 
 function App() {
   return (
     <Routes>
       <Route path="/test" element={<TestPage />} />
+      <Route path="/error" element={<ErrorPage />} />
+      <Route path="*" element={<ErrorPage />} />
 
       <Route path="/landing" element={<LandingPage />} />
 
@@ -51,8 +53,23 @@ function App() {
 
       <Route path="/login" element={<LoginPage />} />
 
-      <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/signup/institution" element={<InstitutionSignUpPage />} />
+      <Route
+        path="/signup"
+        element={
+          <SignUpProvider>
+            <SignUpPage />
+          </SignUpProvider>
+        }
+      />
+
+      <Route
+        path="/signup/institution"
+        element={
+          <SignUpProvider>
+            <InstitutionSignUpPage />
+          </SignUpProvider>
+        }
+      />
 
       <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />
@@ -64,6 +81,7 @@ function App() {
       <Route path="/application/create" element={<CreateApplication />} />
       <Route path="/application/edit" element={<EditApplication />} />
       <Route path="/community/create" element={<CommunityCreatePage />} />
+      <Route path="/home" element={<CommunityCreatePage />} />
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
       <Route path="/work" element={<WorkMainPage />} />
