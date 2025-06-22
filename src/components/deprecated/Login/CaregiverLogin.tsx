@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { InputBox } from '../common/InputBox/InputBox';
-import { Button } from '../common/Button/Button';
+import { InputBox } from '../../common/InputBox/InputBox';
+import { Button } from '../../common/Button/Button';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckBox } from '../common/CheckBox/CheckBox';
+import { CheckBox } from '../../common/CheckBox/CheckBox';
 
 const CaregiverLogin = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { StepProps } from '@/type/SignUp';
+import { StepProps } from '@/types/SignUp';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { ReactComponent as ProfileImage } from '@/assets/icons/signup/PofileImage.svg';
 import { styled } from 'styled-components';

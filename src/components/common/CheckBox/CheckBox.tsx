@@ -23,12 +23,12 @@ export const CheckBox = ({
     <CheckWrapper>
       <Check type="checkbox" id={id} checked={checked} />
       <LabelWrapper onClick={() => onChange(!checked)}>
-        <CheckIcon aria-hidden="true" borderRadius={borderRadius} />
+        <CheckIcon aria-hidden="true" $borderRadius={borderRadius} />
         {select === '' ? (
           <Label htmlFor={id}>{label}</Label>
         ) : (
           <>
-            <SelectLabel htmlFor={id} select={select}>
+            <SelectLabel htmlFor={id} $select={select}>
               {select}
             </SelectLabel>
             <GuideLabel htmlFor={id}>{guide}</GuideLabel>
@@ -57,10 +57,10 @@ const LabelWrapper = styled.div`
   padding-left: 28px;
 `;
 
-const CheckIcon = styled.span<{ borderRadius: string }>`
+const CheckIcon = styled.span<{ $borderRadius: string }>`
   width: 20px;
   height: 20px;
-  border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '50%')};
+  border-radius: ${({ $borderRadius }) => $borderRadius || '50%'};
   background-color: ${({ theme }) => theme.colors.gray200};
   position: absolute;
   left: 0;
@@ -89,13 +89,13 @@ const Label = styled.label`
   color: ${({ theme }) => theme.colors.gray900};
 `;
 
-const SelectLabel = styled.label<{ select: string }>`
+const SelectLabel = styled.label<{ $select: string }>`
   position: relative;
   cursor: pointer;
   font-size: ${({ theme }) => theme.typography.fontSize.body2};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme, select }) =>
-    select === '선택' ? theme.colors.gray300 : theme.colors.gray900};
+  color: ${({ theme, $select }) =>
+    $select === '선택' ? theme.colors.gray300 : theme.colors.gray900};
 `;
 
 const GuideLabel = styled.label`

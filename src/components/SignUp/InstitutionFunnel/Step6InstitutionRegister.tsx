@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { registerInstitution } from '@/api/institutionFunnel';
+import { useRegisterInstitution } from '@/api/institutionFunnel';
 
 interface StepProps {
   onComplete: (newInstitutionId: number) => void;
@@ -14,13 +14,17 @@ export const Step6InstitutionRegister = ({
   onComplete,
   institutionFormData,
 }: StepProps) => {
-  const handleRegister = async () => {
-    try {
-      const newInstitutionId = await registerInstitution(institutionFormData);
-      onComplete(newInstitutionId);
-    } catch (error) {
-      console.error('기관 등록 실패:', error);
-    }
+  const { mutate } = useRegisterInstitution();
+
+  const handleRegister = () => {
+    mutate(institutionFormData, {
+      onSuccess: (newInstitutionId) => {
+        onComplete(newInstitutionId);
+      },
+      onError: () => {
+        alert('기관 등록에 실패했습니다.');
+      },
+    });
   };
 
   return (

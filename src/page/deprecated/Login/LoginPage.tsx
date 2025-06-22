@@ -1,5 +1,5 @@
-import CaregiverLogin from '@/components/Login/CaregiverLogin';
-import SocialworkerLogin from '@/components/Login/SocialworkerLogin';
+import CaregiverLogin from '@/components/deprecated/Login/CaregiverLogin';
+import SocialworkerLogin from '@/components/deprecated/Login/SocialworkerLogin';
 import { Tab } from '@/components/common/Tab/Tab';
 import styled from 'styled-components';
 

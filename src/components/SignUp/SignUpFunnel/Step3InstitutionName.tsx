@@ -1,62 +1,21 @@
 import { InstitutionFunnel } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { useSignUpContext } from '@/contexts/SignUpContext';
-import { useState } from 'react';
 
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
-import { searchInstitution } from '@/api/signupFunnel';
+import { useInstitutionSearch } from '@/hooks/SignUp/useInstitutionSearch';
 
 export const Step3InstitutionName = () => {
-  const { goToNext, goToPrev, setFormData } = useSignUpContext();
-
-  const [institutionName, setInstitutionName] = useState('');
-  const [isRegisteringInstitution, setIsRegisteringInstitution] =
-    useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleCheckInstitution = async () => {
-    if (!institutionName.trim()) return;
-
-    setIsLoading(true);
-
-    try {
-      const resultList = await searchInstitution(institutionName.trim());
-
-      if (resultList.length > 0) {
-        const selected = resultList[0];
-        setFormData((prev) => ({
-          ...prev,
-          nursingInstitutionId: selected.institutionId,
-        }));
-        goToNext();
-      } else {
-        setIsRegisteringInstitution(true);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleRegisterComplete = (newInstitutionId: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      nursingInstitutionId: newInstitutionId,
-    }));
-    setIsRegisteringInstitution(false);
-    goToNext();
-  };
-
-  const handleRegisterCancel = () => {
-    setIsRegisteringInstitution(false);
-    goToPrev();
-  };
-
-  const handleClickRegisterInstitution = () => {
-    setIsRegisteringInstitution(true);
-  };
+  const {
+    institutionName,
+    setInstitutionName,
+    isRegisteringInstitution,
+    handleCheckInstitution,
+    handleClickRegisterInstitution,
+    handleRegisterComplete,
+    handleRegisterCancel,
+    isLoading,
+  } = useInstitutionSearch();
 
   const isInstitutionNameValid = institutionName.trim().length > 0;
 
@@ -93,7 +52,7 @@ export const Step3InstitutionName = () => {
       </SearchContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height="52px" variant="blue2">
+        <Button onClick={handleRegisterCancel} height="52px" variant="blue2">
           이전
         </Button>
         <Button

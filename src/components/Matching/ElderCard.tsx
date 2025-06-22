@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { ReactComponent as ElderProfile } from '@/assets/icons/matching/ElderProfile.svg';
-import { ElderData } from '@/type/Matching';
+import { ElderData } from '@/types/Matching';
 
 export interface ElderCardProps extends ElderData {
   onClick: (data: ElderData) => void;

@@ -1,5 +1,5 @@
 import PostOverview from '@/components/Community/PostOverview';
-import { Notice } from '@/type/Notice';
+import { Notice } from '@/types/Notice';
 import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
