@@ -11,7 +11,7 @@ export const CommunityNotice = [
       authorId: 101,
       authorName: '김민지',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -24,7 +24,7 @@ export const CommunityNotice = [
       authorId: 102,
       authorName: '박선영',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -37,7 +37,7 @@ export const CommunityNotice = [
       authorId: 103,
       authorName: '최우진',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -50,7 +50,7 @@ export const CommunityNotice = [
       authorId: 104,
       authorName: '이수현',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -63,7 +63,7 @@ export const CommunityNotice = [
       authorId: 105,
       authorName: '정지훈',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -76,7 +76,7 @@ export const CommunityNotice = [
       authorId: 108,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -89,7 +89,7 @@ export const CommunityNotice = [
       authorId: 108,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
 ];
@@ -105,7 +105,7 @@ export const CommunityImportant = [
       authorId: 101,
       authorName: '김민지',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -118,7 +118,7 @@ export const CommunityImportant = [
       authorId: 103,
       authorName: '최우진',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -131,7 +131,7 @@ export const CommunityImportant = [
       authorId: 108,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -144,7 +144,7 @@ export const CommunityImportant = [
       authorId: 108,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
 ];
@@ -160,7 +160,7 @@ export const CommunityDefault = [
       authorId: 101,
       authorName: '김민지',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -173,7 +173,7 @@ export const CommunityDefault = [
       authorId: 102,
       authorName: '박선영',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -186,7 +186,7 @@ export const CommunityDefault = [
       authorId: 103,
       authorName: '최우진',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -199,7 +199,7 @@ export const CommunityDefault = [
       authorId: 104,
       authorName: '이수현',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -212,7 +212,7 @@ export const CommunityDefault = [
       authorId: 105,
       authorName: '정지훈',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -225,7 +225,7 @@ export const CommunityDefault = [
       authorId: 108,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -238,7 +238,7 @@ export const CommunityDefault = [
       authorId: 108,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -251,7 +251,7 @@ export const CommunityDefault = [
       authorId: 101,
       authorName: '김민지',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -264,7 +264,7 @@ export const CommunityDefault = [
       authorId: 109,
       authorName: '이승현',
       authorInstitutionRank: 'REPRESENTATIVE',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
   {
@@ -277,7 +277,7 @@ export const CommunityDefault = [
       authorId: 110,
       authorName: '윤지아',
       authorInstitutionRank: 'CENTER_DIRECTOR',
-      institutionImageUrl: { profileDefultImg },
+      institutionImageUrl: profileDefultImg,
     },
   },
 ];
