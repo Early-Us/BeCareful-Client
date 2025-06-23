@@ -64,7 +64,6 @@ const CommunityPage = () => {
           <CommunityTabs>
             {['전체', '협회 공지', '공단 공지', '정보 공유', '참여 신청'].map(
               (tab) => (
-                // {['전체', '협회 공지', '공단 공지'].map((tab) => (
                 <Tab
                   key={tab}
                   active={activeTab === tab}
