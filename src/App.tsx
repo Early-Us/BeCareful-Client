@@ -35,6 +35,7 @@ import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListPage from './page/Chat/ChatListPage';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
+import CaregiverLayout from './layouts/CaregiverLayout';
 
 function App() {
   return (
@@ -64,6 +65,20 @@ function App() {
       />
 
       {/* 요양보호사 */}
+      <Route
+        path="/caregiver/*"
+        // element={(() => {
+        // const user = useRecoilValue(currenUserInfo);
+        // if (user.userType === "caregiver") {
+        //    return <CaregiverLayout />;
+        // }
+        // // else if (user.userType === "socialworker") {
+        // // return <SocialworkerLayout />;
+        // // }
+        // })()}
+        element={<CaregiverLayout />}
+      />
+
       <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />
       <Route path="/mypage" element={<MyPage />} />
