@@ -32,7 +32,7 @@ export const Step3CommunityRegister = ({
     <StepWrapper>
       <HeaderSection>
         <Title>
-          /협회명/ {/*TOOD*/}
+          /{communityFormData.name}/
           <br />
           커뮤니티가 만들어졌어요!
           <br />
