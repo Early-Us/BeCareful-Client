@@ -4,7 +4,7 @@ import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
 
 import { CommunityFormData } from '@/components/SignUp/CommunityFunnel/CommunityFunnel';
-import { registerAssociation } from '@/api/communityFunnel';
+import { useRegisterAssociation } from '@/api/communityFunnel';
 
 interface StepProps {
   onComplete: () => void;
@@ -14,14 +14,18 @@ export const Step3CommunityRegister = ({
   onComplete,
   communityFormData,
 }: StepProps) => {
-  const handleRegister = async () => {
-    try {
-      await registerAssociation(communityFormData);
-      onComplete();
-    } catch (error) {
-      console.error('커뮤니티 등록 실패:', error);
-      console.log(communityFormData);
-    }
+  const { mutate: registerAssociation } = useRegisterAssociation();
+
+  const handleRegister = () => {
+    registerAssociation(communityFormData, {
+      onSuccess: () => {
+        onComplete();
+      },
+      onError: (error) => {
+        console.error('커뮤니티 등록 실패:', error);
+        console.log(communityFormData);
+      },
+    });
   };
 
   return (
