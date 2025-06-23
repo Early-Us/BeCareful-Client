@@ -7,7 +7,7 @@ import { useState } from 'react';
 import CommunityHome from '@/components/Community/CommunityHome';
 import CommunityWritePage from './CommunityWritePage';
 import { SocialTabBar } from '@/components/common/TabBarSocial';
-import CommnunityDetail from '@/components/Community/CommnunityDetail';
+import CommunityDetail from '@/components/Community/CommnunityDetail';
 import { useQuery } from '@tanstack/react-query';
 import { AssociationInfoResponse } from '@/types/Community';
 import { getAssociationInfo } from '@/api/community';
@@ -79,7 +79,7 @@ const CommunityPage = () => {
           {activeTab == '전체' ? (
             <CommunityHome onTabChange={handleTabChange} />
           ) : (
-            <CommnunityDetail boardType={activeTab} />
+            <CommunityDetail boardType={activeTab} />
           )}
 
           <Button onClick={() => setIsWriting(true)}>

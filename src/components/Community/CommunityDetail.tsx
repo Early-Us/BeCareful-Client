@@ -13,7 +13,7 @@ interface CommunityDetailProps {
   boardType: string;
 }
 
-const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
+const CommunityDetail = ({ boardType }: CommunityDetailProps) => {
   const pageable: PageableRequest = {
     page: 0,
     size: 1,
@@ -57,7 +57,7 @@ const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
   );
 };
 
-export default CommnunityDetail;
+export default CommunityDetail;
 
 const Container = styled.div`
   padding: 16px 20px 60px 20px;
