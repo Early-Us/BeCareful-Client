@@ -231,7 +231,8 @@ const CommunityPost = () => {
             댓글 <span>{comments?.length}</span>
           </label>
           {comments?.map((comment) => (
-            <>
+            // <React.Fragment key={comment.commentId}>
+            <React.Fragment key={comment.author.authorId}>
               <div className="reply">
                 <img src={comment.author.institutionImageUrl} />
                 <div className="labels">
@@ -249,7 +250,7 @@ const CommunityPost = () => {
                 </div>
               </div>
               <Border />
-            </>
+            </React.Fragment>
           ))}
         </div>
 

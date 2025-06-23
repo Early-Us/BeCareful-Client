@@ -131,7 +131,7 @@ const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
             const Icon = board.icon;
 
             return (
-              <SwiperSlide>
+              <SwiperSlide key={board.label}>
                 <Title>
                   <Icon />
                   <label>{board.label}</label>
