@@ -7,14 +7,29 @@ import { useState } from 'react';
 import CommunityHome from '@/components/Community/CommunityHome';
 import CommunityWritePage from './CommunityWritePage';
 import { SocialTabBar } from '@/components/common/TabBarSocial';
-import CommnunityDetail from '@/components/Community/CommnunityDetail';
+import CommunityDetail from '@/components/Community/CommunityDetail';
+import { useQuery } from '@tanstack/react-query';
+import { AssociationInfoResponse } from '@/types/Community';
+import { getAssociationInfo } from '@/api/community';
 
 const CommunityPage = () => {
   const [activeTab, setActiveTab] = useState('전체');
   const [isWriting, setIsWriting] = useState(false);
 
+  const { data, isLoading, error } = useQuery<AssociationInfoResponse, Error>({
+    queryKey: ['associationInfo'],
+    queryFn: getAssociationInfo,
+  });
+  if (isLoading) {
+    console.log('getAssociationInfo: 로딩 중');
+  }
+  if (error) {
+    console.log('getAssociationInfo 에러: ', error.message);
+  }
+
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -34,9 +49,11 @@ const CommunityPage = () => {
           </Top>
 
           <Association>
-            <label className="title">장기요양협회명</label>
+            <label className="title">{data?.associationName}</label>
             <div>
-              <label className="member">멤버 1,234</label>
+              <label className="member">
+                멤버 {data?.associationMemberCount}
+              </label>
               <div className="invite">
                 <Plus />
                 <label className="invite-label">초대하기</label>
@@ -47,7 +64,6 @@ const CommunityPage = () => {
           <CommunityTabs>
             {['전체', '협회 공지', '공단 공지', '정보 공유', '참여 신청'].map(
               (tab) => (
-                // {['전체', '협회 공지', '공단 공지'].map((tab) => (
                 <Tab
                   key={tab}
                   active={activeTab === tab}
@@ -59,17 +75,10 @@ const CommunityPage = () => {
             )}
           </CommunityTabs>
 
-          {/* {activeTab == '전체' ? (
-            <CommunityHome onTabChange={handleTabChange} />
-          ) : activeTab == '협회 공지' ? (
-            <CommunityAssociation />
-          ) : (
-            <CommunityCorporation />
-          )} */}
           {activeTab == '전체' ? (
             <CommunityHome onTabChange={handleTabChange} />
           ) : (
-            <CommnunityDetail boardType={activeTab} />
+            <CommunityDetail boardType={activeTab} />
           )}
 
           <Button onClick={() => setIsWriting(true)}>
@@ -92,7 +101,9 @@ const Container = styled.div`
 
 const Top = styled.div`
   height: 88px;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background: ${({ theme }) => theme.colors.mainBlue};
 
   div {
@@ -112,6 +123,11 @@ const Association = styled.div`
   gap: 5px;
   justify-content: space-between;
   padding: 14px 20px 10px 20px;
+
+  position: sticky;
+  top: 88px;
+  z-index: 8;
+  background: ${({ theme }) => theme.colors.white};
 
   div {
     display: flex;
@@ -165,6 +181,11 @@ const CommunityTabs = styled.div`
   padding: 14px 20px 0px 20px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray100};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
+
+  position: sticky;
+  top: 164px;
+  z-index: 6;
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 const Button = styled.button`

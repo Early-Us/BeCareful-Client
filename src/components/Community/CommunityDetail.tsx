@@ -1,23 +1,32 @@
 import PostOverview from '@/components/Community/PostOverview';
 import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
 import styled from 'styled-components';
-import { CommunityDefault } from '@/data/Community';
+import {
+  BoardPostListResponse,
+  PageableRequest,
+  PostListItem,
+} from '@/types/Community';
+import { getPostingList } from '@/api/community';
+import { useQuery } from '@tanstack/react-query';
 
 interface CommunityDetailProps {
   boardType: string;
 }
 
-const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
-  //   const formatBoardType = (key: string): string => {
-  //     const mapping: Record<string, string> = {
-  //       '협회 공지': 'association-notice',
-  //       '공단 공지': 'service-notice',
-  //       '정보 공유': 'information-sharing',
-  //       '참여 신청': 'participation-application',
-  //     };
+const CommunityDetail = ({ boardType }: CommunityDetailProps) => {
+  const pageable: PageableRequest = {
+    page: 0,
+    size: 1,
+    sort: [],
+  };
 
-  //     return mapping[key] ?? key;
-  //   };
+  const { data, error } = useQuery<BoardPostListResponse, Error>({
+    queryKey: ['postingList', boardType, pageable],
+    queryFn: () => getPostingList(pageable, boardType),
+  });
+  if (error) {
+    console.log('getPostingList 에러: ', error);
+  }
 
   return (
     <Container>
@@ -27,21 +36,18 @@ const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
       </Title>
 
       <NoticeList>
-        {CommunityDefault.map((notice) => (
+        {data?.map((post: PostListItem) => (
           <>
             <PostOverview
-              key={notice.postId}
-              id={notice.postId}
-              profileImgUrl={notice.author.institutionImageUrl.profileDefultImg}
-              nickname={notice.author.authorName}
-              position={notice.author.authorInstitutionRank}
-              isMust={notice.isImportant}
-              isNew={true}
-              // isNew={new Date(notice.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)} // 7일 이내 게시물에 대해 true 설정
-              isReaded={false}
-              title={notice.title}
-              date={notice.createdAt.substring(0, 10)}
-              postImgUrl={notice.thumbnailUrl}
+              key={post.postId}
+              postId={post.postId}
+              title={post.title}
+              isImportant={post.isImportant}
+              thumbnailUrl={post.thumbnailUrl}
+              createdAt={post.createdAt}
+              author={post.author}
+              boardType={boardType}
+              // isReaded={false}
             />
             <Border />
           </>
@@ -51,7 +57,7 @@ const CommnunityDetail = ({ boardType }: CommunityDetailProps) => {
   );
 };
 
-export default CommnunityDetail;
+export default CommunityDetail;
 
 const Container = styled.div`
   padding: 16px 20px 60px 20px;

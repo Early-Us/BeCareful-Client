@@ -20,6 +20,7 @@ const BottomSheet = ({
     <>
       {isOpen && <SheetBackground onClick={() => setIsOpen(false)} />}
       <SheetContainer isOpen={isOpen}>
+        <Gray />
         <div className="title">
           {title}
           {titleStar && <span> *</span>}
@@ -39,16 +40,16 @@ const SheetBackground = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 0;
+  z-index: 1;
 `;
 
 const SheetContainer = styled.div<{ isOpen: boolean }>`
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 342px;
+  // height: 342px;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
@@ -57,7 +58,7 @@ const SheetContainer = styled.div<{ isOpen: boolean }>`
   display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   gap: 8px;
   flex-direction: column;
-  margin-bottom: -24px;
+  // margin-bottom: -24px;
 
   .title {
     color: ${({ theme }) => theme.colors.gray900};
@@ -73,4 +74,16 @@ const SheetContainer = styled.div<{ isOpen: boolean }>`
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
     line-height: 140%;
   }
+`;
+
+const Gray = styled.div`
+  width: 40px;
+  height: 6px;
+  background: #e4e4e4;
+  border-radius: 3px;
+
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 `;

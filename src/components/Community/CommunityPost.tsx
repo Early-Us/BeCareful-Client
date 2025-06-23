@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { ReactComponent as Dots } from '@/assets/icons/community/Dots.svg';
-import { ReactComponent as Eye } from '@/assets/icons/community/Eye.svg';
 import { ReactComponent as Share } from '@/assets/icons/community/Share.svg';
 import { ReactComponent as Send } from '@/assets/icons/community/ReplySend.svg';
 import { ReactComponent as Check } from '@/assets/icons/matching/CircleCheck.svg';
@@ -9,22 +8,28 @@ import { ReactComponent as Link } from '@/assets/icons/community/LinkPost.svg';
 import { ReactComponent as Copy } from '@/assets/icons/community/LinkCopy.svg';
 import { ReactComponent as Kakao } from '@/assets/icons/community/KakaoLogo.svg';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import BottomSheet from './BottomSheet';
+import {
+  AuthorRankMapping,
+  BoardTypeMapping,
+  CommentListResponse,
+  CommentRequest,
+  PostDetailResponse,
+} from '@/types/Community';
+import {
+  getComment,
+  getPostDetail,
+  usePostCommentMutation,
+} from '@/api/community';
+import { useQuery } from '@tanstack/react-query';
+import Modal from '../common/Modal/Modal';
+import ModalLimit from '../common/Modal/ModalLimit';
 
-// interface PostProps {
-//   boardType: string;
-// }
-
-const CommunityPost = (/*{ boardType }: PostProps*/) => {
-  // const { matchingId } = useParams();
+const CommunityPost = () => {
   const navigate = useNavigate();
 
-  // const [board, setBoard] = useState(boardType);
-  const [board, setBoard] = useState('공단 공지');
-  const [isMust, setIsMust] = useState(true);
   const [isRead, setIsRead] = useState(false);
-  const [isMyPost, setIsMyPost] = useState(false);
 
   const [isShareSheetOpen, setIsShareSheetOpen] = useState(false);
   const [isDeleteSheetOpen, setIsDeleteSheetOpen] = useState(false);
@@ -38,11 +43,83 @@ const CommunityPost = (/*{ boardType }: PostProps*/) => {
     setIsDeleteSheetOpen(false);
   };
 
-  useEffect(() => {
-    setBoard('공단 공지');
-    setIsMust(true);
-    setIsMyPost(false);
-  }, []);
+  const { postId: postIdParam } = useParams<{ postId: string }>();
+  const postId = postIdParam ? parseInt(postIdParam, 10) : 0;
+
+  const location = useLocation();
+  const boardType =
+    (location.state as { boardType?: string } | undefined)?.boardType ||
+    '협회 공지';
+  const apiBoardType = BoardTypeMapping[boardType];
+
+  // 게시글 상세 조회
+  const { data: post, error: postDetailError } = useQuery<
+    PostDetailResponse,
+    Error
+  >({
+    queryKey: ['postDetail', apiBoardType, postId],
+    queryFn: () => getPostDetail(apiBoardType, postId),
+  });
+  if (postDetailError) {
+    console.log('getPostDetail 에러 발생: ', postDetailError);
+  }
+
+  // 댓글 조회
+  const { data: comments, error: commentsError } = useQuery<
+    CommentListResponse,
+    Error
+  >({
+    queryKey: ['comments', apiBoardType, postId],
+    queryFn: () => getComment(apiBoardType, postId),
+  });
+  if (commentsError) {
+    console.log('getComment 에러 발생: ', commentsError);
+  }
+
+  // 댓글 등록
+  const { mutate: comment, error: commentError } = usePostCommentMutation(
+    apiBoardType,
+    postId,
+  );
+  if (commentError) {
+    console.log('usePostCommentMutation 에러 발생: ', commentError);
+  }
+
+  const [reply, setReply] = useState('');
+
+  const handleReplyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReply(e.target.value);
+  };
+  const handleReplySend = (e: React.FormEvent) => {
+    e.preventDefault();
+    const commentRequest: CommentRequest = { content: reply };
+    comment(commentRequest);
+    setReply('');
+  };
+
+  // 파일 다운로드
+  const handleFileDownload = (fileUrl: string) => {
+    window.open(fileUrl, '_blank');
+  };
+
+  // 원본 URL로 이동
+  const handleOriginalLinkClick = () => {
+    if (post?.originalUrl) {
+      window.open(post.originalUrl, '_blank'); // 새 탭에서 열기
+    }
+  };
+
+  // 게시글 링크 복사
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+  const handleCopy = async () => {
+    try {
+      const currentUrl = window.location.href;
+      await navigator.clipboard.writeText(currentUrl);
+      setIsLinkModalOpen(!isLinkModalOpen);
+    } catch (err) {
+      console.error('링크 복사 실패:', err);
+    }
+  };
 
   return (
     <Container>
@@ -50,34 +127,37 @@ const CommunityPost = (/*{ boardType }: PostProps*/) => {
         <NavLeft>
           <ArrowLeft
             style={{ cursor: 'pointer' }}
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              navigate(-1);
+              window.scrollTo(0, 0);
+            }}
           />
         </NavLeft>
-        {/* <NavCenter>{board}</NavCenter> */}
-        <NavCenter>협회 공지</NavCenter>
+        <NavCenter>{boardType}</NavCenter>
         <NavRight />
       </NavbarWrapper>
 
       <TitleWrapper>
         <Title>
-          {isMust && <Tag>필독</Tag>}
-          <label>
-            2025년 노인요양시설 내 전문요양실 시범사업 참여기관 공모
-          </label>
+          {post?.isImportant && <Tag>필독</Tag>}
+          <label>{post?.title}</label>
         </Title>
 
         <Writer>
           <div className="writer-info">
-            <img src="" />
+            <img src={post?.author.institutionImageUrl} />
             <div className="writer-wrapper">
               <div className="wrapper">
-                <label className="writer">dolda2</label>
+                <label className="writer">{post?.author.authorName}</label>
                 <label className="writer">·</label>
-                <label className="writer">임원진</label>
+                <label className="writer">
+                  {post?.author &&
+                    AuthorRankMapping[post?.author.authorInstitutionRank]}
+                </label>
               </div>
               <div className="wrapper">
-                <label className="date">2025.05.05.</label>
-                <label className="date">09:07</label>
+                <label className="date">{post?.postedDate}</label>
+                {/* <label className="date">09:07</label> */}
                 {!isRead && <label className="new">N</label>}
                 <label className="date">수정됨</label>
                 <label className="date">조회 101</label>
@@ -86,33 +166,47 @@ const CommunityPost = (/*{ boardType }: PostProps*/) => {
           </div>
           <Dots onClick={() => setIsDeleteSheetOpen(true)} />
         </Writer>
-
-        <CheckPerson>
-          <Border />
-          <div className="box">
-            <Eye />
-            <label>
-              <span>24</span>명이 게시물을 확인했어요
-            </label>
-          </div>
-        </CheckPerson>
       </TitleWrapper>
 
-      <Files>
-        <label>첨부 파일 이름</label>
-        <label>첨부 파일 이름</label>
-      </Files>
+      {post?.fileUrls && post.fileUrls.length > 0 && (
+        <Files>
+          {post.fileUrls.map((fileUrl, index) => {
+            const fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+            return (
+              <label
+                key={`file-${index}`}
+                onClick={() => handleFileDownload(fileUrl)}
+              >
+                {fileName}
+              </label>
+            );
+          })}
+        </Files>
+      )}
 
       <Border style={{ marginBottom: '14px' }} />
 
       <ContentWrapper>
-        <label>입력한 공지 내용</label>
-        <img src="" />
+        <label>{post?.content}</label>
+        {/* 이미지 표시 */}
+        {post?.imageUrls &&
+          post?.imageUrls.map((imageUrl, index) => (
+            <img
+              key={`image-${index}`}
+              src={imageUrl}
+              alt={`게시글 이미지 ${index + 1}`}
+            />
+          ))}
+        {/* 비디오 표시 */}
+        {post?.videoUrls &&
+          post?.videoUrls.map((videoUrl, index) => (
+            <video key={`video-${index}`} src={videoUrl} controls />
+          ))}
       </ContentWrapper>
 
       <Border />
 
-      {!isMyPost && (
+      {!post?.isMyPost && (
         <IsRead>
           <IsReadButton active={isRead} onClick={() => setIsRead(true)}>
             <Check />
@@ -134,63 +228,55 @@ const CommunityPost = (/*{ boardType }: PostProps*/) => {
             className="content"
             style={{ display: 'block', padding: '14px 0px' }}
           >
-            댓글 <span>*</span>
+            댓글 <span>{comments?.length}</span>
           </label>
-          <div className="reply">
-            <img src="" />
-            <div className="labels">
-              <div className="writer-wrapper">
-                <label className="writer">dolda2</label>
-                <label className="writer">·</label>
-                <label className="writer">회장</label>
+          {comments?.map((comment) => (
+            // <React.Fragment key={comment.commentId}>
+            <React.Fragment key={comment.author.authorId}>
+              <div className="reply">
+                <img src={comment.author.institutionImageUrl} />
+                <div className="labels">
+                  <div className="writer-wrapper">
+                    <label className="writer">
+                      {comment.author.authorName}
+                    </label>
+                    <label className="writer">·</label>
+                    <label className="writer">
+                      {AuthorRankMapping[comment.author.authorInstitutionRank]}
+                    </label>
+                  </div>
+                  <label className="content">{comment.content}</label>
+                  <label className="date">{comment.createdAt}</label>
+                </div>
               </div>
-              <label className="content">댓글 내용</label>
-              <label className="date">2025.05.05. 09:08</label>
-            </div>
-          </div>
-          <Border />
-
-          <div className="reply">
-            <img src="" />
-            <div className="labels">
-              <div className="writer-wrapper">
-                <label className="writer">dolda2</label>
-                <label className="writer">·</label>
-                <label className="writer">회장</label>
-              </div>
-              <label className="content">댓글 내용</label>
-              <label className="date">2025.05.05. 09:08</label>
-            </div>
-          </div>
-          <Border />
-
-          <div className="reply">
-            <img src="" />
-            <div className="labels">
-              <div className="writer-wrapper">
-                <label className="writer">dolda2</label>
-                <label className="writer">·</label>
-                <label className="writer">회장</label>
-              </div>
-              <label className="content">댓글 내용</label>
-              <label className="date">2025.05.05. 09:08</label>
-            </div>
-          </div>
-          <Border />
+              <Border />
+            </React.Fragment>
+          ))}
         </div>
+
         <SectionBorder />
-        {board === '공단 공지' ? (
+
+        {boardType === '공단 공지' ? (
           <IsMyPost>
-            <Link />
+            <Link onClick={handleOriginalLinkClick} />
             <Share onClick={() => setIsShareSheetOpen(true)} />
           </IsMyPost>
         ) : (
-          <Share style={{ padding: '10px 0px' }} />
+          <Share
+            style={{ padding: '10px 0px' }}
+            onClick={() => setIsShareSheetOpen(true)}
+          />
         )}
+
         <SectionBorder />
+
         <div className="my-reply">
-          <Reply placeholder="댓글을 입력하세요" />
-          <Send style={{ padding: '4px' }} />
+          <Reply
+            placeholder="댓글을 입력하세요"
+            value={reply}
+            onChange={handleReplyChange}
+          />
+          <Send style={{ padding: '4px' }} onClick={handleReplySend} />
         </div>
       </ReplyWrapper>
 
@@ -206,7 +292,7 @@ const CommunityPost = (/*{ boardType }: PostProps*/) => {
             카카오톡
           </button>
           <button className="copy">
-            <Copy />
+            <Copy onClick={handleCopy} />
             링크 복사
           </button>
         </Buttons>
@@ -244,6 +330,17 @@ const CommunityPost = (/*{ boardType }: PostProps*/) => {
           </button>
         </DeleteButtons>
       </BottomSheet>
+
+      <Modal
+        isOpen={isLinkModalOpen}
+        onClose={() => setIsLinkModalOpen(!isLinkModalOpen)}
+      >
+        <ModalLimit
+          title="링크가 복사되었어요."
+          detail={'게시글 링크가 복사되었어요.\n링크를 붙여넣기할 수 있어요.'}
+          onClose={() => setIsLinkModalOpen(!isLinkModalOpen)}
+        />
+      </Modal>
     </Container>
   );
 };
@@ -308,7 +405,7 @@ const Title = styled.div`
 
 const Tag = styled.span`
   display: flex;
-  // width: 30px;
+  width: 60px;
   height: 20px;
   padding: 4px 8px;
   justify-content: center;
@@ -317,7 +414,7 @@ const Tag = styled.span`
   background: ${({ theme }) => theme.colors.subBlue};
 
   color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.title3};
+  font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `;
 
@@ -382,39 +479,6 @@ const Writer = styled.div`
   }
 `;
 
-const CheckPerson = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  .box {
-    display: flex;
-    gap: 4px;
-    height: 52px;
-    padding: 8px 16px;
-    align-items: center;
-    border-radius: 12px;
-    background: ${({ theme }) => theme.colors.subBlue};
-  }
-
-  svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  label {
-    color: ${({ theme }) => theme.colors.gray600};
-    font-size: ${({ theme }) => theme.typography.fontSize.body1};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  }
-
-  span {
-    color: ${({ theme }) => theme.colors.mainBlue};
-    font-size: ${({ theme }) => theme.typography.fontSize.body1};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  }
-`;
-
 const Files = styled.div`
   display: flex;
   flex-direction: column;
@@ -441,7 +505,8 @@ const ContentWrapper = styled.div`
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   }
 
-  img {
+  img,
+  video {
     border: 1px solid gray;
     width: 320px;
     height: 320px;
@@ -558,7 +623,7 @@ const ReplyWrapper = styled.div`
     height: 44px;
     display: flex;
     gap: 6px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 10px 0;
   }
@@ -570,7 +635,7 @@ const IsMyPost = styled.div`
   padding: 10px 0;
 `;
 
-const Reply = styled.input`
+const Reply = styled.textarea`
   resize: none;
   outline: none;
   border-radius: 12px;
@@ -581,7 +646,7 @@ const Reply = styled.input`
 
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: 26px;
   padding: 9px 16px;
 

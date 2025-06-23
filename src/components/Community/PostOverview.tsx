@@ -1,17 +1,22 @@
-import { Notice } from '@/types/Notice';
+import { AuthorRankMapping, PostListItem } from '@/types/Community';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+// PostOverview 컴포넌트가 받을 props 타입 정의
+export interface PostOverviewProps extends PostListItem {
+  // isReaded: boolean;
+  boardType: string;
+}
+
 const PostOverview = ({
-  profileImgUrl,
-  nickname,
-  position,
-  isReaded,
-  isMust,
-  isNew,
+  postId,
   title,
-  date,
-  postImgUrl,
-}: Notice) => {
+  isImportant,
+  thumbnailUrl,
+  createdAt,
+  author,
+  boardType,
+}: PostOverviewProps) => {
   const titleFormat = (text: string) => {
     if (text.length > 33) {
       return text.slice(0, 33) + '..';
@@ -19,35 +24,45 @@ const PostOverview = ({
     return text;
   };
 
-  const authorRankForamt = (authorRank: string) => {
-    if (authorRank === 'CENTER_DIRECTOR') {
-      return '임원진';
-    } else {
-      return '협회장';
-    }
+  const isNew = (dateString: string) => {
+    const createdDate = new Date(dateString);
+    const now = new Date();
+    const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+
+    return createdDate >= threeDaysAgo;
+  };
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/community/${postId}`, {
+      state: { boardType: boardType },
+    }); // 클릭 시 해당 ID의 게시글 상세 페이지로 이동
+    window.scrollTo(0, 0);
   };
 
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <Wrapper>
         <Writer>
-          <img className="writer-img" src={profileImgUrl} />
-          <label>{nickname}</label>
+          <img className="writer-img" src={author.institutionImageUrl} />
+          <label>{author.authorName}</label>
           <label>·</label>
-          <label>{authorRankForamt(position)}</label>
+          <label>{AuthorRankMapping[author.authorInstitutionRank]}</label>
         </Writer>
-        <Title isReaded={isReaded}>
+        {/* <Title isReaded={isReaded}> */}
+        <Title isReaded={false}>
           <label>
-            {isMust && <IsMustTag>필독</IsMustTag>} {titleFormat(title)}
+            {isImportant && <IsMustTag>필독</IsMustTag>} {titleFormat(title)}
           </label>
         </Title>
         <Day>
-          <label>{date}</label>
-          {isNew && <NewTag>N</NewTag>}
+          <label>{createdAt}</label>
+          {isNew(createdAt) && <NewTag>N</NewTag>}
         </Day>
       </Wrapper>
 
-      <img className="profile-img" src={postImgUrl} />
+      <img className="profile-img" src={thumbnailUrl} />
     </Container>
   );
 };

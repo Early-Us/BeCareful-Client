@@ -207,6 +207,8 @@ export const TestPage = () => {
           left="나가기"
           right="계속 작성하기"
           onClose={() => setIsButtonModalOpen(false)}
+          handleLeftBtnClick={() => setIsButtonModalOpen(false)}
+          handleRightBtnClick={() => setIsButtonModalOpen(false)}
         />
       </Modal>
     </div>

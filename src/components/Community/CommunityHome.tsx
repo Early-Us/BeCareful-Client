@@ -1,53 +1,86 @@
 import PostOverview from '@/components/Community/PostOverview';
 import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
-import { ReactComponent as Information } from '@/assets/icons/community/Information.svg';
-import { ReactComponent as Participation } from '@/assets/icons/community/Participation.svg';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { CommunityImportant, CommunityNotice } from '@/data/Community';
+import {
+  BoardList,
+  BoardPostListResponse,
+  ImportantPostListResponse,
+  PageableRequest,
+  PostListItem,
+} from '@/types/Community';
+import { getImportantPosting, getPostingList } from '@/api/community';
+import { useQueries, useQuery } from '@tanstack/react-query';
+import React from 'react';
 
 interface CommunityHomeProps {
   onTabChange: (tabName: string) => void;
 }
 
 const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
-  /*
-  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
-  const getImportantPostInfo = async () => {
-    try {
-      const response = await axios.get(
-        `${apiBaseURL}/community/post/important`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      setNoticeData([]);
-    } catch (e) {
-      console.log('사회복지사 채팅방 리스트 get 에러: ', e);
-    }
+  const importantPageable: PageableRequest = {
+    page: 0,
+    size: 1,
+    sort: [],
   };
+  const { data: importantPostings, error: importantError } = useQuery<
+    ImportantPostListResponse,
+    Error
+  >({
+    queryKey: ['importantPostingList', importantPageable],
+    queryFn: () => getImportantPosting(importantPageable),
+  });
+  if (importantError) {
+    console.log('getImportantPosting 에러: ', importantError);
+  }
 
-  const getPostInfo = async () => {
-    try {
-      const response = await axios.get(
-        `${apiBaseURL}/community/post/important`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      setChatList(response.data.chatroomInfoList);
-    } catch (e) {
-      console.log('사회복지사 채팅방 리스트 get 에러: ', e);
+  const boardPageable: PageableRequest = { page: 1, size: 5, sort: [] };
+  const boardPostings = useQueries({
+    queries: BoardList.map((board) => ({
+      queryKey: ['boardPostingList', board.api, boardPageable],
+      queryFn: () => getPostingList(boardPageable, board.api),
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
+    })),
+  });
+
+  const getContent = (
+    data: BoardPostListResponse | undefined,
+    isError: boolean,
+    error: Error | null,
+    board: string,
+  ) => {
+    if (isError) {
+      console.log('getContent 오류 발생: ', error);
+      return null;
     }
+    if (!data || data.length === 0) {
+      console.log('getContent 데이터 없음');
+      return <div>{board} 게시판의 게시글이 없습니다.</div>;
+    }
+
+    return (
+      <>
+        {data?.map((post: PostListItem) => (
+          <React.Fragment key={post.postId}>
+            <PostOverview
+              postId={post.postId}
+              title={post.title}
+              isImportant={post.isImportant}
+              thumbnailUrl={post.thumbnailUrl}
+              createdAt={post.createdAt}
+              author={post.author}
+              boardType={board}
+            />
+            <Border />
+          </React.Fragment>
+        ))}
+      </>
+    );
   };
-  */
 
   return (
     <Container>
@@ -65,24 +98,19 @@ const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
           slidesPerView={1}
           style={{ width: '100%', height: 'auto' }}
         >
-          {CommunityImportant.map((notice) => (
-            <SwiperSlide key={notice.postId}>
+          {importantPostings?.map((post: PostListItem) => (
+            <SwiperSlide key={post.postId}>
               <NoticeList>
                 <PostOverview
-                  key={notice.postId}
-                  id={notice.postId}
-                  profileImgUrl={
-                    notice.author.institutionImageUrl.profileDefultImg
-                  }
-                  nickname={notice.author.authorName}
-                  position={notice.author.authorInstitutionRank}
-                  isMust={notice.isImportant}
-                  isNew={true}
-                  // isNew={new Date(notice.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)} // 7일 이내 게시물에 대해 true 설정
-                  isReaded={false}
-                  title={notice.title}
-                  date={notice.createdAt.substring(0, 10)}
-                  postImgUrl={notice.thumbnailUrl}
+                  key={post.postId}
+                  postId={post.postId}
+                  title={post.title}
+                  isImportant={post.isImportant}
+                  thumbnailUrl={post.thumbnailUrl}
+                  createdAt={post.createdAt}
+                  author={post.author}
+                  // isReaded={false}
+                  boardType="필독"
                 />
               </NoticeList>
             </SwiperSlide>
@@ -98,137 +126,30 @@ const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
           slidesPerView={1}
           style={{ width: '100%', height: 'auto' }}
         >
-          <SwiperSlide>
-            <Title>
-              <NoticeIcon />
-              <label>협회 공지</label>
-            </Title>
-            <NoticeList>
-              {CommunityNotice.map((notice) => (
-                <>
-                  <PostOverview
-                    key={notice.postId}
-                    id={notice.postId}
-                    profileImgUrl={
-                      notice.author.institutionImageUrl.profileDefultImg
-                    }
-                    nickname={notice.author.authorName}
-                    position={notice.author.authorInstitutionRank}
-                    isMust={notice.isImportant}
-                    isNew={true}
-                    // isNew={new Date(notice.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)} // 7일 이내 게시물에 대해 true 설정
-                    isReaded={false}
-                    title={notice.title}
-                    date={notice.createdAt.substring(0, 10)}
-                    postImgUrl={notice.thumbnailUrl}
-                  />
-                  <Border />
-                </>
-              ))}
-              <PlusButton onClick={() => onTabChange('협회 공지')}>
-                더보기
-              </PlusButton>
-            </NoticeList>
-          </SwiperSlide>
+          {BoardList.map((board, index) => {
+            const { data, isError, error } = boardPostings[index];
+            const Icon = board.icon;
 
-          <SwiperSlide>
-            <Title>
-              <NoticeIcon />
-              <label>공단 공지</label>
-            </Title>
-            <NoticeList>
-              {CommunityNotice.map((notice) => (
-                <>
-                  <PostOverview
-                    key={notice.postId}
-                    id={notice.postId}
-                    profileImgUrl={
-                      notice.author.institutionImageUrl.profileDefultImg
-                    }
-                    nickname={notice.author.authorName}
-                    position={notice.author.authorInstitutionRank}
-                    isMust={notice.isImportant}
-                    isNew={true}
-                    // isNew={new Date(notice.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)} // 7일 이내 게시물에 대해 true 설정
-                    isReaded={false}
-                    title={notice.title}
-                    date={notice.createdAt.substring(0, 10)}
-                    postImgUrl={notice.thumbnailUrl}
-                  />
-                  <Border />
-                </>
-              ))}
-              <PlusButton onClick={() => onTabChange('공단 공지')}>
-                더보기
-              </PlusButton>
-            </NoticeList>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <Title>
-              <Information />
-              <label>정보 공유</label>
-            </Title>
-            <NoticeList>
-              {CommunityNotice.map((notice) => (
-                <>
-                  <PostOverview
-                    key={notice.postId}
-                    id={notice.postId}
-                    profileImgUrl={
-                      notice.author.institutionImageUrl.profileDefultImg
-                    }
-                    nickname={notice.author.authorName}
-                    position={notice.author.authorInstitutionRank}
-                    isMust={notice.isImportant}
-                    isNew={true}
-                    // isNew={new Date(notice.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)} // 7일 이내 게시물에 대해 true 설정
-                    isReaded={false}
-                    title={notice.title}
-                    date={notice.createdAt.substring(0, 10)}
-                    postImgUrl={notice.thumbnailUrl}
-                  />
-                  <Border />
-                </>
-              ))}
-              <PlusButton onClick={() => onTabChange('정보 공유')}>
-                더보기
-              </PlusButton>
-            </NoticeList>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <Title>
-              <Participation />
-              <label>참여 신청</label>
-            </Title>
-            <NoticeList>
-              {CommunityNotice.map((notice) => (
-                <>
-                  <PostOverview
-                    key={notice.postId}
-                    id={notice.postId}
-                    profileImgUrl={
-                      notice.author.institutionImageUrl.profileDefultImg
-                    }
-                    nickname={notice.author.authorName}
-                    position={notice.author.authorInstitutionRank}
-                    isMust={notice.isImportant}
-                    isNew={true}
-                    // isNew={new Date(notice.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)} // 7일 이내 게시물에 대해 true 설정
-                    isReaded={false}
-                    title={notice.title}
-                    date={notice.createdAt.substring(0, 10)}
-                    postImgUrl={notice.thumbnailUrl}
-                  />
-                  <Border />
-                </>
-              ))}
-              <PlusButton onClick={() => onTabChange('참여 신청')}>
-                더보기
-              </PlusButton>
-            </NoticeList>
-          </SwiperSlide>
+            return (
+              <SwiperSlide key={board.label}>
+                <Title>
+                  <Icon />
+                  <label>{board.label}</label>
+                </Title>
+                <NoticeList>
+                  {getContent(
+                    data as BoardPostListResponse,
+                    isError,
+                    error,
+                    board.label,
+                  )}
+                </NoticeList>
+                <PlusButton onClick={() => onTabChange(board.label)}>
+                  더보기
+                </PlusButton>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </CustomPagination>
     </Container>

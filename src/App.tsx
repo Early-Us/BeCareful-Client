@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './page/deprecated/Login/LoginPage';
 import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import HomePage from './page/Home/HomePage';
-
 import MyPage from './page/MyPage/MyPage';
 import SplashPage from './page/SplashPage';
 import EditProfile from './page/MyPage/EditProfile';
@@ -14,7 +13,6 @@ import EditApplication from './page/MyPage/EditApplication';
 import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { ApplyPage } from '@/page/Apply/ApplyPage';
-
 import SocialHomePage from './page/HomeSocial/SocialHomePage';
 import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
 import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
