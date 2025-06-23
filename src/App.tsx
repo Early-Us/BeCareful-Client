@@ -39,14 +39,9 @@ import ChatRoomPage from './page/Chat/ChatRoomPage';
 function App() {
   return (
     <Routes>
-      {/* 테스트, 에러 페이지 */}
-      <Route path="/test" element={<TestPage />} />
-      <Route path="/error" element={<ErrorPage />} />
-      <Route path="*" element={<ErrorPage />} />
-
       {/* 협회 관련 - 랜딩 페이지, 커뮤니티 가입 전 로그인 안내 페이지*/}
       <Route path="/landing" element={<LandingPage />} />
-      <Route path="splash/community" element={<CommunitySplashPage />} />
+      <Route path="/splash/community" element={<CommunitySplashPage />} />
 
       {/* 초기 - 스플래시, 온보딩, 회원가입 페이지 */}
       <Route path="/" element={<SplashPage />} />
@@ -111,6 +106,11 @@ function App() {
       <Route path="/chatList/social" element={<ChatListPage />} />
       <Route path="/chatList/caregiver" element={<ChatListCaregiver />} />
       <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
+
+      {/* 테스트, 에러 페이지 */}
+      <Route path="/test" element={<TestPage />} />
+      <Route path="/error" element={<ErrorPage />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }
