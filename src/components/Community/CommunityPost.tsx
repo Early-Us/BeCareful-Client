@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import BottomSheet from './BottomSheet';
 import {
-  AuthorRankFormat,
+  AuthorRankMapping,
   BoardTypeMapping,
   CommentListResponse,
   CommentRequest,
@@ -152,7 +152,7 @@ const CommunityPost = () => {
                 <label className="writer">·</label>
                 <label className="writer">
                   {post?.author &&
-                    AuthorRankFormat(post?.author.authorInstitutionRank)}
+                    AuthorRankMapping[post?.author.authorInstitutionRank]}
                 </label>
               </div>
               <div className="wrapper">
@@ -242,7 +242,7 @@ const CommunityPost = () => {
                     </label>
                     <label className="writer">·</label>
                     <label className="writer">
-                      {AuthorRankFormat(comment.author.authorInstitutionRank)}
+                      {AuthorRankMapping[comment.author.authorInstitutionRank]}
                     </label>
                   </div>
                   <label className="content">{comment.content}</label>

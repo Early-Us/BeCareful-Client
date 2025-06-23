@@ -11,14 +11,11 @@ export const BoardTypeMapping: { [key: string]: string } = {
   '참여 신청': 'participation-application',
 };
 
-export const AuthorRankFormat = (authorRank: string) => {
-  if (authorRank === 'CENTER_DIRECTOR') {
-    return '회장';
-  } else if (authorRank === 'REPRESENTATIVE') {
-    return '임원진';
-  } else {
-    return '회원';
-  }
+export const AuthorRankMapping: { [key: string]: string } = {
+  CENTER_DIRECTOR: '회장',
+  REPRESENTATIVE: '임원진',
+  SOCIAL_WORKER: '회원',
+  none: '회원',
 };
 
 /* 커뮤니티 공통 인터페이스 */
