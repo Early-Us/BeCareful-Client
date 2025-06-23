@@ -1,16 +1,30 @@
 import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
-
 import { Button } from '@/components/common/Button/Button';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
 import { useNavigate } from 'react-router-dom';
+
+const mapToInstitutionRank = (kor: string) => {
+  switch (kor) {
+    case '센터장':
+      return 'CENTER_DIRECTOR';
+    case '대표':
+      return 'REPRESENTATIVE';
+    case '사회복지사':
+      return 'SOCIAL_WORKER';
+    default:
+      return 'SOCIAL_WORKER';
+  }
+};
 
 export const Step1SelectRole = () => {
   const { goToNext, setStep, formData, setFormData } = useSignUpContext();
-  const handleRoleChange = (selectedRole: string) => {
-    setFormData((prev) => ({ ...prev, institutionRole: selectedRole }));
 
-    if (selectedRole === '사회복지사') {
+  const handleRoleChange = (korLabel: string) => {
+    const rank = mapToInstitutionRank(korLabel);
+    setFormData((prev) => ({ ...prev, institutionRank: rank }));
+
+    if (rank === 'SOCIAL_WORKER') {
       setStep(2);
     }
   };
@@ -32,29 +46,30 @@ export const Step1SelectRole = () => {
 
       <CardContainer>
         <CheckCard
-          pressed={formData.institutionRole === '센터장'}
+          pressed={formData.institutionRank === 'CENTER_DIRECTOR'}
           text="센터장 입니다."
           onClick={() => handleRoleChange('센터장')}
         />
         <CheckCard
-          pressed={formData.institutionRole === '대표'}
+          pressed={formData.institutionRank === 'REPRESENTATIVE'}
           text="대표 입니다."
           onClick={() => handleRoleChange('대표')}
         />
         <CheckCard
-          pressed={formData.institutionRole === '사회복지사'}
+          pressed={formData.institutionRank === 'SOCIAL_WORKER'}
           text="사회복지사 입니다."
           onClick={() => handleRoleChange('사회복지사')}
         />
       </CardContainer>
+
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'} variant="blue2">
+        <Button onClick={goToPrev} height="52px" variant="blue2">
           이전
         </Button>
         <Button
           onClick={goToNext}
-          disabled={!formData.institutionRole}
-          variant={formData.institutionRole ? 'blue' : 'gray'}
+          disabled={!formData.institutionRank}
+          variant={formData.institutionRank ? 'blue' : 'gray'}
           height="52px"
         >
           다음

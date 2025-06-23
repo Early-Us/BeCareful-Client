@@ -2,7 +2,18 @@ import { useState, useEffect } from 'react';
 import { ReactComponent as SearchIcon } from '@/assets/icons/signup/SearchIcon.svg';
 import { styled } from 'styled-components';
 
-const DUMMY_INSTITUTIONS = ['기관1', '기관2', '기관3', '기관있음']; //TODO 나중에 API로 변경
+const DUMMY_INSTITUTIONS = [
+  '재활전문 주간보호센터',
+  '전주재가복지센터',
+  '영생어르신돌봄센터',
+  '참좋은재가복지센터',
+  '전주에코데이케어',
+  '노아노인복지센터',
+  '강산재가노인복지센터',
+  '서전주재가노인복지센터',
+  '삼천재가노인복지센터',
+  '성심재활전문노인복지센터',
+]; //TODO 나중에 API로 변경
 
 export const InstitutionSearchInput = ({
   onInstitutionSelect,
@@ -119,6 +130,7 @@ const Dropdown = styled.ul`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   padding: 8px 0;
   margin-top: 4px;
+  z-index: 10;
 `;
 
 const DropdownItem = styled.li`

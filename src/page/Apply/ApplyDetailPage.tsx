@@ -3,7 +3,7 @@ import { OrganizationInfo } from '@/components/Works/WorkDetail/OrganizationInfo
 import { WorkDetailMain } from '@/components/Works/WorkDetail/WorkDetailMain';
 import { WorkHeader } from '@/components/Works/WorkDetail/WorkHeader';
 import { WorkInfo } from '@/components/Works/WorkDetail/WorkInfo';
-import { RecruitmentDetailResponse } from '@/type/Work';
+import { RecruitmentDetailResponse } from '@/types/Work';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';

@@ -2,9 +2,52 @@ import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
+import { useEffect } from 'react';
+import { useSignUpMember } from '@/api/signupFunnel';
+import { useSetRecoilState } from 'recoil';
+import { currentUserInfo } from '@/recoil/currentUserInfo';
+import { useNavigate } from 'react-router-dom';
 
 export const Step6SignUpComplete = () => {
-  const { goToPrev } = useSignUpContext();
+  const { formData } = useSignUpContext();
+  const setCurrentUser = useSetRecoilState(currentUserInfo);
+  const { mutate } = useSignUpMember();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (formData.nursingInstitutionId != null) {
+      mutate(
+        {
+          nursingInstitutionId: formData.nursingInstitutionId,
+          realName: formData.realName,
+          nickName: formData.nickName,
+          birthYymmdd: formData.birthYymmdd,
+          genderCode: formData.genderCode,
+          phoneNumber: formData.phoneNumber,
+          institutionRank: formData.institutionRank,
+          isAgreedToTerms: formData.isAgreedToTerms,
+          isAgreedToCollectPersonalInfo: formData.isAgreedToCollectPersonalInfo,
+          isAgreedToReceiveMarketingInfo:
+            formData.isAgreedToReceiveMarketingInfo,
+        },
+        {
+          onSuccess: () => {
+            setCurrentUser({
+              realName: formData.realName,
+              nickName: formData.nickName,
+              phoneNumber: formData.phoneNumber,
+              institutionRank: formData.institutionRank,
+            });
+            navigate('/community/create');
+          },
+          onError: (error) => {
+            console.error('회원가입 실패:', error); //TODO
+          },
+        },
+      );
+    }
+  }, [formData, mutate]);
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -14,12 +57,13 @@ export const Step6SignUpComplete = () => {
           <span className="highlight">지금 바로 서비스를 시작해보세요!</span>
         </Title>
       </HeaderSection>
+
       <SignUpCompleteContainer>
         <SignUpComplete />
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'} variant="blue">
+        <Button height="52px" variant="blue" disabled>
           돌봄다리 시작하기
         </Button>
       </ButtonContainer>

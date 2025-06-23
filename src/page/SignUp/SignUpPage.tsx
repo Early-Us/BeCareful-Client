@@ -1,70 +1,57 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 import { useState } from 'react';
-import { CareGiverCard } from '@/components/SignUp/CareGiverCard';
 
 import { Button } from '@/components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { InstitutionCard } from '@/components/SignUp/InstitutionCard';
+
+import {
+  CardType,
+  SignUpCardSelector,
+} from '@/components/SignUp/common/SignUpCardSelector';
+import { useGetGuestInfo } from '@/hooks/SignUp/useGetGuestInfo';
 
 export const SignUpPage = () => {
-  const [pressed, setPressed] = useState<'caregiver' | 'institution' | null>(
-    null,
-  );
+  const [cardPressed, setCardPressed] = useState<CardType | null>(null);
   const navigate = useNavigate();
 
-  const handleCardClick = (cardType: 'caregiver' | 'institution') => {
-    setPressed(cardType);
+  const handleNextStep = () => {
+    if (!cardPressed) return;
+    navigate(`/signup/${cardPressed}`);
   };
 
-  const handleNextStep = () => {
-    if (pressed) {
-      if (pressed === 'caregiver') {
-        navigate('/signup/caregiver');
-      } else if (pressed === 'institution') {
-        navigate('/signup/institution');
-      }
-    }
-  };
+  useGetGuestInfo();
 
   return (
-    <FormWrapper>
-      <SignUpPageContainer>
-        <IconContainer>
+    <PageLayout>
+      <ContentWrapper>
+        <BackButtonWrapper>
           <IconArrowLeft onClick={() => navigate('/login')} />
-        </IconContainer>
+        </BackButtonWrapper>
         <Header>
           환영합니다!
-          <div>
+          <>
             <span className="highlight">회원 유형을 선택</span>
             <span>하세요</span>
-          </div>
+          </>
         </Header>
-        <CardContainer>
-          <div onClick={() => handleCardClick('caregiver')}>
-            <CareGiverCard pressed={pressed === 'caregiver'} />
-          </div>
-
-          <div onClick={() => handleCardClick('institution')}>
-            <InstitutionCard pressed={pressed === 'institution'} />
-          </div>
-        </CardContainer>
-        <ButtonContainer>
+        <SignUpCardSelector pressed={cardPressed} onSelect={setCardPressed} />
+        <FooterButtonBar>
           <Button
-            variant={pressed ? 'blue' : 'disabled'}
+            variant={cardPressed ? 'blue' : 'disabled'}
             height="52px"
             onClick={handleNextStep}
-            disabled={!pressed}
+            disabled={!cardPressed}
           >
             다음 단계로 이동
           </Button>
-        </ButtonContainer>
-      </SignUpPageContainer>
-    </FormWrapper>
+        </FooterButtonBar>
+      </ContentWrapper>
+    </PageLayout>
   );
 };
 
-const FormWrapper = styled.div`
+const PageLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,7 +60,7 @@ const FormWrapper = styled.div`
   margin: 24px 16px auto 16px;
 `;
 
-const SignUpPageContainer = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -81,7 +68,7 @@ const SignUpPageContainer = styled.div`
   width: 100%;
 `;
 
-const IconContainer = styled.div`
+const BackButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
@@ -107,18 +94,7 @@ const Header = styled.div`
   }
 `;
 
-const CardContainer = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: stretchs;
-  justify-content: center;
-  box-sizing: border-box;
-  margin-top: 20px;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const ButtonContainer = styled.div`
+const FooterButtonBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

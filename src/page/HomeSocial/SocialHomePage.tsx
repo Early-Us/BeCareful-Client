@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
-import { ReactComponent as Chat } from '@/assets/icons/home/Chat.svg';
+import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 // import { ReactComponent as ChatNew } from '@/assets/icons/home/ChatNew.svg';
 import { ReactComponent as Institution } from '@/assets/icons/socailHome/Institution.svg';
 import { ReactComponent as ArrowDetail } from '@/assets/icons/socailHome/ArrowDetail.svg';
@@ -15,7 +15,7 @@ import { ReactComponent as Applyer } from '@/assets/icons/socailHome/Applyer.svg
 import { ReactComponent as Applying } from '@/assets/icons/socailHome/Applying.svg';
 import { JobLevelBox } from '@/components/HomeSocial/JobLevelBox';
 import { Button } from '@/components/common/Button/Button';
-import { SocialTabBar } from '@/components/common/SocialTabBar';
+import { SocialTabBar } from '@/components/common/TabBarSocial';
 
 interface ElderlyInfo {
   name: string;

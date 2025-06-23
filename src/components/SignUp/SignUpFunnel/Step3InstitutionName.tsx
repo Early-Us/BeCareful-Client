@@ -1,44 +1,23 @@
 import { InstitutionFunnel } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { useSignUpContext } from '@/contexts/SignUpContext';
-import { useState } from 'react';
 
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
+import { useInstitutionSearch } from '@/hooks/SignUp/useInstitutionSearch';
 
 export const Step3InstitutionName = () => {
-  const { goToNext, goToPrev } = useSignUpContext();
+  const {
+    institutionName,
+    setInstitutionName,
+    isRegisteringInstitution,
+    handleCheckInstitution,
+    handleClickRegisterInstitution,
+    handleRegisterComplete,
+    handleRegisterCancel,
+    isLoading,
+  } = useInstitutionSearch();
 
-  const [institutionName, setInstitutionName] = useState('');
-  const [, setInstitutionExists] = useState<null | boolean>(null);
-  const [isRegisteringInstitution, setIsRegisteringInstitution] =
-    useState(false);
-
-  const handleCheckInstitution = () => {
-    if (institutionName === '기관있음') {
-      setInstitutionExists(true);
-      goToNext();
-    } else {
-      setInstitutionExists(false);
-      setIsRegisteringInstitution(true);
-    }
-  };
-
-  const handleRegisterComplete = () => {
-    setIsRegisteringInstitution(false);
-    goToNext();
-  };
-
-  const handleRegisterCancel = () => {
-    setIsRegisteringInstitution(false);
-    goToPrev();
-  };
-
-  const handleClickRegisterInstitution = () => {
-    setIsRegisteringInstitution(true);
-  };
-
-  const isInstitutionNameValid = institutionName.trim().length > 0; //TODO: api 연결하면 존재하는 기관만 넘어감
+  const isInstitutionNameValid = institutionName.trim().length > 0;
 
   if (isRegisteringInstitution) {
     return (
@@ -53,8 +32,7 @@ export const Step3InstitutionName = () => {
     <StepWrapper>
       <HeaderSection>
         <Title>
-          소속된 기관명을 입력하세요
-          <span className="highlight"> *</span>
+          소속된 기관명을 입력하세요<span className="highlight"> *</span>
         </Title>
         <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
       </HeaderSection>
@@ -74,16 +52,16 @@ export const Step3InstitutionName = () => {
       </SearchContainer>
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height={'52px'} variant="blue2">
+        <Button onClick={handleRegisterCancel} height="52px" variant="blue2">
           이전
         </Button>
         <Button
           onClick={handleCheckInstitution}
           height="52px"
           variant={isInstitutionNameValid ? 'blue' : 'gray'}
-          disabled={!isInstitutionNameValid}
+          disabled={!isInstitutionNameValid || isLoading}
         >
-          다음
+          {isLoading ? '검색 중...' : '다음'}
         </Button>
       </ButtonContainer>
     </StepWrapper>

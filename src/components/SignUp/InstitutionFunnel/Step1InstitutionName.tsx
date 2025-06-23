@@ -21,6 +21,9 @@ export const Step1InstitutionName = ({
   const handleInstitutionNameChange = (name: string) => {
     setInstitutionFormData((prev) => ({ ...prev, institutionName: name }));
   };
+  const handleInstitutionCodeChange = (code: string) => {
+    setInstitutionFormData((prev) => ({ ...prev, institutionCode: code }));
+  };
 
   const isInstitutionNameValid = institutionFormData.institutionName.length > 0;
 
@@ -38,7 +41,18 @@ export const Step1InstitutionName = ({
           onInstitutionSelect={handleInstitutionNameChange}
         />
       </SearchContainer>
-
+      <Header2Section>
+        <Title>
+          소속된 기관 코드를 입력하세요.
+          <span className="highlight"> *</span>
+        </Title>
+        <SubText>소속된 기관의 코드를 등록해 주세요.</SubText>
+      </Header2Section>
+      <SearchContainer>
+        <InstitutionSearchInput
+          onInstitutionSelect={handleInstitutionCodeChange}
+        />
+      </SearchContainer>
       <ButtonContainer>
         <Button onClick={onCancel} height={'52px'} variant="blue2">
           이전
@@ -71,6 +85,15 @@ const HeaderSection = styled.header`
   width: 100%;
   box-sizing: border-box;
   padding: 16px 20px 0 20px;
+`;
+
+const Header2Section = styled.header`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 36px 20px 0 20px;
 `;
 
 const Title = styled.h1`

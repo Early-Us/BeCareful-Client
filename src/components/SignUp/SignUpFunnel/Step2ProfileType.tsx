@@ -1,14 +1,16 @@
-import { useSignUpContext } from '@/contexts/SignUpContext';
+//import { useSignUpContext } from '@/contexts/SignUpContext';
 import { styled } from 'styled-components';
 
-import { Button } from '@/components/common/Button/Button';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
+//import { Button } from '@/components/common/Button/Button';
+//import { CheckCard } from '@/components/SignUp/SignUpFunnel/CheckCard';
 
 export const Step2ProfileType = () => {
-  const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
-  const handleTypeChange = (selectedType: string) => {
+  //const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
+  {
+    /*const handleTypeChange = (selectedType: string) => {
     setFormData((prev) => ({ ...prev, profileType: selectedType }));
-  };
+  };*/
+  }
 
   return (
     <StepWrapper>
@@ -19,7 +21,7 @@ export const Step2ProfileType = () => {
           현재 직급을 알려주세요<span className="highlight"> *</span>
         </Title>
       </HeaderSection>
-
+      {/*}
       <CardContainer>
         <CheckCard
           pressed={formData.profileType === '회장'}
@@ -49,7 +51,7 @@ export const Step2ProfileType = () => {
         >
           다음
         </Button>
-      </ButtonContainer>
+      </ButtonContainer>*/}
     </StepWrapper>
   );
 };
@@ -80,7 +82,7 @@ const Title = styled.h1`
     color: ${({ theme }) => theme.colors.mainBlue};
   }
 `;
-
+/*
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -102,3 +104,4 @@ const CardContainer = styled.div`
   gap: 8px;
   width: 100%;
 `;
+*/

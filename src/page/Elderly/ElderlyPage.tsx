@@ -1,5 +1,5 @@
 import { NavBar } from '@/components/common/NavBar';
-import { SocialTabBar } from '@/components/common/SocialTabBar';
+import { SocialTabBar } from '@/components/common/TabBarSocial';
 import { ElderlyCard } from '@/components/Elderly/ElderlyCard';
 import axios from 'axios';
 import { useEffect, useState } from 'react';

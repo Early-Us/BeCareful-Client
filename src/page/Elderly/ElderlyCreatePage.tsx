@@ -6,7 +6,7 @@ import { Button } from '@/components/common/Button/Button';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { ElderlyDropDown } from '@/components/Elderly/ElderlyDropDown';
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/common/Modal/Modal';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { ReactComponent as ButtonLeft } from '@/assets/icons/elderly/ButtonLeft.svg';
 import { CareTypeList } from '@/data/CareTypeList';

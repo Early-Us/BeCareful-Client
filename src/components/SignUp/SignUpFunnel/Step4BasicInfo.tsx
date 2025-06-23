@@ -5,36 +5,19 @@ import { NameInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/NameI
 import { NicknameInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/NicknameInput';
 import { PhoneNumberInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/PhoneNumberInput';
 import { ResidentIdInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/ResidentIdInput';
-import { useNicknameValidation } from '@/hooks/useNicknameValidation';
+import { useBasicInfoForm } from '@/hooks/SignUp/useBasicInfoForm';
 
 export const Step4BasicInfo = () => {
-  const { goToNext, goToPrev, formData, setFormData } = useSignUpContext();
-  const { message, state, checkNickname, resetMessage } =
-    useNicknameValidation();
-
-  const handleChange =
-    (field: keyof typeof formData) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: e.target.value,
-      }));
-
-      if (field === 'nickname') {
-        resetMessage();
-      }
-    };
-
-  const handleCheckDuplicate = () => {
-    checkNickname(formData.nickname);
-  };
-
-  const isFormValid =
-    formData.name.trim() &&
-    formData.nickname.trim() &&
-    formData.birthDate.trim() &&
-    formData.residentId.trim() &&
-    formData.phoneNumber.trim();
+  const { goToNext, goToPrev } = useSignUpContext();
+  const {
+    formData,
+    isFormValid,
+    handleChange,
+    handleCheckDuplicate,
+    handleBirthAndGenderChange,
+    message,
+    state,
+  } = useBasicInfoForm();
 
   return (
     <StepWrapper>
@@ -42,28 +25,40 @@ export const Step4BasicInfo = () => {
         <Title>담당자 기본 정보를 입력하세요.</Title>
       </HeaderSection>
 
-      <NameInput value={formData.name} onChange={handleChange('name')} />
+      <NameInput
+        value={formData.realName}
+        onChange={handleChange('realName')}
+      />
       <NicknameInput
-        value={formData.nickname}
-        onChange={handleChange('nickname')}
+        value={formData.nickName}
+        onChange={handleChange('nickName')}
         onCheckDuplicate={handleCheckDuplicate}
       />
       {message && (
         <ValidationMessage state={state}>{message}</ValidationMessage>
       )}
       <ResidentIdInput
-        birthDate={formData.birthDate}
-        genderInput={formData.residentId}
-        onBirthDateChange={handleChange('birthDate')}
-        onGenderChange={handleChange('residentId')}
+        birthDate={formData.birthYymmdd}
+        genderInput={
+          formData.genderCode > 0 ? formData.genderCode.toString() : ''
+        }
+        onBirthDateChange={(e) =>
+          handleBirthAndGenderChange(
+            e.target.value,
+            formData.genderCode.toString(),
+          )
+        }
+        onGenderChange={(e) =>
+          handleBirthAndGenderChange(formData.birthYymmdd, e.target.value)
+        }
       />
       <PhoneNumberInput
         value={formData.phoneNumber}
-        onChange={handleChange('phoneNumber')} //TODO: api 연결하면 수정불가로 바뀜
+        onChange={handleChange('phoneNumber')}
       />
 
       <ButtonContainer>
-        <Button onClick={goToPrev} height="52px">
+        <Button onClick={goToPrev} height="52px" variant="blue2">
           이전
         </Button>
         <Button
@@ -78,6 +73,7 @@ export const Step4BasicInfo = () => {
     </StepWrapper>
   );
 };
+
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -118,7 +114,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const ValidationMessage = styled.p<{ state: 'default' | 'error' }>`
+const ValidationMessage = styled.p<{ state: 'default' | 'error' | 'success' }>`
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;

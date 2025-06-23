@@ -1,7 +1,10 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { ReactComponent as ProfileImage } from '@/assets/icons/signup/SocialProfileImage.svg';
+
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
+
+import { ProfileImageUploader } from '@/components/SignUp/InstitutionFunnel/Step5UploadPhoto/ProfileImageUploader';
+import { useUploadInstitutionProfileImage } from '@/api/institutionFunnel';
 
 interface StepProps {
   goToNext: () => void;
@@ -18,19 +21,23 @@ export const Step5UploadPhoto = ({
   institutionFormData,
   setInstitutionFormData,
 }: StepProps) => {
-  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const imageUrl = reader.result as string;
-        setInstitutionFormData((prev) => ({
-          ...prev,
-          institutionImageUrl: imageUrl,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
+  const { mutate: uploadImage } = useUploadInstitutionProfileImage();
+
+  const handleImageUpload = (file: File) => {
+    uploadImage(
+      { file, name: institutionFormData.institutionName },
+      {
+        onSuccess: (url) => {
+          setInstitutionFormData((prev) => ({
+            ...prev,
+            profileImageUrl: url,
+          }));
+        },
+        onError: () => {
+          alert('이미지 업로드에 실패했습니다.');
+        },
+      },
+    );
   };
 
   return (
@@ -44,22 +51,10 @@ export const Step5UploadPhoto = ({
       </HeaderSection>
 
       <ProfileContainer>
-        <ProfileImageWrapper>
-          <ProfileImageInput
-            type="file"
-            accept="image/*"
-            onChange={handleProfileImageChange}
-          />
-
-          {institutionFormData.institutionImageUrl ? (
-            <ProfileImageDisplay
-              src={institutionFormData.institutionImageUrl}
-              alt="Profile"
-            />
-          ) : (
-            <ProfileImage />
-          )}
-        </ProfileImageWrapper>
+        <ProfileImageUploader
+          imageUrl={institutionFormData.profileImageUrl}
+          onChange={handleImageUpload}
+        />
       </ProfileContainer>
 
       <ButtonContainer>
@@ -73,7 +68,6 @@ export const Step5UploadPhoto = ({
     </StepWrapper>
   );
 };
-
 const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -125,26 +119,4 @@ const ProfileContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px 20px 0px 20px;
-`;
-
-const ProfileImageWrapper = styled.div`
-  position: relative;
-`;
-
-const ProfileImageInput = styled.input`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-`;
-
-const ProfileImageDisplay = styled.img`
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid ${({ theme }) => theme.colors.gray300};
 `;

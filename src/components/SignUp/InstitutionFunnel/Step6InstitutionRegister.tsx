@@ -2,12 +2,31 @@ import { styled } from 'styled-components';
 
 import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
+import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
+import { useRegisterInstitution } from '@/api/institutionFunnel';
 
 interface StepProps {
-  onComplete: () => void;
+  onComplete: (newInstitutionId: number) => void;
+  institutionFormData: InstitutionFormData;
 }
 
-export const Step6InstitutionRegister = ({ onComplete }: StepProps) => {
+export const Step6InstitutionRegister = ({
+  onComplete,
+  institutionFormData,
+}: StepProps) => {
+  const { mutate } = useRegisterInstitution();
+
+  const handleRegister = () => {
+    mutate(institutionFormData, {
+      onSuccess: (newInstitutionId) => {
+        onComplete(newInstitutionId);
+      },
+      onError: () => {
+        alert('기관 등록에 실패했습니다.');
+      },
+    });
+  };
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -22,7 +41,7 @@ export const Step6InstitutionRegister = ({ onComplete }: StepProps) => {
       </SignUpCompleteContainer>
 
       <ButtonContainer>
-        <Button onClick={onComplete} height={'52px'} variant="blue">
+        <Button onClick={handleRegister} height="52px" variant="blue">
           회원 가입 진행하기
         </Button>
       </ButtonContainer>
