@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { ReactComponent as Application } from '@/assets/icons/mypage/Application.svg';
 import { ReactComponent as Career } from '@/assets/icons/mypage/Career.svg';
 import WorkApply from '@/components/MyPage/WorkApply';
-import { TabBar } from '@/components/common/TabBar';
+import CaregiverTabBar from '@/components/Caregiver/CaregiverTabBar';
 
 interface WorkLocation {
   siDo: string;
@@ -295,7 +295,7 @@ const MyPage = () => {
 
         <Label onClick={() => logout()}>로그아웃</Label>
       </Container>
-      <TabBar />
+      <CaregiverTabBar />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { ApplyHeader } from '@/components/Apply/ApplyHeader';
 import { ApplyTab } from '@/components/Apply/ApplyTab';
-import { TabBar } from '@/components/common/TabBar';
+import CaregiverTabBar from '@/components/Caregiver/CaregiverTabBar';
 import { styled } from 'styled-components';
 
 export const ApplyPage = () => {
@@ -10,7 +10,7 @@ export const ApplyPage = () => {
       <TabContainer>
         <ApplyTab />
       </TabContainer>
-      <TabBar />
+      <CaregiverTabBar />
     </div>
   );
 };
