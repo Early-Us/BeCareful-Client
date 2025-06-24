@@ -15,25 +15,30 @@ export const CommunityCreatePage = () => {
   const navigate = useNavigate();
   const user = useRecoilValue(currentUserInfo);
 
+  const handleLogoClick = () => {
+    navigate('/home/caregiver'); //TODO
+  };
+
+  const handleChatClick = () => {
+    navigate('/chatlist/caregiver'); //TODO
+  };
+
   return (
     <Container>
       <NavBar
         left={
-          <NavLeft
-            onClick={() => {
-              navigate('/home/caregiver'); //TODO
-            }}
-          >
+          <NavLeft onClick={handleLogoClick}>
             <Logo />
           </NavLeft>
         }
         right={
-          <NavRight onClick={() => navigate('/chatlist/caregiver')}>
+          <NavRight onClick={handleChatClick}>
             <Chat />
           </NavRight>
         }
         color="blue"
       />
+
       <MainWrapper>
         <LabelWrapper>
           <Name>
@@ -41,10 +46,10 @@ export const CommunityCreatePage = () => {
             <br />
             협회 커뮤니티를 둘러보세요.
           </Name>
-
           <DateLabel>{getTodayDate()}</DateLabel>
         </LabelWrapper>
       </MainWrapper>
+
       <HomeMainContent />
       <SocialTabBar />
     </Container>
