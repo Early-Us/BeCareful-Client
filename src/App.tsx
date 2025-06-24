@@ -78,7 +78,6 @@ function App() {
       <Route path="/community" element={<CommunityPage />} />
       <Route path="/community/:postId" element={<CommunityPost />} />
       <Route path="/community/create" element={<CommunityCreatePage />} />
-      <Route path="/home" element={<CommunityCreatePage />} />
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
       {/* 사회복지사 */}
