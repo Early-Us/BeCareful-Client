@@ -9,6 +9,25 @@ export const HomeMainContent = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleCreateClick = () => {
+    navigate('/community/signup');
+    window.scrollTo(0, 0);
+  };
+
+  const handleJoinClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalConfirm = () => {
+    setIsModalOpen(false);
+    navigate('/community/signup');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <SectionWrapper>
       <ScheduleWrapper>
@@ -17,51 +36,44 @@ export const HomeMainContent = () => {
       </ScheduleWrapper>
 
       <ButtonsWrapper>
-        <ApplyButton
-          light
-          onClick={() => {
-            navigate('/community/signup');
-            window.scrollTo(0, 0);
-          }}
-        >
+        <ApplyButton light onClick={handleCreateClick}>
           <ApplyWrapper>
             <Label>커뮤니티</Label>
             <ApplyTitle>만들기</ApplyTitle>
           </ApplyWrapper>
           <ChangeWrapper>
             <Label>협회 회장</Label>
-            <Arrow light={true}>
+            <Arrow light>
               <ArrowRightCircle />
             </Arrow>
           </ChangeWrapper>
         </ApplyButton>
 
-        <ApplyButton onClick={() => setIsModalOpen(true)}>
+        <ApplyButton onClick={handleJoinClick}>
           <ApplyWrapper>
             <Label>커뮤니티</Label>
             <ApplyTitle>가입하기</ApplyTitle>
           </ApplyWrapper>
           <ChangeWrapper>
             <Label>협회 임원진/회원</Label>
-            <Arrow light={false}>
+            <Arrow>
               <ArrowRightCircle />
             </Arrow>
           </ChangeWrapper>
         </ApplyButton>
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <ModalButtons
-            onClose={() => setIsModalOpen(false)}
-            title="커뮤니티 만들기 권한이 없습니다."
-            detail="협회 임원진/회원은 커뮤니티를 가입해주세요!"
-            right="커뮤니티 가입하기"
-            handleLeftBtnClick={() => setIsModalOpen(false)}
-            handleRightBtnClick={() => {
-              navigate('/community/signup');
-              window.scrollTo(0, 0);
-            }}
-          />
-        </Modal>
       </ButtonsWrapper>
+
+      {/*TODO*/}
+      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+        <ModalButtons
+          title="커뮤니티 만들기 권한이 없습니다."
+          detail="협회 임원진/회원은 커뮤니티를 가입해주세요!"
+          right="커뮤니티 가입하기"
+          handleLeftBtnClick={handleModalClose}
+          handleRightBtnClick={handleModalConfirm}
+          onClose={handleModalClose}
+        />
+      </Modal>
     </SectionWrapper>
   );
 };
