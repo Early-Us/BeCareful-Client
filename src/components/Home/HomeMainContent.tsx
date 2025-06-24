@@ -115,7 +115,9 @@ const ApplyButton = styled.button<{ light?: boolean }>`
   border-radius: 12px;
   width: 100%;
   background: ${({ light, theme }) =>
-    light ? theme.colors.white : theme.colors.mainBlue};
+    light
+      ? 'linear-gradient(143deg, var(--White, #FFF) 0%, var(--sub-blue, #F0F5FF) 98.95%)'
+      : theme.colors.mainBlue};
   color: ${({ light, theme }) =>
     light ? theme.colors.mainBlue : theme.colors.white};
 
