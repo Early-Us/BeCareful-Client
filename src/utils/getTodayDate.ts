@@ -1,15 +1,11 @@
 export const getTodayDate = () => {
   const today = new Date();
-  const week = ['', '월', '화', '수', '목', '금', '토', '일'];
-  if (today.getMonth() < 9) {
-    if (today.getDate() < 10)
-      return `${today.getFullYear()}.0${today.getMonth() + 1}.0${today.getDate()} ${week[today.getDay()]}요일`;
-    else
-      return `${today.getFullYear()}.0${today.getMonth() + 1}.${today.getDate()} ${week[today.getDay()]}요일`;
-  } else {
-    if (today.getDate() < 10)
-      return `${today.getFullYear()}.0${today.getMonth() + 1}.0${today.getDate()} ${week[today.getDay()]}요일`;
-    else
-      return `${today.getFullYear()}.0${today.getMonth() + 1}.${today.getDate()} ${week[today.getDay()]}요일`;
-  }
+
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const date = today.getDate().toString().padStart(2, '0');
+  const week = ['일', '월', '화', '수', '목', '금', '토'];
+  const day = week[today.getDay()];
+
+  return `${year}.${month}.${date} ${day}요일`;
 };
