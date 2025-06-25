@@ -21,7 +21,7 @@ export const CommunityCreatePage = () => {
         left={
           <NavLeft
             onClick={() => {
-              navigate('/home/caregiver'); //TODO
+              navigate('/caregiver'); //TODO
             }}
           >
             <Logo />
