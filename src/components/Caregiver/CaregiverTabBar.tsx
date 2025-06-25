@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as Home } from '@/assets/icons/tabbar/Home.svg';
-import { ReactComponent as Task } from '@/assets/icons/tabbar/Task.svg';
-import { ReactComponent as Recruite } from '@/assets/icons/tabbar/Recuite.svg';
+import { ReactComponent as Work } from '@/assets/icons/tabbar/Work.svg';
+import { ReactComponent as Apply } from '@/assets/icons/tabbar/Apply.svg';
 import { ReactComponent as Mypage } from '@/assets/icons/tabbar/Mypage.svg';
 import { NavLink } from 'react-router-dom';
 
@@ -13,12 +13,12 @@ const CaregiverTabBar = () => {
         <Home />
         <span>홈</span>
       </TabItem>
-      <TabItem to="/caregiver/task" end>
-        <Task />
+      <TabItem to="/caregiver/work" end>
+        <Work />
         <span>일자리</span>
       </TabItem>
-      <TabItem to="/caregiver/recruite" end>
-        <Recruite />
+      <TabItem to="/caregiver/apply" end>
+        <Apply />
         <span>지원현황</span>
       </TabItem>
       <TabItem to="/caregiver/mypage" end>
