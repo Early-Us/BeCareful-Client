@@ -9,7 +9,7 @@ import CommunityWritePage from './CommunityWritePage';
 import { SocialTabBar } from '@/components/common/TabBarSocial';
 import CommunityDetail from '@/components/Community/CommunityDetail';
 import { useQuery } from '@tanstack/react-query';
-import { AssociationInfoResponse } from '@/types/Community';
+import { AssociationInfoResponse } from '@/types/Community/community';
 import { getAssociationInfo } from '@/api/community';
 
 const CommunityPage = () => {
