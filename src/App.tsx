@@ -8,7 +8,6 @@ import { OnboardingPage } from './page/Onboarding/OnboardingPage';
 import { SignUpProvider } from './contexts/SignUpContext';
 import { SignUpPage } from './page/SignUp/SignUpPage';
 import { InstitutionSignUpPage } from './page/SignUp/InstitutionSignUpPage';
-import HomePage from './page/Home/HomePage';
 import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import MyPage from './page/MyPage/MyPage';
 import EditProfile from './page/MyPage/EditProfile';
@@ -79,7 +78,6 @@ function App() {
         element={<CaregiverLayout />}
       />
 
-      <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/mypage/profile" element={<EditProfile />} />
