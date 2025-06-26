@@ -7,9 +7,8 @@ import { MatchingApplyModal } from '@/components/Matching/Modal/MatchingApplyMod
 import { ElderData } from '@/types/Matching';
 import axios from 'axios';
 
-import { SocialTabBar } from '@/components/common/TabBarSocial';
-
 import { styled } from 'styled-components';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
 
 export const MatchingApplyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -86,7 +85,7 @@ export const MatchingApplyPage = () => {
         )}
       </Container>
 
-      <SocialTabBar />
+      <SocialWorkerTabBar />
     </>
   );
 };

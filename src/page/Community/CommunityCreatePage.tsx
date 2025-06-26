@@ -5,11 +5,11 @@ import { NavBar } from '@/components/common/NavBar';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import { SocialTabBar } from '@/components/common/TabBarSocial';
 import { getTodayDate } from '@/utils/getTodayDate';
 import { HomeMainContent } from '@/components/Home/HomeMainContent';
 import { useRecoilValue } from 'recoil';
 import { currentUserInfo } from '@/recoil/currentUserInfo';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
 
 export const CommunityCreatePage = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export const CommunityCreatePage = () => {
       </MainWrapper>
 
       <HomeMainContent />
-      <SocialTabBar />
+      <SocialWorkerTabBar />
     </Container>
   );
 };
