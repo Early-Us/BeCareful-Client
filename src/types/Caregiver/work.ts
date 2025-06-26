@@ -1,4 +1,4 @@
-import { CareType, Recruitment, WorkApplication, WorkDay } from './common';
+import { Recruitment, WorkApplication, WorkDay } from './common';
 
 /* 요양보호사 일자리 화면 */
 // 일자리 신청 정보 조회 응답
@@ -27,7 +27,8 @@ export interface InstitutionInfo {
 }
 
 export interface CareInfo {
-  careType: CareType;
+  // careType: CareType;
+  careType: string;
   detailCareTypes: string[];
 }
 

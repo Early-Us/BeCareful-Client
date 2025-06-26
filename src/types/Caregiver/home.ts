@@ -1,4 +1,4 @@
-import { CareType, WorkDay } from './common';
+import { WorkDay } from './common';
 
 /* 요양보호사 홈 화면 */
 export interface WorkSchedule {
@@ -7,7 +7,8 @@ export interface WorkSchedule {
   seniorName: string;
   seniorGender: 'MALE' | 'FEMALE';
   seniorAge: number;
-  seniorCareType: CareType[];
+  // seniorCareType: CareType[];
+  seniorCareType: string[];
   workLocation: string;
 }
 
@@ -29,7 +30,8 @@ export interface CaregiverCompletedMatching {
   elderlyProfileImageUrl: string;
   workDays: WorkDay[];
   workAddress: string;
-  careTypes: CareType[];
+  // careTypes: CareType[];
+  careTypes: string[];
   healthCondition: string;
   institutionName: string;
   note: string;
