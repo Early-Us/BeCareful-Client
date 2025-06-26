@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as HomeJob } from '@/assets/icons/home/HomeJob.svg';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/common/NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 

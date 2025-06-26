@@ -1,4 +1,4 @@
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/common/NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components';

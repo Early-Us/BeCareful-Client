@@ -1,4 +1,4 @@
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/common/NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { ReactComponent as Elederly } from '@/assets/icons/elderly/Elderly.svg';

@@ -1,4 +1,4 @@
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/common/NavBar/NavBar';
 import { SocialTabBar } from '@/components/common/TabBarSocial';
 import { ElderlyCard } from '@/components/Elderly/ElderlyCard';
 import axios from 'axios';

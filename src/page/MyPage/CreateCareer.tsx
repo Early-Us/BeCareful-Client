@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { useNavigate } from 'react-router-dom';
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/common/NavBar/NavBar';
 import { Tab } from '@/components/common/Tab/Tab';
 import { CareerNew } from '@/components/MyPage/CareerNew';
 import { CareerExp } from '@/components/MyPage/CareerExp';
