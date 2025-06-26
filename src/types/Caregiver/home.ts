@@ -7,7 +7,6 @@ export interface WorkSchedule {
   seniorName: string;
   seniorGender: 'MALE' | 'FEMALE';
   seniorAge: number;
-  // seniorCareType: CareType[];
   seniorCareType: string[];
   workLocation: string;
 }
@@ -30,7 +29,6 @@ export interface CaregiverCompletedMatching {
   elderlyProfileImageUrl: string;
   workDays: WorkDay[];
   workAddress: string;
-  // careTypes: CareType[];
   careTypes: string[];
   healthCondition: string;
   institutionName: string;

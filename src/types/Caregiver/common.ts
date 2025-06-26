@@ -9,14 +9,6 @@ export type WorkDay =
   | 'SATURDAY'
   | 'SUNDAY';
 
-// careType
-// export type CareType =
-//   | '식사보조'
-//   | '이동보조'
-//   | '배변보조'
-//   | '일상생활'
-//   | '질병보조';
-
 /* 공통 인터페이스 정의 */
 // 근무 지역
 export interface WorkLocation {

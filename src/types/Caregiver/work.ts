@@ -27,7 +27,6 @@ export interface InstitutionInfo {
 }
 
 export interface CareInfo {
-  // careType: CareType;
   careType: string;
   detailCareTypes: string[];
 }
