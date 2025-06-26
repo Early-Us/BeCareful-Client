@@ -1,6 +1,5 @@
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
@@ -12,6 +11,10 @@ import { ReactComponent as ArrowRight } from '@/assets/icons/ArrowRight.svg';
 import { ReactComponent as ArrowRightCircle } from '@/assets/icons/caregiver/home/ArrowRightCircle.svg';
 import { ReactComponent as Notice } from '@/assets/icons/caregiver/home/Notice.svg';
 import { ReactComponent as Status } from '@/assets/icons/caregiver/home/Status.svg';
+import CaregiverHomeWorkCard from '@/components/Caregiver/Home/CaregiverHomeWorkCard';
+import { useQuery } from '@tanstack/react-query';
+import { CaregiverHomeResponse } from '@/types/Caregiver/home';
+import { getCaregiverHomeInfo } from '@/api/caregiver';
 
 const CaregiverHomePage = () => {
   const navigate = useNavigate();
@@ -19,7 +22,16 @@ const CaregiverHomePage = () => {
   // const [chatNew, setChatNew] = useState(true);
   const chatNew = true;
 
-  const [isWorking, setIsWorking] = useState(true);
+  const { data, isLoading, error } = useQuery<CaregiverHomeResponse, Error>({
+    queryKey: ['caregiverHomeInfo'],
+    queryFn: getCaregiverHomeInfo,
+  });
+  if (isLoading) {
+    console.log('getCaregiverHomeInfo: 로딩 중');
+  }
+  if (error) {
+    console.log('getCaregiverHomeInfo 에러: ', error);
+  }
 
   return (
     <Container>
@@ -35,7 +47,7 @@ const CaregiverHomePage = () => {
         right={
           <NavRight
             onClick={() => {
-              navigate('/chatlist/caregiver');
+              navigate('/caregiver/chatlist');
               window.scrollTo(0, 0);
             }}
           >
@@ -47,20 +59,19 @@ const CaregiverHomePage = () => {
       />
       <BannerWrapper>
         <div className="labelWrapper">
-          {/* {data?.isWorking ? (
+          {data?.isWorking ? (
             <label>
-              {data?.name}님,
+              {data.name}님,
               <br />
               돌봄을 시작하세요!
             </label>
-          ) : ( */}
-          <label>
-            {/* {data?.name}님, */}
-            김요양님,
-            <br />
-            오늘의 일정이에요!
-          </label>
-          {/* )} */}
+          ) : (
+            <label>
+              {data?.name}님, 김요양님,
+              <br />
+              오늘의 일정이에요!
+            </label>
+          )}
           <div
             className="pointWrapper"
             onClick={() => {
@@ -69,6 +80,7 @@ const CaregiverHomePage = () => {
             }}
           >
             <Point />
+            {/* <label className="point">{data.point}</label> */}
             <label className="point">1,500P</label>
             <ChevronRight />
           </div>
@@ -77,33 +89,23 @@ const CaregiverHomePage = () => {
       </BannerWrapper>
 
       <MainWrapper>
-        {isWorking ? (
-          // schedule && schedule.length > 0 ? (
-          //   <CardWrapper>
-          //     {schedule.map((workSchedule, index) => (
-          //       <HomeScheduleCard
-          //         key={index}
-          //         // startHour={workSchedule.workStartTime.hour}
-          //         // startMinute={workSchedule.workStartTime.minute}
-          //         // endHour={workSchedule.workEndTime.hour}
-          //         // endMinute={workSchedule.workEndTime.minute}
-          //         startTime={workSchedule.workStartTime}
-          //         endTime={workSchedule.workEndTime}
-          //         name={workSchedule.seniorName}
-          //         age={workSchedule.seniorAge}
-          //         gender={workSchedule.seniorGender === 'FEMALE' ? '여' : '남'}
-          //         caretype={workSchedule.seniorCareType.join(', ')}
-          //         location={workSchedule.workLocation}
-          //       />
-          //     ))}
-          //   </CardWrapper>
-          // ) : (
-          <ScheduleWrapper>
-            <label className="detail">편안한 하루 보내세요!</label>
-            <label className="title">오늘은 정해진 근무 일정이 없어요</label>
-          </ScheduleWrapper>
+        {data?.isWorking ? (
+          data.workScheduleList && data.workScheduleList.length > 0 ? (
+            <CardWrapper>
+              {data.workScheduleList.map((workSchedule, index) => (
+                <CaregiverHomeWorkCard
+                  key={index}
+                  workSchedule={workSchedule}
+                />
+              ))}
+            </CardWrapper>
+          ) : (
+            <ScheduleWrapper>
+              <label className="detail">편안한 하루 보내세요!</label>
+              <label className="title">오늘은 정해진 근무 일정이 없어요</label>
+            </ScheduleWrapper>
+          )
         ) : (
-          // )
           <ScheduleWrapper>
             <label className="detail">새로운 돌봄을 시작해보세요!</label>
             <label className="title">
@@ -140,8 +142,7 @@ const CaregiverHomePage = () => {
               <div className="left">
                 <label className="title">모집공고</label>
                 <div className="detail">
-                  {/* <ButtonNumber>{notice}</ButtonNumber> */}
-                  <label className="number">3</label>
+                  <label className="number">{data?.recruitmentCount}</label>
                   <label className="unit">건</label>
                 </div>
               </div>
@@ -156,8 +157,7 @@ const CaregiverHomePage = () => {
               <div className="left">
                 <label className="title">지원현황</label>
                 <div className="detail">
-                  {/* <ButtonNumber>{status}</ButtonNumber> */}
-                  <label className="number">5</label>
+                  <label className="number">{data?.applicationCount}</label>
                   <label className="unit">건</label>
                 </div>
               </div>
@@ -220,10 +220,12 @@ const BannerWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
   }
 
   .point {
     font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    cursor: pointer;
   }
 `;
 
@@ -237,15 +239,18 @@ const MainWrapper = styled.div`
   top: 192px;
 `;
 
-/* 
 const CardWrapper = styled.div`
   display: flex;
   gap: 8px;
   overflow-x: scroll;
   flex-wrap: nowrap;
-  width: calc(100% + 20px);
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
-*/
 
 const ScheduleWrapper = styled.div`
   display: flex;
