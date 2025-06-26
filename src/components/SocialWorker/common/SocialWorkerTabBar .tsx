@@ -12,10 +12,10 @@ export const SocialWorkerTabBar = () => {
 
         return (
           <TabBarContentWrapper as={Link} to={path} key={key}>
-            <TabBarIcon isActive={isActive}>
+            <TabBarIcon $isActive={isActive}>
               <Icon />
             </TabBarIcon>
-            <TabBarLabel isActive={isActive}>{label}</TabBarLabel>
+            <TabBarLabel $isActive={isActive}>{label}</TabBarLabel>
           </TabBarContentWrapper>
         );
       })}
@@ -46,18 +46,18 @@ const TabBarContentWrapper = styled.a`
   cursor: pointer;
 `;
 
-const TabBarIcon = styled.div<{ isActive: boolean }>`
+const TabBarIcon = styled.div<{ $isActive: boolean }>`
   width: 24px;
   height: 24px;
   path {
-    fill: ${({ theme, isActive }) =>
-      isActive ? theme.colors.mainBlue : theme.colors.gray200};
+    fill: ${({ theme, $isActive }) =>
+      $isActive ? theme.colors.mainBlue : theme.colors.gray200};
   }
 `;
 
-const TabBarLabel = styled.p<{ isActive: boolean }>`
+const TabBarLabel = styled.p<{ $isActive: boolean }>`
   font-size: 11px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme, isActive }) =>
-    isActive ? theme.colors.mainBlue : theme.colors.gray200};
+  color: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.mainBlue : theme.colors.gray200};
 `;
