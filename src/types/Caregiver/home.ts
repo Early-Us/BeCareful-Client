@@ -36,8 +36,7 @@ export interface CaregiverCompletedMatching {
 }
 
 // 요양보호사 확정된 일자리 리스트 조회 응답
-export type CaregiverCompletedMatchingListResponse =
-  CaregiverCompletedMatching[];
+export type CaregiverCompletedMatchingResponse = CaregiverCompletedMatching[];
 
 // 메모 수정 요청
 export interface MemoEditRequest {

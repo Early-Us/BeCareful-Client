@@ -33,7 +33,7 @@ export interface WorkApplication {
   workLocations: WorkLocation[];
   workDays: WorkDay[];
   workTimes: WorkTime[];
-  careTypes: CareType[];
+  careTypes: string[];
   workSalaryType: 'HOUR' | 'MONTH' | 'YEAR';
   workSalaryAmount: number;
 }
@@ -53,7 +53,7 @@ export interface RecruitmentInfo {
 }
 
 // 매칭 공고 리스트
-export interface MatchingListItem {
+export interface Recruitment {
   recruitmentInfo: RecruitmentInfo;
   matchingResultStatus: '높음' | '보통' | '낮음';
   isHotRecruitment: boolean;
