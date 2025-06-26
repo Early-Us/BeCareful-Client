@@ -59,7 +59,6 @@ function App() {
           </SignUpProvider>
         }
       />
-      {/*기관관리자*/}
 
       {/* 요양보호사 */}
       <Route path="/home/caregiver" element={<HomePage />} />
@@ -82,7 +81,7 @@ function App() {
       <Route path="/community/create" element={<CommunityCreatePage />} />
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
-      {/* 사회복지사 */}
+      {/*기관 관리자 */}
       <Route path="/home/social" element={<SocialHomePage />} />
       <Route path="/elderly" element={<ElderlyPage />} />
       <Route path="/elderly/create" element={<EdlerlyCreatePage />} />
