@@ -5,7 +5,7 @@ import { ReactComponent as Recruite } from '@/assets/icons/tabbar/Recuite.svg';
 import { ReactComponent as Mypage } from '@/assets/icons/tabbar/Mypage.svg';
 import { Link, useLocation } from 'react-router-dom';
 
-export const TabBar = () => {
+export const SocialWorkerTabBar = () => {
   const location = useLocation();
 
   return (

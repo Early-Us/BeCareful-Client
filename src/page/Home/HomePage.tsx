@@ -1,4 +1,4 @@
-import { TabBar } from '@/components/common/TabBar';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
 import axios from 'axios';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
@@ -129,7 +129,7 @@ const HomePage = () => {
         </PersonWrapper>
       </MainWrapper>
 
-      <TabBar />
+      <SocialWorkerTabBar />
     </Container>
   );
 };
