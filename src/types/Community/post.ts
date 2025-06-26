@@ -1,7 +1,6 @@
 import { AuthorInfo, MediaItem } from './common';
 
 /* 게시글 */
-
 // 특정 게시글 상세 조회
 export interface PostDetailResponse {
   postId: number;

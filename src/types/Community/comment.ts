@@ -1,7 +1,6 @@
 import { AuthorInfo } from './common';
 
 /* 댓글 */
-
 // 댓글 항목
 export interface Comment {
   content: string;

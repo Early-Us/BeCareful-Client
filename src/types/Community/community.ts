@@ -4,7 +4,6 @@ import { ReactComponent as Participation } from '@/assets/icons/community/Partic
 import { BoardTypeMapping } from '@/constants/board';
 
 /* 커뮤니티 홈 화면 */
-
 // 커뮤니티 탭 협회 정보 조회 응답
 export interface AssociationInfoResponse {
   associationId: number;
