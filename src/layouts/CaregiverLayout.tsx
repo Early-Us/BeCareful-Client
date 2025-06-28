@@ -1,15 +1,24 @@
 import CaregiverTabBar from '@/components/Caregiver/CaregiverTabBar';
 import CaregiverHomePage from '@/page/Caregiver/CaregiverHomePage';
-import { Route, Routes } from 'react-router-dom';
+import CaregiverMyworkPage from '@/page/Caregiver/CaregiverMyworkPage';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 const CaregiverLayout = () => {
+  const location = useLocation();
+
+  const hideTabBarPaths = ['/caregiver/mywork'];
+  const isHideTabBar = hideTabBarPaths.includes(location.pathname);
+
   return (
     <div
       style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
     >
-      <main style={{ flexGrow: 1, paddingBottom: '57px' }}>
+      <main
+        style={{ flexGrow: 1, paddingBottom: isHideTabBar ? '0px' : '57px' }}
+      >
         <Routes>
           <Route path="/" element={<CaregiverHomePage />} />
+          <Route path="/mywork" element={<CaregiverMyworkPage />} />
           {/* <Route path="jobs" element={<CaregiverJobListPage />} />
           <Route
             path="applications"
@@ -20,7 +29,7 @@ const CaregiverLayout = () => {
         {/* <Outlet /> 중첩 라우트가 있다면 사용 (예: /profile/edit) */}
       </main>
 
-      <CaregiverTabBar />
+      {!isHideTabBar && <CaregiverTabBar />}
     </div>
   );
 };
