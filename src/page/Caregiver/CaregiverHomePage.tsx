@@ -67,7 +67,7 @@ const CaregiverHomePage = () => {
             </label>
           ) : (
             <label>
-              {data?.name}님, 김요양님,
+              {data?.name}님,
               <br />
               오늘의 일정이에요!
             </label>
