@@ -5,23 +5,20 @@ import { MatchingSearchBox } from '@/components/Matching/MatchingSearchBox';
 import { MatchingApplyModal } from '@/components/Matching/Modal/MatchingApplyModal';
 
 import { ElderData } from '@/types/Matching';
-import axios from 'axios';
 
 import { styled } from 'styled-components';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { axiosInstance } from '@/api/axiosInstance';
 
 export const MatchingApplyPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<ElderData | null>(null);
   const [elderList, setElderList] = useState<ElderData[]>([]);
 
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
-  const token = sessionStorage.getItem('accessToken');
-
   useEffect(() => {
     const fetchElderList = async () => {
       try {
-        const response = await axios.get<
+        const response = await axiosInstance.get<
           {
             elderlyId: number;
             name: string;
@@ -31,15 +28,13 @@ export const MatchingApplyPage = () => {
             cognitiveLevel: string;
             profileImageUrl: string;
           }[]
-        >(`${apiUrl}/elderly/list`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        >('/elderly/list');
 
         const transformedData: ElderData[] = response.data.map((elder) => ({
           elderlyId: elder.elderlyId,
           name: elder.name,
           age: elder.age,
-          gender: elder.gender === 'MALE' ? 'MALE' : 'FEMALE',
+          gender: elder.gender,
           careLevel: elder.careLevel,
           cognitiveLevel: elder.cognitiveLevel,
           imageUrl: elder.profileImageUrl,
@@ -52,7 +47,7 @@ export const MatchingApplyPage = () => {
     };
 
     fetchElderList();
-  }, [apiUrl, token]);
+  }, []);
 
   const openModal = (data: ElderData) => {
     setModalData(data);
