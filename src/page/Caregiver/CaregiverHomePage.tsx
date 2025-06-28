@@ -168,7 +168,7 @@ const CaregiverHomePage = () => {
 
         <MyWorkButton
           onClick={() => {
-            navigate('/caregiver/work');
+            navigate('/caregiver/mywork');
             window.scrollTo(0, 0);
           }}
         >

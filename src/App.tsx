@@ -8,7 +8,6 @@ import { OnboardingPage } from './page/Onboarding/OnboardingPage';
 import { SignUpProvider } from './contexts/SignUpContext';
 import { SignUpPage } from './page/SignUp/SignUpPage';
 import { InstitutionSignUpPage } from './page/SignUp/InstitutionSignUpPage';
-import HomeMyworkPage from './page/Home/HomeMyworkPage';
 import MyPage from './page/MyPage/MyPage';
 import EditProfile from './page/MyPage/EditProfile';
 import CreateCareer from './page/MyPage/CreateCareer';
@@ -78,7 +77,6 @@ function App() {
         element={<CaregiverLayout />}
       />
 
-      <Route path="/mywork" element={<HomeMyworkPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/mypage/profile" element={<EditProfile />} />
       <Route path="/career/create" element={<CreateCareer />} />
@@ -117,7 +115,7 @@ function App() {
 
       {/* 채팅 - 요양보호사, 사회복지사 */}
       <Route path="/chatList/social" element={<ChatListPage />} />
-      <Route path="/chatList/caregiver" element={<ChatListCaregiver />} />
+      <Route path="/caregiver/chatList" element={<ChatListCaregiver />} />
       <Route path="/chatroom/:matchingId" element={<ChatRoomPage />} />
 
       {/* 테스트, 에러 페이지 */}
