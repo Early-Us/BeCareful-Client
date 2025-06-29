@@ -12,17 +12,14 @@ import {
   Title,
   TitleWrapper,
 } from '@/components/SocialWorker/ElderyCreate/Section.styles';
-import {
-  CARE_TYPES,
-  CareType,
-  CareTypeList,
-} from '@/constants/careTypes.socialWorker';
+import { CARE_TYPES, CareTypeList } from '@/constants/careTypes.socialWorker';
 import { useState } from 'react';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { ReactComponent as ButtonLeft } from '@/assets/icons/elderly/ButtonLeft.svg';
 import Modal from '@/components/common/Modal/Modal';
 import { Button } from '@/components/common/Button/Button';
 import { CareChcekBox } from '@/components/common/CheckBox/CareChcekBox';
+import { CareType } from '@/types/ElderyCreate';
 
 interface CareTypeSectionProps {
   selectedCare: CareType | null;

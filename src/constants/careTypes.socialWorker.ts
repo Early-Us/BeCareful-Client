@@ -1,3 +1,5 @@
+import { CareType } from '@/types/ElderyCreate';
+
 export const CARE_TYPES = [
   '식사보조',
   '이동보조',
@@ -5,8 +7,6 @@ export const CARE_TYPES = [
   '일상생활',
   '질병보조',
 ] as const;
-
-export type CareType = (typeof CARE_TYPES)[number];
 
 export const CareTypeList: Record<CareType, string[]> = {
   식사보조: ['식사 준비', '식사 수발', '식사 후 정리'],

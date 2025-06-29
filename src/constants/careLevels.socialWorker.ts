@@ -7,5 +7,3 @@ export const CARE_LEVELS = [
   '인지지원등급',
   '등급없음',
 ] as const;
-
-export type CareLevel = (typeof CARE_LEVELS)[number];

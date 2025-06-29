@@ -1,3 +1,6 @@
+import { CARE_LEVELS } from '@/constants/careLevels.socialWorker';
+import { CARE_TYPES } from '@/constants/careTypes.socialWorker';
+
 export interface AreaSocial {
   siDo: string;
   siGuGun: string;
@@ -11,3 +14,7 @@ export interface AreaSelectData {
     dong: string[];
   }[];
 }
+
+export type CareLevel = (typeof CARE_LEVELS)[number];
+
+export type CareType = (typeof CARE_TYPES)[number];
