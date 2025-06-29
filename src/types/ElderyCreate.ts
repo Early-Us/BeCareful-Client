@@ -18,3 +18,5 @@ export interface AreaSelectData {
 export type CareLevel = (typeof CARE_LEVELS)[number];
 
 export type CareType = (typeof CARE_TYPES)[number];
+
+export type Gender = 'MALE' | 'FEMALE';

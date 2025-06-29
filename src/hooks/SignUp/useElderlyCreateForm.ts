@@ -1,10 +1,10 @@
-import { AreaSocial, CareLevel, CareType } from '@/types/ElderyCreate';
+import { AreaSocial, CareLevel, CareType, Gender } from '@/types/ElderyCreate';
 import { useState } from 'react';
 
 export const useElderlyCreateForm = () => {
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
-  const [gender, setGender] = useState<'MALE' | 'FEMALE' | ''>('');
+  const [gender, setGender] = useState<Gender | ''>('');
   const [inmate, setInmate] = useState<'있음' | '없음' | ''>('');
   const [pet, setPet] = useState<'있음' | '없음' | ''>('');
 
