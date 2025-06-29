@@ -20,3 +20,19 @@ export type CareLevel = (typeof CARE_LEVELS)[number];
 export type CareType = (typeof CARE_TYPES)[number];
 
 export type Gender = 'MALE' | 'FEMALE';
+
+export interface ElderlyRegisterPayload {
+  name: string;
+  birthday: string;
+  inmate: boolean;
+  pet: boolean;
+  gender: Gender;
+  careLevel: CareLevel;
+  siDo: AreaSocial['siDo'];
+  siGuGun: AreaSocial['siGuGun'];
+  eupMyeonDong: AreaSocial['dongEupMyeon'];
+  detailAddress: string;
+  profileImageUrl: string;
+  healthCondition: string;
+  detailCareTypeList: CareType[];
+}
