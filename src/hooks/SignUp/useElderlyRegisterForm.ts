@@ -1,7 +1,12 @@
-import { AreaSocial, CareLevel, CareType, Gender } from '@/types/ElderyCreate';
+import {
+  AreaSocial,
+  CareLevel,
+  CareType,
+  Gender,
+} from '@/types/ElderyRegister';
 import { useState } from 'react';
 
-export const useElderlyCreateForm = () => {
+export const useElderlyRegisterForm = () => {
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState<Gender | ''>('');

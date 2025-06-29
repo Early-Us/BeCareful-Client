@@ -1,4 +1,4 @@
-import { CareType } from '@/types/ElderyCreate';
+import { CareType } from '@/types/ElderyRegister';
 
 export const CARE_TYPES = [
   '식사보조',

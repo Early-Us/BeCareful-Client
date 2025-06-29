@@ -11,7 +11,7 @@ import {
   SectionWrapper,
   Title,
   TitleWrapper,
-} from '@/components/SocialWorker/ElderyCreate/Section.styles';
+} from '@/components/SocialWorker/ElderyRegister/Section.styles';
 import { CARE_TYPES, CareTypeList } from '@/constants/careTypes.socialWorker';
 import { useState } from 'react';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
@@ -19,7 +19,7 @@ import { ReactComponent as ButtonLeft } from '@/assets/icons/elderly/ButtonLeft.
 import Modal from '@/components/common/Modal/Modal';
 import { Button } from '@/components/common/Button/Button';
 import { CareChcekBox } from '@/components/common/CheckBox/CareChcekBox';
-import { CareType } from '@/types/ElderyCreate';
+import { CareType } from '@/types/ElderyRegister';
 
 interface CareTypeSectionProps {
   selectedCare: CareType | null;

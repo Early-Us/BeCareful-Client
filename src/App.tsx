@@ -8,8 +8,8 @@ import ChatRoomPage from '@/page/Chat/ChatRoomPage';
 import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
 import CommunityPage from '@/page/Community/CommunityPage';
 import CommunitySplashPage from '@/page/CommunitySplashPage';
-import ElderlyCreatePage from '@/page/Elderly/ElderlyCreatePage';
 import ElderlyPage from '@/page/Elderly/ElderlyPage';
+import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
 import { ErrorPage } from '@/page/Error/ErrorPage';
 import HomeMyworkPage from '@/page/Home/HomeMyworkPage';
 import HomePage from '@/page/Home/HomePage';
@@ -84,7 +84,7 @@ function App() {
       {/*기관 관리자 */}
       <Route path="/home/social" element={<SocialHomePage />} />
       <Route path="/elderly" element={<ElderlyPage />} />
-      <Route path="/elderly/create" element={<ElderlyCreatePage />} />
+      <Route path="/elderly/new" element={<ElderlyRegisterPage />} />
       <Route path="/matching" element={<MatchingApplyPage />} />
       <Route path="/matching/elder-apply" element={<MatchingElderPage />} />
       <Route

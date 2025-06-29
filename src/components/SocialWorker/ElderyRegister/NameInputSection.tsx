@@ -3,23 +3,23 @@ import {
   SectionWrapper,
   Title,
   TitleWrapper,
-} from '@/components/SocialWorker/ElderyCreate/Section.styles';
+} from '@/components/SocialWorker/ElderyRegister/Section.styles';
 
-interface BirthInputSectionProps {
-  birth: string;
+interface NameInputSectionProps {
+  name: string;
   onChange: (value: string) => void;
 }
 
-export function BirthInputSection({ birth, onChange }: BirthInputSectionProps) {
+export function NameInputSection({ name, onChange }: NameInputSectionProps) {
   return (
     <SectionWrapper>
       <TitleWrapper>
-        <Title color="">생년월일</Title>
+        <Title color="">이름</Title>
         <Title color="blue">*</Title>
       </TitleWrapper>
       <Input
-        placeholder="예) 1978-05-08"
-        value={birth}
+        placeholder="이름 입력"
+        value={name}
         onChange={(e) => onChange(e.target.value)}
       />
     </SectionWrapper>

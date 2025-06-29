@@ -4,24 +4,24 @@ import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { ReactComponent as Elederly } from '@/assets/icons/elderly/Elderly.svg';
 import styled from 'styled-components';
 
-import { AreaSelectData } from '@/types/ElderyCreate';
-import { NameInputSection } from '@/components/SocialWorker/ElderyCreate/NameInputSection';
-import { BirthInputSection } from '@/components/SocialWorker/ElderyCreate/BirthInputSection';
-import { GenderSelectSection } from '@/components/SocialWorker/ElderyCreate/GenderSelectSection';
-import { GradeSelectSection } from '@/components/SocialWorker/ElderyCreate/GradeSelectSection';
-import { AddressSelectSection } from '@/components/SocialWorker/ElderyCreate/AddressSelectSection';
-import { HealthConditionSection } from '@/components/SocialWorker/ElderyCreate/HealthConditionSection';
-import { CareTypeSection } from '@/components/SocialWorker/ElderyCreate/CareTypeSection';
-import { InmateSection } from '@/components/SocialWorker/ElderyCreate/InmateSection';
-import { PetSection } from '@/components/SocialWorker/ElderyCreate/PestSection';
-import { SubmitSection } from '@/components/SocialWorker/ElderyCreate/SubmitSection';
+import { AreaSelectData } from '@/types/ElderyRegister';
+import { NameInputSection } from '@/components/SocialWorker/ElderyRegister/NameInputSection';
+import { BirthInputSection } from '@/components/SocialWorker/ElderyRegister/BirthInputSection';
+import { GenderSelectSection } from '@/components/SocialWorker/ElderyRegister/GenderSelectSection';
+import { GradeSelectSection } from '@/components/SocialWorker/ElderyRegister/GradeSelectSection';
+import { AddressSelectSection } from '@/components/SocialWorker/ElderyRegister/AddressSelectSection';
+import { HealthConditionSection } from '@/components/SocialWorker/ElderyRegister/HealthConditionSection';
+import { CareTypeSection } from '@/components/SocialWorker/ElderyRegister/CareTypeSection';
+import { InmateSection } from '@/components/SocialWorker/ElderyRegister/InmateSection';
+import { PetSection } from '@/components/SocialWorker/ElderyRegister/PestSection';
+import { SubmitSection } from '@/components/SocialWorker/ElderyRegister/SubmitSection';
 import { AreaSocials } from '@/data/AreaSocial';
-import { useElderlyCreateForm } from '@/hooks/SignUp/useElderlyCreateForm';
+import { useElderlyRegisterForm } from '@/hooks/SignUp/useElderlyRegisterForm';
 
-const ElderlyCreatePage = () => {
+const ElderlyRegisterPage = () => {
   const navigate = useNavigate();
 
-  const form = useElderlyCreateForm();
+  const form = useElderlyRegisterForm();
   const areaData: AreaSelectData[] = AreaSocials.city;
 
   return (
@@ -75,7 +75,7 @@ const ElderlyCreatePage = () => {
   );
 };
 
-export default ElderlyCreatePage;
+export default ElderlyRegisterPage;
 
 const Container = styled.div`
   margin: auto 20px;

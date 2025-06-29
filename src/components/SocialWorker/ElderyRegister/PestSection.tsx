@@ -6,7 +6,7 @@ import {
   SectionWrapper,
   Title,
   TitleWrapper,
-} from '@/components/SocialWorker/ElderyCreate/Section.styles';
+} from '@/components/SocialWorker/ElderyRegister/Section.styles';
 
 interface PetSectionProps {
   pet: '있음' | '없음' | '';

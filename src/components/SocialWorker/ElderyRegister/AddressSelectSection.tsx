@@ -15,8 +15,8 @@ import {
   SectionWrapper,
   Title,
   TitleWrapper,
-} from '@/components/SocialWorker/ElderyCreate/Section.styles';
-import { AreaSocial } from '@/types/ElderyCreate';
+} from '@/components/SocialWorker/ElderyRegister/Section.styles';
+import { AreaSocial } from '@/types/ElderyRegister';
 import { useState } from 'react';
 
 interface AreaSelectData {
