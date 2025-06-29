@@ -9,3 +9,23 @@ export const useRegisterElderly = () =>
       return data;
     },
   });
+
+export const useUploadElderlyProfileImage = () =>
+  useMutation({
+    mutationFn: async ({
+      file,
+      institutionId,
+    }: {
+      file: File;
+      institutionId: string;
+    }) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('institutionId', institutionId);
+      const { data } = await axiosInstance.post(
+        '/elderly/upload-profile-img',
+        formData,
+      );
+      return data.profileImageUrl as string;
+    },
+  });

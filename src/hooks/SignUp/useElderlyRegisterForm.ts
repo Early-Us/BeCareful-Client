@@ -9,6 +9,8 @@ import {
 import { useState } from 'react';
 
 export const useElderlyRegisterForm = () => {
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState<Gender | ''>('');
@@ -65,6 +67,8 @@ export const useElderlyRegisterForm = () => {
   };
 
   return {
+    profileImageUrl,
+    setProfileImageUrl,
     name,
     setName,
     birth,

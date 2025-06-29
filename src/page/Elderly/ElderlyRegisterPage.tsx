@@ -1,7 +1,6 @@
 import { NavBar } from '@/components/common/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
-import { ReactComponent as Elederly } from '@/assets/icons/elderly/Elderly.svg';
 import styled from 'styled-components';
 
 import { AreaSelectData } from '@/types/ElderyRegister';
@@ -17,12 +16,31 @@ import { PetSection } from '@/components/SocialWorker/ElderyRegister/PestSection
 import { SubmitSection } from '@/components/SocialWorker/ElderyRegister/SubmitSection';
 import { AreaSocials } from '@/data/AreaSocial';
 import { useElderlyRegisterForm } from '@/hooks/SignUp/useElderlyRegisterForm';
+import { useUploadElderlyProfileImage } from '@/api/elderlyRegister';
+import { ProfileImageUploader } from '@/components/SocialWorker/common/ProfileImageUploader';
 
 const ElderlyRegisterPage = () => {
   const navigate = useNavigate();
+  const institutionId = '123'; // TODO ㅠㅠ
 
   const form = useElderlyRegisterForm();
   const areaData: AreaSelectData[] = AreaSocials.city;
+
+  const { mutate: uploadImage } = useUploadElderlyProfileImage();
+
+  const handleImageUpload = (file: File, institutionId: string) => {
+    uploadImage(
+      { file, institutionId },
+      {
+        onSuccess: (url) => {
+          form.setProfileImageUrl(url);
+        },
+        onError: () => {
+          alert('이미지 업로드에 실패했습니다.');
+        },
+      },
+    );
+  };
 
   return (
     <Container>
@@ -38,9 +56,10 @@ const ElderlyRegisterPage = () => {
 
       <MainContent>
         <ProfileWrapper>
-          <ProfileImgWrapper>
-            <Elederly />
-          </ProfileImgWrapper>
+          <ProfileImageUploader
+            imageUrl={form.profileImageUrl}
+            onChange={(file) => handleImageUpload(file, institutionId)}
+          />
         </ProfileWrapper>
 
         <NameInputSection name={form.name} onChange={form.setName} />
@@ -106,10 +125,4 @@ const ProfileWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
-`;
-
-const ProfileImgWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  border-radius: 50%;
 `;
