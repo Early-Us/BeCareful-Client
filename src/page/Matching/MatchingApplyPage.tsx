@@ -7,7 +7,7 @@ import { MatchingApplyModal } from '@/components/Matching/Modal/MatchingApplyMod
 import { ElderData } from '@/types/Matching';
 
 import { styled } from 'styled-components';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { axiosInstance } from '@/api/axiosInstance';
 
 export const MatchingApplyPage = () => {

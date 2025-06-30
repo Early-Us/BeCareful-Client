@@ -1,7 +1,7 @@
 import { NavBar } from '@/components/common/NavBar';
 
 import { ElderlyCard } from '@/components/Elderly/ElderlyCard';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

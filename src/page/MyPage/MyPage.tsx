@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { ReactComponent as Application } from '@/assets/icons/mypage/Application.svg';
 import { ReactComponent as Career } from '@/assets/icons/mypage/Career.svg';
 import WorkApply from '@/components/MyPage/WorkApply';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 interface WorkLocation {
   siDo: string;

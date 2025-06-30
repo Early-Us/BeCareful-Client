@@ -9,7 +9,7 @@ import { getTodayDate } from '@/utils/getTodayDate';
 import { HomeMainContent } from '@/components/Home/HomeMainContent';
 import { useRecoilValue } from 'recoil';
 import { currentUserInfo } from '@/recoil/currentUserInfo';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 export const CommunityCreatePage = () => {
   const navigate = useNavigate();

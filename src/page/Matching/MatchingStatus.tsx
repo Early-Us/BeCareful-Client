@@ -2,7 +2,7 @@ import { NavBar } from '@/components/common/NavBar';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as ElderList } from '@/assets/icons/elderly/ElderList.svg';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 const MatchingStatus = () => {
   const navigate = useNavigate();

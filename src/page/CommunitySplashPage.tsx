@@ -7,7 +7,7 @@ import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 const CommunitySplashPage = () => {
   const [activeTab, setActiveTab] = useState('전체');

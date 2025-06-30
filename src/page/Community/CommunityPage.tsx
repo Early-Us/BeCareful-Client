@@ -10,7 +10,7 @@ import CommunityDetail from '@/components/Community/CommunityDetail';
 import { useQuery } from '@tanstack/react-query';
 import { AssociationInfoResponse } from '@/types/Community';
 import { getAssociationInfo } from '@/api/community';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 const CommunityPage = () => {
   const [activeTab, setActiveTab] = useState('전체');

@@ -1,6 +1,6 @@
 import { ApplyHeader } from '@/components/Apply/ApplyHeader';
 import { ApplyTab } from '@/components/Apply/ApplyTab';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { styled } from 'styled-components';
 
 export const ApplyPage = () => {

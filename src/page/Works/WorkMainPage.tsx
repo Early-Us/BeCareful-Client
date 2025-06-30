@@ -1,4 +1,4 @@
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar ';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 import { WorkFilterContent } from '@/components/Works/WorkMain/WorkFilterContet';
 import { WorkMainHeader } from '@/components/Works/WorkMain/WorkMainHeader';
