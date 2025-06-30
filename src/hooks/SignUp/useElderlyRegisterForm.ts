@@ -58,7 +58,7 @@ export const useElderlyRegisterForm = () => {
       siGuGun: selectedArea.siGuGun,
       eupMyeonDong: selectedArea.dongEupMyeon,
       detailAddress,
-      profileImageUrl: '',
+      profileImageUrl,
       healthCondition,
       detailCareTypeList: selectedDetails as CareType[],
     };
