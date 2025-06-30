@@ -12,12 +12,13 @@ import { AddressSelectSection } from '@/components/SocialWorker/ElderyRegister/A
 import { HealthConditionSection } from '@/components/SocialWorker/ElderyRegister/HealthConditionSection';
 import { CareTypeSection } from '@/components/SocialWorker/ElderyRegister/CareTypeSection';
 import { InmateSection } from '@/components/SocialWorker/ElderyRegister/InmateSection';
-import { PetSection } from '@/components/SocialWorker/ElderyRegister/PestSection';
+
 import { SubmitSection } from '@/components/SocialWorker/ElderyRegister/SubmitSection';
 import { AreaSocials } from '@/data/AreaSocial';
 import { useElderlyRegisterForm } from '@/hooks/SignUp/useElderlyRegisterForm';
 import { useUploadElderlyProfileImage } from '@/api/elderlyRegister';
 import { ProfileImageUploader } from '@/components/SocialWorker/common/ProfileImageUploader';
+import { PetSection } from '@/components/SocialWorker/ElderyRegister/PetSection';
 
 const ElderlyRegisterPage = () => {
   const navigate = useNavigate();
