@@ -11,7 +11,7 @@ export function SubmitSection({ onSubmit }: SubmitSectionProps) {
       <Border />
       <Button
         variant="blue"
-        width=""
+        width="100%"
         height="52px"
         style={{ margin: '20px 0px' }}
         onClick={onSubmit}

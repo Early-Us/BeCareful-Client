@@ -82,7 +82,7 @@ export const Label = styled.label`
 
   color: ${({ theme }) => theme.colors.gray900};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiblod};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 
   ${RadioButton}:checked + & {
     background: ${({ theme }) => theme.colors.subBlue};
