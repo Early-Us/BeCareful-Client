@@ -56,7 +56,7 @@ export const useElderlyRegisterForm = () => {
       careLevel: selectedGrade,
       siDo: selectedArea.siDo,
       siGuGun: selectedArea.siGuGun,
-      eupMyeonDong: selectedArea.dongEupMyeon,
+      dongEupMyeon: selectedArea.dongEupMyeon,
       detailAddress,
       profileImageUrl,
       healthCondition,

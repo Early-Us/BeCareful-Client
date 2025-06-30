@@ -30,7 +30,7 @@ export interface ElderlyRegisterPayload {
   careLevel: CareLevel;
   siDo: AreaSocial['siDo'];
   siGuGun: AreaSocial['siGuGun'];
-  eupMyeonDong: AreaSocial['dongEupMyeon'];
+  dongEupMyeon: AreaSocial['dongEupMyeon'];
   detailAddress: string;
   profileImageUrl: string;
   healthCondition: string;
