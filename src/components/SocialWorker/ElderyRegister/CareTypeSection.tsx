@@ -20,6 +20,8 @@ import Modal from '@/components/common/Modal/Modal';
 import { Button } from '@/components/common/Button/Button';
 import { CareChcekBox } from '@/components/common/CheckBox/CareChcekBox';
 import { CareType } from '@/types/ElderyRegister';
+import { styled } from 'styled-components';
+import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';
 
 interface CareTypeSectionProps {
   selectedCare: CareType | null;
@@ -35,6 +37,7 @@ export function CareTypeSection({
   onSelectDetail,
 }: CareTypeSectionProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCareVisible, setIsCareVisible] = useState(false);
 
   const toggleDetail = (item: string) => {
     onSelectDetail(
@@ -50,22 +53,38 @@ export function CareTypeSection({
         <Title color="">케어 필요항목</Title>
         <Title color="blue">*</Title>
       </TitleWrapper>
-
-      <CareWrapper>
-        <ElderlyDropDown
-          title="항목선택"
-          contents={CARE_TYPES.slice()}
-          selectedContents={selectedCare ? [selectedCare] : []}
-          setSelectedContents={(items) =>
-            onSelectCare((items[0] as CareType) || null)
-          }
-          width="100%"
-        />
-        <CareButton onClick={() => setIsModalOpen(true)}>
-          세부항목 선택
-          <ButtonLeft />
-        </CareButton>
-      </CareWrapper>
+      <ContentWrapper>
+        <CardWrapper>
+          <Button
+            variant="blue2"
+            width=""
+            height="52px"
+            onClick={() => setIsCareVisible(true)}
+          >
+            <ButtonContent>
+              <Plus />
+              추가하기
+            </ButtonContent>
+          </Button>
+        </CardWrapper>
+        {isCareVisible && (
+          <CareWrapper>
+            <ElderlyDropDown
+              title="항목선택"
+              contents={CARE_TYPES.slice()}
+              selectedContents={selectedCare ? [selectedCare] : []}
+              setSelectedContents={(items) =>
+                onSelectCare((items[0] as CareType) || null)
+              }
+              width="100%"
+            />
+            <CareButton onClick={() => setIsModalOpen(true)}>
+              세부항목 선택
+              <ButtonLeft />
+            </CareButton>
+          </CareWrapper>
+        )}
+      </ContentWrapper>
 
       {selectedDetails.length > 0 && (
         <CareLabel>
@@ -111,3 +130,21 @@ export function CareTypeSection({
     </SectionWrapper>
   );
 }
+
+const CardWrapper = styled.div`
+  display: flex;
+  margin: 16px 0px;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+`;
+
+const ContentWrapper = styled.div`
+  gap: 4px;
+`;
