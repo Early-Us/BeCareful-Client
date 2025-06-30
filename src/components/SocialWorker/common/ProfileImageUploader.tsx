@@ -43,8 +43,8 @@ const ProfileImageInput = styled.input`
 `;
 
 const ProfileImageDisplay = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid ${({ theme }) => theme.colors.gray300};

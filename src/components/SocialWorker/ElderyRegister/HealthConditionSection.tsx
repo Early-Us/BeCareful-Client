@@ -1,5 +1,5 @@
+import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 import {
-  Input,
   SectionWrapper,
   Title,
   TitleWrapper,
@@ -20,8 +20,12 @@ export function HealthConditionSection({
         <Title color="">건강상태</Title>
         <Title color="blue">*</Title>
       </TitleWrapper>
-      <Input
+
+      <PlainInputBox
+        width="100%"
+        state="default"
         placeholder="예) 당뇨, 신장질환"
+        guide=""
         value={healthCondition}
         onChange={(e) => onChange(e.target.value)}
       />

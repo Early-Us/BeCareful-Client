@@ -1,5 +1,5 @@
+import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 import {
-  Input,
   SectionWrapper,
   Title,
   TitleWrapper,
@@ -17,8 +17,11 @@ export function NameInputSection({ name, onChange }: NameInputSectionProps) {
         <Title color="">이름</Title>
         <Title color="blue">*</Title>
       </TitleWrapper>
-      <Input
+      <PlainInputBox
+        width="100%"
+        state="default"
         placeholder="이름 입력"
+        guide=""
         value={name}
         onChange={(e) => onChange(e.target.value)}
       />

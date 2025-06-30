@@ -129,6 +129,7 @@ export const AreasWrapper = styled.div`
   display: flex;
   gap: 1px;
   height: 216px;
+  overflow: hidden;
 `;
 
 //TODO: 다른 곳이랑 합칠 부분 찾기
@@ -150,11 +151,8 @@ export const AreaTitle = styled.label`
 `;
 
 export const AreaAreaWrapper = styled.button`
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
+  overflow-y: auto;
+  flex: 1;
 `;
 
 export const AreaArea = styled.div<{ color: boolean }>`

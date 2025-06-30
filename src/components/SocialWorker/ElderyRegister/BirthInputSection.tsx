@@ -1,5 +1,5 @@
+import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 import {
-  Input,
   SectionWrapper,
   Title,
   TitleWrapper,
@@ -17,8 +17,12 @@ export function BirthInputSection({ birth, onChange }: BirthInputSectionProps) {
         <Title color="">생년월일</Title>
         <Title color="blue">*</Title>
       </TitleWrapper>
-      <Input
+
+      <PlainInputBox
+        width="100%"
+        state="default"
         placeholder="예) 1978-05-08"
+        guide=""
         value={birth}
         onChange={(e) => onChange(e.target.value)}
       />

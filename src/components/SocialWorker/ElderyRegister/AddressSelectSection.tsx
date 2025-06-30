@@ -1,4 +1,6 @@
 import { Button } from '@/components/common/Button/Button';
+import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
+import { ReactComponent as CloseIcon } from '@/assets/icons/Close.svg';
 import Modal from '@/components/common/Modal/Modal';
 import {
   AreaArea,
@@ -10,7 +12,6 @@ import {
   AreaTitleWrapper,
   AreaWrapper,
   Close,
-  Input,
   ModalWrapper,
   SectionWrapper,
   Title,
@@ -66,18 +67,27 @@ export function AddressSelectSection({
       </TitleWrapper>
 
       <AreaSelectWrapper>
-        <Input
+        <PlainInputBox
+          width="100%"
+          state="default"
           placeholder="근무지역 선택"
+          guide=""
           value={selectedArea ? selectedArea.dongEupMyeon : ''}
-          readOnly
+          onChange={() => {}}
+          onKeyDown={(e) => e.preventDefault()}
+          suffix={null}
         />
+
         <Button variant="blue2" width="37.5%" height="52px" onClick={openModal}>
           지역 선택
         </Button>
       </AreaSelectWrapper>
 
-      <Input
+      <PlainInputBox
+        width="100%"
+        state="default"
         placeholder="상세주소"
+        guide=""
         value={detailAddress}
         onChange={(e) => onDetailChange(e.target.value)}
       />
@@ -87,7 +97,7 @@ export function AddressSelectSection({
           <AreaTitleWrapper>
             <AreaTitleLabel>지역설정</AreaTitleLabel>
             <Close onClick={closeModal}>
-              <span>닫기</span>
+              <CloseIcon />
             </Close>
           </AreaTitleWrapper>
           <AreasWrapper>
