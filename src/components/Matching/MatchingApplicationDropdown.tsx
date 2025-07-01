@@ -41,7 +41,7 @@ export const MatchingApplicationDropdown = ({
   };
 
   const selectedLabel =
-    selectedContents.length > 0 ? selectedContents[0] : title;
+    selectedContents.length > 0 ? selectedContents: title;
 
   return (
     <SmallDropdowns ref={selectContainerRef}>

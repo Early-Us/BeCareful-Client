@@ -1,3 +1,4 @@
+import { DAY_LABELS } from '@/constants/day.socialWorker';
 import {
   PAY_CODE_TO_LABEL,
   PAY_LABEL_TO_CODE,
@@ -42,3 +43,5 @@ export interface MatchingCareTypeOption {
   title: string;
   description: string;
 }
+
+export type DayLabel = (typeof DAY_LABELS)[number];

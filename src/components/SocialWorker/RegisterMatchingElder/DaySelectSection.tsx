@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import { CheckBoxSelect } from '@/components/common/CheckBox/CheckBoxSelect';
+import { DAY_LABELS } from '@/constants/day.socialWorker';
 
 interface Props {
   selectedDays: string[];
   onToggle: (day: string) => void;
 }
-//TODO
-const days: string[] = ['월', '화', '수', '목', '금', '토', '일'];
 
 export const DaySelectSection = ({ selectedDays, onToggle }: Props) => {
   return (
@@ -17,7 +16,7 @@ export const DaySelectSection = ({ selectedDays, onToggle }: Props) => {
       </SectionTitleWrapper>
       <SectionGuide>중복선택 가능</SectionGuide>
       <SelectWrapper gap="4px">
-        {days.map((day) => (
+        {DAY_LABELS.map((day) => (
           <CheckBoxSelect
             key={day}
             id={day}
