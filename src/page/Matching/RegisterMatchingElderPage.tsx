@@ -11,8 +11,11 @@ import { PaySection } from '@/components/SocialWorker/RegisterMatchingElder/PayS
 import { MemoSection } from '@/components/SocialWorker/RegisterMatchingElder/MemoSection';
 import { useRegisterMatchingForm } from '@/hooks/Elderly/useRegisterMatchingElder';
 import { useRegisterMatchingRecruitment } from '@/api/matching.socialWorker';
+import { useState } from 'react';
+import { RegisterMatchingElderModal } from '@/components/SocialWorker/RegisterMatchingElder/RegisterMatchingElderModal';
 
 export const RegisterMatchingElderPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const elderlyId = location.state?.elderlyId;
   const {
@@ -49,6 +52,14 @@ export const RegisterMatchingElderPage = () => {
         console.error('공고 등록 실패:', error);
       },
     });
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -88,11 +99,18 @@ export const RegisterMatchingElderPage = () => {
         variant={isFormValid ? 'blue' : 'disabled'}
         height="52px"
         style={{ margin: '20px 0px' }}
-        onClick={handleSubmit}
+        onClick={handleOpenModal}
         disabled={!isFormValid}
       >
         매칭 등록하기
       </Button>
+      {isModalOpen && (
+        <RegisterMatchingElderModal
+          width="80%"
+          onClose={handleCloseModal}
+          onCancel={handleSubmit}
+        />
+      )}
     </Container>
   );
 };
