@@ -5,8 +5,8 @@ import { ReactComponent as IconPolygon6 } from '@/assets/icons/IconPolygon6.svg'
 interface SmallDropdownProps {
   title: string;
   contents: string[];
-  selectedContents: string[];
-  setSelectedContents: (selectedContents: string[]) => void;
+  selectedContents: string;
+  setSelectedContents: (selectedContents: string) => void;
   pressed?: boolean;
 }
 
@@ -37,7 +37,7 @@ export const MatchingApplicationDropdown = ({
   const handleToggleSmallDropdown = () => setOpen((prev) => !prev);
 
   const handleSelectContent = (content: string) => {
-    setSelectedContents([content]);
+    setSelectedContents(content);
   };
 
   const selectedLabel =

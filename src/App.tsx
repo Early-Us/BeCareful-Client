@@ -16,9 +16,9 @@ import HomePage from '@/page/Home/HomePage';
 import SocialHomePage from '@/page/HomeSocial/SocialHomePage';
 import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
 
-import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import MatchingStatus from '@/page/Matching/MatchingStatus';
+import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
 import CreateApplication from '@/page/MyPage/CreateApplication';
 import CreateCareer from '@/page/MyPage/CreateCareer';
 import EditApplication from '@/page/MyPage/EditApplication';
@@ -87,7 +87,10 @@ function App() {
       <Route path="/elderly" element={<ElderlyPage />} />
       <Route path="/elderly/new" element={<ElderlyRegisterPage />} />
       <Route path="/match/social" element={<SocialWorkerMatchingPage />} />
-      <Route path="/social/matching/new" element={<MatchingElderPage />} />
+      <Route
+        path="/social/matching/new"
+        element={<RegisterMatchingElderPage />}
+      />
       <Route
         path="/matching/info/:recruitmentId"
         element={<MatchingInformationPage />}
