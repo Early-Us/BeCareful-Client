@@ -1,26 +1,14 @@
+import { DAY_KO_TO_EN } from '@/constants/payType.socialWorker';
+import { PayCode } from '@/types/Matching.socialWorker';
 import { useState } from 'react';
 
-//TODO
-const dayAPI = {
-  월: 'MONDAY',
-  화: 'TUESDAY',
-  수: 'WEDNESDAY',
-  목: 'THURSDAY',
-  금: 'FRIDAY',
-  토: 'SATURDAY',
-  일: 'SUNDAY',
-} as const;
-
 export const useRegisterMatchingForm = () => {
-  //TODO
   const [selectDay, setSelectDay] = useState<string[]>([]);
   const [title, setTitle] = useState('');
   const [startTime, setStartTime] = useState('00:00');
   const [endTime, setEndTime] = useState('00:00');
   const [careTypes, setCareTypes] = useState<string[]>([]);
-  const [selectedPayType, setSelectedPayType] = useState<
-    'HOUR' | 'DAY' | 'MONTH'
-  >('HOUR');
+  const [selectedPayType, setSelectedPayType] = useState<PayCode>('HOUR');
 
   const [workSalaryAmount, setWorkSalaryAmount] = useState(0);
   const [memoContent, setMemoContent] = useState('');
@@ -50,11 +38,13 @@ export const useRegisterMatchingForm = () => {
   const getPayload = () => ({
     elderlyId: 1,
     title,
-    workDays: selectDay.map((day) => dayAPI[day as keyof typeof dayAPI]),
+    workDays: selectDay.map(
+      (day) => DAY_KO_TO_EN[day as keyof typeof DAY_KO_TO_EN],
+    ),
     workStartTime: startTime,
     workEndTime: endTime,
     careTypes,
-    workSalaryType: selectedPayType as 'HOUR' | 'DAY' | 'MONTH',
+    workSalaryType: selectedPayType,
     workSalaryAmount,
     description: memoContent,
   });

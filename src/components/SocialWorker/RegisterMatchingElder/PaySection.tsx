@@ -1,27 +1,17 @@
 import styled from 'styled-components';
 import { MatchingApplicationDropdown } from '@/components/Matching/MatchingApplicationDropdown';
+import {
+  PAY_CODE_TO_LABEL,
+  PAY_LABEL_TO_CODE,
+} from '@/constants/payType.socialWorker';
+import { PayCode, PayLabel } from '@/types/Matching.socialWorker';
 
 interface Props {
-  selectedPayType: 'HOUR' | 'DAY' | 'MONTH';
-  onPayTypeChange: (value: 'HOUR' | 'DAY' | 'MONTH') => void;
+  selectedPayType: PayCode;
+  onPayTypeChange: (value: PayCode) => void;
   payAmount: number;
   onAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-//TODO가 많음...
-type PayLabel = '시급' | '일급' | '월급';
-
-const labelToCode: Record<PayLabel, 'HOUR' | 'DAY' | 'MONTH'> = {
-  시급: 'HOUR',
-  일급: 'DAY',
-  월급: 'MONTH',
-};
-
-const codeToLabel: Record<'HOUR' | 'DAY' | 'MONTH', PayLabel> = {
-  HOUR: '시급',
-  DAY: '일급',
-  MONTH: '월급',
-};
 
 export const PaySection = ({
   selectedPayType,
@@ -29,6 +19,7 @@ export const PaySection = ({
   payAmount,
   onAmountChange,
 }: Props) => {
+  const payLabels: PayLabel[] = ['시급', '일급', '월급', '연봉'];
   return (
     <SectionWrapper>
       <SectionTitleWrapper>
@@ -39,12 +30,11 @@ export const PaySection = ({
       <PayWrapper>
         <MatchingApplicationDropdown
           title="시급"
-          contents={['시급', '일급', '월급']}
-          selectedContents={codeToLabel[selectedPayType]}
+          contents={payLabels}
+          selectedContents={PAY_CODE_TO_LABEL[selectedPayType]}
           setSelectedContents={(label: string) => {
-            if (label in labelToCode) {
-              const code = labelToCode[label as PayLabel];
-              onPayTypeChange(code);
+            if (label in PAY_LABEL_TO_CODE) {
+              onPayTypeChange(PAY_LABEL_TO_CODE[label as PayLabel]);
             }
           }}
         />
