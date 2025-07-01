@@ -1,54 +1,17 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Button } from '../common/Button/Button';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 interface CareerNewProps {
-  edit: boolean;
-  title: string;
   introduce?: string;
+  handleIntroduceChange: (introduce: string) => void;
 }
 
-export const CareerNew = ({ edit, title, introduce }: CareerNewProps) => {
-  const navigate = useNavigate();
-
+const CaregiverCareerNew = ({
+  introduce,
+  handleIntroduceChange,
+}: CareerNewProps) => {
   const [textCount, setTextCount] = useState(0);
   const [memoContent, setMemoContent] = useState('');
-
-  const apiBaseURL = import.meta.env.VITE_APP_API_URL;
-  const putData = async () => {
-    let accessToken;
-    if (localStorage.getItem('isAutoLogin')) {
-      accessToken = localStorage.getItem('accessToken');
-    } else {
-      accessToken = sessionStorage.getItem('accessToken');
-    }
-
-    const data = {
-      title: title,
-      careerType: '신입',
-      introduce: memoContent,
-      careerDetails: [
-        {
-          workInstitution: '',
-          workYear: '0',
-        },
-      ],
-    };
-    console.log(data);
-
-    try {
-      const response = await axios.put(`${apiBaseURL}/caregiver/career`, data, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(response);
-    } catch (e) {
-      console.log('신입 경력 등록하기 에러: ', e);
-    }
-  };
 
   useEffect(() => {
     if (introduce) {
@@ -56,6 +19,12 @@ export const CareerNew = ({ edit, title, introduce }: CareerNewProps) => {
       setTextCount(introduce.length);
     }
   }, [introduce]);
+
+  const handleMemoChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextCount(e.target.value.length);
+    setMemoContent(e.target.value);
+    handleIntroduceChange(e.target.value);
+  };
 
   return (
     <Container>
@@ -67,32 +36,17 @@ export const CareerNew = ({ edit, title, introduce }: CareerNewProps) => {
             placeholder="나의 강점을 자유롭게 설명해주세요."
             value={memoContent}
             maxLength={200}
-            onChange={(e) => {
-              setTextCount(e.target.value.length);
-              setMemoContent(e.target.value);
-            }}
+            onChange={handleMemoChange}
           />
           <MemoCount>{textCount}/200</MemoCount>
         </MemoFieldWrapper>
       </InputWrapper>
       <Border />
-      <ButtonWrapper>
-        <Button
-          variant={memoContent ? 'blue' : 'disabled'}
-          width=""
-          height="52px"
-          onClick={() => {
-            putData();
-            navigate('/mypage');
-          }}
-          disabled={memoContent ? false : true}
-        >
-          {edit ? '경력서 수정하기' : '경력서 등록하기'}
-        </Button>
-      </ButtonWrapper>
     </Container>
   );
 };
+
+export default CaregiverCareerNew;
 
 const Container = styled.div`
   display: flex;
@@ -136,18 +90,14 @@ const MemoField = styled.textarea`
   color: ${({ theme }) => theme.colors.gray900};
   font-size: ${({ theme }) => theme.typography.fontSize.body1};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  letter-spacing: -0.4px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray300};
-    font-size: ${({ theme }) => theme.typography.fontSize.body1};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-    letter-spacing: -0.4px;
   }
 
   &:hover,
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
     outline: none;
     caret-color: ${({ theme }) => theme.colors.mainBlue};
   }
@@ -169,12 +119,4 @@ const Border = styled.div`
   margin-left: -20px;
   position: absolute;
   bottom: 92px;
-`;
-
-const ButtonWrapper = styled.div`
-  background: ${({ theme }) => theme.colors.white};
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  left: 20px;
 `;
