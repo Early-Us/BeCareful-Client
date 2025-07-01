@@ -13,7 +13,7 @@ import {
   AreaAreaWrapper,
   AreaArea,
 } from '@/components/SocialWorker/ElderyRegister/Section.styles';
-import { AreaSelectData, AreaSocial } from '@/types/ElderyRegister';
+import { AreaSelectData, AreaSocial } from '@/types/Elderly';
 
 interface AreaSelectModalProps {
   isOpen: boolean;

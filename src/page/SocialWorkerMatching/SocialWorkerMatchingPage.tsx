@@ -10,7 +10,7 @@ import { styled } from 'styled-components';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { axiosInstance } from '@/api/axiosInstance';
 
-export const MatchingApplyPage = () => {
+export const SocialWorkerMatchingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<ElderData | null>(null);
   const [elderList, setElderList] = useState<ElderData[]>([]);

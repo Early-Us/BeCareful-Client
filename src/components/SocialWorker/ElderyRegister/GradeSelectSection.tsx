@@ -5,7 +5,7 @@ import {
   TitleWrapper,
 } from '@/components/SocialWorker/ElderyRegister/Section.styles';
 import { CARE_LEVELS } from '@/constants/careLevels.socialWorker';
-import { CareLevel } from '@/types/ElderyRegister';
+import { CareLevel } from '@/types/Elderly';
 
 interface GradeSelectSectionProps {
   selectedGrade: CareLevel | '';

@@ -5,7 +5,7 @@ import {
   CareType,
   ElderlyRegisterPayload,
   Gender,
-} from '@/types/ElderyRegister';
+} from '@/types/Elderly';
 import { useState } from 'react';
 
 export const useElderlyRegisterForm = () => {

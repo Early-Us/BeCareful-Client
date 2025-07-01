@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/common/Button/Button';
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
 
-import { AreaSelectData, AreaSocial } from '@/types/ElderyRegister';
+import { AreaSelectData, AreaSocial } from '@/types/Elderly';
 import {
   AreaSelectWrapper,
   SectionWrapper,

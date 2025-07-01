@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import styled from 'styled-components';
 
-import { AreaSelectData } from '@/types/ElderyRegister';
+import { AreaSelectData } from '@/types/Elderly';
 import { NameInputSection } from '@/components/SocialWorker/ElderyRegister/NameInputSection';
 import { BirthInputSection } from '@/components/SocialWorker/ElderyRegister/BirthInputSection';
 import { GenderSelectSection } from '@/components/SocialWorker/ElderyRegister/GenderSelectSection';

@@ -19,7 +19,7 @@ import { ReactComponent as ButtonLeft } from '@/assets/icons/elderly/ButtonLeft.
 import Modal from '@/components/common/Modal/Modal';
 import { Button } from '@/components/common/Button/Button';
 import { CareChcekBox } from '@/components/common/CheckBox/CareChcekBox';
-import { CareType } from '@/types/ElderyRegister';
+import { CareType } from '@/types/Elderly';
 import { styled } from 'styled-components';
 import { ReactComponent as Plus } from '@/assets/icons/signup/Plus.svg';
 

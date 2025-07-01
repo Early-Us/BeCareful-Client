@@ -1,5 +1,5 @@
 import { axiosInstance } from '@/api/axiosInstance';
-import { ElderlyRegisterPayload } from '@/types/ElderyRegister';
+import { ElderlyRegisterPayload } from '@/types/Elderly';
 import { useMutation } from '@tanstack/react-query';
 
 export const useRegisterElderly = () =>
