@@ -1,54 +1,76 @@
-import { NavBar } from '@/components/common/NavBar/NavBar';
-import { CaregiverMyResponse } from '@/types/Caregiver/mypage';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import styled from 'styled-components';
+import { NavBar } from '@/components/common/NavBar/NavBar';
+import { Toggle } from '@/components/common/Toggle/Toggle';
 import { ReactComponent as Point } from '@/assets/icons/Point.svg';
 import { ReactComponent as ChevronRight } from '@/assets/icons/ChevronRight.svg';
-import { ReactComponent as Application } from '@/assets/icons/caregiver/MyWork.svg';
-import { ReactComponent as Career } from '@/assets/icons/caregiver/my/Career.svg';
+import { ReactComponent as ApplicationIcon } from '@/assets/icons/caregiver/MyWork.svg';
+import { ReactComponent as CareerIcon } from '@/assets/icons/caregiver/my/Career.svg';
 import { ReactComponent as LogoutIcon } from '@/assets/icons/caregiver/my/Logout.svg';
-import { GenderMapping } from '@/constants/caregiver';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  CareTypeFormat,
+  DayFormat,
+  GenderMapping,
+  LocationFormat,
+  TimeFormat,
+} from '@/constants/caregiver';
+import { CaregiverMyResponse } from '@/types/Caregiver/mypage';
+import {
+  getCaregiverMyPageInfo,
+  workApplicationActive,
+  workApplicationInactive,
+} from '@/api/caregiver';
 
 const CaregiverMyPage = () => {
+  const { data, isLoading, error } = useQuery<CaregiverMyResponse, Error>({
+    queryKey: ['caregiverMypageInfo'],
+    queryFn: getCaregiverMyPageInfo,
+  });
+  if (isLoading) {
+    console.log('getCaregiverMyPageInfo: 로딩 중');
+  }
+  if (error) {
+    console.log('getCaregiverMyPageInfo 에러: ', error);
+  }
+
   const navigate = useNavigate();
   const handleNavigate = (path: string) => {
-    console.log(path);
-    // navigate(path);
-    // window.scrollTo(0, 0);
+    navigate(path);
+    window.scrollTo(0, 0);
   };
 
-  const logout = () => {
-    console.log('로그아웃');
-  };
-
-  const data: CaregiverMyResponse = {
-    name: '김영희',
-    gender: 'FEMALE',
-    phoneNumber: '010-1234-5678',
-    profileImageUrl: 'https://example.com/profile/kim_younghee.jpg',
-    certificateNames: ['요양보호사', '사회복지사 2급', '간호조무사 2급'],
-    isHavingCar: false,
-    isCompleteDementiaEducation: false,
-    careerTitle: '10년 경력의 베테랑 요양보호사',
-    careerLastModifyDate: '2024-06-25',
-    workApplicationInfo: {
-      workLocations: [
-        { siDo: '서울특별시', siGuGun: '강남구', dongEupMyeon: '전체' },
-        { siDo: '경기도', siGuGun: '성남시 분당구', dongEupMyeon: '정자동' },
-        {
-          siDo: '경기도',
-          siGuGun: '용인시 수지구',
-          dongEupMyeon: '풍덕천동',
-        },
-      ],
-      workDays: ['MONDAY', 'WEDNESDAY', 'FRIDAY', 'SUNDAY'],
-      workTimes: ['MORNING', 'AFTERNOON'],
-      careTypes: ['신체활동 지원', '일상생활 지원', '인지활동 지원'],
-      workSalaryType: 'HOUR',
-      workSalaryAmount: 15000,
+  const queryClient = useQueryClient();
+  const workApplicationToggle = useMutation({
+    mutationFn: (isActive: boolean) => {
+      if (isActive) {
+        return workApplicationInactive();
+      } else {
+        return workApplicationActive();
+      }
     },
-    isWorkApplicationActive: true,
-    workApplicationLastModifyDate: '2024-07-01',
+    onSuccess: () => {
+      console.log('일자리 매칭 상태 변경 성공');
+      setIsToggleChecked((prev) => !prev);
+      queryClient.invalidateQueries({
+        queryKey: ['applicationToggle'],
+      });
+    },
+    onError: (error) => {
+      console.log('일자리 매칭 상태 변경 실패', error);
+    },
+  });
+
+  const [isToggleChecked, setIsToggleChecked] = useState(
+    data?.isWorkApplicationActive,
+  );
+  const handleToggleChange = () => {
+    workApplicationToggle.mutate(isToggleChecked ? true : false);
+  };
+
+  const handleLogout = () => {
+    console.log('로그아웃');
   };
 
   return (
@@ -59,7 +81,7 @@ const CaregiverMyPage = () => {
         <Top>
           <img src={data?.profileImageUrl} />
           <div className="right">
-            <label className="name">{data.name}</label>
+            <label className="name">{data?.name}</label>
             <div
               className="pointWrapper"
               onClick={() => {
@@ -72,25 +94,26 @@ const CaregiverMyPage = () => {
               <Chevron />
             </div>
             <div className="infoWrapper">
-              <label className="info">{data.phoneNumber}</label>
+              <label className="info">{data?.phoneNumber}</label>
               <label className="info">·</label>
               {/* <label className="info">{data.age}</label> */}
               <label className="info">만 52세</label>
               <label className="info">·</label>
-              <label className="info">{GenderMapping[data.gender]}</label>
+              <label className="info">
+                {data?.gender && GenderMapping[data?.gender]}
+              </label>
             </div>
           </div>
         </Top>
-
         <Bottom>
           <div className="certificateWrapper">
             <label className="title-label">기본 자격</label>
             <div className="certificates">
-              <CertificateCard isBlue={data.isHavingCar}>
-                {data.isHavingCar ? '자차 보유' : '자차 미보유'}
+              <CertificateCard isBlue={data?.isHavingCar}>
+                {data?.isHavingCar ? '자차 보유' : '자차 미보유'}
               </CertificateCard>
-              <CertificateCard isBlue={data.isCompleteDementiaEducation}>
-                {data.isCompleteDementiaEducation
+              <CertificateCard isBlue={data?.isCompleteDementiaEducation}>
+                {data?.isCompleteDementiaEducation
                   ? '치매교육 이수 완료'
                   : '치매교육 이수전'}
               </CertificateCard>
@@ -99,13 +122,12 @@ const CaregiverMyPage = () => {
           <div className="certificateWrapper">
             <label className="title-label">보유 자격증</label>
             <div className="certificates">
-              {data.certificateNames.map((certificate) => (
+              {data?.certificateNames.map((certificate) => (
                 <label className="certificate">{certificate}</label>
               ))}
             </div>
           </div>
         </Bottom>
-
         <Button onClick={() => handleNavigate('/my/edit')}>
           프로필 수정하기
         </Button>
@@ -113,76 +135,104 @@ const CaregiverMyPage = () => {
 
       <Border />
 
-      {data?.careerTitle ? (
-        <SectionWrapper>
-          <TitleLabel>경력서</TitleLabel>
-          <NoApplication>
-            <FixWrapper>
-              <Fix color="">최근 수정일</Fix>
-              <Fix color="blue">{data?.careerLastModifyDate}</Fix>
-            </FixWrapper>
-            <NoApplicationLabel>{data?.careerTitle}</NoApplicationLabel>
-          </NoApplication>
-          <Button>경력서 수정하기</Button>
-        </SectionWrapper>
-      ) : (
-        <SectionWrapper>
-          <TitleLabel>경력서</TitleLabel>
-          <InsideWrapper>
-            <Icon>
-              <Career />
-            </Icon>
-            <InsideTitle>아직 등록된 경력서가 없어요!</InsideTitle>
-            <InsideDetail>
+      <SectionWrapper>
+        <label className="title-label">경력서</label>
+        {data?.careerTitle ? (
+          <Career>
+            <div className="dateWrapper">
+              <DateLabel isBlue={false}>최근 수정일</DateLabel>
+              <DateLabel isBlue={true}>
+                {data?.careerLastModifyDate.replaceAll('-', '.')}
+              </DateLabel>
+            </div>
+            <label className="title">{data?.careerTitle}</label>
+          </Career>
+        ) : (
+          <NoContent>
+            <CareerIcon />
+            <label className="title">아직 등록된 경력서가 없어요!</label>
+            <label className="detail">
               나의 경력을 입력하여 합격률을 높여보세요!
-            </InsideDetail>
-          </InsideWrapper>
-          <Button>경력서 등록하기</Button>
-        </SectionWrapper>
-      )}
+            </label>
+          </NoContent>
+        )}
+        <Button onClick={() => handleNavigate('/edit')}>
+          {data?.careerTitle ? '경력서 수정하기' : '경력서 작성하기'}
+        </Button>
+      </SectionWrapper>
 
-      {data?.workApplicationInfo ? (
-        <SectionWrapper>
-          <TitleLabel>일자리 신청서</TitleLabel>
-          {/*
-            <WorkApply
-              fix={data ? data.workApplicationLastModifyDate : ''}
-              apply={data ? data.isWorkApplicationActive : false}
-              caretype={formattedCareTypes}
-              day={formattedDay}
-              time={formattedTime}
-              pay={
-                data && data.workApplicationInfo
-                  ? data.workApplicationInfo.workSalaryAmount
-                  : 0
-              }
-              location={formattedLocation}
-                      />
-                      */}
-          <Button>신청서 수정하기</Button>
-        </SectionWrapper>
-      ) : (
-        <SectionWrapper>
-          <TitleLabel>일자리 신청서</TitleLabel>
-          <InsideWrapper>
-            <Icon>
-              <Application />
-            </Icon>
-            <InsideTitle>아직 등록된 신청서가 없어요!</InsideTitle>
-            <InsideDetail>
+      <SectionWrapper>
+        <label className="title-label">일자리 신청서</label>
+        {data?.workApplicationInfo ? (
+          <Application>
+            <div className="top">
+              <div className="left">
+                <div className="dateWrapper">
+                  <DateLabel isBlue={false}>최근 수정일</DateLabel>
+                  <DateLabel isBlue={true}>
+                    {data?.workApplicationLastModifyDate.replaceAll('-', '.')}
+                  </DateLabel>
+                </div>
+                <label className="title">일자리 신청서</label>
+              </div>
+              <div className="right">
+                <Toggle
+                  checked={isToggleChecked ? true : false}
+                  onChange={handleToggleChange}
+                />
+                <ToggleLabel isBlue={isToggleChecked}>
+                  {isToggleChecked ? '신청중' : '미신청'}
+                </ToggleLabel>
+              </div>
+            </div>
+            <div className="bottom">
+              <div className="applyWrapper">
+                <label className="apply-title">케어항목</label>
+                <label className="apply-title">근무요일</label>
+                <label className="apply-title">근무시간</label>
+                <label className="apply-title">희망급여</label>
+                <label className="apply-title">근무지역</label>
+              </div>
+              <div className="applyWrapper">
+                <label className="apply-detail">
+                  {CareTypeFormat(data.workApplicationInfo.careTypes, 2)}
+                </label>
+                <label className="apply-detail">
+                  {DayFormat(data.workApplicationInfo.workDays)}
+                </label>
+                <label className="apply-detail">
+                  {TimeFormat(data.workApplicationInfo.workTimes)}
+                </label>
+                <label className="apply-detail">
+                  {data.workApplicationInfo.workSalaryAmount}원
+                </label>
+                <label className="apply-detail">
+                  {LocationFormat(data.workApplicationInfo.workLocations, 2)}
+                </label>
+              </div>
+            </div>
+          </Application>
+        ) : (
+          <NoContent>
+            <ApplicationIcon />
+            <label className="title">아직 등록된 신청서가 없어요!</label>
+            <label className="detail">
               일자리 신청서를 등록하고
               <br />
               나에게 딱 맞는 일자리 확인하세요!
-            </InsideDetail>
-          </InsideWrapper>
-          <Button>신청서 등록하기</Button>
-        </SectionWrapper>
-      )}
+            </label>
+          </NoContent>
+        )}
+        <Button onClick={() => handleNavigate('/application')}>
+          {data?.workApplicationInfo ? '신청서 수정하기' : '신청서 작성하기'}
+        </Button>
+      </SectionWrapper>
 
       <Border style={{ height: '5px' }} />
 
       <SectionWrapper>
-        <Logout isRed={true}>
+        <label className="title-label">계정</label>
+        <Logout isRed={true} onClick={handleLogout}>
           <LogoutIcon />
           로그아웃
         </Logout>
@@ -306,7 +356,7 @@ const Bottom = styled.div`
   }
 `;
 
-const CertificateCard = styled.label<{ isBlue: boolean }>`
+const CertificateCard = styled.label<{ isBlue: boolean | undefined }>`
   padding: 4px 10px;
   justify-content: center;
   align-items: center;
@@ -321,16 +371,100 @@ const CertificateCard = styled.label<{ isBlue: boolean }>`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
-const TitleLabel = styled.label`
-  color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-`;
-
 const SectionWrapper = styled.div`
   padding: 20px 0px;
   flex-direction: column;
   gap: 12px;
+
+  .title {
+    color: ${({ theme }) => theme.colors.gray900};
+    font-size: ${({ theme }) => theme.typography.fontSize.title5};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  }
+`;
+
+const NoContent = styled.div`
+  margin-bottom: 8px;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+
+  .detail {
+    color: ${({ theme }) => theme.colors.gray500};
+    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+    text-align: center;
+  }
+`;
+
+const Career = styled.div`
+  padding: 20px;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  background: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.08);
+
+  .dateWrapper {
+    gap: 6px;
+  }
+`;
+
+const Application = styled.div`
+  padding: 20px;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  background: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.08);
+
+  div {
+    flex-direction: column;
+  }
+
+  .dateWrapper {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .top {
+    flex-direction: row;
+    gap: auto;
+    justify-content: space-between;
+  }
+
+  .left {
+    gap: auto;
+    justify-content: space-between;
+  }
+
+  .right {
+    gap: 4px;
+    align-items: center;
+  }
+
+  .bottom {
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  .applyWrapper {
+    gap: 8px;
+  }
+
+  .apply-title {
+    color: ${({ theme }) => theme.colors.gray500};
+    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
+
+  .apply-detail {
+    color: ${({ theme }) => theme.colors.gray900};
+    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
 `;
 
 const Logout = styled.div<{ isRed: boolean }>`
@@ -376,70 +510,16 @@ const Border = styled.div`
   margin-left: -20px;
 `;
 
-const InsideWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 8px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Icon = styled.div`
-  width: 60px;
-  height: 60px;
-`;
-
-const InsideTitle = styled.label`
-  color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  text-align: center;
-`;
-
-const InsideDetail = styled.label`
-  color: ${({ theme }) => theme.colors.gray500};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  text-align: center;
-`;
-
-const NoApplication = styled.div`
-  padding: 20px;
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.gray50};
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.08);
-`;
-
-const FixWrapper = styled.div`
-  display: flex;
-  gap: 6px;
-`;
-
-const Fix = styled.div<{ color: string }>`
-  color: ${({ theme, color }) =>
-    color === 'blue' ? theme.colors.mainBlue : theme.colors.gray500};
+const DateLabel = styled.div<{ isBlue: boolean }>`
+  color: ${({ theme, isBlue }) =>
+    isBlue ? theme.colors.mainBlue : theme.colors.gray500};
   font-size: ${({ theme }) => theme.typography.fontSize.body3};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
-const NoApplicationLabel = styled.div`
-  color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
+const ToggleLabel = styled.label<{ isBlue: boolean | undefined }>`
+  color: ${({ theme, isBlue }) =>
+    isBlue ? theme.colors.mainBlue : theme.colors.gray500};
+  font-size: ${({ theme }) => theme.typography.fontSize.body3};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-`;
-
-const Label = styled.label`
-  margin-top: 24px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  color: ${({ theme }) => theme.colors.gray600};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
