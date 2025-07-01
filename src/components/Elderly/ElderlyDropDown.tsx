@@ -121,6 +121,7 @@ const DropdownExpandContent = styled.div`
 
 const DropdownItem = styled.button<{ selected: boolean }>`
   display: flex;
+  align-items: center;
   padding: 16px;
   height: 48px;
   text-align: left;
@@ -129,7 +130,7 @@ const DropdownItem = styled.button<{ selected: boolean }>`
   color: ${({ selected, theme }) =>
     selected ? theme.colors.mainBlue : theme.colors.gray900};
 
-  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray50};
   cursor: pointer;
 
   &:hover {

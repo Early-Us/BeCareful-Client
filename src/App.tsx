@@ -1,39 +1,39 @@
+import CommunityPost from '@/components/Community/CommunityPost';
+import { SignUpProvider } from '@/contexts/SignUpContext';
+import { ApplyDetailPage } from '@/page/Apply/ApplyDetailPage';
+import { ApplyPage } from '@/page/Apply/ApplyPage';
+import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
+import ChatListPage from '@/page/Chat/ChatListPage';
+import ChatRoomPage from '@/page/Chat/ChatRoomPage';
+import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
+import CommunityPage from '@/page/Community/CommunityPage';
+import CommunitySplashPage from '@/page/CommunitySplashPage';
+import ElderlyPage from '@/page/Elderly/ElderlyPage';
+import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
+import { ErrorPage } from '@/page/Error/ErrorPage';
+import HomeMyworkPage from '@/page/Home/HomeMyworkPage';
+import HomePage from '@/page/Home/HomePage';
+import SocialHomePage from '@/page/HomeSocial/SocialHomePage';
+import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
+import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
+import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
+import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
+import MatchingStatus from '@/page/Matching/MatchingStatus';
+import CreateApplication from '@/page/MyPage/CreateApplication';
+import CreateCareer from '@/page/MyPage/CreateCareer';
+import EditApplication from '@/page/MyPage/EditApplication';
+import EditCareer from '@/page/MyPage/EditCareer';
+import EditProfile from '@/page/MyPage/EditProfile';
+import MyPage from '@/page/MyPage/MyPage';
+import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
+import { CommunitySignUpPage } from '@/page/SignUp/CommunitySignUpPage';
+import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
+import { SignUpPage } from '@/page/SignUp/SignUpPage';
+import SplashPage from '@/page/SplashPage';
+import { TestPage } from '@/page/TestPage';
+import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
+import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { Route, Routes } from 'react-router-dom';
-import { TestPage } from './page/TestPage';
-import { ErrorPage } from './page/Error/ErrorPage';
-import CommunitySplashPage from './page/CommunitySplashPage';
-import SplashPage from './page/SplashPage';
-import { OnboardingPage } from './page/Onboarding/OnboardingPage';
-import { SignUpProvider } from './contexts/SignUpContext';
-import { SignUpPage } from './page/SignUp/SignUpPage';
-import { InstitutionSignUpPage } from './page/SignUp/InstitutionSignUpPage';
-import HomePage from './page/Home/HomePage';
-import HomeMyworkPage from './page/Home/HomeMyworkPage';
-import MyPage from './page/MyPage/MyPage';
-import EditProfile from './page/MyPage/EditProfile';
-import CreateCareer from './page/MyPage/CreateCareer';
-import EditCareer from './page/MyPage/EditCareer';
-import CreateApplication from './page/MyPage/CreateApplication';
-import EditApplication from './page/MyPage/EditApplication';
-import { WorkMainPage } from './page/Works/WorkMainPage';
-import { ApplyPage } from './page/Apply/ApplyPage';
-import { WorkDetailPage } from './page/Works/WorkDetailPage';
-import { ApplyDetailPage } from './page/Apply/ApplyDetailPage';
-import CommunityPage from './page/Community/CommunityPage';
-import CommunityPost from './components/Community/CommunityPost';
-import { CommunityCreatePage } from './page/Community/CommunityCreatePage';
-import { CommunitySignUpPage } from './page/SignUp/CommunitySignUpPage';
-import SocialHomePage from './page/HomeSocial/SocialHomePage';
-import ElderlyPage from './page/Elderly/ElderlyPage';
-import EdlerlyCreatePage from './page/Elderly/ElderlyCreatePage';
-import { MatchingApplyPage } from './page/Matching/MatchingApplyPage';
-import { MatchingElderPage } from './page/Matching/MatchingElderPage';
-import { MatchingInformationPage } from './page/Matching/MatchingInformationPage';
-import { CareGiverInfoPage } from './page/Matching/CareGiverInfoPage';
-import MatchingStatus from './page/Matching/MatchingStatus';
-import ChatListPage from './page/Chat/ChatListPage';
-import ChatListCaregiver from './page/Chat/ChatListCaregiver';
-import ChatRoomPage from './page/Chat/ChatRoomPage';
 
 function App() {
   return (
@@ -60,6 +60,7 @@ function App() {
         }
       />
 
+      {/* 요양보호사 */}
       <Route path="/home/caregiver" element={<HomePage />} />
       <Route path="/mywork" element={<HomeMyworkPage />} />
       <Route path="/mypage" element={<MyPage />} />
@@ -80,10 +81,10 @@ function App() {
       <Route path="/community/create" element={<CommunityCreatePage />} />
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
-      {/* 사회복지사 */}
+      {/*기관 관리자 */}
       <Route path="/home/social" element={<SocialHomePage />} />
       <Route path="/elderly" element={<ElderlyPage />} />
-      <Route path="/elderly/create" element={<EdlerlyCreatePage />} />
+      <Route path="/elderly/new" element={<ElderlyRegisterPage />} />
       <Route path="/matching" element={<MatchingApplyPage />} />
       <Route path="/matching/elder-apply" element={<MatchingElderPage />} />
       <Route
