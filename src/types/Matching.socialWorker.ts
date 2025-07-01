@@ -36,3 +36,9 @@ export interface MatchingElderData {
 
 export type PayLabel = keyof typeof PAY_LABEL_TO_CODE;
 export type PayCode = keyof typeof PAY_CODE_TO_LABEL;
+
+export interface MatchingCareTypeOption {
+  key: string;
+  title: string;
+  description: string;
+}

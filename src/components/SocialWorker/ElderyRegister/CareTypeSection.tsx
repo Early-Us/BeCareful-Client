@@ -12,7 +12,10 @@ import {
   Title,
   TitleWrapper,
 } from '@/components/SocialWorker/ElderyRegister/Section.styles';
-import { CARE_TYPES, CareTypeList } from '@/constants/careTypes.socialWorker';
+import {
+  CARE_TYPES,
+  CARE_TYPE_DETAILS,
+} from '@/constants/careTypes.socialWorker';
 import { useState } from 'react';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { ReactComponent as ButtonLeft } from '@/assets/icons/elderly/ButtonLeft.svg';
@@ -104,7 +107,7 @@ export function CareTypeSection({
 
           <CareModalButtonWrapper>
             {selectedCare &&
-              CareTypeList[selectedCare]?.map((item) => (
+              CARE_TYPE_DETAILS[selectedCare]?.map((item) => (
                 <CareChcekBox
                   key={item}
                   id={item}

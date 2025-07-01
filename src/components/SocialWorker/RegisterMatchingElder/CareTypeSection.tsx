@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { MatchingCareCard } from '@/page/Matching/MatchingCareCard';
+import { MATCHING_CARE_TYPE_OPTIONS } from '@/constants/careTypes.socialWorker';
 
 interface Props {
   selectedCareTypes: string[];
@@ -14,24 +15,15 @@ export const CareTypeSection = ({ selectedCareTypes, onChange }: Props) => {
         <SectionTitle color="blue">*</SectionTitle>
       </SectionTitleWrapper>
       <SectionGuide>중복선택 가능</SectionGuide>
-      <MatchingCareCard
-        title="식사보조"
-        description="스스로 식사가능, 경관식 보조"
-        initialChecked={selectedCareTypes.includes('식사보조')}
-        onChange={() => onChange('식사보조')}
-      />
-      <MatchingCareCard
-        title="배변보조"
-        description="가끔 대소변 실수 시 도움, 기저귀 케어 필요"
-        initialChecked={selectedCareTypes.includes('배변보조')}
-        onChange={() => onChange('배변보조')}
-      />
-      <MatchingCareCard
-        title="일상생활"
-        description="청소, 빨래보조"
-        initialChecked={selectedCareTypes.includes('일상생활')}
-        onChange={() => onChange('일상생활')}
-      />
+      {MATCHING_CARE_TYPE_OPTIONS.map(({ key, title, description }) => (
+        <MatchingCareCard
+          key={key}
+          title={title}
+          description={description}
+          initialChecked={selectedCareTypes.includes(key)}
+          onChange={() => onChange(key)}
+        />
+      ))}
     </SectionWrapper>
   );
 };
