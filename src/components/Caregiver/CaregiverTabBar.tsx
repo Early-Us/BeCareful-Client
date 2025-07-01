@@ -21,7 +21,7 @@ const CaregiverTabBar = () => {
         <Apply />
         <span>지원현황</span>
       </TabItem>
-      <TabItem to="/caregiver/mypage" end>
+      <TabItem to="/caregiver/my" end>
         <Mypage />
         <span>마이페이지</span>
       </TabItem>
