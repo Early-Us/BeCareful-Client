@@ -52,7 +52,7 @@ const MemoField = styled.textarea`
   padding: 16px 16px;
   border-radius: 12px;
   border: 1px solid;
-  border-color: ${({ theme }) => theme.colors.gray50};
+  border-color: ${({ theme }) => theme.colors.gray100};
   background: ${({ theme }) => theme.colors.white};
   resize: none;
   box-sizing: border-box;
@@ -71,7 +71,7 @@ const MemoField = styled.textarea`
 
   &:hover,
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
     outline: none;
     caret-color: ${({ theme }) => theme.colors.mainBlue};
   }

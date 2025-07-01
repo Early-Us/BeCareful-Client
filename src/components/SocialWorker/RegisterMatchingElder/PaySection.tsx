@@ -92,7 +92,7 @@ const PayField = styled.input`
   height: 22px;
   padding: 13px 16px;
   border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.gray50};
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
   background: ${({ theme }) => theme.colors.white};
   resize: none;
 
@@ -110,7 +110,7 @@ const PayField = styled.input`
 
   &:hover,
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
     outline: none;
     caret-color: ${({ theme }) => theme.colors.mainBlue};
   }

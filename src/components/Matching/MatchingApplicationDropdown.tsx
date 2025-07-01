@@ -40,8 +40,7 @@ export const MatchingApplicationDropdown = ({
     setSelectedContents(content);
   };
 
-  const selectedLabel =
-    selectedContents.length > 0 ? selectedContents: title;
+  const selectedLabel = selectedContents.length > 0 ? selectedContents : title;
 
   return (
     <SmallDropdowns ref={selectContainerRef}>
@@ -111,7 +110,6 @@ const SmallDropdownExpandContent = styled.div`
   top: 56px;
   left: 0;
   z-index: 2;
-
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
@@ -126,6 +124,7 @@ const SmallDropdownExpandContent = styled.div`
 
 const SmallDropdownItem = styled.button<{ selected: boolean }>`
   display: flex;
+  align-items: center;
   padding: 16px;
   height: 48px;
   text-align: left;
