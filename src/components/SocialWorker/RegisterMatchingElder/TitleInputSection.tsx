@@ -35,12 +35,12 @@ const TitleContainer = styled.div`
   flex-direction: column;
 
   font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+
   color: ${({ theme }) => theme.colors.gray900};
 
   .highlight {
     font-weight: ${({ theme }) => theme.typography.fontWeight.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+
     color: ${({ theme }) => theme.colors.mainBlue};
   }
 
