@@ -9,7 +9,7 @@ import { PayCode, PayLabel } from '@/types/Matching.socialWorker';
 interface Props {
   selectedPayType: PayCode;
   onPayTypeChange: (value: PayCode) => void;
-  payAmount: number;
+  payAmount: string;
   onAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -42,6 +42,7 @@ export const PaySection = ({
         <PayFieldWrapper>
           <PayField
             id="pay"
+            type="number"
             placeholder="금액입력"
             value={payAmount}
             onChange={onAmountChange}

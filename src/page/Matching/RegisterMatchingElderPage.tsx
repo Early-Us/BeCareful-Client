@@ -77,7 +77,7 @@ export const RegisterMatchingElderPage = () => {
         selectedPayType={selectedPayType}
         onPayTypeChange={setSelectedPayType}
         payAmount={workSalaryAmount}
-        onAmountChange={(e) => setWorkSalaryAmount(Number(e.target.value))}
+        onAmountChange={(e) => setWorkSalaryAmount(e.target.value)}
       />
       <MemoSection
         value={memoContent}

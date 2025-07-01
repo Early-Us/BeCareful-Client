@@ -11,7 +11,7 @@ export const useRegisterMatchingForm = (elderlyId: number) => {
   const [careTypes, setCareTypes] = useState<string[]>([]);
   const [selectedPayType, setSelectedPayType] = useState<PayCode>('HOUR');
 
-  const [workSalaryAmount, setWorkSalaryAmount] = useState(0);
+  const [workSalaryAmount, setWorkSalaryAmount] = useState('');
   const [memoContent, setMemoContent] = useState('');
 
   const handleSelectDay = (id: string) => {
@@ -34,7 +34,7 @@ export const useRegisterMatchingForm = (elderlyId: number) => {
     startTime !== '' &&
     endTime !== '' &&
     careTypes.length > 0 &&
-    workSalaryAmount > 0;
+    workSalaryAmount !== '';
 
   const getPayload = () => ({
     elderlyId,
@@ -46,7 +46,8 @@ export const useRegisterMatchingForm = (elderlyId: number) => {
     workEndTime: endTime,
     careTypes,
     workSalaryType: selectedPayType,
-    workSalaryAmount,
+    workSalaryAmount: Number(workSalaryAmount),
+
     description: memoContent,
   });
 
