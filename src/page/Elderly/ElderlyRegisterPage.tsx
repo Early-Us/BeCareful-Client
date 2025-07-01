@@ -16,7 +16,7 @@ import { InmateSection } from '@/components/SocialWorker/ElderyRegister/InmateSe
 import { SubmitSection } from '@/components/SocialWorker/ElderyRegister/SubmitSection';
 import { AreaSocials } from '@/data/AreaSocial';
 import { useElderlyRegisterForm } from '@/hooks/SignUp/useElderlyRegisterForm';
-import { useUploadElderlyProfileImage } from '@/api/elderlyRegister';
+import { useUploadElderlyProfileImage } from '@/api/elderly';
 import { ProfileImageUploader } from '@/components/SocialWorker/common/ProfileImageUploader';
 import { PetSection } from '@/components/SocialWorker/ElderyRegister/PetSection';
 
