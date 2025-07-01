@@ -8,7 +8,6 @@ import { OnboardingPage } from './page/Onboarding/OnboardingPage';
 import { SignUpProvider } from './contexts/SignUpContext';
 import { SignUpPage } from './page/SignUp/SignUpPage';
 import { InstitutionSignUpPage } from './page/SignUp/InstitutionSignUpPage';
-import MyPage from './page/MyPage/MyPage';
 import EditProfile from './page/MyPage/EditProfile';
 import CreateCareer from './page/MyPage/CreateCareer';
 import EditCareer from './page/MyPage/EditCareer';
@@ -77,7 +76,6 @@ function App() {
         element={<CaregiverLayout />}
       />
 
-      <Route path="/mypage" element={<MyPage />} />
       <Route path="/mypage/profile" element={<EditProfile />} />
       <Route path="/career/create" element={<CreateCareer />} />
       <Route path="/career/edit" element={<EditCareer />} />
