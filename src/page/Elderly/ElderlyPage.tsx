@@ -52,7 +52,7 @@ const ElderlyPage = () => {
         right={
           <NavRight
             onClick={() => {
-              navigate('/elderly/create');
+              navigate('/elderly/new');
             }}
           >
             등록하기
