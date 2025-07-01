@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.svg';
 
 import { Button } from '@/components/common/Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TitleInputSection } from '@/components/SocialWorker/RegisterMatchingElder/TitleInputSection';
 import { DaySelectSection } from '@/components/SocialWorker/RegisterMatchingElder/DaySelectSection';
 import { TimeSelectSection } from '@/components/SocialWorker/RegisterMatchingElder/TimeSelectSection';
@@ -13,6 +13,8 @@ import { useRegisterMatchingForm } from '@/hooks/Elderly/useRegisterMatchingElde
 import { useRegisterMatchingRecruitment } from '@/api/matching.socialWorker';
 
 export const RegisterMatchingElderPage = () => {
+  const location = useLocation();
+  const elderlyId = location.state?.elderlyId;
   const {
     title,
     setTitle,
@@ -32,7 +34,7 @@ export const RegisterMatchingElderPage = () => {
     setMemoContent,
     isFormValid,
     getPayload,
-  } = useRegisterMatchingForm();
+  } = useRegisterMatchingForm(elderlyId);
   const navigate = useNavigate();
   const { mutate: registerMatchingRecruitment } =
     useRegisterMatchingRecruitment();
@@ -52,7 +54,7 @@ export const RegisterMatchingElderPage = () => {
   return (
     <Container>
       <TopContainer>
-        <IconContainer onClick={() => navigate('/matching')}>
+        <IconContainer onClick={() => navigate(-1)}>
           <IconArrowLeft />
         </IconContainer>
         매칭 등록

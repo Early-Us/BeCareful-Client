@@ -16,7 +16,7 @@ export const MatchingInformationPage = () => {
   return (
     <Container>
       <TopContainer>
-        <IconContainer onClick={() => navigate('/matching')}>
+        <IconContainer onClick={() => navigate(-2)}>
           <IconArrowLeft />
         </IconContainer>
         매칭 정보

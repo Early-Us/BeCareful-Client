@@ -2,7 +2,7 @@ import { DAY_KO_TO_EN } from '@/constants/payType.socialWorker';
 import { PayCode } from '@/types/Matching.socialWorker';
 import { useState } from 'react';
 
-export const useRegisterMatchingForm = () => {
+export const useRegisterMatchingForm = (elderlyId: number) => {
   const [selectDay, setSelectDay] = useState<string[]>([]);
   const [title, setTitle] = useState('');
   const [startTime, setStartTime] = useState('00:00');
@@ -36,7 +36,7 @@ export const useRegisterMatchingForm = () => {
     workSalaryAmount > 0;
 
   const getPayload = () => ({
-    elderlyId: 1,
+    elderlyId,
     title,
     workDays: selectDay.map(
       (day) => DAY_KO_TO_EN[day as keyof typeof DAY_KO_TO_EN],
