@@ -85,7 +85,7 @@ const CaregiverMyPage = () => {
             <div
               className="pointWrapper"
               onClick={() => {
-                handleNavigate('/point');
+                handleNavigate('/caregiver/point');
               }}
             >
               <Point />

@@ -75,7 +75,7 @@ const CaregiverHomePage = () => {
           <div
             className="pointWrapper"
             onClick={() => {
-              // navigate('/caregiver');
+              navigate('/caregiver/point');
               window.scrollTo(0, 0);
             }}
           >
@@ -117,7 +117,7 @@ const CaregiverHomePage = () => {
         <ButtonsWrapper>
           <ApplyButton
             onClick={() => {
-              navigate('caregiver/mypage');
+              navigate('caregiver/my');
               window.scrollTo(0, 0);
             }}
           >
