@@ -50,6 +50,7 @@ export const RegisterMatchingElderPage = () => {
       },
       onError: (error) => {
         console.error('공고 등록 실패:', error);
+        alert('공고 등록에 실패했습니다. 다시 시도해주세요.');
       },
     });
   };

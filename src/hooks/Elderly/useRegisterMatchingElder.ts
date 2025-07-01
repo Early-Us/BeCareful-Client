@@ -33,6 +33,7 @@ export const useRegisterMatchingForm = (elderlyId: number) => {
     selectDay.length > 0 &&
     startTime !== '' &&
     endTime !== '' &&
+    startTime < endTime &&
     careTypes.length > 0 &&
     workSalaryAmount !== '';
 
