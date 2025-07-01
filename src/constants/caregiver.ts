@@ -30,7 +30,7 @@ export const CareTypeFormat = (caretypes: string[], length: number) => {
     return caretypes.join(', ');
   } else {
     const count = caretypes.length - length;
-    return `${caretypes.slice(0, length).join(',')} 외 ${count}개`;
+    return `${caretypes.slice(0, length).join(', ')} 외 ${count}개`;
   }
 };
 
@@ -59,6 +59,6 @@ export const LocationFormat = (
     return locations.join(',');
   } else {
     const count = locations.length - length;
-    return `${locations.slice(0, length).join(',')} 외 ${count}개`;
+    return `${locations.slice(0, length).join(', ')} 외 ${count}개`;
   }
 };
