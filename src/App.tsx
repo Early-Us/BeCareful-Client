@@ -87,7 +87,7 @@ function App() {
       <Route path="/elderly" element={<ElderlyPage />} />
       <Route path="/elderly/new" element={<ElderlyRegisterPage />} />
       <Route path="/match/social" element={<SocialWorkerMatchingPage />} />
-      <Route path="/matching/elder-apply" element={<MatchingElderPage />} />
+      <Route path="/social/matching/new" element={<MatchingElderPage />} />
       <Route
         path="/matching/info/:recruitmentId"
         element={<MatchingInformationPage />}
