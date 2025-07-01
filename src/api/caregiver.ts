@@ -48,6 +48,22 @@ export const getCaregiverMyPageInfo =
     return response.data;
   };
 
+// 일자리 신청 활성화
+export const workApplicationActive = async () => {
+  const response = await axiosInstance.get(
+    '/caregiver/work-application/active',
+  );
+  return response;
+};
+
+// 일자리 신청 비활성화
+export const workApplicationInactive = async () => {
+  const response = await axiosInstance.get(
+    '/caregiver/work-application/inactive',
+  );
+  return response;
+};
+
 // 경력서 조회
 export const getCareer = async (): Promise<CareerResponse> => {
   const response = await axiosInstance.get('/caregiver/career');
