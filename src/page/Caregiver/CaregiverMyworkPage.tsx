@@ -2,7 +2,7 @@ import { NavBar } from '@/components/common/NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
-import { ReactComponent as Mywork } from '@/assets/icons/caregiver/home/MyWork.svg';
+import { ReactComponent as Mywork } from '@/assets/icons/caregiver/MyWork.svg';
 import { Button } from '@/components/common/Button/Button';
 import CaregiverMyworkCard from '@/components/Caregiver/Home/CaregiverMyworkCard';
 import { useQuery } from '@tanstack/react-query';

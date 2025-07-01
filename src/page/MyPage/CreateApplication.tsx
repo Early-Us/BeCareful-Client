@@ -8,7 +8,7 @@ import { ApplicationDropdown } from '@/components/MyPage/ApplicationDropdown';
 import { CheckBoxSelect } from '@/components/common/CheckBox/CheckBoxSelect';
 import axios from 'axios';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
-import { ReactComponent as CloseButtonX } from '@/assets/icons/mypage/CloseButton.svg';
+import { ReactComponent as CloseButtonX } from '@/assets/icons/Close.svg';
 import Modal from '@/components/common/Modal/Modal';
 import { Area } from '@/data/Area';
 
