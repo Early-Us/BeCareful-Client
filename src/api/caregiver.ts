@@ -9,6 +9,10 @@ import {
   CareerResponse,
   CaregiverMyResponse,
 } from '@/types/Caregiver/mypage';
+import {
+  WorkApplicationRequest,
+  WorkApplicationResponse,
+} from '@/types/Caregiver/work';
 
 /* 홈화면 */
 // 요양보호사 홈 화면 구성 데이터 조회
@@ -48,6 +52,33 @@ export const getCaregiverMyPageInfo =
     return response.data;
   };
 
+// 경력서 조회
+export const getCareer = async (): Promise<CareerResponse> => {
+  const response = await axiosInstance.get('/caregiver/career');
+  return response.data;
+};
+
+// 경력서 등록/수정
+export const putCareer = async (career: CareerRequest) => {
+  const response = await axiosInstance.put('/caregiver/career', career);
+  return response;
+};
+
+// 신청서 조회
+export const getApplication = async (): Promise<WorkApplicationResponse> => {
+  const response = await axiosInstance.get('/caregiver/work-application');
+  return response.data;
+};
+
+// 신청서 등록
+export const putApplication = async (application: WorkApplicationRequest) => {
+  const response = await axiosInstance.put(
+    '/caregiver/work-application',
+    application,
+  );
+  return response;
+};
+
 // 일자리 신청 활성화
 export const workApplicationActive = async () => {
   const response = await axiosInstance.get(
@@ -61,17 +92,5 @@ export const workApplicationInactive = async () => {
   const response = await axiosInstance.get(
     '/caregiver/work-application/inactive',
   );
-  return response;
-};
-
-// 경력서 조회
-export const getCareer = async (): Promise<CareerResponse> => {
-  const response = await axiosInstance.get('/caregiver/career');
-  return response.data;
-};
-
-// 경력서 등록/수정
-export const putCareer = async (career: CareerRequest) => {
-  const response = await axiosInstance.put('/caregiver/career', career);
   return response;
 };
