@@ -1,17 +1,11 @@
 import { TabContentMatching } from '@/components/Matching/TabContentMatching';
+import { MatchingCaregiver } from '@/types/Matching.socialWorker';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-interface Caregiver {
-  caregiverId: number;
-  profileImageUrl: string;
-  name: string;
-  resumeTitle: string;
-}
-
 interface ApplyListTabProps {
   recruitmentId: number;
-  caregivers: Caregiver[];
+  caregivers: MatchingCaregiver[];
 }
 
 export const ApplyListTab = ({
@@ -25,12 +19,12 @@ export const ApplyListTab = ({
         <TabContentMatching
           key={index}
           matchingScore={85}
-          profileImageUrl={caregiver.profileImageUrl}
-          caregiverName={caregiver.name}
-          careerTitle={caregiver.resumeTitle}
+          profileImageUrl={caregiver.caregiverInfo.profileImageUrl}
+          caregiverName={caregiver.caregiverInfo.name}
+          careerTitle={caregiver.caregiverInfo.applicationTitle}
           onClick={() =>
             navigate(
-              `/matching/${recruitmentId}/caregiver/${caregiver.caregiverId}`,
+              `/matching/${recruitmentId}/caregiver/${caregiver.caregiverInfo.caregiverId}`,
             )
           }
         />

@@ -1,19 +1,13 @@
 import { Tab } from '@/components/common/Tab/Tab';
 import { ApplyListTab } from '@/components/Matching/ApplyListTab';
 import { UnApplyListTab } from '@/components/Matching/UnApplyListTab';
+import { MatchingCaregiver } from '@/types/Matching.socialWorker';
 import styled from 'styled-components';
-
-interface Caregiver {
-  caregiverId: number;
-  profileImageUrl: string;
-  name: string;
-  resumeTitle: string;
-}
 
 interface MatchingTabProps {
   recruitmentId: number;
-  appliedCaregivers: Caregiver[];
-  unAppliedCaregivers: Caregiver[];
+  appliedCaregivers: MatchingCaregiver[];
+  unAppliedCaregivers: MatchingCaregiver[];
 }
 
 export const MatchingTab = ({

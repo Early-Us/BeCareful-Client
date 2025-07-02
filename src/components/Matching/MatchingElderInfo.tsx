@@ -1,56 +1,39 @@
+import { DAY_EN_TO_KO } from '@/constants/day.socialWorker';
+import { MatchingElderData } from '@/types/Matching.socialWorker';
 import { styled } from 'styled-components';
-
 interface MatchingElderInfoProps {
-  elderlyName: string;
-  careTypes: string[];
-  elderlyAge: number;
-  gender: string;
-  workDays: string[];
-  workStartTime: string;
-  workEndTime: string;
-  profileImageUrl: string;
+  data: MatchingElderData;
 }
 
-const dayMapping: Record<string, string> = {
-  MONDAY: '월요일',
-  TUESDAY: '화요일',
-  WEDNESDAY: '수요일',
-  THURSDAY: '목요일',
-  FRIDAY: '금요일',
-  SATURDAY: '토요일',
-  SUNDAY: '일요일',
-};
-
-export const MatchingElderInfo = ({
-  elderlyName,
-  careTypes,
-  elderlyAge,
-  gender,
-  workDays,
-  workStartTime,
-  workEndTime,
-  profileImageUrl,
-}: MatchingElderInfoProps) => {
+export const MatchingElderInfo = ({ data }: MatchingElderInfoProps) => {
+  const { careType, workDays, workStartTime, workEndTime, elderlyInfo } =
+    data.recruitmentInfo;
+  const { name, address, gender, age, profileImageUrl } = elderlyInfo;
   const translatedWorkDays = workDays
-    .map((day) => dayMapping[day] || day)
+    .map((day) => DAY_EN_TO_KO[day as keyof typeof DAY_EN_TO_KO] || day)
     .join(', ');
+
   return (
     <ElderInfoContainer>
       <ElderTitle>매칭 정보</ElderTitle>
       <ElderProfile>
-        <ProfileImage src={profileImageUrl} alt={`${elderlyName}의 프로필`} />
-        <span>{elderlyName}</span>
+        <ProfileImage src={profileImageUrl} alt={`${name}의 프로필`} />
+        <span>{name}</span>
       </ElderProfile>
       <DetailContentContainer>
         <DetailContent>
           <span className="highlight">케어 항목</span>
-          <span>{careTypes.join(', ')}</span>
+          <span>{careType.join(', ')}</span>
         </DetailContent>
         <DetailContent>
           <span className="highlight">나이/성별</span>
           <span>
-            {elderlyAge}세 {gender === 'MALE' ? '남성' : '여성'}
+            {age}세 {gender === 'MALE' ? '남성' : '여성'}
           </span>
+        </DetailContent>
+        <DetailContent>
+          <span className="highlight">주소</span>
+          <span>{address}</span>
         </DetailContent>
         <DetailContent>
           <span className="highlight">근무 요일</span>
@@ -66,7 +49,6 @@ export const MatchingElderInfo = ({
     </ElderInfoContainer>
   );
 };
-
 const ElderInfoContainer = styled.div`
   display: flex;
   padding: 20px;
