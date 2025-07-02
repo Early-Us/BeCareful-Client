@@ -7,7 +7,7 @@ export const GenderMapping: { [key: string]: string } = {
   MALE: '남성',
 };
 
-const DayMapping: { [key: string]: string } = {
+export const DayMapping: { [key: string]: string } = {
   MONDAY: '월',
   TUESDAY: '화',
   WEDNESDAY: '수',
@@ -17,10 +17,26 @@ const DayMapping: { [key: string]: string } = {
   SUNDAY: '일',
 };
 
-const TimeMapping: { [key: string]: string } = {
+const APIDayMapping: { [key: string]: string } = {
+  월: 'MONDAY',
+  화: 'TUESDAY',
+  수: 'WEDNESDAY',
+  목: 'THURSDAY',
+  금: 'FRIDAY',
+  토: 'SATURDAY',
+  일: 'SUNDAY',
+};
+
+export const TimeMapping: { [key: string]: string } = {
   MORNING: '오전',
   AFTERNOON: '오후',
   EVENING: '저녁',
+};
+
+const APITimeMapping: { [key: string]: string } = {
+  오전: 'MORNING',
+  오후: 'AFTERNOON',
+  저녁: 'EVENING',
 };
 
 /* 요양보호사 관련 format 함수들 */
@@ -39,9 +55,17 @@ export const DayFormat = (days: string[]) => {
   return days.map((day) => DayMapping[day]).join(', ');
 };
 
+export const APIDayFormat = (days: string[]) => {
+  return days.map((day) => APIDayMapping[day]);
+};
+
 // worktime
 export const TimeFormat = (times: string[]) => {
   return times.map((time) => TimeMapping[time]).join(', ');
+};
+
+export const APITimeFormat = (times: string[]) => {
+  return times.map((time) => APITimeMapping[time]);
 };
 
 // location
