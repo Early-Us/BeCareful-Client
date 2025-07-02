@@ -24,19 +24,19 @@ export const MatchingCareCard = ({
   };
 
   return (
-    <CardContainer isClicked={isClicked} onClick={handleClick}>
+    <CardContainer $isClicked={isClicked} onClick={handleClick}>
       <LeftContainer>
         <span className="highlight">{title}</span>
         <span>{description}</span>
       </LeftContainer>
-      <RightContainer isClicked={isClicked}>
+      <RightContainer $isClicked={isClicked}>
         <CircleCheck />
       </RightContainer>
     </CardContainer>
   );
 };
 
-const CardContainer = styled.div<{ isClicked: boolean }>`
+const CardContainer = styled.div<{ $isClicked: boolean }>`
   display: flex;
   height: 90px;
   padding: 20px 16px;
@@ -44,12 +44,12 @@ const CardContainer = styled.div<{ isClicked: boolean }>`
   width: 100%;
   box-sizing: border-box;
   border-radius: 12px;
-  border: ${({ theme, isClicked }) =>
-    isClicked
+  border: ${({ theme, $isClicked }) =>
+    $isClicked
       ? `2px solid ${theme.colors.mainBlue}`
       : `1px solid ${theme.colors.gray100}`};
-  background-color: ${({ isClicked, theme }) =>
-    isClicked ? theme.colors.subBlue : theme.colors.white};
+  background-color: ${({ $isClicked, theme }) =>
+    $isClicked ? theme.colors.subBlue : theme.colors.white};
 `;
 
 const LeftContainer = styled.div`
@@ -67,12 +67,12 @@ const LeftContainer = styled.div`
   }
 `;
 
-const RightContainer = styled.div<{ isClicked: boolean }>`
+const RightContainer = styled.div<{ $isClicked: boolean }>`
   display: flex;
   align-items: flex-start;
 
   path {
-    fill: ${({ isClicked, theme }) =>
-      isClicked ? theme.colors.mainBlue : theme.colors.gray200};
+    fill: ${({ $isClicked, theme }) =>
+      $isClicked ? theme.colors.mainBlue : theme.colors.gray200};
   }
 `;

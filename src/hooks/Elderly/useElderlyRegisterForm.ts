@@ -1,11 +1,11 @@
-import { useRegisterElderly } from '@/api/elderlyRegister';
+import { useRegisterElderly } from '@/api/elderly';
 import {
   AreaSocial,
   CareLevel,
   CareType,
   ElderlyRegisterPayload,
   Gender,
-} from '@/types/ElderyRegister';
+} from '@/types/Elderly';
 import { useState } from 'react';
 
 export const useElderlyRegisterForm = () => {

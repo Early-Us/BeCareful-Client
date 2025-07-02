@@ -1,6 +1,8 @@
 import { axiosInstance } from '@/api/axiosInstance';
-import { ElderlyRegisterPayload } from '@/types/ElderyRegister';
-import { useMutation } from '@tanstack/react-query';
+import { ElderlyListItem, ElderlyRegisterPayload } from '@/types/Elderly';
+import { ElderData } from '@/types/Matching';
+
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useRegisterElderly = () =>
   useMutation({
@@ -27,5 +29,19 @@ export const useUploadElderlyProfileImage = () =>
         formData,
       );
       return data.profileImageUrl as string;
+    },
+  });
+
+export const useElderlyList = () =>
+  useQuery({
+    queryKey: ['elderlyList'],
+    queryFn: async (): Promise<ElderData[]> => {
+      const { data } =
+        await axiosInstance.get<ElderlyListItem[]>('/elderly/list');
+
+      return data.map((elder) => ({
+        ...elder,
+        imageUrl: elder.profileImageUrl,
+      }));
     },
   });
