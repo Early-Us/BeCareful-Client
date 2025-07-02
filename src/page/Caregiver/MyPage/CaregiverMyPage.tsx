@@ -128,7 +128,7 @@ const CaregiverMyPage = () => {
             </div>
           </div>
         </Bottom>
-        <Button onClick={() => handleNavigate('/my/edit')}>
+        <Button onClick={() => handleNavigate('/caregiver/my/profile')}>
           프로필 수정하기
         </Button>
       </ProfileWrapper>
@@ -156,7 +156,7 @@ const CaregiverMyPage = () => {
             </label>
           </NoContent>
         )}
-        <Button onClick={() => handleNavigate('/edit')}>
+        <Button onClick={() => handleNavigate('/caregiver/my/career')}>
           {data?.careerTitle ? '경력서 수정하기' : '경력서 작성하기'}
         </Button>
       </SectionWrapper>
@@ -223,7 +223,7 @@ const CaregiverMyPage = () => {
             </label>
           </NoContent>
         )}
-        <Button onClick={() => handleNavigate('/application')}>
+        <Button onClick={() => handleNavigate('/caregiver/my/application')}>
           {data?.workApplicationInfo ? '신청서 수정하기' : '신청서 작성하기'}
         </Button>
       </SectionWrapper>

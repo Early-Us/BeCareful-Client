@@ -8,11 +8,6 @@ import { OnboardingPage } from './page/Onboarding/OnboardingPage';
 import { SignUpProvider } from './contexts/SignUpContext';
 import { SignUpPage } from './page/SignUp/SignUpPage';
 import { InstitutionSignUpPage } from './page/SignUp/InstitutionSignUpPage';
-import EditProfile from './page/MyPage/EditProfile';
-import CreateCareer from './page/MyPage/CreateCareer';
-import EditCareer from './page/MyPage/EditCareer';
-import CreateApplication from './page/MyPage/CreateApplication';
-import EditApplication from './page/MyPage/EditApplication';
 import { WorkMainPage } from './page/Works/WorkMainPage';
 import { ApplyPage } from './page/Apply/ApplyPage';
 import { WorkDetailPage } from './page/Works/WorkDetailPage';
@@ -32,7 +27,7 @@ import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListPage from './page/Chat/ChatListPage';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
-import CaregiverLayout from './layouts/CaregiverLayout';
+import CaregiverRoute from './route/CaregiverRoute';
 
 function App() {
   return (
@@ -73,18 +68,14 @@ function App() {
         // // return <SocialworkerLayout />;
         // // }
         // })()}
-        element={<CaregiverLayout />}
+        element={<CaregiverRoute />}
       />
 
-      <Route path="/mypage/profile" element={<EditProfile />} />
-      <Route path="/career/create" element={<CreateCareer />} />
-      <Route path="/career/edit" element={<EditCareer />} />
-      <Route path="/application/create" element={<CreateApplication />} />
-      <Route path="/application/edit" element={<EditApplication />} />
       <Route path="/work" element={<WorkMainPage />} />
-      <Route path="/apply" element={<ApplyPage />} />
       <Route path="/work/:recruitmentId" element={<WorkDetailPage />} />
       <Route path="/workdetail" element={<WorkDetailPage />} />
+
+      <Route path="/apply" element={<ApplyPage />} />
       <Route path="/apply/:recruitmentId" element={<ApplyDetailPage />} />
 
       {/* 커뮤니티 */}
