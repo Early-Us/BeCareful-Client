@@ -1,6 +1,8 @@
-import { DAY_EN_TO_KO } from '@/constants/day.socialWorker';
 import { MatchingElderData } from '@/types/Matching.socialWorker';
+import { formatHHMM } from '@/utils/formatTime';
+import { translateWorkDaysToKo } from '@/utils/formatWorkDays';
 import { styled } from 'styled-components';
+
 interface MatchingElderInfoProps {
   data: MatchingElderData;
 }
@@ -9,9 +11,21 @@ export const MatchingElderInfo = ({ data }: MatchingElderInfoProps) => {
   const { careType, workDays, workStartTime, workEndTime, elderlyInfo } =
     data.recruitmentInfo;
   const { name, address, gender, age, profileImageUrl } = elderlyInfo;
-  const translatedWorkDays = workDays
-    .map((day) => DAY_EN_TO_KO[day as keyof typeof DAY_EN_TO_KO] || day)
-    .join(', ');
+  const translatedWorkDays = translateWorkDaysToKo(workDays);
+
+  const infoItems = [
+    { label: '케어 항목', value: careType.join(', ') },
+    {
+      label: '나이/성별',
+      value: `${age}세 ${gender === 'MALE' ? '남성' : '여성'}`,
+    },
+    { label: '주소', value: address },
+    { label: '근무 요일', value: translatedWorkDays },
+    {
+      label: '근무 시간',
+      value: `${formatHHMM(workStartTime)} ~ ${formatHHMM(workEndTime)}`,
+    },
+  ];
 
   return (
     <ElderInfoContainer>
@@ -21,34 +35,17 @@ export const MatchingElderInfo = ({ data }: MatchingElderInfoProps) => {
         <span>{name}</span>
       </ElderProfile>
       <DetailContentContainer>
-        <DetailContent>
-          <span className="highlight">케어 항목</span>
-          <span>{careType.join(', ')}</span>
-        </DetailContent>
-        <DetailContent>
-          <span className="highlight">나이/성별</span>
-          <span>
-            {age}세 {gender === 'MALE' ? '남성' : '여성'}
-          </span>
-        </DetailContent>
-        <DetailContent>
-          <span className="highlight">주소</span>
-          <span>{address}</span>
-        </DetailContent>
-        <DetailContent>
-          <span className="highlight">근무 요일</span>
-          <span>{translatedWorkDays}</span>
-        </DetailContent>
-        <DetailContent>
-          <span className="highlight">근무 시간</span>
-          <span>
-            {workStartTime} ~ {workEndTime}
-          </span>
-        </DetailContent>
+        {infoItems.map((item) => (
+          <DetailContent key={item.label}>
+            <span className="highlight">{item.label}</span>
+            <span>{item.value}</span>
+          </DetailContent>
+        ))}
       </DetailContentContainer>
     </ElderInfoContainer>
   );
 };
+
 const ElderInfoContainer = styled.div`
   display: flex;
   padding: 20px;
