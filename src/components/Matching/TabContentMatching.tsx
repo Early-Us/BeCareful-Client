@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 interface TabContentMatchingProps {
-  matchingScore: number;
+  matchingScore: string;
   profileImageUrl?: string;
   caregiverName: string;
   careerTitle: string;
@@ -21,7 +21,7 @@ export const TabContentMatching = ({
         <ProfileImage src={profileImageUrl} alt={`${caregiverName}의 프로필`} />
       </LeftContainer>
       <RightContainer>
-        <TagContainer>매칭적합도 {matchingScore}%</TagContainer>
+        <TagContainer>적합도 {matchingScore}</TagContainer>
         <span className="highlight">{caregiverName} 요양보호사</span>
         <span>{careerTitle}</span>
       </RightContainer>

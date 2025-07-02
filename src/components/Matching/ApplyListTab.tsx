@@ -18,7 +18,7 @@ export const ApplyListTab = ({
       {caregivers.map((caregiver, index) => (
         <TabContentMatching
           key={index}
-          matchingScore={85}
+          matchingScore={caregiver.matchingResultStatus}
           profileImageUrl={caregiver.caregiverInfo.profileImageUrl}
           caregiverName={caregiver.caregiverInfo.name}
           careerTitle={caregiver.caregiverInfo.applicationTitle}
