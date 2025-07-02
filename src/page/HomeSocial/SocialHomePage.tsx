@@ -15,7 +15,7 @@ import { ReactComponent as Applyer } from '@/assets/icons/socailHome/Applyer.svg
 import { ReactComponent as Applying } from '@/assets/icons/socailHome/Applying.svg';
 import { JobLevelBox } from '@/components/HomeSocial/JobLevelBox';
 import { Button } from '@/components/common/Button/Button';
-import { SocialTabBar } from '@/components/common/TabBarSocial';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 interface ElderlyInfo {
   name: string;
@@ -271,7 +271,7 @@ const SocialHomePage = () => {
         </SectionWrapper>
       </HomeContainer>
 
-      <SocialTabBar />
+      <SocialWorkerTabBar />
     </Container>
   );
 };

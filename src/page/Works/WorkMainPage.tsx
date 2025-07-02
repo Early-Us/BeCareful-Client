@@ -1,3 +1,4 @@
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { WorkFilterContent } from '@/components/Works/WorkMain/WorkFilterContet';
 import { WorkMainHeader } from '@/components/Works/WorkMain/WorkMainHeader';
 import WorkApplys from '@/components/Works/WorkMain/WorkApplys';
@@ -5,7 +6,7 @@ import { styled } from 'styled-components';
 import { RecruitmentList } from '@/components/Works/RecruitCard/RecruitmentList';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import CaregiverTabBar from '@/components/Caregiver/CaregiverTabBar';
+
 interface WorkLocation {
   siDo: string;
   siGuGun: string;
@@ -136,7 +137,7 @@ export const WorkMainPage = () => {
         <RecruitmentList />
       </CardContainer>
 
-      <CaregiverTabBar />
+      <SocialWorkerTabBar />
     </PageWrapper>
   );
 };

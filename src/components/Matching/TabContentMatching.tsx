@@ -1,12 +1,17 @@
 import { styled } from 'styled-components';
 
 interface TabContentMatchingProps {
-  matchingScore: number;
+  matchingScore: '높음' | '보통' | '낮음';
   profileImageUrl?: string;
   caregiverName: string;
   careerTitle: string;
   onClick?: () => void;
 }
+const getTagColors = (score: '높음' | '보통' | '낮음') => {
+  if (score === '높음') return { bg: 'subBlue', color: 'mainBlue' };
+  if (score === '보통') return { bg: 'gray50', color: 'gray500' };
+  return { bg: 'subOrange', color: 'mainOrange' };
+};
 
 export const TabContentMatching = ({
   matchingScore,
@@ -21,7 +26,9 @@ export const TabContentMatching = ({
         <ProfileImage src={profileImageUrl} alt={`${caregiverName}의 프로필`} />
       </LeftContainer>
       <RightContainer>
-        <TagContainer>매칭적합도 {matchingScore}%</TagContainer>
+        <TagContainer score={matchingScore}>
+          적합도 {matchingScore}
+        </TagContainer>
         <span className="highlight">{caregiverName} 요양보호사</span>
         <span>{careerTitle}</span>
       </RightContainer>
@@ -64,14 +71,20 @@ const RightContainer = styled.div`
   }
 `;
 
-const TagContainer = styled.div`
+const TagContainer = styled.div<{ score: '높음' | '보통' | '낮음' }>`
   display: flex;
   padding: 4px 8px;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.gray50};
-  color: ${({ theme }) => theme.colors.gray500};
+
+  ${({ theme, score }) => {
+    const { bg, color } = getTagColors(score);
+    return `
+      background-color: ${theme.colors[bg]};
+      color: ${theme.colors[color]};
+    `;
+  }}
 
   font-size: ${({ theme }) => theme.typography.fontSize.body4};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
