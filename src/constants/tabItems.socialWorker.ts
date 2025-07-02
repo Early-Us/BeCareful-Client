@@ -11,7 +11,7 @@ export const SOCIAL_WORKER_TAB = [
   },
   {
     key: 'matching',
-    path: '/matching',
+    path: '/match/social',
     label: '매칭하기',
     Icon: Matching,
   },

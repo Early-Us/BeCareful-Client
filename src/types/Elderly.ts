@@ -36,3 +36,14 @@ export interface ElderlyRegisterPayload {
   healthCondition: string;
   detailCareTypeList: CareType[];
 }
+
+export interface ElderlyListItem {
+  elderlyId: number;
+  name: string;
+  age: number;
+  gender: Gender;
+  profileImageUrl: string;
+  careLevel: string;
+  caregiverNum: number;
+  isMatching: boolean;
+}

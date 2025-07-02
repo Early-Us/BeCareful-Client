@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import styled from 'styled-components';
 
-import { AreaSelectData } from '@/types/ElderyRegister';
+import { AreaSelectData } from '@/types/Elderly';
 import { NameInputSection } from '@/components/SocialWorker/ElderyRegister/NameInputSection';
 import { BirthInputSection } from '@/components/SocialWorker/ElderyRegister/BirthInputSection';
 import { GenderSelectSection } from '@/components/SocialWorker/ElderyRegister/GenderSelectSection';
@@ -15,8 +15,8 @@ import { InmateSection } from '@/components/SocialWorker/ElderyRegister/InmateSe
 
 import { SubmitSection } from '@/components/SocialWorker/ElderyRegister/SubmitSection';
 import { AreaSocials } from '@/data/AreaSocial';
-import { useElderlyRegisterForm } from '@/hooks/SignUp/useElderlyRegisterForm';
-import { useUploadElderlyProfileImage } from '@/api/elderlyRegister';
+import { useElderlyRegisterForm } from '@/hooks/Elderly/useElderlyRegisterForm';
+import { useUploadElderlyProfileImage } from '@/api/elderly';
 import { ProfileImageUploader } from '@/components/SocialWorker/common/ProfileImageUploader';
 import { PetSection } from '@/components/SocialWorker/ElderyRegister/PetSection';
 

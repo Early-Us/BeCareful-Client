@@ -15,10 +15,10 @@ import HomeMyworkPage from '@/page/Home/HomeMyworkPage';
 import HomePage from '@/page/Home/HomePage';
 import SocialHomePage from '@/page/HomeSocial/SocialHomePage';
 import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
-import { MatchingApplyPage } from '@/page/Matching/MatchingApplyPage';
-import { MatchingElderPage } from '@/page/Matching/MatchingElderPage';
+
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import MatchingStatus from '@/page/Matching/MatchingStatus';
+import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
 import CreateApplication from '@/page/MyPage/CreateApplication';
 import CreateCareer from '@/page/MyPage/CreateCareer';
 import EditApplication from '@/page/MyPage/EditApplication';
@@ -29,6 +29,7 @@ import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 import { CommunitySignUpPage } from '@/page/SignUp/CommunitySignUpPage';
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
+import { SocialWorkerMatchingPage } from '@/page/SocialWorkerMatching/SocialWorkerMatchingPage';
 import SplashPage from '@/page/SplashPage';
 import { TestPage } from '@/page/TestPage';
 import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
@@ -85,8 +86,11 @@ function App() {
       <Route path="/home/social" element={<SocialHomePage />} />
       <Route path="/elderly" element={<ElderlyPage />} />
       <Route path="/elderly/new" element={<ElderlyRegisterPage />} />
-      <Route path="/matching" element={<MatchingApplyPage />} />
-      <Route path="/matching/elder-apply" element={<MatchingElderPage />} />
+      <Route path="/match/social" element={<SocialWorkerMatchingPage />} />
+      <Route
+        path="/social/matching/new"
+        element={<RegisterMatchingElderPage />}
+      />
       <Route
         path="/matching/info/:recruitmentId"
         element={<MatchingInformationPage />}

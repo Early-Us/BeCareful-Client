@@ -1,27 +1,30 @@
 import { styled } from 'styled-components';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { Button } from '@/components/common/Button/Button';
-import { ElderData } from '@/types/Matching';
+
 import { useNavigate } from 'react-router-dom';
 
-interface MatchingApplyModalProps {
+interface RegisterMatchingElderModalProps {
   width: string;
   onClose: () => void;
-  data: ElderData;
+  onCancel?: () => void;
 }
 
-export const MatchingApplyModal = ({
+export const RegisterMatchingElderModal = ({
   width,
   onClose,
-  data,
-}: MatchingApplyModalProps) => {
+  onCancel,
+}: RegisterMatchingElderModalProps) => {
   const navigate = useNavigate();
-  const handleApply = () => {
-    navigate('/social/matching/new', {
-      state: { elderlyId: data.elderlyId },
-    });
+  const handleCancel = () => {
+    navigate(-1);
   };
-  console.log(data);
+
+  const handleApply = () => {
+    onClose();
+    onCancel?.();
+  };
+
   return (
     <Overlay>
       <ModalContent width={width}>
@@ -31,18 +34,24 @@ export const MatchingApplyModal = ({
           </ModalCloseButton>
         </ModalTopContainer>
         <ModalMiddleContainer>
-          <span>일자리 매칭 등록하기</span>
+          <span>
+            현재 입력하신 조건으로
+            <br />
+            매칭을 시작할까요?
+          </span>
           <span className="highlight">
-            해당 어르신의 매칭 조건을 등록하시겠습니까?
+            적합한 요양보호사를 리스트를 확인하고
+            <br />
+            해당 보호사님께 지원 공고를 보냅니다.
           </span>
         </ModalMiddleContainer>
         <ModalBottomContainer>
-          <Button variant="blue2" height="52px" onClick={onClose}>
+          <Button variant="blue2" height="52px" onClick={handleCancel}>
             취소
           </Button>
 
           <Button variant="blue" height="52px" onClick={handleApply}>
-            등록하기
+            확인
           </Button>
         </ModalBottomContainer>
       </ModalContent>
