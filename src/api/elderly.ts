@@ -14,16 +14,10 @@ export const useRegisterElderly = () =>
 
 export const useUploadElderlyProfileImage = () =>
   useMutation({
-    mutationFn: async ({
-      file,
-      institutionId,
-    }: {
-      file: File;
-      institutionId: string;
-    }) => {
+    mutationFn: async ({ file }: { file: File }) => {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('institutionId', institutionId);
+
       const { data } = await axiosInstance.post(
         '/elderly/upload-profile-img',
         formData,

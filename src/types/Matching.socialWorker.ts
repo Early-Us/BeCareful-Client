@@ -3,6 +3,7 @@ import {
   PAY_CODE_TO_LABEL,
   PAY_LABEL_TO_CODE,
 } from '@/constants/payType.socialWorker';
+import { Gender } from '@/types/Elderly';
 
 export interface MatchingRecruitmentPayload {
   elderlyId: number;
@@ -24,15 +25,35 @@ export interface Caregiver {
 }
 
 export interface MatchingElderData {
-  elderlyName: string;
-  careType: string[];
-  elderlyAge: number;
-  gender: string;
-  workDays: string[];
-  workStartTime: string;
-  workEndTime: string;
-  unAppliedCaregivers: Caregiver[];
-  appliedCaregivers: Caregiver[];
+  recruitmentInfo: {
+    careType: string[];
+    workDays: string[];
+    workStartTime: string;
+    workEndTime: string;
+    elderlyInfo: {
+      name: string;
+      address: string;
+      gender: Gender;
+      age: number;
+      hasInmate: boolean;
+      hasPet: boolean;
+      profileImageUrl: string;
+      careLevel: string;
+      healthCondition: string;
+    };
+  };
+  matchedCaregivers: MatchingCaregiver[];
+  appliedCaregivers: MatchingCaregiver[];
+}
+
+export interface MatchingCaregiver {
+  caregiverInfo: {
+    caregiverId: number;
+    profileImageUrl: string;
+    name: string;
+    applicationTitle: string;
+  };
+  matchingResultStatus: string;
 }
 
 export type PayLabel = keyof typeof PAY_LABEL_TO_CODE;

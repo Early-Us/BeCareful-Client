@@ -1,67 +1,46 @@
+import { MatchingElderData } from '@/types/Matching.socialWorker';
+import { formatHHMM } from '@/utils/formatTime';
+import { translateWorkDaysToKo } from '@/utils/formatWorkDays';
 import { styled } from 'styled-components';
 
 interface MatchingElderInfoProps {
-  elderlyName: string;
-  careTypes: string[];
-  elderlyAge: number;
-  gender: string;
-  workDays: string[];
-  workStartTime: string;
-  workEndTime: string;
-  profileImageUrl: string;
+  data: MatchingElderData;
 }
 
-const dayMapping: Record<string, string> = {
-  MONDAY: '월요일',
-  TUESDAY: '화요일',
-  WEDNESDAY: '수요일',
-  THURSDAY: '목요일',
-  FRIDAY: '금요일',
-  SATURDAY: '토요일',
-  SUNDAY: '일요일',
-};
+export const MatchingElderInfo = ({ data }: MatchingElderInfoProps) => {
+  const { careType, workDays, workStartTime, workEndTime, elderlyInfo } =
+    data.recruitmentInfo;
+  const { name, address, gender, age, profileImageUrl } = elderlyInfo;
+  const translatedWorkDays = translateWorkDaysToKo(workDays);
 
-export const MatchingElderInfo = ({
-  elderlyName,
-  careTypes,
-  elderlyAge,
-  gender,
-  workDays,
-  workStartTime,
-  workEndTime,
-  profileImageUrl,
-}: MatchingElderInfoProps) => {
-  const translatedWorkDays = workDays
-    .map((day) => dayMapping[day] || day)
-    .join(', ');
+  const infoItems = [
+    { label: '케어 항목', value: careType.join(', ') },
+    {
+      label: '나이/성별',
+      value: `${age}세 ${gender === 'MALE' ? '남성' : '여성'}`,
+    },
+    { label: '주소', value: address },
+    { label: '근무 요일', value: translatedWorkDays },
+    {
+      label: '근무 시간',
+      value: `${formatHHMM(workStartTime)} ~ ${formatHHMM(workEndTime)}`,
+    },
+  ];
+
   return (
     <ElderInfoContainer>
       <ElderTitle>매칭 정보</ElderTitle>
       <ElderProfile>
-        <ProfileImage src={profileImageUrl} alt={`${elderlyName}의 프로필`} />
-        <span>{elderlyName}</span>
+        <ProfileImage src={profileImageUrl} alt={`${name}의 프로필`} />
+        <span>{name}</span>
       </ElderProfile>
       <DetailContentContainer>
-        <DetailContent>
-          <span className="highlight">케어 항목</span>
-          <span>{careTypes.join(', ')}</span>
-        </DetailContent>
-        <DetailContent>
-          <span className="highlight">나이/성별</span>
-          <span>
-            {elderlyAge}세 {gender === 'MALE' ? '남성' : '여성'}
-          </span>
-        </DetailContent>
-        <DetailContent>
-          <span className="highlight">근무 요일</span>
-          <span>{translatedWorkDays}</span>
-        </DetailContent>
-        <DetailContent>
-          <span className="highlight">근무 시간</span>
-          <span>
-            {workStartTime} ~ {workEndTime}
-          </span>
-        </DetailContent>
+        {infoItems.map((item) => (
+          <DetailContent key={item.label}>
+            <span className="highlight">{item.label}</span>
+            <span>{item.value}</span>
+          </DetailContent>
+        ))}
       </DetailContentContainer>
     </ElderInfoContainer>
   );

@@ -22,16 +22,15 @@ import { PetSection } from '@/components/SocialWorker/ElderyRegister/PetSection'
 
 const ElderlyRegisterPage = () => {
   const navigate = useNavigate();
-  const institutionId = '123'; // TODO ㅠㅠ
 
   const form = useElderlyRegisterForm();
   const areaData: AreaSelectData[] = AreaSocials.city;
 
   const { mutate: uploadImage } = useUploadElderlyProfileImage();
 
-  const handleImageUpload = (file: File, institutionId: string) => {
+  const handleImageUpload = (file: File) => {
     uploadImage(
-      { file, institutionId },
+      { file },
       {
         onSuccess: (url) => {
           form.setProfileImageUrl(url);
@@ -59,7 +58,7 @@ const ElderlyRegisterPage = () => {
         <ProfileWrapper>
           <ProfileImageUploader
             imageUrl={form.profileImageUrl}
-            onChange={(file) => handleImageUpload(file, institutionId)}
+            onChange={(file) => handleImageUpload(file)}
           />
         </ProfileWrapper>
 

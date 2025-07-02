@@ -28,24 +28,13 @@ export const MatchingInformationPage = () => {
 
       {elderData && (
         <>
-          <MatchingElderInfo
-            elderlyName={elderData.elderlyName}
-            careTypes={elderData.careType}
-            elderlyAge={elderData.elderlyAge}
-            gender={elderData.gender}
-            workDays={elderData.workDays}
-            workStartTime={elderData.workStartTime}
-            workEndTime={elderData.workEndTime}
-            profileImageUrl={
-              elderData.unAppliedCaregivers[0]?.profileImageUrl || ''
-            }
-          />
+          <MatchingElderInfo data={elderData} />
           <GapContainer />
           <TabContainer>
             <MatchingTab
               recruitmentId={Number(recruitmentId)}
+              matchedCaregivers={elderData.matchedCaregivers}
               appliedCaregivers={elderData.appliedCaregivers}
-              unAppliedCaregivers={elderData.unAppliedCaregivers}
             />
           </TabContainer>
         </>
