@@ -11,20 +11,11 @@ import CommunitySplashPage from '@/page/CommunitySplashPage';
 import ElderlyPage from '@/page/Elderly/ElderlyPage';
 import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
 import { ErrorPage } from '@/page/Error/ErrorPage';
-import HomeMyworkPage from '@/page/Home/HomeMyworkPage';
-import HomePage from '@/page/Home/HomePage';
 import SocialHomePage from '@/page/HomeSocial/SocialHomePage';
 import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
-
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import MatchingStatus from '@/page/Matching/MatchingStatus';
 import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
-import CreateApplication from '@/page/MyPage/CreateApplication';
-import CreateCareer from '@/page/MyPage/CreateCareer';
-import EditApplication from '@/page/MyPage/EditApplication';
-import EditCareer from '@/page/MyPage/EditCareer';
-import EditProfile from '@/page/MyPage/EditProfile';
-import MyPage from '@/page/MyPage/MyPage';
 import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 import { CommunitySignUpPage } from '@/page/SignUp/CommunitySignUpPage';
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
@@ -35,6 +26,7 @@ import { TestPage } from '@/page/TestPage';
 import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
 import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { Route, Routes } from 'react-router-dom';
+import CaregiverRoute from './route/CaregiverRoute';
 
 function App() {
   return (
@@ -62,14 +54,20 @@ function App() {
       />
 
       {/* 요양보호사 */}
-      <Route path="/home/caregiver" element={<HomePage />} />
-      <Route path="/mywork" element={<HomeMyworkPage />} />
-      <Route path="/mypage" element={<MyPage />} />
-      <Route path="/mypage/profile" element={<EditProfile />} />
-      <Route path="/career/create" element={<CreateCareer />} />
-      <Route path="/career/edit" element={<EditCareer />} />
-      <Route path="/application/create" element={<CreateApplication />} />
-      <Route path="/application/edit" element={<EditApplication />} />
+      <Route
+        path="/caregiver/*"
+        // element={(() => {
+        // const user = useRecoilValue(currenUserInfo);
+        // if (user.userType === "caregiver") {
+        //    return <CaregiverLayout />;
+        // }
+        // // else if (user.userType === "socialworker") {
+        // // return <SocialworkerLayout />;
+        // // }
+        // })()}
+        element={<CaregiverRoute />}
+      />
+
       <Route path="/work" element={<WorkMainPage />} />
       <Route path="/apply" element={<ApplyPage />} />
       <Route path="/work/:recruitmentId" element={<WorkDetailPage />} />
