@@ -17,14 +17,11 @@ export interface WorkLocation {
   dongEupMyeon: string;
 }
 
-// 근무 시간대
-export type WorkTime = 'MORNING' | 'AFTERNOON' | 'EVENING';
-
 // 지원 정보
 export interface WorkApplication {
   workLocations: WorkLocation[];
-  workDays: WorkDay[];
-  workTimes: WorkTime[];
+  workDays: string[];
+  workTimes: string[];
   careTypes: string[];
   workSalaryType: 'HOUR' | 'MONTH' | 'YEAR';
   workSalaryAmount: number;
