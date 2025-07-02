@@ -85,12 +85,12 @@ const SmallDropdowns = styled.div`
 `;
 
 const SmallDropdownHeader = styled.div<{ pressed?: boolean }>`
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
 
-  height: 48px;
   border-radius: 12px;
   border: 1px solid
     ${({ theme, pressed }) =>
@@ -112,23 +112,23 @@ const SmallDropdownExpandContent = styled.div`
   left: 0;
   z-index: 2;
 
+  width: 100%;
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-
   box-sizing: border-box;
   border-radius: 8px;
-  width: 90px;
 
   overflow: hidden;
 `;
 
 const SmallDropdownItem = styled.button<{ selected: boolean }>`
-  display: flex;
-  padding: 16px;
   height: 48px;
-  text-align: left;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   color: ${({ selected, theme }) =>
