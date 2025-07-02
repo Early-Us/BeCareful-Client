@@ -52,7 +52,7 @@ const Label = styled.label<{ border: boolean }>`
 
   color: ${({ theme }) => theme.colors.gray900};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiblod};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `;
 
 const Check = styled.input`
