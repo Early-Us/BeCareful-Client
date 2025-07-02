@@ -3,15 +3,15 @@ import { MatchingCaregiver } from '@/types/Matching.socialWorker';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-interface UnApplyListTabProps {
+interface MatchListTabProps {
   recruitmentId: number;
   caregivers: MatchingCaregiver[];
 }
 
-export const UnApplyListTab = ({
+export const MatchListTab = ({
   recruitmentId,
   caregivers,
-}: UnApplyListTabProps) => {
+}: MatchListTabProps) => {
   const navigate = useNavigate();
   return (
     <Container>

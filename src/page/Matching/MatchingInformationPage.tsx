@@ -33,8 +33,8 @@ export const MatchingInformationPage = () => {
           <TabContainer>
             <MatchingTab
               recruitmentId={Number(recruitmentId)}
+              matchedCaregivers={elderData.matchedCaregivers}
               appliedCaregivers={elderData.appliedCaregivers}
-              unAppliedCaregivers={elderData.matchedCaregivers}
             />
           </TabContainer>
         </>
