@@ -1,12 +1,20 @@
 import CaregiverTabBar from '@/components/Caregiver/CaregiverTabBar';
-import CaregiverHomePage from '@/page/Caregiver/CaregiverHomePage';
-import CaregiverMyworkPage from '@/page/Caregiver/CaregiverMyworkPage';
+import CaregiverHomePage from '@/page/Caregiver/Home/CaregiverHomePage';
+import CaregiverMyworkPage from '@/page/Caregiver/Home/CaregiverMyworkPage';
+import CaregiverPointPage from '@/page/Caregiver/CaregiverPointPage';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import CaregiverMyRoute from './CaregiverMyRoute';
 
-const CaregiverLayout = () => {
+const CaregiverRoute = () => {
   const location = useLocation();
 
-  const hideTabBarPaths = ['/caregiver/mywork'];
+  const hideTabBarPaths = [
+    '/caregiver/mywork',
+    '/caregiver/point',
+    '/caregiver/my/profile',
+    '/caregiver/my/career',
+    '/caregiver/my/application',
+  ];
   const isHideTabBar = hideTabBarPaths.includes(location.pathname);
 
   return (
@@ -19,14 +27,10 @@ const CaregiverLayout = () => {
         <Routes>
           <Route path="/" element={<CaregiverHomePage />} />
           <Route path="/mywork" element={<CaregiverMyworkPage />} />
-          {/* <Route path="jobs" element={<CaregiverJobListPage />} />
-          <Route
-            path="applications"
-            element={<CaregiverApplicationStatusPage />}
-          />
-          <Route path="profile" element={<CaregiverProfilePage />} /> */}
+          <Route path="/my/*" element={<CaregiverMyRoute />} />
+
+          <Route path="/point" element={<CaregiverPointPage />} />
         </Routes>
-        {/* <Outlet /> 중첩 라우트가 있다면 사용 (예: /profile/edit) */}
       </main>
 
       {!isHideTabBar && <CaregiverTabBar />}
@@ -34,4 +38,4 @@ const CaregiverLayout = () => {
   );
 };
 
-export default CaregiverLayout;
+export default CaregiverRoute;
