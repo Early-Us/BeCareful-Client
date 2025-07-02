@@ -246,7 +246,7 @@ const CaregiverApplicationPage = () => {
               label={day}
               checked={selectDay.includes(day)}
               onChange={handleSelectDay}
-              width=""
+              width="100%"
               height="42px"
             />
           ))}
@@ -266,7 +266,7 @@ const CaregiverApplicationPage = () => {
               label={time}
               checked={selectTime.includes(time)}
               onChange={handleSelectTime}
-              width=""
+              width="100%"
               height="48px"
             />
           ))}
@@ -311,7 +311,7 @@ const CaregiverApplicationPage = () => {
               label={careType}
               checked={selectCaretype.includes(careType)}
               onChange={handleSelectCaretype}
-              width=""
+              width="100%"
               height="48px"
             />
           ))}
@@ -325,7 +325,7 @@ const CaregiverApplicationPage = () => {
                   key={careType}
                   id={careType}
                   label={careType}
-                  width=""
+                  width="100%"
                   height="48px"
                   border={false}
                 />
@@ -336,7 +336,7 @@ const CaregiverApplicationPage = () => {
                   label={careType}
                   checked={selectCaretype.includes(careType)}
                   onChange={handleSelectCaretype}
-                  width=""
+                  width="100%"
                   height="48px"
                 />
               ),
