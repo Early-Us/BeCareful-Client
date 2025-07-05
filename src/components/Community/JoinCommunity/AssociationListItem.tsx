@@ -76,8 +76,8 @@ const MetaItem = styled.div`
 `;
 
 const Thumbnail = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 71px;
+  height: 71px;
   object-fit: cover;
 `;
 
