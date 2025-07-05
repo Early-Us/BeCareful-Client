@@ -22,16 +22,25 @@ export const CommunityJoinPage = () => {
         <CommunityJoinSearchInput onCommunitySelect={setCommunityName} />
       </Header>
 
-      <CommunitySearchList keyword={communityName} />
+      <ContentWrapper>
+        <CommunitySearchList keyword={communityName} />
+      </ContentWrapper>
     </>
   );
 };
 
 const Header = styled.div`
-  padding: 0 20px;
-  margin-top: 56px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  background: ${({ theme }) => theme.colors.white};
+  z-index: 10;
+
+  padding: 0 20px 8px;
   display: flex;
-  padding-bottom: 8px;
+  flex-direction: column;
 `;
 
 const NavbarWrapper = styled.div`
@@ -39,11 +48,6 @@ const NavbarWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  background: ${({ theme }) => theme.colors.white};
 `;
 
 const NavTitle = styled.div`
@@ -54,4 +58,8 @@ const NavTitle = styled.div`
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+`;
+
+const ContentWrapper = styled.div`
+  margin-top: 116px;
 `;
