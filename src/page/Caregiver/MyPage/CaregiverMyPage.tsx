@@ -140,10 +140,8 @@ const CaregiverMyPage = () => {
         {data?.careerTitle ? (
           <Career>
             <div className="dateWrapper">
-              <DateLabel isBlue={false}>최근 수정일</DateLabel>
-              <DateLabel isBlue={true}>
-                {data?.careerLastModifyDate.replaceAll('-', '.')}
-              </DateLabel>
+              <label className="date">최근 수정일 </label>
+              <span>{data?.careerLastModifyDate.replaceAll('-', '.')}</span>
             </div>
             <label className="title">{data?.careerTitle}</label>
           </Career>
@@ -168,10 +166,8 @@ const CaregiverMyPage = () => {
             <div className="top">
               <div className="left">
                 <div className="dateWrapper">
-                  <DateLabel isBlue={false}>최근 수정일</DateLabel>
-                  <DateLabel isBlue={true}>
-                    {data?.workApplicationLastModifyDate.replaceAll('-', '.')}
-                  </DateLabel>
+                  <label className="date">최근 수정일 </label>
+                  <span>{data?.careerLastModifyDate.replaceAll('-', '.')}</span>
                 </div>
                 <label className="title">일자리 신청서</label>
               </div>
@@ -409,6 +405,18 @@ const Career = styled.div`
   .dateWrapper {
     gap: 6px;
   }
+
+  .date {
+    color: ${({ theme }) => theme.colors.gray500};
+    font-size: ${({ theme }) => theme.typography.fontSize.body3};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.mainBlue};
+    font-size: ${({ theme }) => theme.typography.fontSize.body3};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
 `;
 
 const Application = styled.div`
@@ -427,6 +435,18 @@ const Application = styled.div`
   .dateWrapper {
     flex-direction: row;
     gap: 6px;
+  }
+
+  .date {
+    color: ${({ theme }) => theme.colors.gray500};
+    font-size: ${({ theme }) => theme.typography.fontSize.body3};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.mainBlue};
+    font-size: ${({ theme }) => theme.typography.fontSize.body3};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   }
 
   .top {
@@ -508,13 +528,6 @@ const Border = styled.div`
   height: 1px;
   background: ${({ theme }) => theme.colors.gray50};
   margin-left: -20px;
-`;
-
-const DateLabel = styled.div<{ isBlue: boolean }>`
-  color: ${({ theme, isBlue }) =>
-    isBlue ? theme.colors.mainBlue : theme.colors.gray500};
-  font-size: ${({ theme }) => theme.typography.fontSize.body3};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const ToggleLabel = styled.label<{ isBlue: boolean | undefined }>`
