@@ -1,7 +1,7 @@
 import { AssociationListItem } from '@/components/Community/JoinCommunity/AssociationListItem';
 import { styled } from 'styled-components';
 
-interface Association {
+interface AssociationList {
   name: string;
   establishedYear: string;
   memberCount: number;
@@ -9,7 +9,7 @@ interface Association {
 }
 
 interface AssociationListCardProps {
-  associations: Association[];
+  associations: AssociationList[];
   title: string;
 }
 
