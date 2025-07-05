@@ -570,7 +570,7 @@ const Pay = styled.input`
 `;
 
 const Bottom = styled.div`
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
