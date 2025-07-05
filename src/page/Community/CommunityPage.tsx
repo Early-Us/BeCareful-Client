@@ -97,6 +97,8 @@ export default CommunityPage;
 
 const Container = styled.div`
   padding-bottom: 57px;
+  min-height: 100vh;
+  background: ${({ theme }) => theme.colors.gray50};
 `;
 
 const Top = styled.div`
