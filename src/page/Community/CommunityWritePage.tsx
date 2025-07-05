@@ -50,7 +50,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
 
   // 게시글 제목
   const [title, setTitle] = useState('');
-  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
@@ -743,8 +743,7 @@ const ToggleLabel = styled.div<{ checked: boolean }>`
   }
 `;
 
-const Title = styled.textarea`
-  resize: none;
+const Title = styled.input`
   outline: none;
   border: none;
   padding: 14px 0px;

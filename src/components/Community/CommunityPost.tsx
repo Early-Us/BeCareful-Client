@@ -84,7 +84,7 @@ const CommunityPost = () => {
 
   const [reply, setReply] = useState('');
 
-  const handleReplyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleReplyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReply(e.target.value);
   };
   const handleReplySend = (e: React.FormEvent) => {
@@ -636,8 +636,7 @@ const IsMyPost = styled.div`
   padding: 10px 0;
 `;
 
-const Reply = styled.textarea`
-  resize: none;
+const Reply = styled.input`
   outline: none;
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};

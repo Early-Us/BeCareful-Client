@@ -30,8 +30,8 @@ const CaregiverCareerNew = ({
     <Container>
       <InputWrapper>
         <InputFieldLabel htmlFor="memo">자기소개</InputFieldLabel>
-        <MemoFieldWrapper>
-          <MemoField
+        <StrengthWrapper>
+          <Strength
             id="memo"
             placeholder="나의 강점을 자유롭게 설명해주세요."
             value={memoContent}
@@ -39,7 +39,7 @@ const CaregiverCareerNew = ({
             onChange={handleMemoChange}
           />
           <MemoCount>{textCount}/200</MemoCount>
-        </MemoFieldWrapper>
+        </StrengthWrapper>
       </InputWrapper>
       <Border />
     </Container>
@@ -72,17 +72,16 @@ const InputFieldLabel = styled.label`
   letter-spacing: -0.35px;
 `;
 
-const MemoFieldWrapper = styled.div`
+const StrengthWrapper = styled.div`
   position: relative;
 `;
 
-const MemoField = styled.textarea`
+const Strength = styled.textarea`
   width: 100%;
   height: 200px;
-  padding: 16px 16px;
+  padding: 16px;
   border-radius: 12px;
-  border: 1px solid;
-  border-color: ${({ theme }) => theme.colors.gray50};
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
   background: ${({ theme }) => theme.colors.white};
   resize: none;
   box-sizing: border-box;

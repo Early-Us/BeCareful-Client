@@ -20,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: -0.025em; 
   }
 
+  body.is-chrome textarea {
+    word-spacing: -5px;
+  }
+
   p, h1, h2, h3 {
     margin: 0;
     padding: 0;
