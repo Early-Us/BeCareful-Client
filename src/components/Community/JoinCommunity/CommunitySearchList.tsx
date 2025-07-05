@@ -1,27 +1,7 @@
+import { useGetAssociationList } from '@/api/communityAssociation';
 import { AssociationListCard } from '@/components/Community/JoinCommunity/AssociationListCard';
 import { CommunityNotFound } from '@/components/Community/JoinCommunity/CommunityNotFound';
 import { styled } from 'styled-components';
-
-const dummyAssociations = [
-  {
-    name: '전주완주장기요양기관협회',
-    establishedYear: '2000년',
-    memberCount: 121,
-    thumbnailUrl: '',
-  },
-  {
-    name: '00장기요양기관협회',
-    establishedYear: '2000년',
-    memberCount: 1,
-    thumbnailUrl: '',
-  },
-  {
-    name: '더미장기요양기관협회',
-    establishedYear: '2000년',
-    memberCount: 1,
-    thumbnailUrl: '',
-  },
-];
 
 interface Props {
   keyword: string;
@@ -30,12 +10,24 @@ interface Props {
 export const CommunitySearchList = ({ keyword }: Props) => {
   const trimmed = keyword.trim();
   const isSearching = trimmed.length > 0;
-  const filtered = dummyAssociations.filter((a) => a.name.includes(trimmed));
 
-  const targetList = isSearching ? filtered : dummyAssociations;
+  const { data, isLoading, isError } = useGetAssociationList();
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError || !data) return <div>목록 불러오는 중 오류가 발생했습니다.</div>;
+
+  const associations = data.associationWholeList.map((item) => ({
+    name: item.associationName,
+    establishedYear: `${item.associationEstablishedYear}년`,
+    memberCount: item.associationMemberCount,
+    thumbnailUrl: item.associationProfileImageUrl,
+  }));
+
+  const filtered = associations.filter((a) => a.name.includes(trimmed));
+
+  const targetList = isSearching ? filtered : associations;
   const title = isSearching
-    ? `${filtered.length}건`
-    : `전체 ${dummyAssociations.length}개`;
+    ? `${associations.length}건`
+    : `전체 ${associations.length}개`;
 
   if (isSearching && filtered.length === 0) {
     return (
