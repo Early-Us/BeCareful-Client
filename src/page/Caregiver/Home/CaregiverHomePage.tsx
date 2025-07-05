@@ -117,7 +117,7 @@ const CaregiverHomePage = () => {
         <ButtonsWrapper>
           <ApplyButton
             onClick={() => {
-              navigate('caregiver/my');
+              navigate('/caregiver/my');
               window.scrollTo(0, 0);
             }}
           >
@@ -135,7 +135,7 @@ const CaregiverHomePage = () => {
           <WorkButtons>
             <WorkButton
               onClick={() => {
-                navigate('caregiver/work');
+                navigate('/caregiver/work');
                 window.scrollTo(0, 0);
               }}
             >
@@ -184,7 +184,8 @@ export default CaregiverHomePage;
 
 const Container = styled.div`
   background: #f2f3f7;
-  height: 100vh;
+  // height: 100vh;
+  // paddings-bottom: 108px;
 `;
 
 const NavLeft = styled(Logo)`
@@ -237,6 +238,8 @@ const MainWrapper = styled.div`
   left: 20px;
   right: 20px;
   top: 192px;
+
+  background: #f2f3f7;
 `;
 
 const CardWrapper = styled.div`
@@ -286,6 +289,7 @@ const ApplyButton = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-start;
   padding: 16px;
   padding-top: 20px;
   width: 100%;
