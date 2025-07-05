@@ -1,47 +1,60 @@
 import { AssociationListItem } from '@/components/Community/JoinCommunity/AssociationListItem';
 import { styled } from 'styled-components';
 
-const dummyAssociations = [
-  {
-    name: '전주완주장기요양기관협회',
-    establishedYear: '2000년',
-    memberCount: 121,
-    thumbnailUrl: '',
-  },
-  {
-    name: '00장기요양기관협회',
-    establishedYear: '2000년',
-    memberCount: 1,
-    thumbnailUrl: '',
-  },
-  {
-    name: '전주완주장기요양기관협회',
-    establishedYear: '2000년',
-    memberCount: 121,
-    thumbnailUrl: '',
-  },
-];
+interface Association {
+  name: string;
+  establishedYear: string;
+  memberCount: number;
+  thumbnailUrl?: string;
+}
 
-export const AssociationListCard = () => {
+interface AssociationListCardProps {
+  associations: Association[];
+  title: string;
+}
+
+export const AssociationListCard = ({
+  associations,
+  title,
+}: AssociationListCardProps) => {
   return (
-    <CardListWrapper>
-      {dummyAssociations.map((item) => (
-        <AssociationListItem
-          key={item.name}
-          name={item.name}
-          establishedYear={item.establishedYear}
-          memberCount={item.memberCount}
-          thumbnailUrl={item.thumbnailUrl}
-        />
-      ))}
-    </CardListWrapper>
+    <CardWrapper>
+      <CountWrapper>{title}</CountWrapper>
+      <CardListWrapper>
+        {associations.map((item) => (
+          <AssociationListItem
+            key={item.name}
+            name={item.name}
+            establishedYear={item.establishedYear}
+            memberCount={item.memberCount}
+            thumbnailUrl={item.thumbnailUrl}
+          />
+        ))}
+      </CardListWrapper>
+    </CardWrapper>
   );
 };
+
+const CardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 const CardListWrapper = styled.div`
   ${({ theme }) => theme.colors.white};
   border-radius: 12px;
   padding: 24px 20px 12px 20px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.03);
-  margin: 20px;
+  margin: 0 20px;
+`;
+
+const CountWrapper = styled.div`
+  display: flex;
+  padding: 16px 20px 0px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: ${({ theme }) => theme.typography.fontSize.body2};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.gray700};
 `;

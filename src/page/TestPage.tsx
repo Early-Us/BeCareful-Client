@@ -21,7 +21,6 @@ import { InstitutionCard } from '@/components/SignUp/common/InstitutionCard';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
-import { AssociationListCard } from '@/components/Community/JoinCommunity/AssociationListCard';
 
 export const TestPage = () => {
   const [selectedDropContents, setSelectedDropContents] = useState<string[]>(
@@ -63,7 +62,7 @@ export const TestPage = () => {
   return (
     <div>
       <h1>Test Page</h1>
-      <AssociationListCard />
+
       <BooleanNoCard pressed={true} text="네, 소유하고 있습니다." />
       <BooleanNoCard pressed={false} text="네, 소유하고 있습니다." />
       <BooleanYesCard pressed={true} text="네, 소유하고 있습니다." />

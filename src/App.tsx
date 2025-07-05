@@ -34,6 +34,7 @@ import MatchingStatus from './page/Matching/MatchingStatus';
 import ChatListPage from './page/Chat/ChatListPage';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
+import { CommunityJoinPage } from '@/page/Community/CommunityJoinPage';
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
       <Route path="/community" element={<CommunityPage />} />
       <Route path="/community/:postId" element={<CommunityPost />} />
       <Route path="/community/create" element={<CommunityCreatePage />} />
+      <Route path="/community/members/new" element={<CommunityJoinPage />} />
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
       {/* 사회복지사 */}
