@@ -31,7 +31,7 @@ const CaregiverApplicationPage = () => {
   const navigate = useNavigate();
 
   const { data, error } = useQuery<WorkApplicationResponse, Error>({
-    queryKey: ['caregiveApplication'],
+    queryKey: ['caregiverApplication'],
     queryFn: getApplication,
   });
   if (error) {
@@ -171,7 +171,7 @@ const CaregiverApplicationPage = () => {
     onSuccess: () => {
       console.log('신청서 등록/수정하기 성공');
       queryClient.invalidateQueries({
-        queryKey: ['caregiveApplication'],
+        queryKey: ['caregiverApplication'],
       });
 
       if (data) {

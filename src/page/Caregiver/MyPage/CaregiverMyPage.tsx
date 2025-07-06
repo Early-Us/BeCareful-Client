@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import { Toggle } from '@/components/common/Toggle/Toggle';
@@ -62,11 +62,15 @@ const CaregiverMyPage = () => {
     },
   });
 
-  const [isToggleChecked, setIsToggleChecked] = useState(
-    data?.isWorkApplicationActive,
-  );
+  const [isToggleChecked, setIsToggleChecked] = useState(false);
+  useEffect(() => {
+    if (data?.isWorkApplicationActive !== undefined) {
+      setIsToggleChecked(data.isWorkApplicationActive);
+    }
+  }, [data?.isWorkApplicationActive]);
+
   const handleToggleChange = () => {
-    workApplicationToggle.mutate(isToggleChecked ? true : false);
+    workApplicationToggle.mutate(isToggleChecked);
   };
 
   const handleLogout = () => {
@@ -122,8 +126,10 @@ const CaregiverMyPage = () => {
           <div className="certificateWrapper">
             <label className="title-label">보유 자격증</label>
             <div className="certificates">
-              {data?.certificateNames.map((certificate) => (
-                <label className="certificate">{certificate}</label>
+              {data?.certificateNames.map((certificate, index) => (
+                <label key={`certificate-${index}`} className="certificate">
+                  {certificate}
+                </label>
               ))}
             </div>
           </div>
