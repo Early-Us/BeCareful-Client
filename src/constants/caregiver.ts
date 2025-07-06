@@ -39,6 +39,20 @@ const APITimeMapping: { [key: string]: string } = {
   저녁: 'EVENING',
 };
 
+export const SalaryTypeMapping: { [key: string]: string } = {
+  HOUR: '시급',
+  MONTH: '월급',
+  YEAR: '연봉',
+};
+
+export const APISalaryTypeMapping: {
+  [key: string]: 'HOUR' | 'MONTH' | 'YEAR';
+} = {
+  시급: 'HOUR',
+  일급: 'MONTH',
+  연봉: 'YEAR',
+};
+
 /* 요양보호사 관련 format 함수들 */
 // caretype
 export const CareTypeFormat = (caretypes: string[], length: number) => {
