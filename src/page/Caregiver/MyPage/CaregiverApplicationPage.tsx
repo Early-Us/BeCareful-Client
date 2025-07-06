@@ -20,8 +20,10 @@ import ModalButtons from '@/components/common/Modal/ModalButtons';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import {
   APIDayFormat,
+  APISalaryTypeMapping,
   APITimeFormat,
   DayMapping,
+  SalaryTypeMapping,
   TimeMapping,
 } from '@/constants/caregiver';
 
@@ -37,9 +39,20 @@ const CaregiverApplicationPage = () => {
   }
 
   // 희망 급여 관련 상태
-  const payDropContents = ['시급', '월급'];
+  const payDropContents = ['시급', '월급', '연봉'];
   const [payType, setPayType] = useState('시급');
   const [pay, setPay] = useState('');
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    const format = input.replace(/[^0-9]/g, '');
+    const amount = Number(format);
+
+    if (!isNaN(amount) && format !== '') {
+      setPay(amount.toLocaleString('ko-KR'));
+    } else {
+      setPay('');
+    }
+  };
 
   // 근무 요일
   const [selectDay, setSelectDay] = useState<string[]>([]);
@@ -142,8 +155,8 @@ const CaregiverApplicationPage = () => {
 
   useEffect(() => {
     if (data) {
-      setPayType(data.workSalaryType === 'HOUR' ? '시급' : '월급');
-      setPay(`${data.workSalaryAmount}`);
+      setPayType(SalaryTypeMapping[data.workSalaryType]);
+      setPay(data.workSalaryAmount.toLocaleString('ko-KR'));
       setSelectDay(data.workDays.map((day) => DayMapping[day]));
       setSelectTime(data.workTimes.map((time) => TimeMapping[time]));
       setSelectCaretype(data.careTypes);
@@ -174,8 +187,8 @@ const CaregiverApplicationPage = () => {
 
   const handleBtnClick = () => {
     const applicationData: WorkApplicationRequest = {
-      workSalaryType: payType === '시급' ? 'HOUR' : 'MONTH',
-      workSalaryAmount: Number(pay),
+      workSalaryType: APISalaryTypeMapping[payType],
+      workSalaryAmount: Number(pay.replaceAll(',', '')),
       workTimes: APITimeFormat(selectTime),
       workDays: APIDayFormat(selectDay),
       workLocations: selectedArea,
@@ -287,11 +300,9 @@ const CaregiverApplicationPage = () => {
           <div className="pay">
             <Pay
               id="pay"
-              placeholder="금액입력"
+              placeholder="10,030"
               value={pay}
-              onChange={(e) => {
-                setPay(e.target.value);
-              }}
+              onChange={handleAmountChange}
             />
             <label className="count">원</label>
           </div>

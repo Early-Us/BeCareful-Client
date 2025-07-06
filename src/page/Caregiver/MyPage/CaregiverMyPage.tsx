@@ -200,7 +200,10 @@ const CaregiverMyPage = () => {
                   {TimeFormat(data.workApplicationInfo.workTimes)}
                 </label>
                 <label className="apply-detail">
-                  {data.workApplicationInfo.workSalaryAmount}원
+                  {data.workApplicationInfo.workSalaryAmount.toLocaleString(
+                    'ko-KR',
+                  )}
+                  원
                 </label>
                 <label className="apply-detail">
                   {LocationFormat(data.workApplicationInfo.workLocations, 2)}
@@ -245,7 +248,7 @@ export default CaregiverMyPage;
 
 const Container = styled.div`
   margin: auto 20px;
-  padding-bottom: 40px;
+  margin-bottom: 57px;
 
   div {
     display: flex;
