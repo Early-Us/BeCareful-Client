@@ -44,7 +44,7 @@ const CardWrapper = styled.div`
 `;
 
 const CardListWrapper = styled.div`
-  ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
   border-radius: 12px;
   padding: 24px 20px 12px 20px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.03);
