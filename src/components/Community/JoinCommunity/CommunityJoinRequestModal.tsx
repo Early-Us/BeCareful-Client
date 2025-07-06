@@ -9,7 +9,6 @@ interface CommunityJoinRequestModalProps {
   associationName: string;
   associationId: number;
   onClose: () => void;
-  onCancel?: () => void;
 }
 
 export const CommunityJoinRequestModal = ({
