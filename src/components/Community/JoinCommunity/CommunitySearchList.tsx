@@ -15,7 +15,8 @@ export const CommunitySearchList = ({ keyword }: Props) => {
   if (isLoading) return <div>로딩 중...</div>;
   if (isError || !data) return <div>목록 불러오는 중 오류가 발생했습니다.</div>;
 
-  const associations = data.associationWholeList.map((item) => ({
+  const associations = (data?.associationSimpleDtoList ?? []).map((item) => ({
+    id: item.associationId,
     name: item.associationName,
     establishedYear: `${item.associationEstablishedYear}년`,
     memberCount: item.associationMemberCount,
