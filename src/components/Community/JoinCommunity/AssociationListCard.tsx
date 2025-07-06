@@ -2,6 +2,7 @@ import { AssociationListItem } from '@/components/Community/JoinCommunity/Associ
 import { styled } from 'styled-components';
 
 interface AssociationList {
+  id: number;
   name: string;
   establishedYear: string;
   memberCount: number;
@@ -23,7 +24,8 @@ export const AssociationListCard = ({
       <CardListWrapper>
         {associations.map((item) => (
           <AssociationListItem
-            key={item.name}
+            id={item.id}
+            key={item.id}
             name={item.name}
             establishedYear={item.establishedYear}
             memberCount={item.memberCount}

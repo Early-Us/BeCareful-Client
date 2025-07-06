@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { ReactComponent as ProfileImage } from '@/assets/icons/SquareInstitutionProfile.svg';
 import { ReactComponent as InstitutionAvatar } from '@/assets/icons/Institution_avatar.svg';
 import { ReactComponent as PersonAvatar } from '@/assets/icons/Person_avatar.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface AssociationListItemProps {
+  id: number;
   name: string;
   establishedYear: string;
   memberCount: number;
@@ -11,13 +13,25 @@ interface AssociationListItemProps {
 }
 
 export const AssociationListItem = ({
+  id,
   name,
   establishedYear,
   memberCount,
   thumbnailUrl,
 }: AssociationListItemProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/community/${id}/preview`, {
+      state: {
+        associationId: id,
+        associationName: name,
+      },
+    });
+  };
+
   return (
-    <CardWrapper>
+    <CardWrapper onClick={handleClick}>
       <LeftSection>
         {name}
         <MetaInfo>
