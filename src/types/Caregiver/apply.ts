@@ -4,7 +4,7 @@ import { MatchingRecruitmentResponse } from './work';
 /* 요양보호사 지원 현황 화면 */
 export interface MatchingRecruitment {
   recruitmentInfo: Recruitment;
-  matchingStatus: '미지원' | '지원' | '합격' | '거절' | '불합격';
+  matchingStatus: '검토중' | '합격' | '거절';
 }
 
 // 지원 현황 조회 응답
