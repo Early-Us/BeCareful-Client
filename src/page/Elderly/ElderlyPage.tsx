@@ -1,6 +1,7 @@
 import { NavBar } from '@/components/common/NavBar';
-import { SocialTabBar } from '@/components/common/TabBarSocial';
+
 import { ElderlyCard } from '@/components/Elderly/ElderlyCard';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -51,7 +52,7 @@ const ElderlyPage = () => {
         right={
           <NavRight
             onClick={() => {
-              navigate('/elderly/create');
+              navigate('/elderly/new');
             }}
           >
             등록하기
@@ -73,7 +74,7 @@ const ElderlyPage = () => {
           />
         ))}
       </MainContent>
-      <SocialTabBar />
+      <SocialWorkerTabBar />
     </Container>
   );
 };

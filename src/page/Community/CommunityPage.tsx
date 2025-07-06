@@ -6,12 +6,12 @@ import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
 import { useState } from 'react';
 import CommunityHome from '@/components/Community/CommunityHome';
 import CommunityWritePage from './CommunityWritePage';
-import { SocialTabBar } from '@/components/common/TabBarSocial';
 import CommunityDetail from '@/components/Community/CommunityDetail';
 import { useQuery } from '@tanstack/react-query';
 import { AssociationInfoResponse } from '@/types/Community';
 import { getAssociationInfo } from '@/api/community';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { CommunityJoinRequestModal } from '@/components/Community/JoinCommunity/CommunityJoinRequestModal';
 
 const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
@@ -91,8 +91,7 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
             글쓰기
           </Button>
 
-          <SocialTabBar />
-
+          <SocialWorkerTabBar />
           {previewMode && (
             <CommunityJoinRequestModal
               width="343px"

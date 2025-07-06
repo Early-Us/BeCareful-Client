@@ -105,5 +105,4 @@ const IconContainer = styled.div`
   padding: 0px 20px;
   height: 56px;
   width: 100%;
-  margin: 24px 0 auto 0;
 `;
