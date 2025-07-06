@@ -53,7 +53,7 @@ const CardContainer = styled.div`
   padding: 20px;
   min-width: 180px;
   height: 100px;
-  border-radius: 12px;s
+  border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   background: ${({ theme }) => theme.colors.white};
 

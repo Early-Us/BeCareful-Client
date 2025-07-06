@@ -8,20 +8,19 @@ import { NavLink } from 'react-router-dom';
 const CaregiverTabBar = () => {
   return (
     <TabBarWrapper>
-      <TabItem to="/caregiver" end>
-        {/* 'end' prop은 정확히 일치하는 경로일 때만 active */}
+      <TabItem to="/caregiver">
         <Home />
         <span>홈</span>
       </TabItem>
-      <TabItem to="/caregiver/work" end>
+      <TabItem to="/caregiver/work">
         <Work />
         <span>일자리</span>
       </TabItem>
-      <TabItem to="/caregiver/apply" end>
+      <TabItem to="/caregiver/apply">
         <Apply />
         <span>지원현황</span>
       </TabItem>
-      <TabItem to="/caregiver/my" end>
+      <TabItem to="/caregiver/my">
         <Mypage />
         <span>마이페이지</span>
       </TabItem>

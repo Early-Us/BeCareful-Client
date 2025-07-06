@@ -17,7 +17,7 @@ const CaregiverCareerPage = () => {
   const navigate = useNavigate();
 
   const { data, error } = useQuery<CareerResponse, Error>({
-    queryKey: ['caregiveCareer'],
+    queryKey: ['caregiverCareer'],
     queryFn: getCareer,
   });
   if (error) {

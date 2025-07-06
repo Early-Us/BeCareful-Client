@@ -108,7 +108,7 @@ const CaregiverEditProfilePage = () => {
         <label>
           휴대전화 번호 <span>*</span>
         </label>
-        <Number placeholder="휴대전화 번호" type="tel" />
+        <PhoneNumber placeholder="휴대전화 번호" type="tel" />
       </NumberWrapper>
 
       {certificateList.map((cert, index) => (
@@ -216,7 +216,7 @@ const NumberWrapper = styled.div`
   }
 `;
 
-const Number = styled.input`
+const PhoneNumber = styled.input`
   width: 100%;
   height: 20px;
   padding: 16px;

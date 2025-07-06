@@ -42,7 +42,9 @@ const CaregiverMyworkPage = () => {
       />
       {data && data.length > 0 ? (
         <CardWrapper>
-          {data?.map((workInfo) => <CaregiverMyworkCard workInfo={workInfo} />)}
+          {data?.map((workInfo) => (
+            <CaregiverMyworkCard key={workInfo.id} workInfo={workInfo} />
+          ))}
         </CardWrapper>
       ) : (
         <NoWorkingCard>
