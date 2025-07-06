@@ -139,7 +139,7 @@ export default CaregiverCareerPage;
 
 const Container = styled.div`
   margin: auto 20px;
-  margin-bottom: 100px;
+  margin-bottom: 112px;
 `;
 
 const NavLeft = styled(ArrowLeft)`
