@@ -1,3 +1,7 @@
+import {
+  MatchingMyRecruitmentDetailResponse,
+  MatchingMyRecruitmentResponse,
+} from '@/types/Caregiver/apply';
 import { axiosInstance } from './axiosInstance';
 import {
   CaregiverCompletedMatchingResponse,
@@ -10,6 +14,8 @@ import {
   CaregiverMyResponse,
 } from '@/types/Caregiver/mypage';
 import {
+  MatchingListResponse,
+  MatchingRecruitmentResponse,
   WorkApplicationRequest,
   WorkApplicationResponse,
 } from '@/types/Caregiver/work';
@@ -93,4 +99,47 @@ export const workApplicationInactive = async () => {
     '/caregiver/work-application/inactive',
   );
   return response;
+};
+
+/* 일자리 */
+// 매칭 공고 리스트 조회
+export const getRecruitmentList = async (): Promise<MatchingListResponse> => {
+  const response = await axiosInstance.get('/matching/caregiver/list');
+  return response.data;
+};
+
+// 매칭 공고 상세 조회
+export const getRecruitmentDetail = async (
+  recruitmentId: number,
+): Promise<MatchingRecruitmentResponse> => {
+  const response = await axiosInstance.get(
+    `/matching/caregiver/recruitment/${recruitmentId}`,
+  );
+  return response.data;
+};
+
+/* 지원현황 */
+// 지원 현황 조회
+export const getApplicationList = async (
+  matchingApplicationStatus: string,
+): Promise<MatchingMyRecruitmentResponse> => {
+  const response = await axiosInstance.get(
+    '/matching/caregiver/my/recruitment',
+    {
+      params: {
+        matchingApplicationStatus: matchingApplicationStatus,
+      },
+    },
+  );
+  return response.data;
+};
+
+// 지원 현황 상세 조회
+export const getApplicationDetail = async (
+  recruitmentId: number,
+): Promise<MatchingMyRecruitmentDetailResponse> => {
+  const response = await axiosInstance.get(
+    `/matching/caregiver/my/recruitment/${recruitmentId}`,
+  );
+  return response.data;
 };
