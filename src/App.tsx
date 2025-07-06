@@ -1,7 +1,5 @@
 import CommunityPost from '@/components/Community/CommunityPost';
 import { SignUpProvider } from '@/contexts/SignUpContext';
-import { ApplyDetailPage } from '@/page/Apply/ApplyDetailPage';
-import { ApplyPage } from '@/page/Apply/ApplyPage';
 import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
 import ChatListPage from '@/page/Chat/ChatListPage';
 import ChatRoomPage from '@/page/Chat/ChatRoomPage';
@@ -23,8 +21,6 @@ import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import { SocialWorkerMatchingPage } from '@/page/SocialWorkerMatching/SocialWorkerMatchingPage';
 import SplashPage from '@/page/SplashPage';
 import { TestPage } from '@/page/TestPage';
-import { WorkDetailPage } from '@/page/Works/WorkDetailPage';
-import { WorkMainPage } from '@/page/Works/WorkMainPage';
 import { Route, Routes } from 'react-router-dom';
 import CaregiverRoute from './route/CaregiverRoute';
 
@@ -67,14 +63,6 @@ function App() {
         // })()}
         element={<CaregiverRoute />}
       />
-
-      <Route path="/work" element={<WorkMainPage />} />
-      <Route path="/apply" element={<ApplyPage />} />
-      <Route path="/work/:recruitmentId" element={<WorkDetailPage />} />
-      <Route path="/workdetail" element={<WorkDetailPage />} />
-
-      <Route path="/apply" element={<ApplyPage />} />
-      <Route path="/apply/:recruitmentId" element={<ApplyDetailPage />} />
 
       {/* 커뮤니티 */}
       <Route path="/community" element={<CommunityPage />} />
