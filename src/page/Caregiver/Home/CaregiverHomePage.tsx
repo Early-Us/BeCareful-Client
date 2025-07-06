@@ -184,8 +184,8 @@ export default CaregiverHomePage;
 
 const Container = styled.div`
   background: #f2f3f7;
-  // height: 100vh;
-  // paddings-bottom: 108px;
+  position: relative;
+  min-height: 100vh;
 `;
 
 const NavLeft = styled(Logo)`
@@ -238,8 +238,6 @@ const MainWrapper = styled.div`
   left: 20px;
   right: 20px;
   top: 192px;
-
-  background: #f2f3f7;
 `;
 
 const CardWrapper = styled.div`
@@ -382,6 +380,7 @@ const MyWorkButton = styled.button`
   align-items: center;
   border-radius: 12px;
   background: #555960;
+  margin-bottom: 72px;
 
   label {
     color: ${({ theme }) => theme.colors.white};
