@@ -35,6 +35,7 @@ import ChatListPage from './page/Chat/ChatListPage';
 import ChatListCaregiver from './page/Chat/ChatListCaregiver';
 import ChatRoomPage from './page/Chat/ChatRoomPage';
 import { CommunityJoinPage } from '@/page/Community/CommunityJoinPage';
+import CommunityJoinSelectRolePage from '@/page/Community/CommunityJoinSelectRolePage';
 
 function App() {
   return (
@@ -77,6 +78,14 @@ function App() {
 
       {/* 커뮤니티 */}
       <Route path="/community" element={<CommunityPage />} />
+      <Route
+        path="/community/:id/preview"
+        element={<CommunityPage previewMode />}
+      />
+      <Route
+        path="/community/join/:id/role"
+        element={<CommunityJoinSelectRolePage />}
+      />
       <Route path="/community/:postId" element={<CommunityPost />} />
       <Route path="/community/create" element={<CommunityCreatePage />} />
       <Route path="/community/members/new" element={<CommunityJoinPage />} />
