@@ -1,7 +1,7 @@
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/common/NavBar/NavBar';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 

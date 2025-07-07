@@ -13,7 +13,9 @@ import Modal from '@/components/common/Modal/Modal';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
 import { usePostMediaMutation, usePostPostingMutation } from '@/api/community';
-import { BoardTypeMapping, MediaItem, PostRequest } from '@/types/Community';
+import { MediaItem } from '@/types/Community/common';
+import { BoardTypeMapping } from '@/constants/board';
+import { PostRequest } from '@/types/Community/post';
 
 interface WritingProp {
   boardType: string;

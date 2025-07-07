@@ -1,4 +1,5 @@
-import { AuthorRankMapping, PostListItem } from '@/types/Community';
+import { InstitutionRankMapping } from '@/constants/institutionRank';
+import { PostListItem } from '@/types/Community/post';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -48,7 +49,7 @@ const PostOverview = ({
           <img className="writer-img" src={author.institutionImageUrl} />
           <label>{author.authorName}</label>
           <label>·</label>
-          <label>{AuthorRankMapping[author.authorInstitutionRank]}</label>
+          <label>{InstitutionRankMapping[author.authorInstitutionRank]}</label>
         </Writer>
         {/* <Title isReaded={isReaded}> */}
         <Title isReaded={false}>

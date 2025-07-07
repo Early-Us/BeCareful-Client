@@ -11,13 +11,6 @@ import styled from 'styled-components';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import BottomSheet from './BottomSheet';
 import {
-  AuthorRankMapping,
-  BoardTypeMapping,
-  CommentListResponse,
-  CommentRequest,
-  PostDetailResponse,
-} from '@/types/Community';
-import {
   getComment,
   getPostDetail,
   usePostCommentMutation,
@@ -25,6 +18,10 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import Modal from '../common/Modal/Modal';
 import ModalLimit from '../common/Modal/ModalLimit';
+import { BoardTypeMapping } from '@/constants/board';
+import { PostDetailResponse } from '@/types/Community/post';
+import { CommentListResponse, CommentRequest } from '@/types/Community/comment';
+import { InstitutionRankMapping } from '@/constants/institutionRank';
 
 const CommunityPost = () => {
   const navigate = useNavigate();
@@ -152,7 +149,7 @@ const CommunityPost = () => {
                 <label className="writer">·</label>
                 <label className="writer">
                   {post?.author &&
-                    AuthorRankMapping[post?.author.authorInstitutionRank]}
+                    InstitutionRankMapping[post?.author.authorInstitutionRank]}
                 </label>
               </div>
               <div className="wrapper">
@@ -242,7 +239,11 @@ const CommunityPost = () => {
                     </label>
                     <label className="writer">·</label>
                     <label className="writer">
-                      {AuthorRankMapping[comment.author.authorInstitutionRank]}
+                      {
+                        InstitutionRankMapping[
+                          comment.author.authorInstitutionRank
+                        ]
+                      }
                     </label>
                   </div>
                   <label className="content">{comment.content}</label>

@@ -5,16 +5,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {
-  BoardList,
-  BoardPostListResponse,
-  ImportantPostListResponse,
-  PageableRequest,
-  PostListItem,
-} from '@/types/Community';
 import { getImportantPosting, getPostingList } from '@/api/community';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { PageableRequest } from '@/types/Community/common';
+import {
+  BoardPostListResponse,
+  ImportantPostListResponse,
+  PostListItem,
+} from '@/types/Community/post';
+import { BoardList } from '@/types/Community/community';
 
 interface CommunityHomeProps {
   onTabChange: (tabName: string) => void;

@@ -1,13 +1,10 @@
 import PostOverview from '@/components/Community/PostOverview';
 import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
 import styled from 'styled-components';
-import {
-  BoardPostListResponse,
-  PageableRequest,
-  PostListItem,
-} from '@/types/Community';
 import { getPostingList } from '@/api/community';
 import { useQuery } from '@tanstack/react-query';
+import { PageableRequest } from '@/types/Community/common';
+import { BoardPostListResponse, PostListItem } from '@/types/Community/post';
 
 interface CommunityDetailProps {
   boardType: string;

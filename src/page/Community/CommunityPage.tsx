@@ -8,7 +8,7 @@ import CommunityHome from '@/components/Community/CommunityHome';
 import CommunityWritePage from './CommunityWritePage';
 import CommunityDetail from '@/components/Community/CommunityDetail';
 import { useQuery } from '@tanstack/react-query';
-import { AssociationInfoResponse } from '@/types/Community';
+import { AssociationInfoResponse } from '@/types/Community/community';
 import { getAssociationInfo } from '@/api/community';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';

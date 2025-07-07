@@ -1,4 +1,3 @@
-import { NavBar } from '@/components/common/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import styled from 'styled-components';
@@ -19,6 +18,7 @@ import { useElderlyRegisterForm } from '@/hooks/Elderly/useElderlyRegisterForm';
 import { useUploadElderlyProfileImage } from '@/api/elderly';
 import { ProfileImageUploader } from '@/components/SocialWorker/common/ProfileImageUploader';
 import { PetSection } from '@/components/SocialWorker/ElderyRegister/PetSection';
+import { NavBar } from '@/components/common/NavBar/NavBar';
 
 const ElderlyRegisterPage = () => {
   const navigate = useNavigate();

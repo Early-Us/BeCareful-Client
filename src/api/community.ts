@@ -1,16 +1,14 @@
-import {
-  AssociationInfoResponse,
-  BoardPostListResponse,
-  CommentListResponse,
-  CommentRequest,
-  ImportantPostListResponse,
-  MediaItem,
-  PageableRequest,
-  PostDetailResponse,
-  PostRequest,
-} from '@/types/Community';
+import { AssociationInfoResponse } from '@/types/Community/community';
 import { axiosInstance } from './axiosInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { MediaItem, PageableRequest } from '@/types/Community/common';
+import {
+  BoardPostListResponse,
+  ImportantPostListResponse,
+  PostDetailResponse,
+  PostRequest,
+} from '@/types/Community/post';
+import { CommentListResponse, CommentRequest } from '@/types/Community/comment';
 
 /* api 요청 */
 // 커뮤니티 탭 협회 정보 조회
