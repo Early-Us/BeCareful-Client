@@ -340,6 +340,7 @@ const CommunityPost = () => {
           title="링크가 복사되었어요."
           detail={'게시글 링크가 복사되었어요.\n링크를 붙여넣기할 수 있어요.'}
           onClose={() => setIsLinkModalOpen(!isLinkModalOpen)}
+          handleBtnClick={() => setIsLinkModalOpen(!isLinkModalOpen)}
         />
       </Modal>
     </Container>

@@ -465,6 +465,9 @@ const CaregiverApplicationPage = () => {
           detail={
             '입력하신 조건으로 수정되었습니다.\n새로운 조건에 맞는 공고가 표시됩니다.'
           }
+          handleBtnClick={() => {
+            setIsEditModalOpen(!isEditModalOpen);
+          }}
         />
       </Modal>
     </Container>

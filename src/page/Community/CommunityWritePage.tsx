@@ -495,6 +495,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           title={modalTitle}
           detail={modalDetail}
           onClose={handleCloseLimitModal}
+          handleBtnClick={handleCloseLimitModal}
         />
       </Modal>
 
