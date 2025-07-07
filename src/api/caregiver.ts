@@ -15,6 +15,7 @@ import {
 } from '@/types/Caregiver/mypage';
 import {
   MatchingListResponse,
+  MatchingRecruitmentMediateRequest,
   MatchingRecruitmentResponse,
   WorkApplicationRequest,
   WorkApplicationResponse,
@@ -116,6 +117,34 @@ export const getRecruitmentDetail = async (
     `/matching/caregiver/recruitment/${recruitmentId}`,
   );
   return response.data;
+};
+
+// 매칭 공고 거절
+export const postReject = async (recruitmentId: number) => {
+  const response = await axiosInstance.post(
+    `/matching/caregiver/recruitment/${recruitmentId}/reject`,
+  );
+  return response;
+};
+
+// 매칭 공고 지원
+export const postApply = async (recruitmentId: number) => {
+  const response = await axiosInstance.post(
+    `/matching/caregiver/recruitment/${recruitmentId}/apply`,
+  );
+  return response;
+};
+
+// 근무 조건 조율
+export const postMediate = async (
+  recruitmentId: number,
+  mediateData: MatchingRecruitmentMediateRequest,
+) => {
+  const response = await axiosInstance.post(
+    `/matching/caregiver/recruitment/${recruitmentId}/mediate`,
+    mediateData,
+  );
+  return response;
 };
 
 /* 지원현황 */
