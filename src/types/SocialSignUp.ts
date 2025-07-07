@@ -1,3 +1,5 @@
+import { FACILITY_TYPES } from '@/constants/institutionFacilityTypes';
+
 export type Gender = 'MALE' | 'FEMALE' | '';
 
 export type Rank = 'MANAGER' | 'SOCIALWORKER' | '';
@@ -33,3 +35,5 @@ export type SocialStepProps = {
   onNext: (step?: number) => void;
   onSubmit?: () => void;
 };
+
+export type FacilityType = (typeof FACILITY_TYPES)[number];

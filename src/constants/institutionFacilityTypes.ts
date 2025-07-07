@@ -6,5 +6,3 @@ export const FACILITY_TYPES = [
   '단기 보호',
   '복지 용구',
 ] as const;
-
-export type FacilityType = (typeof FACILITY_TYPES)[number];
