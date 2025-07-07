@@ -10,22 +10,27 @@ import CommunityDetail from '@/components/Community/CommunityDetail';
 import { useQuery } from '@tanstack/react-query';
 import { AssociationInfoResponse } from '@/types/Community/community';
 import { getAssociationInfo } from '@/api/community';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
+import { CommunityJoinRequestModal } from '@/components/Community/JoinCommunity/CommunityJoinRequestModal';
 
-const CommunityPage = () => {
+const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const selectedAssociation = location.state as {
+    associationId: number;
+    associationName: string;
+  };
+
   const [activeTab, setActiveTab] = useState('전체');
   const [isWriting, setIsWriting] = useState(false);
 
-  const { data, isLoading, error } = useQuery<AssociationInfoResponse, Error>({
+  const { data } = useQuery<AssociationInfoResponse>({
     queryKey: ['associationInfo'],
     queryFn: getAssociationInfo,
+    enabled: !previewMode,
   });
-  if (isLoading) {
-    console.log('getAssociationInfo: 로딩 중');
-  }
-  if (error) {
-    console.log('getAssociationInfo 에러: ', error.message);
-  }
 
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);
@@ -87,6 +92,14 @@ const CommunityPage = () => {
           </Button>
 
           <SocialWorkerTabBar />
+          {previewMode && (
+            <CommunityJoinRequestModal
+              width="343px"
+              associationId={selectedAssociation?.associationId}
+              associationName={selectedAssociation?.associationName ?? ''}
+              onClose={() => navigate(-1)}
+            />
+          )}
         </Container>
       )}
     </>
