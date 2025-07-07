@@ -94,10 +94,6 @@ export default CaregiverApplyPage;
 const Container = styled.div`
   margin: auto 20px;
   padding-bottom: 72px;
-
-  div {
-    display: flex;
-  }
 `;
 
 const NavLeft = styled.label`
@@ -169,6 +165,7 @@ const TabText = styled.div`
 `;
 
 const ApplicationsWrapper = styled.div`
+  display: flex;
   flex-direction: column;
   gap: 12px;
 `;

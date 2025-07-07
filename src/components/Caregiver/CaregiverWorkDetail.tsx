@@ -47,14 +47,14 @@ const CaregiverWorkDetail = ({ work, date }: CaregiverWorkDetailProps) => {
 
       <WorkInfoWrapper>
         <div className="top">
-          <Date>
+          <ApplyDate>
             <label className="institution">
               {work.recruitmentInfo.institutionName}
             </label>
             {date && (
               <label className="date">{date.replaceAll('-', '.')} 신청</label>
             )}
-          </Date>
+          </ApplyDate>
 
           <label className="work-title">{work.recruitmentInfo.title}</label>
 
@@ -105,7 +105,7 @@ const CaregiverWorkDetail = ({ work, date }: CaregiverWorkDetailProps) => {
         <label className="section-title">어르신 정보</label>
 
         <div className="info">
-          <img src={''} />
+          <img src={work.elderlyInfo.profileImageUrl} />
           <label className="section-title">{work.elderlyInfo.name}</label>
         </div>
 
@@ -142,7 +142,7 @@ const CaregiverWorkDetail = ({ work, date }: CaregiverWorkDetailProps) => {
             <label className="title">케어항목</label>
             <div className="apply">
               {work.recruitmentInfo.careTypes.map((caretype) => (
-                <label className="detail">
+                <label key={caretype.careType} className="detail">
                   {caretype.careType} - {caretype.detailCareTypes}
                 </label>
               ))}
@@ -238,7 +238,7 @@ const WorkInfoWrapper = styled.div`
   }
 `;
 
-const Date = styled.div`
+const ApplyDate = styled.div`
   gap: 6px;
 
   label {

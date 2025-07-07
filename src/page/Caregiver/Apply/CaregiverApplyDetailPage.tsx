@@ -9,11 +9,11 @@ const CaregiverApplyDetailPage = () => {
   const { recruitmentId } = useParams();
 
   const { data, error } = useQuery<MatchingMyRecruitmentDetailResponse, Error>({
-    queryKey: ['caregiveApplicationDetail', recruitmentId],
+    queryKey: ['caregiverApplicationDetail', recruitmentId],
     queryFn: () => getApplicationDetail(Number(recruitmentId)),
   });
   if (error) {
-    console.log('getRecruitmentDetail 에러: ', error);
+    console.log('getApplicationDetail 에러: ', error);
   }
 
   if (!data) {
