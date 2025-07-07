@@ -6,9 +6,17 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   detail: string;
+  button?: string;
+  handleBtnClick: () => void;
 }
 
-const ModalLimit = ({ onClose, title, detail }: ModalProps) => {
+const ModalLimit = ({
+  onClose,
+  title,
+  detail,
+  button,
+  handleBtnClick,
+}: ModalProps) => {
   return (
     <ModalWrapper>
       <ModalXImg onClick={onClose}>
@@ -25,13 +33,7 @@ const ModalLimit = ({ onClose, title, detail }: ModalProps) => {
           ))}
         </ModalDetailLabel>
       </ModalLabelWrapper>
-      <button
-        onClick={() => {
-          onClose();
-        }}
-      >
-        확인
-      </button>
+      <button onClick={handleBtnClick}>{button ? button : '확인'}</button>
     </ModalWrapper>
   );
 };
