@@ -31,7 +31,7 @@ const CaregiverApplyPage = () => {
   return (
     <Container>
       <NavBar
-        left={<NavLeft>일자리</NavLeft>}
+        left={<NavLeft>지원하기</NavLeft>}
         right={
           <NavRight
             onClick={() => {
