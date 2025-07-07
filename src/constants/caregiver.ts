@@ -1,7 +1,6 @@
 /* 요양보호사 관련 mapping 함수들 */
 import { WorkLocation } from '@/types/Caregiver/common';
 
-// 성별
 export const GenderMapping: { [key: string]: string } = {
   FEMALE: '여성',
   MALE: '남성',
@@ -53,6 +52,14 @@ export const APISalaryTypeMapping: {
   연봉: 'YEAR',
 };
 
+const APIMediationTypeMapping: {
+  [key: string]: 'TIME' | 'DAY' | 'PAY';
+} = {
+  '시간 조율': 'TIME',
+  '급여 조율': 'PAY',
+  '요일 조율': 'DAY',
+};
+
 /* 요양보호사 관련 format 함수들 */
 // caretype
 export const CareTypeFormat = (caretypes: string[], length: number) => {
@@ -99,4 +106,11 @@ export const LocationFormat = (
     const count = locations.length - length;
     return `${locations.slice(0, length).join(', ')} 외 ${count}개`;
   }
+};
+
+// mediation type
+export const APIMediationFormat = (mediationTypes: string[]) => {
+  return mediationTypes.map(
+    (mediationType) => APIMediationTypeMapping[mediationType],
+  );
 };
