@@ -6,6 +6,8 @@ import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
 import ChatListPage from '@/page/Chat/ChatListPage';
 import ChatRoomPage from '@/page/Chat/ChatRoomPage';
 import { CommunityCreatePage } from '@/page/Community/CommunityCreatePage';
+import { CommunityJoinPage } from '@/page/Community/CommunityJoinPage';
+import CommunityJoinSelectRolePage from '@/page/Community/CommunityJoinSelectRolePage';
 import CommunityPage from '@/page/Community/CommunityPage';
 import CommunitySplashPage from '@/page/CommunitySplashPage';
 import ElderlyPage from '@/page/Elderly/ElderlyPage';
@@ -15,7 +17,6 @@ import HomeMyworkPage from '@/page/Home/HomeMyworkPage';
 import HomePage from '@/page/Home/HomePage';
 import SocialHomePage from '@/page/HomeSocial/SocialHomePage';
 import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
-
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import MatchingStatus from '@/page/Matching/MatchingStatus';
 import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
@@ -78,8 +79,17 @@ function App() {
 
       {/* 커뮤니티 */}
       <Route path="/community" element={<CommunityPage />} />
+      <Route
+        path="/community/:id/preview"
+        element={<CommunityPage previewMode />}
+      />
+      <Route
+        path="/community/join/:id/role"
+        element={<CommunityJoinSelectRolePage />}
+      />
       <Route path="/community/:postId" element={<CommunityPost />} />
       <Route path="/community/create" element={<CommunityCreatePage />} />
+      <Route path="/community/members/new" element={<CommunityJoinPage />} />
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
       {/*기관 관리자 */}
