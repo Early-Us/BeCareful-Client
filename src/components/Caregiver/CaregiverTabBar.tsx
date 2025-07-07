@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 const CaregiverTabBar = () => {
   return (
     <TabBarWrapper>
-      <TabItem to="/caregiver">
+      <TabItem to="/caregiver" end>
         <Home />
         <span>홈</span>
       </TabItem>
