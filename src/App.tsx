@@ -11,7 +11,6 @@ import CommunitySplashPage from '@/page/CommunitySplashPage';
 import ElderlyPage from '@/page/Elderly/ElderlyPage';
 import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
 import { ErrorPage } from '@/page/Error/ErrorPage';
-import SocialHomePage from '@/page/HomeSocial/SocialHomePage';
 import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import MatchingStatus from '@/page/Matching/MatchingStatus';
@@ -24,7 +23,8 @@ import { SocialWorkerMatchingPage } from '@/page/SocialWorkerMatching/SocialWork
 import SplashPage from '@/page/SplashPage';
 import { TestPage } from '@/page/TestPage';
 import { Route, Routes } from 'react-router-dom';
-import CaregiverRoute from './route/CaregiverRoute';
+import CaregiverRoute from '@/route/CaregiverRoute';
+import SocialworkerRoute from '@/route/SocialworkerRoute';
 
 function App() {
   return (
@@ -82,7 +82,8 @@ function App() {
       <Route path="/community/signup" element={<CommunitySignUpPage />} />
 
       {/*기관 관리자 */}
-      <Route path="/home/social" element={<SocialHomePage />} />
+      <Route path="/socialworker/*" element={<SocialworkerRoute />} />
+
       <Route path="/elderly" element={<ElderlyPage />} />
       <Route path="/elderly/new" element={<ElderlyRegisterPage />} />
       <Route path="/match/social" element={<SocialWorkerMatchingPage />} />
