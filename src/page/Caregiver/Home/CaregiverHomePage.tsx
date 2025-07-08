@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
-import { ReactComponent as ChatNew } from '@/assets/icons/caregiver/home/ChatNew.svg';
+import { ReactComponent as ChatNew } from '@/assets/icons/ChatNew.svg';
 import { ReactComponent as Point } from '@/assets/icons/Point.svg';
 import { ReactComponent as ChevronRight } from '@/assets/icons/ChevronRight.svg';
 import { ReactComponent as Person } from '@/assets/icons/caregiver/home/Person.svg';
