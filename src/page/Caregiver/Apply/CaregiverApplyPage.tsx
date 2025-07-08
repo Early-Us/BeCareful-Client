@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Chat } from '@/assets/icons/ChatBlack.svg';
+import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/caregiver/home/ChatNew.svg';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import CaregiverWorkCard from '@/components/Caregiver/CaregiverWorkCard';
@@ -106,6 +106,7 @@ const NavRight = styled.div`
   width: 28px;
   height: 28px;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.gray700};
 `;
 
 const TabWrapper = styled.div`

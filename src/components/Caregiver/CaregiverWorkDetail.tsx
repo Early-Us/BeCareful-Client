@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
-import { ReactComponent as Chat } from '@/assets/icons/ChatBlack.svg';
+import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/caregiver/home/ChatNew.svg';
 import { NavBar } from '../common/NavBar/NavBar';
 import { MatchingRecruitmentResponse } from '@/types/Caregiver/work';
@@ -212,6 +212,7 @@ const NavRight = styled.div`
   width: 28px;
   height: 28px;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.gray700};
 `;
 
 const WorkInfoWrapper = styled.div`

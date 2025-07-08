@@ -198,6 +198,7 @@ const NavRight = styled.div`
   height: 28px;
   padding-right: 20px;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 const BannerWrapper = styled.div`
