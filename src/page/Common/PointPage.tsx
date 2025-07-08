@@ -4,7 +4,7 @@ import { ReactComponent as PointIcon } from '@/assets/icons/Point.svg';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CaregiverPointPage = () => {
+const PointPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -89,7 +89,7 @@ const CaregiverPointPage = () => {
   );
 };
 
-export default CaregiverPointPage;
+export default PointPage;
 
 const Container = styled.div`
   margin: auto 20px;

@@ -2,7 +2,7 @@ import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import CaregiverTabBar from '@/components/Caregiver/CaregiverTabBar';
 import CaregiverHomePage from '@/page/Caregiver/Home/CaregiverHomePage';
 import CaregiverMyworkPage from '@/page/Caregiver/Home/CaregiverMyworkPage';
-import CaregiverPointPage from '@/page/Caregiver/CaregiverPointPage';
+import PointPage from '@/page/Common/PointPage';
 import CaregiverMyRoute from './CaregiverMyRoute';
 import CaregiverWorkPage from '@/page/Caregiver/Work/CaregiverWorkPage';
 import CaregiverWorkDetailPage from '@/page/Caregiver/Work/CaregiverWorkDetailPage';
@@ -48,7 +48,7 @@ const CaregiverRoute = () => {
           />
           <Route path="/my/*" element={<CaregiverMyRoute />} />
 
-          <Route path="/point" element={<CaregiverPointPage />} />
+          <Route path="/point" element={<PointPage />} />
         </Routes>
       </main>
 
