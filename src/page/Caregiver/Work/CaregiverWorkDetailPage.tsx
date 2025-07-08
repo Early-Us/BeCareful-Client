@@ -77,6 +77,7 @@ const CaregiverWorkDetailPage = () => {
   // 팝업 공통
   const handleNavigate = (path: string) => {
     navigate(`/caregiver/${path}`);
+    window.scrollTo(0, 0);
   };
   const handleModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>,
