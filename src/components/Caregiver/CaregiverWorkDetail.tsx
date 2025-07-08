@@ -52,7 +52,7 @@ const CaregiverWorkDetail = ({ work, date }: CaregiverWorkDetailProps) => {
               {work.recruitmentInfo.institutionName}
             </label>
             {date && (
-              <label className="date">{date.replaceAll('-', '.')} 신청</label>
+              <label className="date">{date.replace(/-/g, '.')} 신청</label>
             )}
           </ApplyDate>
 
