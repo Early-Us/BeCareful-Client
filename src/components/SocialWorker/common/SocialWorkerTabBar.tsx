@@ -49,10 +49,8 @@ const TabBarContentWrapper = styled.a`
 const TabBarIcon = styled.div<{ $isActive: boolean }>`
   width: 24px;
   height: 24px;
-  path {
-    fill: ${({ theme, $isActive }) =>
-      $isActive ? theme.colors.mainBlue : theme.colors.gray200};
-  }
+  color: ${({ theme, $isActive }) =>
+    $isActive ? theme.colors.mainBlue : theme.colors.gray200};
 `;
 
 const TabBarLabel = styled.p<{ $isActive: boolean }>`
