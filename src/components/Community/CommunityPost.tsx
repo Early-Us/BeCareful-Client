@@ -84,7 +84,7 @@ const CommunityPost = () => {
 
   const [reply, setReply] = useState('');
 
-  const handleReplyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleReplyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReply(e.target.value);
   };
   const handleReplySend = (e: React.FormEvent) => {
@@ -340,6 +340,7 @@ const CommunityPost = () => {
           title="링크가 복사되었어요."
           detail={'게시글 링크가 복사되었어요.\n링크를 붙여넣기할 수 있어요.'}
           onClose={() => setIsLinkModalOpen(!isLinkModalOpen)}
+          handleBtnClick={() => setIsLinkModalOpen(!isLinkModalOpen)}
         />
       </Modal>
     </Container>
@@ -636,8 +637,7 @@ const IsMyPost = styled.div`
   padding: 10px 0;
 `;
 
-const Reply = styled.textarea`
-  resize: none;
+const Reply = styled.input`
   outline: none;
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};

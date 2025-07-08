@@ -160,7 +160,6 @@ export default CommunityHome;
 
 const Container = styled.div`
   padding: 16px 20px 40px 20px;
-  background: ${({ theme }) => theme.colors.gray50};
 `;
 
 const Must = styled.div`
@@ -214,7 +213,9 @@ const Border = styled.div`
 
 const PlusButton = styled.button`
   margin-top: 4px;
+  margin-bottom: 15px;
   display: flex;
+  width: 100%;
   height: 52px;
   justify-content: center;
   align-items: center;

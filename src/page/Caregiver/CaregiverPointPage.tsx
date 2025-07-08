@@ -211,7 +211,7 @@ const Description = styled.div`
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.08);
 
   label {
-    color: ${({ theme }) => theme.colors.gary900};
+    color: ${({ theme }) => theme.colors.gray900};
     font-size: ${({ theme }) => theme.typography.fontSize.body2};
     font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   }

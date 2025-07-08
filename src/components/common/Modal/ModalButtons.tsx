@@ -27,7 +27,14 @@ const ModalButtons = ({
         <ModalClose />
       </ModalXImg>
       <ModalLabelWrapper>
-        <ModalTitleLabel>{title}</ModalTitleLabel>
+        <ModalTitleLabel>
+          {title.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </ModalTitleLabel>
         <ModalDetailLabel>
           {detail.split('\n').map((line, index) => (
             <React.Fragment key={index}>

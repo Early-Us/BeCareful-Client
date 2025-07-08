@@ -42,7 +42,9 @@ const CaregiverMyworkPage = () => {
       />
       {data && data.length > 0 ? (
         <CardWrapper>
-          {data?.map((workInfo) => <CaregiverMyworkCard workInfo={workInfo} />)}
+          {data?.map((workInfo) => (
+            <CaregiverMyworkCard key={workInfo.id} workInfo={workInfo} />
+          ))}
         </CardWrapper>
       ) : (
         <NoWorkingCard>
@@ -60,7 +62,7 @@ const CaregiverMyworkPage = () => {
             width=""
             height="52px"
             onClick={() => {
-              navigate('/mypage');
+              navigate('/caregiver/my');
               window.scrollTo(0, 0);
             }}
           >
@@ -77,6 +79,8 @@ export default CaregiverMyworkPage;
 const Container = styled.div<{ isData: boolean }>`
   background: ${({ theme, isData }) =>
     isData ? theme.colors.white : theme.colors.gray50};
+
+  min-height: 100vh;
 `;
 
 const NavLeft = styled(ArrowLeft)`

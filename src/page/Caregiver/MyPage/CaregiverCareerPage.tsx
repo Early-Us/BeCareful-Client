@@ -17,7 +17,7 @@ const CaregiverCareerPage = () => {
   const navigate = useNavigate();
 
   const { data, error } = useQuery<CareerResponse, Error>({
-    queryKey: ['caregiveCareer'],
+    queryKey: ['caregiverCareer'],
     queryFn: getCareer,
   });
   if (error) {
@@ -139,7 +139,7 @@ export default CaregiverCareerPage;
 
 const Container = styled.div`
   margin: auto 20px;
-  margin-bottom: 100px;
+  margin-bottom: 112px;
 `;
 
 const NavLeft = styled(ArrowLeft)`
@@ -199,7 +199,7 @@ const Title = styled.input`
 `;
 
 const Bottom = styled.div`
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;

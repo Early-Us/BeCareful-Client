@@ -19,6 +19,7 @@ export interface ElderlyInfo {
   hasPet: boolean;
   profileImageUrl: string;
   careLevel: string;
+  healthCondition: string;
 }
 
 export interface InstitutionInfo {
@@ -26,20 +27,23 @@ export interface InstitutionInfo {
   address: string;
 }
 
-export interface CareInfo {
+export interface CareType {
   careType: string;
   detailCareTypes: string[];
 }
 
 export interface RecruitmentDetailInfo {
+  recruitmentId: number;
   title: string;
+  careTypes: CareType[];
   workDays: WorkDay[];
   workStartTime: string;
   workEndTime: string;
   workSalaryType: 'HOUR' | 'MONTH' | 'YEAR';
   workSalaryAmount: number;
   description: string;
-  careInfoList: CareInfo[];
+  isRecruiting: boolean;
+  institutionName: string;
 }
 
 // 매칭 공고 상세 조회 응답
@@ -49,7 +53,7 @@ export interface MatchingRecruitmentResponse {
   institutionInfo: InstitutionInfo;
   isHotRecruitment: boolean;
   isHourlySalaryTop: boolean;
-  matchRate: number;
+  matchingResultStatus: '높음' | '보통' | '낮음';
 }
 
 export type MediationType = 'TIME' | 'DAY' | 'PAY';

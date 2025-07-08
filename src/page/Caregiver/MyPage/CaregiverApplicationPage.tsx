@@ -20,8 +20,10 @@ import ModalButtons from '@/components/common/Modal/ModalButtons';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import {
   APIDayFormat,
+  APISalaryTypeMapping,
   APITimeFormat,
   DayMapping,
+  SalaryTypeMapping,
   TimeMapping,
 } from '@/constants/caregiver';
 
@@ -29,7 +31,7 @@ const CaregiverApplicationPage = () => {
   const navigate = useNavigate();
 
   const { data, error } = useQuery<WorkApplicationResponse, Error>({
-    queryKey: ['caregiveApplication'],
+    queryKey: ['caregiverApplication'],
     queryFn: getApplication,
   });
   if (error) {
@@ -37,9 +39,20 @@ const CaregiverApplicationPage = () => {
   }
 
   // 희망 급여 관련 상태
-  const payDropContents = ['시급', '월급'];
+  const payDropContents = ['시급', '월급', '연봉'];
   const [payType, setPayType] = useState('시급');
   const [pay, setPay] = useState('');
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    const format = input.replace(/[^0-9]/g, '');
+    const amount = Number(format);
+
+    if (!isNaN(amount) && format !== '') {
+      setPay(amount.toLocaleString('ko-KR'));
+    } else {
+      setPay('');
+    }
+  };
 
   // 근무 요일
   const [selectDay, setSelectDay] = useState<string[]>([]);
@@ -142,8 +155,8 @@ const CaregiverApplicationPage = () => {
 
   useEffect(() => {
     if (data) {
-      setPayType(data.workSalaryType === 'HOUR' ? '시급' : '월급');
-      setPay(`${data.workSalaryAmount}`);
+      setPayType(SalaryTypeMapping[data.workSalaryType]);
+      setPay(data.workSalaryAmount.toLocaleString('ko-KR'));
       setSelectDay(data.workDays.map((day) => DayMapping[day]));
       setSelectTime(data.workTimes.map((time) => TimeMapping[time]));
       setSelectCaretype(data.careTypes);
@@ -158,7 +171,7 @@ const CaregiverApplicationPage = () => {
     onSuccess: () => {
       console.log('신청서 등록/수정하기 성공');
       queryClient.invalidateQueries({
-        queryKey: ['caregiveApplication'],
+        queryKey: ['caregiverApplication'],
       });
 
       if (data) {
@@ -174,8 +187,8 @@ const CaregiverApplicationPage = () => {
 
   const handleBtnClick = () => {
     const applicationData: WorkApplicationRequest = {
-      workSalaryType: payType === '시급' ? 'HOUR' : 'MONTH',
-      workSalaryAmount: Number(pay),
+      workSalaryType: APISalaryTypeMapping[payType],
+      workSalaryAmount: Number(pay.replaceAll(',', '')),
       workTimes: APITimeFormat(selectTime),
       workDays: APIDayFormat(selectDay),
       workLocations: selectedArea,
@@ -287,11 +300,9 @@ const CaregiverApplicationPage = () => {
           <div className="pay">
             <Pay
               id="pay"
-              placeholder="금액입력"
+              placeholder="10,030"
               value={pay}
-              onChange={(e) => {
-                setPay(e.target.value);
-              }}
+              onChange={handleAmountChange}
             />
             <label className="count">원</label>
           </div>
@@ -454,6 +465,9 @@ const CaregiverApplicationPage = () => {
           detail={
             '입력하신 조건으로 수정되었습니다.\n새로운 조건에 맞는 공고가 표시됩니다.'
           }
+          handleBtnClick={() => {
+            setIsEditModalOpen(!isEditModalOpen);
+          }}
         />
       </Modal>
     </Container>
@@ -570,7 +584,7 @@ const Pay = styled.input`
 `;
 
 const Bottom = styled.div`
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;

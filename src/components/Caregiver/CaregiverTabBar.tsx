@@ -9,19 +9,18 @@ const CaregiverTabBar = () => {
   return (
     <TabBarWrapper>
       <TabItem to="/caregiver" end>
-        {/* 'end' prop은 정확히 일치하는 경로일 때만 active */}
         <Home />
         <span>홈</span>
       </TabItem>
-      <TabItem to="/caregiver/work" end>
+      <TabItem to="/caregiver/work">
         <Work />
         <span>일자리</span>
       </TabItem>
-      <TabItem to="/caregiver/apply" end>
+      <TabItem to="/caregiver/apply">
         <Apply />
         <span>지원현황</span>
       </TabItem>
-      <TabItem to="/caregiver/my" end>
+      <TabItem to="/caregiver/my">
         <Mypage />
         <span>마이페이지</span>
       </TabItem>
@@ -53,11 +52,6 @@ const TabItem = styled(NavLink)`
   text-decoration: none;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.gray200};
-  svg {
-    path {
-      fill: ${({ theme }) => theme.colors.gray200};
-    }
-  }
 
   span {
     font-size: 11px;
@@ -66,10 +60,5 @@ const TabItem = styled(NavLink)`
 
   &.active {
     color: ${({ theme }) => theme.colors.mainBlue};
-    svg {
-      path {
-        fill: ${({ theme }) => theme.colors.mainBlue};
-      }
-    }
   }
 `;

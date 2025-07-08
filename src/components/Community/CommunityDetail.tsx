@@ -58,7 +58,6 @@ export default CommunityDetail;
 
 const Container = styled.div`
   padding: 16px 20px 60px 20px;
-  background: ${({ theme }) => theme.colors.gray50};
 `;
 
 const Title = styled.div`

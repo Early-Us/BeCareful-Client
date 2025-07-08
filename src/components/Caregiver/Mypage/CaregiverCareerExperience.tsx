@@ -69,7 +69,7 @@ const CaregiverCareerExperience = ({
   return (
     <Container>
       {experiences.map((experience, index) => (
-        <CareerWrapper>
+        <CareerWrapper key={index}>
           <InstitutionWrapper>
             <label>
               근무처 <span>*</span>
