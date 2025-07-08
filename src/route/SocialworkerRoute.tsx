@@ -1,11 +1,16 @@
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import SocialworkerHomePage from '@/page/SocialWorker/Home/SocialworkerHomePage';
+import PointPage from '@/page/Common/PointPage';
 
 const SocialworkerRoute = () => {
   const location = useLocation();
 
-  const hideTabBarPaths = ['/socialWorker/my/profile'];
+  const hideTabBarPaths = [
+    '/socialWorker/my/profile',
+    '/socialWorker/my/association',
+    '/socialWorker/my/institution',
+  ];
   const shouldHideTabBar = () => {
     return hideTabBarPaths.some((pathPattern) => {
       return matchPath(pathPattern, location.pathname) !== null;
@@ -20,6 +25,8 @@ const SocialworkerRoute = () => {
       <main>
         <Routes>
           <Route path="/" element={<SocialworkerHomePage />} />
+
+          <Route path="/point" element={<PointPage />} />
         </Routes>
       </main>
 
