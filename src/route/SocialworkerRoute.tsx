@@ -1,7 +1,8 @@
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
-import SocialworkerHomePage from '@/page/SocialWorker/Home/SocialworkerHomePage';
+import SocialworkerHomePage from '@/page/Socialworker/Home/SocialworkerHomePage';
 import PointPage from '@/page/Common/PointPage';
+import SocialworkerMyPage from '@/page/Socialworker/MyPage/SocialworkerMyPage';
 
 const SocialworkerRoute = () => {
   const location = useLocation();
@@ -25,6 +26,7 @@ const SocialworkerRoute = () => {
       <main>
         <Routes>
           <Route path="/" element={<SocialworkerHomePage />} />
+          <Route path="/my" element={<SocialworkerMyPage />} />
 
           <Route path="/point" element={<PointPage />} />
         </Routes>

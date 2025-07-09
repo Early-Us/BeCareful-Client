@@ -22,8 +22,8 @@ export const SOCIAL_WORKER_TAB = [
     Icon: Community,
   },
   {
-    key: 'elderly',
-    path: '/elderly',
+    key: 'mypage',
+    path: '/socialworker/my',
     label: '마이페이지',
     Icon: Mypage,
   },
