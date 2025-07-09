@@ -35,7 +35,7 @@ const SocialworkerMyRoute = () => {
               institution="은파요양원"
               institutionCode="12345678910"
               year="2007"
-              types={['방문 요양', '방문 간호']}
+              types={['방문 요양', '방문 간호', '방문 목욕']}
               phoneNumber="02-1234-5678"
             />
           }
