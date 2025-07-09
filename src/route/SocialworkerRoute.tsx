@@ -1,8 +1,8 @@
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
-import SocialworkerHomePage from '@/page/Socialworker/Home/SocialworkerHomePage';
 import PointPage from '@/page/Common/PointPage';
-import SocialworkerMyRoute from './SocialworkerMyRoute';
+import SocialworkerHomePage from '@/page/Socialworker/Home/SocialworkerHomePage';
+import SocialworkerMyRoute from '@/route/SocialworkerMyRoute';
 
 const SocialworkerRoute = () => {
   const location = useLocation();
