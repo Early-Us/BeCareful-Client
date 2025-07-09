@@ -3,8 +3,6 @@ import react from '@vitejs/plugin-react-swc';
 import svgr from '@svgr/rollup';
 import { VitePWA } from 'vite-plugin-pwa';
 import fs from 'fs';
-import path from 'path';
-
 const isDev = process.env.NODE_ENV === 'development';
 
 export default defineConfig({
@@ -47,7 +45,7 @@ export default defineConfig({
   ] as PluginOption[],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': '/src',
     },
   },
   server: isDev

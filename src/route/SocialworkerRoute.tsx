@@ -1,7 +1,7 @@
 import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import PointPage from '@/page/Common/PointPage';
-import SocialworkerHomePage from '@/page/Socialworker/Home/SocialworkerHomePage';
+import SocialworkerHomePage from '@/page/SocialWorker/Home/SocialworkerHomePage';
 import SocialworkerMyRoute from '@/route/SocialworkerMyRoute';
 
 const SocialworkerRoute = () => {

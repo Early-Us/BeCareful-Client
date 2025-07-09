@@ -1,9 +1,9 @@
 import { API_Association_Rank_Mapping } from '@/constants/associationRank';
 import { API_Institution_Rank_Mapping } from '@/constants/institutionRank';
-import SocialworkerEditAssociationPage from '@/page/Socialworker/MyPage/SocialworkerEditAssociationPage';
-import SocialworkerEditInstituitionPage from '@/page/Socialworker/MyPage/SocialworkerEditInstituitionPage';
-import SocialworkerEditProfilePage from '@/page/Socialworker/MyPage/SocialworkerEditProfilePage';
-import SocialworkerMyPage from '@/page/Socialworker/MyPage/SocialworkerMyPage';
+import SocialworkerEditAssociationPage from '@/page/SocialWorker/MyPage/SocialworkerEditAssociationPage';
+import SocialworkerEditInstituitionPage from '@/page/SocialWorker/MyPage/SocialworkerEditInstituitionPage';
+import SocialworkerEditProfilePage from '@/page/SocialWorker/MyPage/SocialworkerEditProfilePage';
+import SocialworkerMyPage from '@/page/SocialWorker/MyPage/SocialworkerMyPage';
 import { Routes, Route, Outlet } from 'react-router-dom';
 
 const SocialworkerMyRoute = () => {
