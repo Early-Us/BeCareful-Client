@@ -328,6 +328,7 @@ const Border = styled.div`
 
 const Bottom = styled.div`
   padding: 20px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
