@@ -155,7 +155,9 @@ const CaregiverMyPage = () => {
               <div className="left">
                 <div className="dateWrapper">
                   <label className="date">최근 수정일 </label>
-                  <span>{data?.careerLastModifyDate.replaceAll('-', '.')}</span>
+                  <span>
+                    {data?.workApplicationLastModifyDate.replaceAll('-', '.')}
+                  </span>
                 </div>
                 <label className="title">일자리 신청서</label>
               </div>

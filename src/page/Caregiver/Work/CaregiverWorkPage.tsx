@@ -66,7 +66,7 @@ const CaregiverWorkPage = () => {
       console.log('일자리 매칭 상태 변경 성공');
       setIsToggleChecked((prev) => !prev);
       queryClient.invalidateQueries({
-        queryKey: ['applicationToggle'],
+        queryKey: ['caregiveApplication'],
       });
     },
     onError: (error) => {
@@ -262,6 +262,7 @@ const NavRight = styled.div`
   width: 28px;
   height: 28px;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.gray700};
 `;
 
 const Application = styled.div`

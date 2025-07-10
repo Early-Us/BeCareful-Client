@@ -25,7 +25,7 @@ const CaregiverWorkDetailPage = () => {
 
   // 매칭 공고 상세 조회
   const { data, error } = useQuery<MatchingRecruitmentResponse, Error>({
-    queryKey: ['caregiveApplicationDetail', recruitmentId],
+    queryKey: ['caregiverRecruitmentDetail', recruitmentId],
     queryFn: () => getRecruitmentDetail(Number(recruitmentId)),
   });
   if (error) {
@@ -39,7 +39,7 @@ const CaregiverWorkDetailPage = () => {
     onSuccess: () => {
       console.log('매칭 공고 지원 성공');
       queryClient.invalidateQueries({
-        queryKey: ['apply', recruitmentId],
+        queryKey: ['caregiverRecruitmentDetail', recruitmentId],
       });
     },
     onError: (error) => {
@@ -52,7 +52,7 @@ const CaregiverWorkDetailPage = () => {
     onSuccess: () => {
       console.log('매칭 공고 거절 성공');
       queryClient.invalidateQueries({
-        queryKey: ['reject', recruitmentId],
+        queryKey: ['caregiverRecruitmentDetail', recruitmentId],
       });
     },
     onError: (error) => {
@@ -66,7 +66,7 @@ const CaregiverWorkDetailPage = () => {
     onSuccess: () => {
       console.log('매칭 공고 근무 조건 조율 성공');
       queryClient.invalidateQueries({
-        queryKey: ['mediate', recruitmentId],
+        queryKey: ['caregiverRecruitmentDetail', recruitmentId],
       });
     },
     onError: (error) => {
@@ -77,6 +77,7 @@ const CaregiverWorkDetailPage = () => {
   // 팝업 공통
   const handleNavigate = (path: string) => {
     navigate(`/caregiver/${path}`);
+    window.scrollTo(0, 0);
   };
   const handleModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>,
@@ -137,7 +138,7 @@ const CaregiverWorkDetailPage = () => {
   };
   // 근무조건 조율하기 설명
   const [mediationDescription, setMediationDescription] = useState('');
-  const handleDesciprtionChange = (
+  const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setMediationDescription(e.target.value);
@@ -254,15 +255,20 @@ const CaregiverWorkDetailPage = () => {
                 'ex) 근무시간을 몇 시로 조율하고싶어요,\n요일을 월요일로 바꾸고 싶어요.'
               }
               value={mediationDescription}
-              onChange={handleDesciprtionChange}
+              onChange={handleDescriptionChange}
             />
           </MediateContent>
 
           <Button
             isBlue={true}
-            disabled={mediationDescription.length <= 0}
+            disabled={
+              mediationDescription.length <= 0 || mediationTypes.length === 0
+            }
             style={{
-              background: mediationDescription.length <= 0 ? '#A6A6A6' : '',
+              background:
+                mediationDescription.length <= 0 || mediationTypes.length === 0
+                  ? '#A6A6A6'
+                  : '',
             }}
             onClick={handleMediate}
           >
