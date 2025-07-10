@@ -7,16 +7,16 @@ interface BelongCardProps {
 
 const BelongCard = ({ title, rank }: BelongCardProps) => {
   return (
-    <CardContainter>
+    <CardContainer>
       <label className="title">{title}</label>
       <div className="rank">{rank}</div>
-    </CardContainter>
+    </CardContainer>
   );
 };
 
 export default BelongCard;
 
-const CardContainter = styled.div`
+const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;

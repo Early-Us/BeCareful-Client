@@ -6,7 +6,7 @@ import { NavBar } from '@/components/common/NavBar/NavBar';
 import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
 import { FACILITY_TYPES } from '@/constants/institutionFacilityTypes';
 
-interface SocialworkerEditInstituitionPageProps {
+interface SocialworkerEditInstitutionPageProps {
   institution: string;
   institutionCode: string;
   year: string;
@@ -14,13 +14,13 @@ interface SocialworkerEditInstituitionPageProps {
   phoneNumber: string;
 }
 
-const SocialworkerEditInstituitionPage = ({
+const SocialworkerEditInstitutionPage = ({
   institution: initialInstitution,
   institutionCode: initialInstitutionCode,
   year: initialYear,
   types: initialTypes,
   phoneNumber: initialPhoneNumber,
-}: SocialworkerEditInstituitionPageProps) => {
+}: SocialworkerEditInstitutionPageProps) => {
   const navigate = useNavigate();
 
   const [institution, setInstitution] = useState(initialInstitution);
@@ -150,7 +150,7 @@ const SocialworkerEditInstituitionPage = ({
   );
 };
 
-export default SocialworkerEditInstituitionPage;
+export default SocialworkerEditInstitutionPage;
 
 const Container = styled.div`
   margin: auto 20px;
@@ -174,7 +174,7 @@ const NavCenter = styled.div`
 `;
 
 const Profile = styled.div`
-  padding-top: -16px;
+  margin-top: -16px;
   display: flex;
   align-items: center;
   justify-content: center;

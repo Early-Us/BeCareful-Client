@@ -11,6 +11,7 @@ interface ProfileCardProps {
   phoneNumber: string;
   age: number;
   gender: string;
+  pointPagePath?: string;
 }
 
 const ProfileCard = ({
@@ -30,7 +31,7 @@ const ProfileCard = ({
 
   return (
     <CardContainter>
-      <img src={profileImgURL} />
+      <img src={profileImgURL} alt={'프로필 이미지'} />
 
       <div className="right">
         <NameWrapper>

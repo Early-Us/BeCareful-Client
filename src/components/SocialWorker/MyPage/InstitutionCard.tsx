@@ -19,7 +19,7 @@ const InstitutionCard = ({
   const years = currentYear - year;
 
   return (
-    <CardContainter>
+    <CardContainer>
       <DateWrapper>
         <label className="fix">최근 수정일</label>
         <label className="date">{date}</label>
@@ -41,13 +41,13 @@ const InstitutionCard = ({
           <label className="detail">{phoneNumber}</label>
         </div>
       </InfoWrapper>
-    </CardContainter>
+    </CardContainer>
   );
 };
 
 export default InstitutionCard;
 
-const CardContainter = styled.div`
+const CardContainer = styled.div`
   display: flex;
   padding: 20px 20px 24px 20px;
   flex-direction: column;

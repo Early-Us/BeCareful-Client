@@ -8,7 +8,7 @@ interface AssociationCardProps {
 
 const AssociationCard = ({ association, type, rank }: AssociationCardProps) => {
   return (
-    <CardContainter>
+    <CardContainer>
       <label className="association">{association}</label>
 
       <InfoWrapper>
@@ -21,13 +21,13 @@ const AssociationCard = ({ association, type, rank }: AssociationCardProps) => {
           <label className="detail">{rank}</label>
         </div>
       </InfoWrapper>
-    </CardContainter>
+    </CardContainer>
   );
 };
 
 export default AssociationCard;
 
-const CardContainter = styled.div`
+const CardContainer = styled.div`
   display: flex;
   padding: 20px 20px 24px 20px;
   flex-direction: column;
