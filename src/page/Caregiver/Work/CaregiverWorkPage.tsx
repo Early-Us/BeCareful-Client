@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Chat } from '@/assets/icons/ChatBlack.svg';
+import { ReactComponent as Chat } from '@/assets/icons/ChatNewBlack.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/ChatNew.svg';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import { Toggle } from '@/components/common/Toggle/Toggle';
