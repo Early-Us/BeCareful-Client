@@ -52,11 +52,6 @@ const TabItem = styled(NavLink)`
   text-decoration: none;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.gray200};
-  svg {
-    path {
-      fill: ${({ theme }) => theme.colors.gray200};
-    }
-  }
 
   span {
     font-size: 11px;
@@ -65,10 +60,5 @@ const TabItem = styled(NavLink)`
 
   &.active {
     color: ${({ theme }) => theme.colors.mainBlue};
-    svg {
-      path {
-        fill: ${({ theme }) => theme.colors.mainBlue};
-      }
-    }
   }
 `;
