@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import { Toggle } from '@/components/common/Toggle/Toggle';
-import { ReactComponent as Point } from '@/assets/icons/Point.svg';
-import { ReactComponent as ChevronRight } from '@/assets/icons/ChevronRight.svg';
 import { ReactComponent as ApplicationIcon } from '@/assets/icons/caregiver/MyWork.svg';
 import { ReactComponent as CareerIcon } from '@/assets/icons/caregiver/my/Career.svg';
 import { ReactComponent as LogoutIcon } from '@/assets/icons/caregiver/my/Logout.svg';
@@ -22,6 +20,7 @@ import {
   workApplicationActive,
   workApplicationInactive,
 } from '@/api/caregiver';
+import ProfileCard from '@/components/shared/ProfileCard';
 
 const CaregiverMyPage = () => {
   const { data, isLoading, error } = useQuery<CaregiverMyResponse, Error>({
@@ -82,33 +81,16 @@ const CaregiverMyPage = () => {
       <NavBar left={<NavLeft>마이페이지</NavLeft>} color="" />
 
       <ProfileWrapper>
-        <Top>
-          <img src={data?.profileImageUrl} />
-          <div className="right">
-            <label className="name">{data?.name}</label>
-            <div
-              className="pointWrapper"
-              onClick={() => {
-                handleNavigate('/caregiver/point');
-              }}
-            >
-              <Point />
-              {/* <label className="point">{data.point}</label> */}
-              <label className="point">1,500P</label>
-              <Chevron />
-            </div>
-            <div className="infoWrapper">
-              <label className="info">{data?.phoneNumber}</label>
-              <label className="info">·</label>
-              {/* <label className="info">{data.age}</label> */}
-              <label className="info">만 52세</label>
-              <label className="info">·</label>
-              <label className="info">
-                {data?.gender && GenderMapping[data?.gender]}
-              </label>
-            </div>
-          </div>
-        </Top>
+        {data && (
+          <ProfileCard
+            profileImgURL={data?.profileImageUrl}
+            name={data?.name}
+            point={1500}
+            phoneNumber={data?.phoneNumber}
+            age={52}
+            gender={data?.gender && GenderMapping[data?.gender]}
+          />
+        )}
         <Bottom>
           <div className="certificateWrapper">
             <label className="title-label">기본 자격</label>
@@ -280,60 +262,6 @@ const ProfileWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-`;
-
-const Top = styled.div`
-  padding: 16px 0px;
-  gap: 12px;
-
-  img {
-    width: 86px;
-    height: 86px;
-    border-radius: 50%;
-    border: 1px solid ${({ theme }) => theme.colors.gray100};
-  }
-
-  .right {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .name {
-    color: ${({ theme }) => theme.colors.gray900};
-    font-size: ${({ theme }) => theme.typography.fontSize.title4};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  }
-
-  .pointWrapper {
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-
-  .point {
-    color: ${({ theme }) => theme.colors.black};
-    font-size: ${({ theme }) => theme.typography.fontSize.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-    cursor: pointer;
-  }
-
-  .infoWrapper {
-    margin-top: 4px;
-    gap: 4px;
-  }
-
-  .info {
-    color: ${({ theme }) => theme.colors.gray500};
-    font-size: ${({ theme }) => theme.typography.fontSize.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  }
-`;
-
-const Chevron = styled(ChevronRight)`
-  path {
-    fill: ${({ theme }) => theme.colors.black};
-    stroke: ${({ theme }) => theme.colors.black};
-  }
 `;
 
 const Bottom = styled.div`

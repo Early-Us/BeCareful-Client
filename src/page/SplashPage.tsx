@@ -15,9 +15,9 @@ const SplashPage = () => {
 
       if (isAutoLogin === 'true' && accessToken) {
         if (localStorage.getItem('role') === 'caregiver') {
-          navigate('/home/caregiver');
+          navigate('/caregiver');
         } else {
-          navigate('/home/social');
+          navigate('/socialworker');
         }
       } else {
         navigate('/onboarding');

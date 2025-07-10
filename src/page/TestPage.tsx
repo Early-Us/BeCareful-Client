@@ -1,5 +1,4 @@
 import { Button } from '@/components/common/Button/Button';
-import { InputBox } from '@/components/common/InputBox/InputBox';
 import { Dropdown } from '@/components/common/Dropdown/Dropdown';
 import { useState } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
@@ -89,30 +88,7 @@ export const TestPage = () => {
       <Button variant="blue2" width="120px" height="52px">
         재전송
       </Button>
-      <InputBox
-        width="320px"
-        label="필드 레이블"
-        labelStar={false}
-        state="default"
-        placeholder="플레이스홀더"
-        guide="도움말"
-      />
-      <InputBox
-        width="320px"
-        label="필드 레이블"
-        labelStar={true}
-        state="error"
-        placeholder="플레이스홀더"
-        guide="도움말"
-      />
-      <InputBox
-        width="320px"
-        label="필드 레이블"
-        labelStar={false}
-        state="success"
-        placeholder="플레이스홀더"
-        guide="도움말"
-      />
+
       <Dropdown
         title="드롭다운 가이드"
         contents={dropContents}

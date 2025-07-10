@@ -21,7 +21,7 @@ import ModalLimit from '../common/Modal/ModalLimit';
 import { BoardTypeMapping } from '@/constants/board';
 import { PostDetailResponse } from '@/types/Community/post';
 import { CommentListResponse, CommentRequest } from '@/types/Community/comment';
-import { InstitutionRankMapping } from '@/constants/institutionRank';
+import { Institution_Rank_Mapping } from '@/constants/institutionRank';
 
 const CommunityPost = () => {
   const navigate = useNavigate();
@@ -149,7 +149,9 @@ const CommunityPost = () => {
                 <label className="writer">·</label>
                 <label className="writer">
                   {post?.author &&
-                    InstitutionRankMapping[post?.author.authorInstitutionRank]}
+                    Institution_Rank_Mapping[
+                      post?.author.authorInstitutionRank
+                    ]}
                 </label>
               </div>
               <div className="wrapper">
@@ -240,7 +242,7 @@ const CommunityPost = () => {
                     <label className="writer">·</label>
                     <label className="writer">
                       {
-                        InstitutionRankMapping[
+                        Institution_Rank_Mapping[
                           comment.author.authorInstitutionRank
                         ]
                       }
