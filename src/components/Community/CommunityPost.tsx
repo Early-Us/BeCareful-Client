@@ -1,4 +1,6 @@
+import styled from 'styled-components';
 import React, { useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { ReactComponent as Dots } from '@/assets/icons/community/Dots.svg';
 import { ReactComponent as Share } from '@/assets/icons/community/Share.svg';
@@ -7,38 +9,19 @@ import { ReactComponent as Check } from '@/assets/icons/matching/CircleCheck.svg
 import { ReactComponent as Link } from '@/assets/icons/community/LinkPost.svg';
 import { ReactComponent as Copy } from '@/assets/icons/community/LinkCopy.svg';
 import { ReactComponent as Kakao } from '@/assets/icons/community/KakaoLogo.svg';
-import styled from 'styled-components';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { NavBar } from '../common/NavBar/NavBar';
 import BottomSheet from './BottomSheet';
-import {
-  getComment,
-  getPostDetail,
-  usePostCommentMutation,
-} from '@/api/community';
-import { useQuery } from '@tanstack/react-query';
+import { Button } from '../common/Button/Button';
 import Modal from '../common/Modal/Modal';
 import ModalLimit from '../common/Modal/ModalLimit';
-import { BoardTypeMapping } from '@/constants/board';
-import { PostDetailResponse } from '@/types/Community/post';
-import { CommentListResponse, CommentRequest } from '@/types/Community/comment';
+import { Board_Type_Mapping } from '@/constants/communityBoard';
 import { Institution_Rank_Mapping } from '@/constants/institutionRank';
+import { useLinkCopy } from '@/hooks/Community/useLinkCopy';
+import { useCommentSend } from '@/hooks/Community/useCommentSend';
+import { useComments, usePostDetail } from '@/hooks/Community/communityQuery';
 
 const CommunityPost = () => {
   const navigate = useNavigate();
-
-  const [isRead, setIsRead] = useState(false);
-
-  const [isShareSheetOpen, setIsShareSheetOpen] = useState(false);
-  const [isDeleteSheetOpen, setIsDeleteSheetOpen] = useState(false);
-  const [writingTask, setWritingTask] = useState('');
-  const handleDeleteSheetConfirm = () => {
-    if (writingTask == '수정하기') {
-      // 글쓰기 수정 api 아니면 wirtingpage로 이동
-    } else if (writingTask == '삭제하기') {
-      // delete api 연결
-    }
-    setIsDeleteSheetOpen(false);
-  };
 
   const { postId: postIdParam } = useParams<{ postId: string }>();
   const postId = postIdParam ? parseInt(postIdParam, 10) : 0;
@@ -47,51 +30,43 @@ const CommunityPost = () => {
   const boardType =
     (location.state as { boardType?: string } | undefined)?.boardType ||
     '협회 공지';
-  const apiBoardType = BoardTypeMapping[boardType];
+  const apiBoardType = Board_Type_Mapping[boardType];
+
+  // TODO : id와 함께 local에 저장
+  const [isRead, setIsRead] = useState(false);
+  // bottomsheet - 공유 버튼
+  const [isShareSheetOpen, setIsShareSheetOpen] = useState(false);
+  // bottomsheet - 수정 버튼
+  const [isDeleteSheetOpen, setIsDeleteSheetOpen] = useState(false);
+  const [writingTask, setWritingTask] = useState('');
 
   // 게시글 상세 조회
-  const { data: post, error: postDetailError } = useQuery<
-    PostDetailResponse,
-    Error
-  >({
-    queryKey: ['postDetail', apiBoardType, postId],
-    queryFn: () => getPostDetail(apiBoardType, postId),
-  });
-  if (postDetailError) {
-    console.log('getPostDetail 에러 발생: ', postDetailError);
-  }
-
-  // 댓글 조회
-  const { data: comments, error: commentsError } = useQuery<
-    CommentListResponse,
-    Error
-  >({
-    queryKey: ['comments', apiBoardType, postId],
-    queryFn: () => getComment(apiBoardType, postId),
-  });
-  if (commentsError) {
-    console.log('getComment 에러 발생: ', commentsError);
-  }
-
-  // 댓글 등록
-  const { mutate: comment, error: commentError } = usePostCommentMutation(
+  const { data: post, error: postDetailError } = usePostDetail(
     apiBoardType,
     postId,
   );
-  if (commentError) {
-    console.log('usePostCommentMutation 에러 발생: ', commentError);
-  }
+  // 댓글 조회
+  const { data: comments, error: commentsError } = useComments(
+    apiBoardType,
+    postId,
+  );
 
-  const [reply, setReply] = useState('');
+  // 댓글 등록
+  const { reply, handleReplyChange, handleReplySend } = useCommentSend(
+    apiBoardType,
+    postId,
+  );
 
-  const handleReplyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReply(e.target.value);
-  };
-  const handleReplySend = (e: React.FormEvent) => {
-    e.preventDefault();
-    const commentRequest: CommentRequest = { content: reply };
-    comment(commentRequest);
-    setReply('');
+  // 게시글 링크 복사
+  const { isLinkModalOpen, setIsLinkModalOpen, handleCopy } = useLinkCopy();
+
+  const handleDeleteSheetConfirm = () => {
+    if (writingTask == '수정하기') {
+      // TODO: 글쓰기 수정 api 아니면 wirtingpage로 이동
+    } else if (writingTask == '삭제하기') {
+      // TODO: delete api 연결
+    }
+    setIsDeleteSheetOpen(false);
   };
 
   // 파일 다운로드
@@ -102,37 +77,31 @@ const CommunityPost = () => {
   // 원본 URL로 이동
   const handleOriginalLinkClick = () => {
     if (post?.originalUrl) {
-      window.open(post.originalUrl, '_blank'); // 새 탭에서 열기
+      window.open(post.originalUrl, '_blank');
     }
   };
 
-  // 게시글 링크 복사
-  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
-  const handleCopy = async () => {
-    try {
-      const currentUrl = window.location.href;
-      await navigator.clipboard.writeText(currentUrl);
-      setIsLinkModalOpen(!isLinkModalOpen);
-    } catch (err) {
-      console.error('링크 복사 실패:', err);
-    }
-  };
+  if (postDetailError) {
+    console.log('getPostDetail 에러 발생: ', postDetailError);
+  }
+  if (commentsError) {
+    console.log('getComment 에러 발생: ', commentsError);
+  }
 
   return (
     <Container>
-      <NavbarWrapper>
-        <NavLeft>
-          <ArrowLeft
-            style={{ cursor: 'pointer' }}
+      <NavBar
+        left={
+          <NavLeft
             onClick={() => {
               navigate(-1);
               window.scrollTo(0, 0);
             }}
           />
-        </NavLeft>
-        <NavCenter>{boardType}</NavCenter>
-        <NavRight />
-      </NavbarWrapper>
+        }
+        center={<NavCenter>{boardType}</NavCenter>}
+        color="white"
+      />
 
       <TitleWrapper>
         <Title>
@@ -187,35 +156,35 @@ const CommunityPost = () => {
 
       <ContentWrapper>
         <label>{post?.content}</label>
-        {/* 이미지 표시 */}
-        {post?.imageUrls &&
-          post?.imageUrls.map((imageUrl, index) => (
-            <img
-              key={`image-${index}`}
-              src={imageUrl}
-              alt={`게시글 이미지 ${index + 1}`}
-            />
-          ))}
-        {/* 비디오 표시 */}
-        {post?.videoUrls &&
-          post?.videoUrls.map((videoUrl, index) => (
-            <video key={`video-${index}`} src={videoUrl} controls />
-          ))}
+        <MediaWrapper>
+          {post?.imageUrls &&
+            post?.imageUrls.map((imageUrl, index) => (
+              <img
+                key={`image-${index}`}
+                src={imageUrl}
+                alt={`게시글 이미지 ${index + 1}`}
+              />
+            ))}
+          {post?.videoUrls &&
+            post?.videoUrls.map((videoUrl, index) => (
+              <video key={`video-${index}`} src={videoUrl} controls />
+            ))}
+        </MediaWrapper>
       </ContentWrapper>
 
       <Border />
 
       {!post?.isMyPost && (
         <IsRead>
-          <IsReadButton active={isRead} onClick={() => setIsRead(true)}>
+          <CheckButton active={isRead} onClick={() => setIsRead(true)}>
             <Check />
             게시물을 확인하셨나요?
-          </IsReadButton>
-          <IsReadLabel>
+          </CheckButton>
+          <label>
             {isRead
               ? '* 게시물 확인이 완료되었습니다.'
               : '* 게시물을 꼼꼼히 확인하셨다면 위 버튼을 눌러주세요.'}
-          </IsReadLabel>
+          </label>
         </IsRead>
       )}
 
@@ -307,30 +276,37 @@ const CommunityPost = () => {
         title="게시물을 수정 또는 삭제하시겠습니까?"
         titleStar={false}
       >
-        <SheetButton
-          active={writingTask === '협회 공지'}
-          onClick={() => setWritingTask('협회 공지')}
+        <CheckButton
+          active={writingTask === '수정하기'}
+          onClick={() => setWritingTask('수정하기')}
         >
           <Check />
           수정하기
-        </SheetButton>
-        <SheetButton
-          active={writingTask === '공단 공지'}
-          onClick={() => setWritingTask('공단 공지')}
+        </CheckButton>
+        <CheckButton
+          active={writingTask === '삭제하기'}
+          onClick={() => setWritingTask('삭제하기')}
         >
           <Check />
           삭제하기
-        </SheetButton>
+        </CheckButton>
         <DeleteButtons>
-          <button
-            className="cancle"
+          <Button
+            width="100%"
+            height="52px"
+            variant="subBlue"
             onClick={() => setIsDeleteSheetOpen(false)}
           >
             취소
-          </button>
-          <button className="check" onClick={handleDeleteSheetConfirm}>
+          </Button>
+          <Button
+            width="100%"
+            height="52px"
+            variant="mainBlue"
+            onClick={handleDeleteSheetConfirm}
+          >
             확인
-          </button>
+          </Button>
         </DeleteButtons>
       </BottomSheet>
 
@@ -353,41 +329,18 @@ export default CommunityPost;
 
 const Container = styled.div`
   padding: 0px 20px;
-  margin-top: 56px;
 `;
 
-const NavbarWrapper = styled.div`
-  height: 56px;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  background: ${({ theme }) => theme.colors.white};
-`;
-
-const NavLeft = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
+const NavLeft = styled(ArrowLeft)`
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
 `;
 
 const NavCenter = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-`;
-
-const NavRight = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const TitleWrapper = styled.div`
@@ -500,13 +453,25 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 300px;
-  height: 680px;
   margin-bottom: 50px;
 
   label {
     color: ${({ theme }) => theme.colors.black};
     font-size: ${({ theme }) => theme.typography.fontSize.body1};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
+`;
+
+const MediaWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 
   img,
@@ -522,9 +487,15 @@ const IsRead = styled.div`
   flex-direction: column;
   gap: 10px;
   padding: 10px 0px 30px 0px;
+
+  label {
+    color: ${({ theme }) => theme.colors.mainBlue};
+    font-size: ${({ theme }) => theme.typography.fontSize.body3};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
 `;
 
-const IsReadButton = styled.div<{ active: boolean }>`
+const CheckButton = styled.div<{ active: boolean }>`
   height: 32px;
   padding: 10px;
   cursor: pointer;
@@ -556,12 +527,6 @@ const IsReadButton = styled.div<{ active: boolean }>`
       fill: ${({ theme }) => theme.colors.mainBlue};
     }
   }
-`;
-
-const IsReadLabel = styled.label`
-  color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.body3};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const ReplyWrapper = styled.div`
@@ -696,59 +661,4 @@ const DeleteButtons = styled.div`
   gap: 8px;
   justify-content: space-between;
   padding-top: 85px;
-
-  button {
-    display: flex;
-    height: 52px;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-    font-size: ${({ theme }) => theme.typography.fontSize.body1};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  }
-
-  .cancle {
-    background: ${({ theme }) => theme.colors.subBlue};
-    color: ${({ theme }) => theme.colors.mainBlue};
-  }
-
-  .check {
-    background: ${({ theme }) => theme.colors.mainBlue};
-    color: ${({ theme }) => theme.colors.white};
-  }
-`;
-
-const SheetButton = styled.div<{ active: boolean }>`
-  height: 32px;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 12px;
-  border: 1px solid
-    ${({ theme, active }) =>
-      active ? theme.colors.mainBlue : theme.colors.gray100};
-  background: ${({ theme, active }) =>
-    active ? theme.colors.subBlue : theme.colors.white};
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.mainBlue : theme.colors.gray900};
-  font-weight: ${({ theme, active }) =>
-    active
-      ? theme.typography.fontWeight.bold
-      : theme.typography.fontWeight.medium};
-
-  path {
-    fill: ${({ theme, active }) => (active ? theme.colors.mainBlue : '')};
-  }
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.subBlue};
-    border-color: ${({ theme }) => theme.colors.mainBlue};
-
-    path {
-      fill: ${({ theme }) => theme.colors.mainBlue};
-    }
-  }
 `;

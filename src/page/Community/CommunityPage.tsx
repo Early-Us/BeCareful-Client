@@ -1,36 +1,31 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Search } from '@/assets/icons/Search.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as Plus } from '@/assets/icons/ButtonPlus.svg';
 import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
-import { useState } from 'react';
-import CommunityHome from '@/components/Community/CommunityHome';
 import CommunityWritePage from './CommunityWritePage';
+import CommunityHome from '@/components/Community/CommunityHome';
 import CommunityDetail from '@/components/Community/CommunityDetail';
-import { useQuery } from '@tanstack/react-query';
-import { AssociationInfoResponse } from '@/types/Community/community';
-import { getAssociationInfo } from '@/api/community';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { CommunityJoinRequestModal } from '@/components/Community/JoinCommunity/CommunityJoinRequestModal';
+import { COMMUNITY_BOARDS } from '@/constants/communityBoard';
+import { useAssociationInfo } from '@/hooks/Community/communityQuery';
 
 const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
+  const location = useLocation();
   const selectedAssociation = location.state as {
     associationId: number;
     associationName: string;
   };
 
   const [activeTab, setActiveTab] = useState('전체');
-  const [isWriting, setIsWriting] = useState(false);
+  const [isWriting, setIsWriting] = useState(true);
 
-  const { data } = useQuery<AssociationInfoResponse>({
-    queryKey: ['associationInfo'],
-    queryFn: getAssociationInfo,
-    enabled: !previewMode,
-  });
+  const { data } = useAssociationInfo(!previewMode);
 
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);
@@ -67,17 +62,15 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
           </Association>
 
           <CommunityTabs>
-            {['전체', '협회 공지', '공단 공지', '정보 공유', '참여 신청'].map(
-              (tab) => (
-                <Tab
-                  key={tab}
-                  active={activeTab === tab}
-                  onClick={() => handleTabChange(tab)}
-                >
-                  {tab}
-                </Tab>
-              ),
-            )}
+            {COMMUNITY_BOARDS.map((tab) => (
+              <Tab
+                key={tab}
+                active={activeTab === tab}
+                onClick={() => handleTabChange(tab)}
+              >
+                {tab}
+              </Tab>
+            ))}
           </CommunityTabs>
 
           {activeTab == '전체' ? (
@@ -92,6 +85,7 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
           </Button>
 
           <SocialWorkerTabBar />
+
           {previewMode && (
             <CommunityJoinRequestModal
               width="343px"

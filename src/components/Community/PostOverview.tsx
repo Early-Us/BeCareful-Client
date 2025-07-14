@@ -1,7 +1,9 @@
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { Institution_Rank_Mapping } from '@/constants/institutionRank';
 import { PostListItem } from '@/types/Community/post';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { textTruncateFormat } from '@/hooks/Community/textFormat';
+import { isRecentDate } from '@/hooks/Community/isRecentDate';
 
 // PostOverview 컴포넌트가 받을 props 타입 정의
 export interface PostOverviewProps extends PostListItem {
@@ -18,21 +20,6 @@ const PostOverview = ({
   author,
   boardType,
 }: PostOverviewProps) => {
-  const titleFormat = (text: string) => {
-    if (text.length > 33) {
-      return text.slice(0, 33) + '..';
-    }
-    return text;
-  };
-
-  const isNew = (dateString: string) => {
-    const createdDate = new Date(dateString);
-    const now = new Date();
-    const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
-
-    return createdDate >= threeDaysAgo;
-  };
-
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -56,12 +43,13 @@ const PostOverview = ({
         {/* <Title isReaded={isReaded}> */}
         <Title isReaded={false}>
           <label>
-            {isImportant && <IsMustTag>필독</IsMustTag>} {titleFormat(title)}
+            {isImportant && <IsMustTag>필독</IsMustTag>}{' '}
+            {textTruncateFormat(title, 33)}
           </label>
         </Title>
         <Day>
           <label>{createdAt}</label>
-          {isNew(createdAt) && <NewTag>N</NewTag>}
+          {isRecentDate(createdAt, 3) && <NewTag>N</NewTag>}
         </Day>
       </Wrapper>
 
@@ -90,7 +78,6 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  // gap: 8px;
   justify-content: space-between;
 `;
 

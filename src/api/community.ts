@@ -1,6 +1,5 @@
 import { AssociationInfoResponse } from '@/types/Community/community';
 import { axiosInstance } from './axiosInstance';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MediaItem, PageableRequest } from '@/types/Community/common';
 import {
   BoardPostListResponse,
@@ -9,6 +8,7 @@ import {
   PostRequest,
 } from '@/types/Community/post';
 import { CommentListResponse, CommentRequest } from '@/types/Community/comment';
+import { getVideoDuration } from '@/utils/communityMedia';
 
 /* api 요청 */
 // 커뮤니티 탭 협회 정보 조회
@@ -128,89 +128,4 @@ export const postComment = async (
     comment,
   );
   return response;
-};
-
-/* mutation */
-// 미디어 파일 업로드 mutation
-export const usePostMediaMutation = () => {
-  return useMutation({
-    mutationFn: ({
-      file,
-      fileTypeParam,
-    }: {
-      file: File;
-      fileTypeParam: 'FILE' | 'IMAGE' | 'VIDEO';
-    }) => postMedia(file, fileTypeParam),
-    onSuccess: (data) => {
-      console.log('mutation - 미디어 업로드 성공:', data);
-    },
-    onError: (error) => {
-      console.error('mutation - 미디어 업로드 실패:', error);
-    },
-  });
-};
-
-// 게시글 작성 mutation
-export const usePostPostingMutation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({
-      boardType,
-      postData,
-    }: {
-      boardType: string;
-      postData: PostRequest;
-    }) => postPosting(boardType, postData),
-    onSuccess: (response, variables) => {
-      console.log('mutation - 게시글 작성 성공:', response.data);
-      queryClient.invalidateQueries({
-        queryKey: ['posts', variables.boardType],
-      });
-    },
-    onError: (error) => {
-      console.error('mutation - 게시글 작성 실패:', error);
-    },
-  });
-};
-
-// 댓글 작성 mutation
-export const usePostCommentMutation = (boardType: string, postId: number) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (comment: CommentRequest) =>
-      postComment(boardType, postId, comment),
-    onSuccess: (response) => {
-      console.log('mutation - 댓글 작성 성공:', response.data);
-      queryClient.invalidateQueries({
-        queryKey: ['comments', boardType, postId],
-      });
-    },
-    onError: (error) => {
-      console.error('mutation - 댓글 작성 실패:', error);
-    },
-  });
-};
-
-/* 이외의 함수 */
-// 영상 길이 얻는 함수
-const getVideoDuration = (file: File): Promise<number> => {
-  return new Promise((resolve, reject) => {
-    const video = document.createElement('video');
-    video.preload = 'metadata'; // 메타데이터만 로드
-
-    video.onloadedmetadata = () => {
-      window.URL.revokeObjectURL(video.src); // 임시 URL 해제
-      resolve(video.duration); // 길이 (초) 반환
-    };
-
-    video.onerror = () => {
-      window.URL.revokeObjectURL(video.src); // 임시 URL 해제
-      reject(new Error('Failed to load video metadata.')); // 에러 발생 시 reject
-    };
-
-    const fileURL = URL.createObjectURL(file);
-    video.src = fileURL;
-  });
 };

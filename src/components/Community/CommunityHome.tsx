@@ -1,20 +1,19 @@
-import PostOverview from '@/components/Community/PostOverview';
-import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
 import styled from 'styled-components';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { getImportantPosting, getPostingList } from '@/api/community';
-import { useQueries, useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css/pagination';
+import { Button } from '../common/Button/Button';
+import PostOverview from '@/components/Community/PostOverview';
+import { Board_List } from '@/constants/communityBoard';
 import { PageableRequest } from '@/types/Community/common';
+import { BoardPostListResponse, PostListItem } from '@/types/Community/post';
 import {
-  BoardPostListResponse,
-  ImportantPostListResponse,
-  PostListItem,
-} from '@/types/Community/post';
-import { BoardList } from '@/types/Community/community';
+  useBoardPostings,
+  useImportantPostings,
+} from '@/hooks/Community/communityQuery';
 
 interface CommunityHomeProps {
   onTabChange: (tabName: string) => void;
@@ -26,26 +25,15 @@ const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
     size: 1,
     sort: [],
   };
-  const { data: importantPostings, error: importantError } = useQuery<
-    ImportantPostListResponse,
-    Error
-  >({
-    queryKey: ['importantPostingList', importantPageable],
-    queryFn: () => getImportantPosting(importantPageable),
-  });
+
+  const { data: importantPostings, error: importantError } =
+    useImportantPostings(importantPageable);
   if (importantError) {
     console.log('getImportantPosting 에러: ', importantError);
   }
 
   const boardPageable: PageableRequest = { page: 1, size: 5, sort: [] };
-  const boardPostings = useQueries({
-    queries: BoardList.map((board) => ({
-      queryKey: ['boardPostingList', board.api, boardPageable],
-      queryFn: () => getPostingList(boardPageable, board.api),
-      staleTime: 1000 * 60 * 5,
-      cacheTime: 1000 * 60 * 30,
-    })),
-  });
+  const boardPostings = useBoardPostings(boardPageable);
 
   const getContent = (
     data: BoardPostListResponse | undefined,
@@ -126,7 +114,7 @@ const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
           slidesPerView={1}
           style={{ width: '100%', height: 'auto' }}
         >
-          {BoardList.map((board, index) => {
+          {Board_List.map((board, index) => {
             const { data, isError, error } = boardPostings[index];
             const Icon = board.icon;
 
@@ -144,9 +132,15 @@ const CommunityHome = ({ onTabChange }: CommunityHomeProps) => {
                     board.label,
                   )}
                 </NoticeList>
-                <PlusButton onClick={() => onTabChange(board.label)}>
+                <Button
+                  width="100%"
+                  height="52px"
+                  variant="subBlue"
+                  style={{ marginTop: '4px', marginBottom: '15px' }}
+                  onClick={() => onTabChange(board.label)}
+                >
                   더보기
-                </PlusButton>
+                </Button>
               </SwiperSlide>
             );
           })}
@@ -209,21 +203,6 @@ const NoticeList = styled.div`
 const Border = styled.div`
   background: ${({ theme }) => theme.colors.gray50};
   height: 1px;
-`;
-
-const PlusButton = styled.button`
-  margin-top: 4px;
-  margin-bottom: 15px;
-  display: flex;
-  width: 100%;
-  height: 52px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  background: ${({ theme }) => theme.colors.subBlue};
-  color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.body1};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
 
 const CustomPagination = styled.div`

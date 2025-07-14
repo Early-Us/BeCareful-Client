@@ -1,10 +1,9 @@
-import PostOverview from '@/components/Community/PostOverview';
-import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
 import styled from 'styled-components';
-import { getPostingList } from '@/api/community';
-import { useQuery } from '@tanstack/react-query';
+import { ReactComponent as NoticeIcon } from '@/assets/icons/community/Notice.svg';
+import PostOverview from '@/components/Community/PostOverview';
+import { PostListItem } from '@/types/Community/post';
 import { PageableRequest } from '@/types/Community/common';
-import { BoardPostListResponse, PostListItem } from '@/types/Community/post';
+import { useBoardPostList } from '@/hooks/Community/communityQuery';
 
 interface CommunityDetailProps {
   boardType: string;
@@ -17,10 +16,7 @@ const CommunityDetail = ({ boardType }: CommunityDetailProps) => {
     sort: [],
   };
 
-  const { data, error } = useQuery<BoardPostListResponse, Error>({
-    queryKey: ['postingList', boardType, pageable],
-    queryFn: () => getPostingList(pageable, boardType),
-  });
+  const { data, error } = useBoardPostList(boardType, pageable);
   if (error) {
     console.log('getPostingList 에러: ', error);
   }

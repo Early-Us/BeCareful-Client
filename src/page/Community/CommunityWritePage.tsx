@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { ReactComponent as Close } from '@/assets/icons/Close.svg';
 import { ReactComponent as Store } from '@/assets/icons/community/Store.svg';
 import { ReactComponent as Post } from '@/assets/icons/community/Post.svg';
@@ -7,14 +8,17 @@ import { ReactComponent as Photo } from '@/assets/icons/community/Photo.svg';
 import { ReactComponent as File } from '@/assets/icons/community/File.svg';
 import { ReactComponent as LinkIcon } from '@/assets/icons/community/LinkIcon.svg';
 import { ReactComponent as Check } from '@/assets/icons/matching/CircleCheck.svg';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import BottomSheet from '@/components/Community/BottomSheet';
 import Modal from '@/components/common/Modal/Modal';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
-import { usePostMediaMutation, usePostPostingMutation } from '@/api/community';
-import { MediaItem } from '@/types/Community/common';
-import { BoardTypeMapping } from '@/constants/board';
+import { Button } from '@/components/common/Button/Button';
+import { NavBar } from '@/components/common/NavBar/NavBar';
+import { useModals } from '@/hooks/Community/WritePage/useModals';
+import { usePostings } from '@/hooks/Community/WritePage/usePostings';
+import { useMedia } from '@/hooks/Community/WritePage/useMedia';
+import { useSave } from '@/hooks/Community/WritePage/useSave';
+import { usePostingSubmit } from '@/hooks/Community/WritePage/usePostingSubmit';
 import { PostRequest } from '@/types/Community/post';
 
 interface WritingProp {
@@ -42,372 +46,122 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
     setIsOpen(false);
   };
 
-  // 필독 여부
-  const [isImportant, setIsImportant] = useState(true);
-  const handleToggleChange = () => {
-    setIsImportant((prevChecked) => !prevChecked);
-  };
-
-  // 게시글 제목
-  const [title, setTitle] = useState('');
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
+  // 모달 관련
+  // 모달 상태 및 로직
+  const {
+    modalContent,
+    isLimitModalOpen,
+    isSaveModalOpen,
+    isCloseModalOpen,
+    isPostModalOpen,
+    setIsSaveModalOpen,
+    setIsCloseModalOpen,
+    setIsPostModalOpen,
+    handleCloseLimitModal,
+  } = useModals();
 
   // 게시글 내용
-  const [content, setContent] = useState('');
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-    const textarea = e.target;
-    textarea.style.height = 'auto';
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  };
+  const {
+    isImportant,
+    title,
+    content,
+    originalUrl,
+    setIsImportant,
+    setTitle,
+    setContent,
+    setOriginalUrl,
+    handleToggleChange,
+    handleTitleChange,
+    handleContentChange,
+    handleLinkClick,
+  } = usePostings();
+
+  // 미디어 파일 업로드
+  const {
+    photos,
+    videos,
+    attachedFiles,
+    photoRef,
+    fileRef,
+    setPhotos,
+    setVideos,
+    setAttachedFiles,
+    handlePhotoClick,
+    handleFileClick,
+    handleMediaChange,
+    handleFileChange,
+  } = useMedia();
+
+  // 임시 저장
+  const { handleSaveDraft } = useSave({
+    board,
+    postData: { title, content, isImportant, originalUrl },
+    mediaData: { photos, videos, attachedFiles },
+    setPostData: ({ title, content, isImportant, originalUrl }) => {
+      setTitle(title);
+      setContent(content);
+      setIsImportant(isImportant);
+      setOriginalUrl(originalUrl);
+    },
+    setMediaData: ({ photos, videos, attachedFiles }) => {
+      setPhotos(photos);
+      setVideos(videos);
+      setAttachedFiles(attachedFiles);
+    },
+  });
 
   // 내용이 다 채워져 있어야 작성 버튼 클릭 가능
   const isActive =
     title.length > 0 && content.length > 0 && board !== '게시판 선택';
 
-  // limit modal
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalDetail, setModalDetail] = useState('');
-  const [isLimitModalOpen, setIsLimitModalOpen] = useState(false);
-  const showLimitModal = (title: string, detail: string) => {
-    setModalTitle(title);
-    setModalDetail(detail);
-    setIsLimitModalOpen(true);
-  };
-  const handleCloseLimitModal = () => {
-    setIsLimitModalOpen(false);
-    setModalTitle('');
-    setModalDetail('');
-  };
-
-  // 임시저장 모달
-  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
-  // 나가기 모달
-  const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
-  // 등록 모달
-  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-
-  // 미디어 등록 api mutation
-  const { mutateAsync: postMediaMutate } = usePostMediaMutation();
-  // 게시글 작성 api mutation
-  const { mutateAsync: postPostingMutate } = usePostPostingMutation();
-
-  // 사진 첨부
-  const photoRef = useRef<HTMLInputElement>(null);
-  const handlePhotoClick = () => {
-    photoRef.current?.click();
-  };
-  const [photos, setPhotos] = useState<MediaItem[]>([]);
-  const [videos, setVideos] = useState<MediaItem[]>([]);
-  const handlePhotoChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) {
-      event.target.value = '';
-      return;
-    }
-
-    const selectedFilesArray = Array.from(files);
-    const newPhotosToUpload: File[] = [];
-    const newVideosToUpload: File[] = [];
-
-    // multiple로 선택했으로 사용자가 선택한 모든 파일 검사
-    for (const file of selectedFilesArray) {
-      if (file.type.startsWith('image/')) {
-        if (photos.length + newPhotosToUpload.length > 100) {
-          showLimitModal(
-            '사진이 크기 제한을 초과해요.',
-            '사진 1장당 최대 크기는 30MB입니다.\n사진은 최대 100장까지 첨부 가능합니다.',
-          );
-          continue;
-        }
-        if (file.size > 30 * 1024 * 1024) {
-          showLimitModal(
-            '사진이 크기 제한을 초과해요.',
-            '사진 1장당 최대 크기는 30MB입니다.\n사진은 최대 100장까지 첨부 가능합니다.',
-          );
-          continue;
-        }
-        newPhotosToUpload.push(file);
-      } else if (file.type.startsWith('video/')) {
-        if (videos.length + newVideosToUpload.length > 10) {
-          showLimitModal(
-            '동영상이 크기 제한을 초과해요.',
-            '영상 1건당 최대 크기는 1GB(15분)입니다.\n영상은 최대 10건까지 첨부 가능합니다.',
-          );
-          continue;
-        }
-        if (file.size > 1 * 1024 * 1024 * 1024) {
-          showLimitModal(
-            '동영상이 크기 제한을 초과해요.',
-            '영상 1건당 최대 크기는 1GB(15분)입니다.\n영상은 최대 10건까지 첨부 가능합니다.',
-          );
-          continue;
-        }
-        newVideosToUpload.push(file);
-      }
-    }
-
-    const uploadedMedia: Promise<MediaItem | null>[] = [];
-    // 유효성 검사를 통과한 사진/동영상 파일들에 대해 mutateAsync 호출 Promise 생성
-    for (const file of newPhotosToUpload) {
-      uploadedMedia.push(postMediaMutate({ file, fileTypeParam: 'IMAGE' }));
-    }
-    for (const file of newVideosToUpload) {
-      uploadedMedia.push(postMediaMutate({ file, fileTypeParam: 'VIDEO' }));
-    }
-
-    try {
-      const results = await Promise.allSettled(uploadedMedia);
-
-      const successfulUploads: MediaItem[] = [];
-      results.forEach((result) => {
-        if (result.status === 'fulfilled' && result.value) {
-          successfulUploads.push(result.value);
-        } else if (result.status === 'rejected') {
-          console.error('파일 업로드 실패:', result.reason);
-        }
-      });
-
-      // 성공적으로 업로드된 파일들만 상태에 추가
-      setPhotos((prev) => [
-        ...prev,
-        ...successfulUploads.filter((item) => item.fileType === 'IMAGE'),
-      ]);
-      setVideos((prev) => [
-        ...prev,
-        ...successfulUploads.filter((item) => item.fileType === 'VIDEO'),
-      ]);
-    } catch (error) {
-      console.error('사진/비디오 업로드 중 오류 발생: ', error);
-    } finally {
-      event.target.value = ''; // input value 초기화 (동일 파일 재선택 가능하도록)
-    }
-  };
-
-  // 파일 첨부
-  const fileRef = useRef<HTMLInputElement>(null);
-  const handleFileClick = () => {
-    fileRef.current?.click();
-  };
-  // 첨부된 파일 상태 관리
-  const [attachedFiles, setAttachedFiles] = useState<MediaItem[]>([]);
-  // 파일 선택 완료 시 호출될 핸들러
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) {
-      event.target.value = ''; // input value 초기화
-      return;
-    }
-
-    const selectedFilesArray = Array.from(files);
-    const newFilesToUpload: File[] = [];
-
-    // 현재 첨부된 파일들 총 용량 계산
-    const currentTotalSize = attachedFiles.reduce(
-      (sum, file) => sum + file.fileSize,
-      0,
-    );
-    let newFilesTotalSize = 0; // 새로 선택된 유효한 파일들의 총 용량
-
-    // 파일 개수 제한 확인
-    if (attachedFiles.length + selectedFilesArray.length > 5) {
-      showLimitModal(
-        '파일이 크기 제한을 초과해요.',
-        '파일 1건당 최대 크기는 10MB이며,\n한 게시글당 최대 크기 30MB,\n파일 개수는 5건까지 첨부 가능합니다.',
-      );
-      event.target.value = ''; // input value 초기화
-      return; // 개수 초과 시 더 이상 처리하지 않음
-    }
-
-    // 파일 유효성 검사
-    for (const file of selectedFilesArray) {
-      // 파일 용량 제한 확인 (개별 파일)
-      if (file.size > 10 * 1024 * 1024) {
-        showLimitModal(
-          '파일이 크기 제한을 초과해요.',
-          '파일 1건당 최대 크기는 10MB이며,\n한 게시글당 최대 크기 30MB,\n파일 개수는 5건까지 첨부 가능합니다.',
-        );
-        continue; // 다음 파일로 건너뛰기
-      }
-
-      // 전체 파일 용량 제한 확인 (추가될 파일 포함)
-      // 현재까지 유효한 파일들의 총 용량 + 현재 파일 용량이 전체 제한을 초과하는지 확인
-      if (currentTotalSize + newFilesTotalSize + file.size > 30 * 1024 * 1024) {
-        showLimitModal(
-          '파일이 크기 제한을 초과해요.',
-          '파일 1건당 최대 크기는 10MB이며,\n한 게시글당 최대 크기 30MB,\n파일 개수는 5건까지 첨부 가능합니다.',
-        );
-        break;
-      }
-
-      newFilesToUpload.push(file); // 유효한 파일만 추가
-      newFilesTotalSize += file.size; // 유효한 파일 용량만 합산
-    }
-
-    // 유효한 파일이 있을 경우 상태 업데이트
-    const uploadedFiles: Promise<MediaItem | null>[] = [];
-    for (const file of newFilesToUpload) {
-      uploadedFiles.push(postMediaMutate({ file, fileTypeParam: 'FILE' }));
-    }
-
-    try {
-      // 모든 업로드 Promise가 완료될 때까지 기다림
-      const results = await Promise.allSettled(uploadedFiles);
-
-      const successfulUploads: MediaItem[] = [];
-      results.forEach((result) => {
-        if (result.status === 'fulfilled' && result.value) {
-          successfulUploads.push(result.value);
-        } else if (result.status === 'rejected') {
-          console.error('파일 업로드 실패:', result.reason);
-          // 개별 파일 업로드 실패에 대한 사용자 피드백
-        }
-      });
-
-      // 업로드 성공한 파일들만 상태에 추가
-      setAttachedFiles((prev) => [...prev, ...successfulUploads]);
-    } catch (error) {
-      console.error('파일 업로드 중 오류 발생: ', error);
-    } finally {
-      event.target.value = '';
-    }
-  };
-
-  // 링크 첨부
-  const [originalUrl, setOriginalUrl] = useState('');
-  const handleLinkClick = () => {
-    const link = prompt('첨부할 링크 URL을 입력하세요:');
-    if (link) {
-      setOriginalUrl(link);
-      console.log('첨부된 링크:', link);
-    }
-  };
-
-  // 임시 저장 데이터의 localStorage 키 생성 함수
-  const getDraftStorageKey = (board: string) => `communityDraft_${board}`;
-  // localStorage에 임시 저장
-  const handleSaveDraft = () => {
-    const draftData = {
+  // 게시글 전송(post)
+  const { handleSubmit } = usePostingSubmit(board, onClose);
+  const handlePostBtnClick = async () => {
+    const postData: PostRequest = {
       title,
       content,
       isImportant,
       originalUrl,
-      photos,
-      videos,
-      attachedFiles,
+      imageList: photos,
+      videoList: videos,
+      fileList: attachedFiles,
     };
-    const storageKey = getDraftStorageKey(board);
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(draftData));
-      console.log(`${boardType} 임시 저장 완료:`, draftData);
-      setIsSaveModalOpen(!isSaveModalOpen);
-    } catch (e) {
-      console.error('임시 저장 중 오류 발생:', e);
-    }
-  };
 
-  // 임시 저장 데이터 불러오기
-  useEffect(() => {
-    const storageKey = getDraftStorageKey(board);
-    const savedDraft = localStorage.getItem(storageKey);
-
-    if (savedDraft) {
-      try {
-        const draftData = JSON.parse(savedDraft);
-        setTitle(draftData.title || '');
-        setContent(draftData.content || '');
-        setIsImportant(draftData.isImportant || false);
-        setOriginalUrl(draftData.originalUrl || '');
-        setPhotos(draftData.photos || []);
-        setVideos(draftData.videos || []);
-        setAttachedFiles(draftData.attachedFiles || []);
-      } catch (e) {
-        console.error('임시 저장 데이터 파싱 오류:', e);
-        // localStorage.removeItem(storageKey);
-      }
-    }
-  }, [board]);
-
-  const handleSubmit = async () => {
-    try {
-      const imageList: MediaItem[] = photos.map((file) => ({
-        fileName: file.fileName,
-        mediaUrl: file.mediaUrl,
-        fileType: 'IMAGE',
-        fileSize: file.fileSize,
-        videoDuration: 0, // 이미지에는 해당 없음
-      }));
-
-      const videoList: MediaItem[] = videos.map((file) => ({
-        fileName: file.fileName,
-        mediaUrl: file.mediaUrl,
-        fileType: 'VIDEO',
-        fileSize: file.fileSize,
-        videoDuration: file.videoDuration, // 업로드 응답에서 받은 영상 길이 사용
-      }));
-
-      const fileList: MediaItem[] = attachedFiles.map((file) => ({
-        fileName: file.fileName,
-        mediaUrl: file.mediaUrl,
-        fileType: 'FILE',
-        fileSize: file.fileSize,
-        videoDuration: 0,
-      }));
-
-      const requestBoard = BoardTypeMapping[board];
-      const postData: PostRequest = {
-        title,
-        content,
-        isImportant,
-        originalUrl,
-        imageList,
-        videoList,
-        fileList,
-      };
-
-      await postPostingMutate({ boardType: requestBoard, postData });
-
-      const storageKey = getDraftStorageKey(board);
-      localStorage.removeItem(storageKey);
-
-      console.log('게시글 작성 완료', postData);
-
-      onClose();
-    } catch (error) {
-      console.log('게시글 작성 post 실패: ', error);
-    }
+    console.log(postData);
+    await handleSubmit(postData);
   };
 
   return (
     <Container>
-      <NavbarWrapper>
-        <NavLeft>
+      <NavBar
+        left={
           <Close
             onClick={() => setIsCloseModalOpen(!isCloseModalOpen)}
             style={{ cursor: 'pointer' }}
           />
-        </NavLeft>
-        <NavRight isActive={isActive}>
-          <button
-            className="store"
-            onClick={handleSaveDraft}
-            disabled={!isActive}
-          >
-            <Store className="store-svg" />
-            임시저장
-          </button>
-          <button
-            className="post"
-            onClick={() => setIsPostModalOpen(!isPostModalOpen)}
-            disabled={!isActive}
-          >
-            <Post className="post-svg" />
-            등록
-          </button>
-        </NavRight>
-      </NavbarWrapper>
+        }
+        right={
+          <NavRight isActive={isActive}>
+            <button
+              className="store"
+              onClick={handleSaveDraft}
+              disabled={!isActive}
+            >
+              <Store className="store-svg" />
+              임시저장
+            </button>
+            <button
+              className="post"
+              onClick={() => setIsPostModalOpen(!isPostModalOpen)}
+              disabled={!isActive}
+            >
+              <Post className="post-svg" />
+              등록
+            </button>
+          </NavRight>
+        }
+        color=""
+      />
 
       <BoardSelect onClick={toggleSheet}>
         <label>{board}</label>
@@ -441,8 +195,22 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           정보 공유
         </SheetButton>
         <Buttons>
-          <CancleButton onClick={() => setIsOpen(false)}>취소</CancleButton>
-          <CheckButton onClick={handleSheetConfirm}>확인</CheckButton>
+          <Button
+            width="100%"
+            height="52px"
+            variant="subBlue"
+            onClick={() => setIsOpen(false)}
+          >
+            취소
+          </Button>
+          <Button
+            width="100%"
+            height="52px"
+            variant="mainBlue"
+            onClick={handleSheetConfirm}
+          >
+            확인
+          </Button>
         </Buttons>
       </BottomSheet>
 
@@ -465,7 +233,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
         onChange={handleContentChange}
       />
 
-      <NavBottom>
+      <Bottom>
         <Border />
         <div>
           <Photo onClick={handlePhotoClick} />
@@ -474,7 +242,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
             ref={photoRef}
             style={{ display: 'none' }}
             accept="image/*, video/*"
-            onChange={handlePhotoChange}
+            onChange={handleMediaChange}
             multiple // 여러 파일 선택 가능하도록 설정
           />
           <File onClick={handleFileClick} />
@@ -488,12 +256,12 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           />
           <LinkIcon onClick={handleLinkClick} />
         </div>
-      </NavBottom>
+      </Bottom>
 
       <Modal isOpen={isLimitModalOpen} onClose={handleCloseLimitModal}>
         <ModalLimit
-          title={modalTitle}
-          detail={modalDetail}
+          title={modalContent.title}
+          detail={modalContent.detail}
           onClose={handleCloseLimitModal}
           handleBtnClick={handleCloseLimitModal}
         />
@@ -542,7 +310,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           left="취소"
           right="등록하기"
           handleLeftBtnClick={() => setIsPostModalOpen(!isPostModalOpen)}
-          handleRightBtnClick={handleSubmit}
+          handleRightBtnClick={handlePostBtnClick}
         />
       </Modal>
     </Container>
@@ -552,30 +320,11 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
 export default CommunityWritePage;
 
 const Container = styled.div`
-  padding: 0px 20px;
-`;
-
-const NavbarWrapper = styled.div`
-  height: 56px;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  background: ${({ theme }) => theme.colors.white};
-`;
-
-const NavLeft = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
+  margin: 0px 20px;
 `;
 
 const NavRight = styled.div<{ isActive: boolean }>`
-  flex: 1;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   gap: 8px;
 
@@ -616,7 +365,6 @@ const NavRight = styled.div<{ isActive: boolean }>`
 `;
 
 const BoardSelect = styled.div`
-  margin-top: 56px;
   padding: 10px 0px;
   display: flex;
   justify-content: space-between;
@@ -670,34 +418,6 @@ const Buttons = styled.div`
   padding-top: 85px;
 `;
 
-const CancleButton = styled.button`
-  display: flex;
-  height: 52px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  font-size: ${({ theme }) => theme.typography.fontSize.body1};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-
-  background: ${({ theme }) => theme.colors.subBlue};
-  color: ${({ theme }) => theme.colors.mainBlue};
-`;
-
-const CheckButton = styled.button`
-  display: flex;
-  height: 52px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  font-size: ${({ theme }) => theme.typography.fontSize.body1};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-
-  background: ${({ theme }) => theme.colors.mainBlue};
-  color: ${({ theme }) => theme.colors.white};
-`;
-
 const MustSelect = styled.div`
   padding: 10px 0px;
   display: flex;
@@ -724,6 +444,7 @@ const ToggleLabel = styled.div<{ checked: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
+
   background-color: ${({ theme, checked }) =>
     checked ? theme.colors.mainBlue : theme.colors.gray300};
   border-radius: 20px;
@@ -783,11 +504,12 @@ const Border = styled.div`
   background: ${({ theme }) => theme.colors.gray50};
 `;
 
-const NavBottom = styled.div`
+const Bottom = styled.div`
   height: 44px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+
   position: fixed;
   bottom: 0;
   left: 0;
