@@ -1,4 +1,4 @@
-import { useSignUpContext } from '@/contexts/SignUpContext';
+import { useSignUpContext } from '@/contexts/SocialWorkerSignUpContext';
 import { useNicknameValidation } from '@/hooks/SignUp/useNicknameValidation';
 
 const getGenderCode = (char: string): number => {

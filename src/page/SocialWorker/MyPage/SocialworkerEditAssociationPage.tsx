@@ -7,7 +7,7 @@ import { NavBar } from '@/components/common/NavBar/NavBar';
 import AgreeSection from '@/components/SocialWorker/MyPage/AgreeSection';
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
+import { CheckCard } from '@/components/SignUp/SocialWorkerSignUpFunnel/common/CheckCard';
 import { AgreementValues } from '@/types/Socialworker/common';
 
 interface SocialworkerEditAssociationPageProps {

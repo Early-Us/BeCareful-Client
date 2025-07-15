@@ -1,7 +1,9 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { InstitutionSearchInput } from '@/components/SignUp/SignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
+
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
+import { InstitutionRegisterNameInput } from '@/components/SignUp/InstitutionFunnel/Step1InstitutionName/InstitutionRegisterNameInput';
+import { InstitutionSearchInput } from '@/components/SignUp/SocialWorkerSignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
 
 interface StepProps {
   goToNext: () => void;
@@ -37,8 +39,9 @@ export const Step1InstitutionName = ({
         <SubText>소속된 기관의 정확한 명칭을 검색해 주세요.</SubText>
       </HeaderSection>
       <SearchContainer>
-        <InstitutionSearchInput
+        <InstitutionRegisterNameInput
           onInstitutionSelect={handleInstitutionNameChange}
+          onChangeText={handleInstitutionNameChange}
         />
       </SearchContainer>
       <Header2Section>
@@ -76,6 +79,8 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  overflow-y: auto;
+  padding-bottom: 112px;
 `;
 
 const HeaderSection = styled.header`

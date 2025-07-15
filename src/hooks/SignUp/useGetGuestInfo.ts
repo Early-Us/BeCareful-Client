@@ -1,7 +1,5 @@
-import { useGuestInfoQuery } from '@/api/guestInfo';
-import { useSignUpContext } from '@/contexts/SignUpContext';
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSignUpContext } from '@/contexts/SocialWorkerSignUpContext';
+import { useGetGuestInfoBase } from '@/hooks/SignUp/useGetGuestInfoBase';
 
 const getGenderCode = (char: string): number => {
   if (char === '1' || char === '3') return 1;
@@ -10,20 +8,10 @@ const getGenderCode = (char: string): number => {
 };
 
 export const useGetGuestInfo = () => {
-  const [searchParams] = useSearchParams();
-  const guestKey = searchParams.get('guestKey');
-  const { data: guestInfo } = useGuestInfoQuery(guestKey);
-  const { setFormData } = useSignUpContext();
-
-  useEffect(() => {
-    if (!guestInfo) return;
-    setFormData((prev) => ({
-      ...prev,
-      realName: guestInfo.name,
-      birthYymmdd: guestInfo.birthYymmdd,
-      genderCode: getGenderCode(String(guestInfo.birthGenderCode)),
-      phoneNumber: guestInfo.phoneNumber,
-      institutionRank: guestInfo.institutionRank,
-    }));
-  }, [guestInfo, setFormData]);
+  return useGetGuestInfoBase(useSignUpContext, (guest) => ({
+    realName: guest.name,
+    birthYymmdd: guest.birthYymmdd,
+    genderCode: getGenderCode(String(guest.birthGenderCode)),
+    phoneNumber: guest.phoneNumber,
+  }));
 };

@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { NavBar } from '@/components/common/NavBar/NavBar';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
+
 import { FACILITY_TYPES } from '@/constants/institutionFacilityTypes';
+import { CheckCard } from '@/components/SignUp/SocialWorkerSignUpFunnel/common/CheckCard';
 
 interface SocialworkerEditInstitutionPageProps {
   institution: string;

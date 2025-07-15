@@ -8,7 +8,8 @@ import { Toggle } from '@/components/common/Toggle/Toggle';
 import { CareGiverQualificationCard } from '@/components/common/QualificationCard/CaregiverQualificationCard';
 import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { SocialQualificationCard } from '@/components/common/QualificationCard/SocialQualificationCard';
-import { Modal } from '@/components/SignUp/deprecated/SignUpModal';
+import { CertificateSelectModal } from '@/components/SignUp/CareGiverSignUpFunnel/Step2AddCertificate/CertificateSelectModal';
+import { CertificateFormInput } from '@/types/CareGiverSignUp';
 
 const CaregiverEditProfilePage = () => {
   const navigate = useNavigate();
@@ -19,24 +20,21 @@ const CaregiverEditProfilePage = () => {
       number: string;
       component: React.FC<{
         initialType: string;
-        onChange: (data: {
-          level?: string;
-          type?: string;
-          number: string;
-        }) => void;
+        onChange: (data: CertificateFormInput) => void;
       }>;
-      onChange: (data: {
-        level?: string;
-        type?: string;
-        number: string;
-      }) => void;
+      onChange: (data: CertificateFormInput) => void;
     }[]
   >([
     {
       type: '요양보호사',
       number: '',
       component: CareGiverQualificationCard,
-      onChange: (data) => handleCertificateChange('caregiverCertificate', data),
+      onChange: (data) =>
+        handleCertificateChange('caregiverCertificate', {
+          certificateType: data.certificateType ?? '',
+          certificateLevel: data.certificateLevel ?? '',
+          certificateNumber: data.certificateNumber ?? '',
+        }),
     },
   ]);
 
@@ -44,10 +42,7 @@ const CaregiverEditProfilePage = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleCertificateChange = (
-    key: string,
-    data: { level?: string; number: string },
-  ) => {
+  const handleCertificateChange = (key: string, data: CertificateFormInput) => {
     console.log(`자격증 업데이트: ${key}`, data);
   };
 
@@ -69,7 +64,12 @@ const CaregiverEditProfilePage = () => {
         type,
         number: '',
         component,
-        onChange: (data) => handleCertificateChange(key, data),
+        onChange: (data) =>
+          handleCertificateChange(key, {
+            certificateType: data.certificateType ?? '',
+            certificateLevel: data.certificateLevel ?? '',
+            certificateNumber: data.certificateNumber ?? '',
+          }),
       },
     ]);
 
@@ -123,7 +123,7 @@ const CaregiverEditProfilePage = () => {
             <Plus />
             자격증 추가하기
           </Button>
-          <Modal
+          <CertificateSelectModal
             width=""
             isOpen={isModalOpen}
             onClose={handleCloseModal}

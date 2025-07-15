@@ -1,13 +1,14 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconCheckCircle } from '@/assets/icons/IconCheckCircle.svg';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
+import { CertificateFormInput } from '@/types/CareGiverSignUp';
 
 type CardState = 'default' | 'focus' | 'check';
 
 interface SocialQualificationCardProps {
   initialType: string;
-  onChange: (data: { type: string; level: string; number: string }) => void;
+  onChange: (data: CertificateFormInput) => void;
 }
 
 export const SocialQualificationCard = ({
@@ -21,13 +22,26 @@ export const SocialQualificationCard = ({
 
   const smallDropContents = ['1급', '2급'];
 
-  useEffect(() => {
+  const handleLevelChange = (values: string[]) => {
+    const newLevel = values[0] || '';
+    setCertificateLevel(newLevel);
     onChange({
-      type: certificateType,
-      level: certificateLevel,
-      number: certificateNumber,
+      certificateType,
+      certificateLevel: newLevel,
+      certificateNumber,
     });
-  }, [certificateLevel, certificateNumber, onChange]);
+  };
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newNumber = e.target.value;
+    setCertificateNumber(newNumber);
+    onChange({
+      certificateType,
+      certificateLevel,
+      certificateNumber: newNumber,
+    });
+  };
+
   return (
     <CardContainer state={cardState} onClick={() => setCardState('focus')}>
       <CardTopContainer>
@@ -55,14 +69,14 @@ export const SocialQualificationCard = ({
           title="1급"
           contents={smallDropContents}
           selectedContents={[certificateLevel]}
-          setSelectedContents={(values) => setCertificateLevel(values[0] || '')}
+          setSelectedContents={handleLevelChange}
           pressed={cardState === 'focus'}
         />
         <CardInput
           state={cardState}
           type="text"
           value={certificateNumber}
-          onChange={(e) => setCertificateNumber(e.target.value)}
+          onChange={handleNumberChange}
         />
       </CardBottomContainer>
     </CardContainer>

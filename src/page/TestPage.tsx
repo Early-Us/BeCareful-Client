@@ -3,12 +3,11 @@ import { Dropdown } from '@/components/common/Dropdown/Dropdown';
 import { useState } from 'react';
 import { SmallDropdown } from '@/components/common/Dropdown/SmallDropdown';
 import { MiddleDropdown } from '@/components/common/Dropdown/MiddleDropdown';
-import { NursingQualificationCard } from '@/components/common/QualificationCard/NursingQualificationCard';
 import { Toggle } from '@/components/common/Toggle/Toggle';
 
-import { BooleanNoCard } from '@/components/SignUp/deprecated/BooleanNoCard';
-import { BooleanYesCard } from '@/components/SignUp/deprecated/BooleanYesCard';
-import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
+import { BooleanNoCard } from '@/components/SignUp/CareGiverSignUpFunnel/common/BooleanNoCard';
+import { BooleanYesCard } from '@/components/SignUp/CareGiverSignUpFunnel/common/BooleanYesCard';
+import { AgreeCard } from '@/components/SignUp/CareGiverSignUpFunnel/common/AgreeCard';
 
 import { ApplyChip } from '@/components/common/ApplyCard/ApplyChip';
 import { ApplyTag } from '@/components/common/ApplyCard/ApplyTag';
@@ -27,19 +26,10 @@ export const TestPage = () => {
   const smallDropContents = ['1급', '2급'];
   const [middleContents, setMiddleContents] = useState<string[]>([]);
   const middleDropContents = ['시급', '일급', '월급', '연봉'];
-  const [certificateData, setCertificateData] = useState({
-    type: '간호지원사',
-    level: '1급',
-    number: '',
-  });
 
   const [isToggleChecked, setIsToggleChecked] = useState(true);
   const handleToggleChange = () => {
     setIsToggleChecked((prevChecked) => !prevChecked);
-  };
-
-  const handleCertificateChange = (updatedData: typeof certificateData) => {
-    setCertificateData(updatedData);
   };
 
   const [isChecked, setIsChecked] = useState(false);
@@ -115,10 +105,7 @@ export const TestPage = () => {
         setSelectedContents={setSmallContents}
         pressed={true}
       />
-      <NursingQualificationCard
-        initialType={certificateData.type}
-        onChange={handleCertificateChange}
-      />
+
       <Toggle checked={isToggleChecked} onChange={handleToggleChange} />
       <MiddleDropdown
         title="시급"

@@ -9,6 +9,7 @@ import {
   CardType,
   SignUpCardSelector,
 } from '@/components/SignUp/common/SignUpCardSelector';
+import { useGetGuestInfoForCaregiver } from '@/hooks/SignUp/useGuestInfoForCaregiver';
 import { useGetGuestInfo } from '@/hooks/SignUp/useGetGuestInfo';
 
 export const SignUpPage = () => {
@@ -20,13 +21,14 @@ export const SignUpPage = () => {
     navigate(`/signup/${cardPressed}`);
   };
 
+  useGetGuestInfoForCaregiver();
   useGetGuestInfo();
 
   return (
     <PageLayout>
       <ContentWrapper>
         <BackButtonWrapper>
-          <IconArrowLeft onClick={() => navigate('/login')} />
+          <IconArrowLeft onClick={() => navigate(-1)} />
         </BackButtonWrapper>
         <Header>
           환영합니다!
@@ -56,8 +58,8 @@ const PageLayout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  margin: 24px 16px auto 16px;
+  padding-bottom: 135px;
+  margin: 0px 16px auto 16px;
 `;
 
 const ContentWrapper = styled.div`

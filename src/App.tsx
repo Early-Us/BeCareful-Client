@@ -1,25 +1,27 @@
-import { Route, Routes } from 'react-router-dom';
-import SplashPage from '@/page/SplashPage';
+import { CaregiverSignUpProvider } from '@/contexts/CaregiverSignUpContext';
+import { SignUpProvider } from '@/contexts/SocialWorkerSignUpContext';
+import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
+import ChatListPage from '@/page/Chat/ChatListPage';
+import ChatRoomPage from '@/page/Chat/ChatRoomPage';
+import ElderlyPage from '@/page/Elderly/ElderlyPage';
+import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
+import { ErrorPage } from '@/page/Error/ErrorPage';
+import LandingPage from '@/page/Landing/LandingPage';
+import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
+import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
+import MatchingStatus from '@/page/Matching/MatchingStatus';
+import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
 import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
-import { SignUpProvider } from '@/contexts/SignUpContext';
-import { SignUpPage } from '@/page/SignUp/SignUpPage';
+import { CareGiverSignUpPage } from '@/page/SignUp/CareGiverSignUpPage';
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
+import { SignUpPage } from '@/page/SignUp/SignUpPage';
+import { SocialWorkerMatchingPage } from '@/page/SocialWorkerMatching/SocialWorkerMatchingPage';
+import SplashPage from '@/page/SplashPage';
+import { TestPage } from '@/page/TestPage';
 import CaregiverRoute from '@/route/CaregiverRoute';
 import CommunityRoute from '@/route/CommunityRoute';
 import SocialworkerRoute from '@/route/SocialworkerRoute';
-import ElderlyPage from '@/page/Elderly/ElderlyPage';
-import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
-import { SocialWorkerMatchingPage } from '@/page/SocialWorkerMatching/SocialWorkerMatchingPage';
-import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
-import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
-import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
-import MatchingStatus from '@/page/Matching/MatchingStatus';
-import ChatListPage from '@/page/Chat/ChatListPage';
-import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
-import ChatRoomPage from '@/page/Chat/ChatRoomPage';
-import LandingPage from '@/page/Landing/LandingPage';
-import { TestPage } from '@/page/TestPage';
-import { ErrorPage } from '@/page/Error/ErrorPage';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
@@ -43,7 +45,14 @@ function App() {
           </SignUpProvider>
         }
       />
-
+      <Route
+        path="/signup/caregiver"
+        element={
+          <CaregiverSignUpProvider>
+            <CareGiverSignUpPage />
+          </CaregiverSignUpProvider>
+        }
+      />
       {/* 요양보호사 */}
       <Route
         path="/caregiver/*"

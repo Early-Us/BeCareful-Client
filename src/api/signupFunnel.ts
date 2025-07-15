@@ -1,5 +1,6 @@
 import { axiosInstance } from '@/api/axiosInstance';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { Institution } from '@/types/SocialSignUp';
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 export interface SignUpPayload {
   nursingInstitutionId: number;
@@ -37,13 +38,20 @@ export const searchInstitution = async (name: string) => {
   return data.nursingInstitutionSimpleInfoList;
 };
 
-export const useSearchInstitution = (name: string) => {
-  return useQuery({
+export const useSearchInstitution = (
+  name: string,
+  options?: Omit<
+    UseQueryOptions<Institution[], unknown>,
+    'queryKey' | 'queryFn'
+  >,
+) => {
+  return useQuery<Institution[], unknown>({
     queryKey: ['searchInstitution', name],
     queryFn: () => searchInstitution(name),
-    enabled: false,
+    enabled: !!name,
+    ...options,
   });
-};
+}; //TODO
 
 export const checkNicknameDuplicate = async (nickname: string) => {
   const { data } = await axiosInstance.get('/socialworker/check-nickname', {

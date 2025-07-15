@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useCallback, useState } from 'react';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { NavBar } from '@/components/common/NavBar/NavBar';
-import { ResidentIdInput } from '@/components/SignUp/SignUpFunnel/Step4BasicInfo/ResidentIdInput';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
+
 import { useNicknameValidation } from '@/hooks/SignUp/useNicknameValidation';
 import AgreeSection from '@/components/SocialWorker/MyPage/AgreeSection';
 import { AgreementValues } from '@/types/Socialworker/common';
+import { CheckCard } from '@/components/SignUp/SocialWorkerSignUpFunnel/common/CheckCard';
+import { ResidentIdInput } from '@/components/SignUp/SocialWorkerSignUpFunnel/Step4BasicInfo/ResidentIdInput';
 
 interface SocialworkerEditProfilePageProps {
   name: string;

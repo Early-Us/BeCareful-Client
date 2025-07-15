@@ -55,6 +55,8 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  overflow-y: auto;
+  padding-bottom: 112px;
 `;
 
 const HeaderSection = styled.header`

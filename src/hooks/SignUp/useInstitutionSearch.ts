@@ -1,42 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useSearchInstitution } from '@/api/signupFunnel';
-import { useSignUpContext } from '@/contexts/SignUpContext';
+import { useState } from 'react';
+import { useSignUpContext } from '@/contexts/SocialWorkerSignUpContext';
 
 export const useInstitutionSearch = () => {
   const { setFormData, goToNext, goToPrev } = useSignUpContext();
 
   const [institutionName, setInstitutionName] = useState('');
+  const [institutionId, setInstitutionId] = useState<number | null>(null);
   const [isRegisteringInstitution, setIsRegisteringInstitution] =
     useState(false);
-  const [searchTrigger, setSearchTrigger] = useState(false);
-
-  const { isLoading, refetch } = useSearchInstitution(institutionName.trim());
-
-  useEffect(() => {
-    if (!searchTrigger) return;
-
-    refetch().then(({ data }) => {
-      if (!data) return;
-
-      if (data.length > 0) {
-        const selected = data[0];
-        setFormData((prev) => ({
-          ...prev,
-          nursingInstitutionId: selected.institutionId,
-        }));
-        goToNext();
-      } else {
-        setIsRegisteringInstitution(true);
-      }
-
-      setSearchTrigger(false);
-    });
-  }, [searchTrigger]);
-
-  const handleCheckInstitution = () => {
-    if (!institutionName.trim()) return;
-    setSearchTrigger(true);
-  };
 
   const handleRegisterComplete = (newInstitutionId: number) => {
     setFormData((prev) => ({
@@ -52,14 +23,24 @@ export const useInstitutionSearch = () => {
     goToPrev();
   };
 
+  const handleNext = () => {
+    if (!institutionId) return;
+    setFormData((prev) => ({
+      ...prev,
+      nursingInstitutionId: institutionId,
+    }));
+    goToNext();
+  };
+
   return {
     institutionName,
     setInstitutionName,
+    setInstitutionId,
+    institutionId,
     isRegisteringInstitution,
-    handleCheckInstitution,
     handleClickRegisterInstitution: () => setIsRegisteringInstitution(true),
     handleRegisterComplete,
     handleRegisterCancel,
-    isLoading,
+    handleNext,
   };
 };

@@ -1,5 +1,5 @@
 import { Button } from '@/components/common/Button/Button';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
+import { CheckCard } from '@/components/SignUp/SocialWorkerSignUpFunnel/common/CheckCard';
 import { ASSOCIATION_JOIN_RANKS_LABELS } from '@/constants/associationRank';
 import { AssociationRank } from '@/types/CommunityAssociation';
 import { styled } from 'styled-components';

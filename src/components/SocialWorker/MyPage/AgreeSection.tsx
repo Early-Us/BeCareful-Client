@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as ChevronRight } from '@/assets/icons/signup/ChevronRight.svg';
-import { AgreeCard } from '@/components/SignUp/deprecated/AgreeCard';
+import { AgreeCard } from '@/components/SignUp/CareGiverSignUpFunnel/common/AgreeCard';
 import { AGREE_ITEMS } from '@/constants/signUpAgreeItems';
 import { CheckBox } from '@/components/common/CheckBox/CheckBox';
 import { useEffect, useState } from 'react';
