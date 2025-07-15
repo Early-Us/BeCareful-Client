@@ -1,8 +1,9 @@
 import { PostRequest } from '@/types/Community/post';
-import { usePostPostingMutation } from '../useCommunityMutations';
 import { Board_Type_Mapping } from '@/constants/communityBoard';
-import { getDraftStorageKey } from './getDraftStorageKey';
+import { getDraftStorageKey } from '@/utils/getDraftStorageKey';
+import { usePostPostingMutation } from '@/api/community';
 
+/* CommunityWritePage */
 export const usePostingSubmit = (board: string, onClose: () => void) => {
   // 게시글 작성 api mutation
   const { mutateAsync: postPostingMutate } = usePostPostingMutation();

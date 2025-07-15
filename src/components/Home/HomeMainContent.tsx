@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as ArrowRightCircle } from '@/assets/icons/caregiver/home/ArrowRightCircle.svg';
 import { useState } from 'react';
 import Modal from '@/components/common/Modal/Modal';
-import ModalButtons from '@/components/common/Modal/ModalButtons';
+import ModalLimit from '@/components/common/Modal/ModalLimit';
 
 export const HomeMainContent = () => {
   const navigate = useNavigate();
@@ -65,13 +65,12 @@ export const HomeMainContent = () => {
 
       {/*TODO*/}
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <ModalButtons
+        <ModalLimit
+          onClose={handleModalClose}
           title="커뮤니티 만들기 권한이 없습니다."
           detail="협회 임원진/회원은 커뮤니티를 가입해주세요!"
-          right="커뮤니티 가입하기"
-          handleLeftBtnClick={handleModalClose}
-          handleRightBtnClick={handleModalConfirm}
-          onClose={handleModalClose}
+          button="커뮤니티 가입하기"
+          handleBtnClick={handleModalConfirm}
         />
       </Modal>
     </SectionWrapper>

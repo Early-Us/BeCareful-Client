@@ -1,4 +1,4 @@
-import CommunityHome from '@/components/Community/CommunityHome';
+import CommunityHome from '@/components/Community/home/CommunityHome';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '@/assets/icons/Search.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';

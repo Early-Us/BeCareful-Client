@@ -440,11 +440,6 @@ const Logout = styled.div<{ isRed: boolean }>`
     isRed ? theme.colors.mainOrange : theme.colors.gray500};
   font-size: ${({ theme }) => theme.typography.fontSize.body3};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-
-  path {
-    stroke: ${({ theme, isRed }) =>
-      isRed ? theme.colors.mainOrange : theme.colors.gray500};
-  }
 `;
 
 const Button = styled.button`

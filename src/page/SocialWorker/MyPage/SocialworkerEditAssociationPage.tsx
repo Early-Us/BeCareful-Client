@@ -258,10 +258,6 @@ const Withdraw = styled.div`
   color: ${({ theme }) => theme.colors.gray500};
   font-size: ${({ theme }) => theme.typography.fontSize.body3};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-
-  path {
-    stroke: ${({ theme }) => theme.colors.gray500};
-  }
 `;
 
 const Border = styled.div`

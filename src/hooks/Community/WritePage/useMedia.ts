@@ -1,15 +1,16 @@
 import { MediaItem } from '@/types/Community/common';
-import { useModals } from './useModals';
 import { ChangeEvent, useRef, useState } from 'react';
-import { usePostMediaMutation } from '../useCommunityMutations';
 import {
   processUploadResults,
   validateAttachedFile,
   validateImageFile,
   validateVideoFile,
   ValidationResult,
-} from './fileValidation';
+} from '@/utils/fileValidation';
+import { usePostMediaMutation } from '@/hooks/Community/api/usePostMediaMutation';
+import { useModals } from './useModals';
 
+/* CommunityWritePage */
 export const useMedia = () => {
   const { handleOpenLimitModal } = useModals();
 

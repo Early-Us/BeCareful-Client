@@ -24,12 +24,8 @@ export const usePostings = () => {
 
   // 링크 첨부
   const [originalUrl, setOriginalUrl] = useState('');
-  const handleLinkClick = () => {
-    const link = prompt('첨부할 링크 URL을 입력하세요:');
-    if (link) {
-      setOriginalUrl(link);
-      console.log('첨부된 링크:', link);
-    }
+  const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOriginalUrl(e.target.value);
   };
 
   return {
@@ -44,6 +40,6 @@ export const usePostings = () => {
     handleToggleChange,
     handleTitleChange,
     handleContentChange,
-    handleLinkClick,
+    handleLinkChange,
   };
 };

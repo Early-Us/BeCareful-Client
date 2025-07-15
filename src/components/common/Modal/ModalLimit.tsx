@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import React from 'react';
+import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
+import { Button } from '@/components/common/Button/Button';
 
 interface ModalProps {
   onClose: () => void;
@@ -19,9 +20,7 @@ const ModalLimit = ({
 }: ModalProps) => {
   return (
     <ModalWrapper>
-      <ModalXImg onClick={onClose}>
-        <ModalClose />
-      </ModalXImg>
+      <ModalXImg onClick={onClose} />
       <ModalLabelWrapper>
         <ModalTitleLabel>{title}</ModalTitleLabel>
         <ModalDetailLabel>
@@ -33,7 +32,9 @@ const ModalLimit = ({
           ))}
         </ModalDetailLabel>
       </ModalLabelWrapper>
-      <button onClick={handleBtnClick}>{button ? button : '확인'}</button>
+      <Button height="52px" variant="mainBlue" onClick={handleBtnClick}>
+        {button ? button : '확인'}
+      </Button>
     </ModalWrapper>
   );
 };
@@ -49,19 +50,9 @@ const ModalWrapper = styled.div`
   width: 272px;
   border-radius: 12px;
   padding: 56px 20px 20px 20px;
-
-  button {
-    height: 52px;
-    border-radius: 12px;
-    background: ${({ theme }) => theme.colors.mainBlue};
-    color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => theme.typography.fontSize.title5};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-    text-align: center;
-  }
 `;
 
-const ModalXImg = styled.div`
+const ModalXImg = styled(ModalClose)`
   width: 24px;
   height: 24px;
   position: absolute;

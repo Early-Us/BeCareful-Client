@@ -5,8 +5,8 @@ import { NavBar } from '@/components/common/NavBar/NavBar';
 import { ReactComponent as LogoutIcon } from '@/assets/icons/caregiver/my/Logout.svg';
 import ProfileCard from '@/components/shared/ProfileCard';
 import BelongCard from '@/components/SocialWorker/MyPage/BelongCard';
-import AssociationCard from '@/components/SocialWorker/MyPage/AssociationCard';
-import InstitutionCard from '@/components/SocialWorker/MyPage/InstitutionCard';
+import AssociationCard from '@/components/shared/AssociationCard';
+import InstitutionCard from '@/components/shared/InstitutionCard';
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
 
@@ -211,11 +211,6 @@ const Logout = styled.div<{ isRed: boolean }>`
     isRed ? theme.colors.mainOrange : theme.colors.gray500};
   font-size: ${({ theme }) => theme.typography.fontSize.body3};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-
-  path {
-    stroke: ${({ theme, isRed }) =>
-      isRed ? theme.colors.mainOrange : theme.colors.gray500};
-  }
 `;
 
 const Button = styled.button`

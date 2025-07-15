@@ -1,7 +1,7 @@
 import { MediaItem } from '@/types/Community/common';
 import { useModals } from './useModals';
 import { useEffect } from 'react';
-import { getDraftStorageKey } from './getDraftStorageKey';
+import { getDraftStorageKey } from '@/utils/getDraftStorageKey';
 
 interface PostData {
   title: string;

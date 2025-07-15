@@ -9,14 +9,21 @@ import {
 } from '@/types/Community/post';
 import { CommentListResponse, CommentRequest } from '@/types/Community/comment';
 import { getVideoDuration } from '@/utils/communityMedia';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-/* api 요청 */
+/* CommunityPage */
 // 커뮤니티 탭 협회 정보 조회
-export const getAssociationInfo =
-  async (): Promise<AssociationInfoResponse> => {
-    const response = await axiosInstance.get('/community/my/association');
-    return response.data;
-  };
+export const useAssociationInfo = (enabled: boolean) => {
+  return useQuery<AssociationInfoResponse, Error>({
+    queryKey: ['associationInfo'],
+    queryFn: async () => {
+      // getAssociationInfo 로직을 queryFn 내부로 이동
+      const response = await axiosInstance.get('/community/my/association');
+      return response.data;
+    },
+    enabled: enabled,
+  });
+};
 
 // 미디어 파일 업로드
 export const postMedia = async (
@@ -54,26 +61,52 @@ export const postMedia = async (
 };
 
 // 게시글 작성
-export const postPosting = async (boardType: string, postData: PostRequest) => {
-  const response = await axiosInstance.post(
-    `/community/board/${boardType}/post`,
-    postData,
-  );
-  return response;
-};
+export const usePostPostingMutation = () => {
+  const queryClient = useQueryClient();
 
-// 모든 게시판의 필독 게시글 모아보기
-export const getImportantPosting = async (
-  pageable: PageableRequest,
-): Promise<ImportantPostListResponse> => {
-  const response = await axiosInstance.get('/community/board/important', {
-    params: {
-      page: pageable.page,
-      size: pageable.size,
-      ...(pageable.sort && pageable.sort.length > 0 && { sort: pageable.sort }),
+  return useMutation({
+    mutationFn: async ({
+      boardType,
+      postData,
+    }: {
+      boardType: string;
+      postData: PostRequest;
+    }) => {
+      const response = await axiosInstance.post(
+        `/community/board/${boardType}/post`,
+        postData,
+      );
+      return response;
+    },
+    onSuccess: (response, variables) => {
+      console.log('usePostPostingMutation - 게시글 작성 성공:', response.data);
+      queryClient.invalidateQueries({
+        queryKey: ['posts', variables.boardType],
+      });
+    },
+    onError: (error) => {
+      console.error('usePostPostingMutation - 게시글 작성 실패:', error);
     },
   });
-  return response.data;
+};
+
+/* CommunityHome */
+// 모든 게시판의 필독 게시글 모아보기
+export const useImportantPostings = (pageable: PageableRequest) => {
+  return useQuery<ImportantPostListResponse, Error>({
+    queryKey: ['importantPostingList', pageable],
+    queryFn: async () => {
+      const response = await axiosInstance.get('/community/board/important', {
+        params: {
+          page: pageable.page,
+          size: pageable.size,
+          ...(pageable.sort &&
+            pageable.sort.length > 0 && { sort: pageable.sort }),
+        },
+      });
+      return response.data;
+    },
+  });
 };
 
 // 특정 게시판의 모든 게시글 리스트 조회
@@ -95,37 +128,84 @@ export const getPostingList = async (
   return response.data;
 };
 
+/* CommunityPost */
 // 특정 게시글 상세 조회
-export const getPostDetail = async (
-  boardType: string,
-  postId: number,
-): Promise<PostDetailResponse> => {
-  const response = await axiosInstance.get(
-    `/community/board/${boardType}/post/${postId}`,
-  );
-  return response.data;
+export const usePostDetail = (boardType: string, postId: number) => {
+  return useQuery<PostDetailResponse, Error>({
+    queryKey: ['postDetail', boardType, postId],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/community/board/${boardType}/post/${postId}`,
+      );
+      return response.data;
+    },
+    enabled: !!boardType && postId > 0, // boardType과 postId가 유효할 때만 쿼리 실행
+  });
 };
 
 // 댓글 조회
-export const getComment = async (
-  boardType: string,
-  postId: number,
-): Promise<CommentListResponse> => {
-  const response = await axiosInstance.get(
-    `/community/board/${boardType}/post/${postId}/comment`,
-  );
-  return response.data;
+export const useComments = (boardType: string, postId: number) => {
+  return useQuery<CommentListResponse, Error>({
+    queryKey: ['comments', boardType, postId],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/community/board/${boardType}/post/${postId}/comment`,
+      );
+      return response.data;
+    },
+    enabled: !!boardType && postId > 0, // boardType과 postId가 유효할 때만 쿼리 실행
+  });
 };
 
 // 댓글 작성
-export const postComment = async (
-  boardType: string,
-  postId: number,
-  comment: CommentRequest,
-) => {
-  const response = await axiosInstance.post(
-    `/community/board/${boardType}/post/${postId}/comment`,
-    comment,
-  );
-  return response;
+export const usePostCommentMutation = (boardType: string, postId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (comment: CommentRequest) => {
+      const response = await axiosInstance.post(
+        `/community/board/${boardType}/post/${postId}/comment`,
+        comment,
+      );
+      return response;
+    },
+    onSuccess: (response) => {
+      console.log('usePostCommentMutation - 댓글 작성 성공:', response.data);
+      queryClient.invalidateQueries({
+        queryKey: ['comments', boardType, postId],
+      });
+    },
+    onError: (error) => {
+      console.error('usePostCommentMutation - 댓글 작성 실패:', error);
+    },
+  });
+};
+
+// 게시글 삭제
+export const useDeletePost = (boardType: string, postId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      const response = await axiosInstance.delete(
+        `/community/board/${boardType}/post/${postId}`,
+      );
+      return response;
+    },
+    onSuccess: (response) => {
+      console.log('useDeletePost - 게시글 삭제 성공:', response.data);
+      queryClient.invalidateQueries({
+        queryKey: ['posts', boardType],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['postDetail', boardType, postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['importantPostingList'],
+      });
+    },
+    onError: (error) => {
+      console.error('useDeletePost - 게시글 삭제 실패:', error);
+    },
+  });
 };

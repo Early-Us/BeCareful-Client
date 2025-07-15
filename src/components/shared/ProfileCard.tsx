@@ -7,7 +7,7 @@ interface ProfileCardProps {
   profileImgURL: string;
   name: string;
   nickname?: string;
-  point: number;
+  point?: number;
   phoneNumber: string;
   age: number;
   gender: string;
@@ -36,18 +36,22 @@ const ProfileCard = ({
       <div className="right">
         <NameWrapper>
           <label className="name">{name}</label>
-          <label className="nickname">{nickname}</label>
+          {point && <label className="nickname">{nickname}</label>}
         </NameWrapper>
 
-        <PointWrapper
-          onClick={() => {
-            handleNavigate('/socialworker/point');
-          }}
-        >
-          <Point />
-          <label className="point">{point.toLocaleString('ko-KR')}P</label>
-          <Chevron />
-        </PointWrapper>
+        {!point && <label className="nickname">{nickname}</label>}
+
+        {point && (
+          <PointWrapper
+            onClick={() => {
+              handleNavigate('/socialworker/point');
+            }}
+          >
+            <Point />
+            <label className="point">{point.toLocaleString('ko-KR')}P</label>
+            <Chevron />
+          </PointWrapper>
+        )}
 
         <InfoWrapper>
           <label className="info">{phoneNumber}</label>
@@ -67,6 +71,7 @@ const CardContainter = styled.div`
   padding: 16px 0px;
   display: flex;
   gap: 12px;
+  align-items: center;
 
   div {
     display: flex;
@@ -81,21 +86,23 @@ const CardContainter = styled.div`
 
   .right {
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+  }
+
+  .nickname {
+    color: ${({ theme }) => theme.colors.mainBlue};
+    font-size: ${({ theme }) => theme.typography.fontSize.title4};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   }
 `;
 
 const NameWrapper = styled.div`
   gap: 8px;
 
-  label {
+  .name {
     color: ${({ theme }) => theme.colors.gray900};
     font-size: ${({ theme }) => theme.typography.fontSize.title4};
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  }
-
-  .nickname {
-    color: ${({ theme }) => theme.colors.mainBlue};
   }
 `;
 

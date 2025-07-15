@@ -3,18 +3,23 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Search } from '@/assets/icons/Search.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
+import { ReactComponent as ChevronRight } from '@/assets/icons/ChevronRight.svg';
 import { ReactComponent as Plus } from '@/assets/icons/ButtonPlus.svg';
 import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
-import CommunityWritePage from './CommunityWritePage';
-import CommunityHome from '@/components/Community/CommunityHome';
-import CommunityDetail from '@/components/Community/CommunityDetail';
+import CommunityWritePage from '@/page/Community/CommunityWritePage';
+import CommunityHome from '@/components/Community/home/CommunityHome';
+import CommunityDetail from '@/components/Community/home/CommunityDetail';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { CommunityJoinRequestModal } from '@/components/Community/JoinCommunity/CommunityJoinRequestModal';
 import { COMMUNITY_BOARDS } from '@/constants/communityBoard';
-import { useAssociationInfo } from '@/hooks/Community/communityQuery';
+import { useAssociationInfo } from '@/api/community';
 
 const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
   const navigate = useNavigate();
+  const handleNavigate = (path: string) => {
+    navigate(path);
+    scrollTo(0, 0);
+  };
 
   const location = useLocation();
   const selectedAssociation = location.state as {
@@ -23,14 +28,14 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
   };
 
   const [activeTab, setActiveTab] = useState('전체');
-  const [isWriting, setIsWriting] = useState(true);
-
-  const { data } = useAssociationInfo(!previewMode);
-
   const handleTabChange = (tabName: string) => {
     setActiveTab(tabName);
     window.scrollTo(0, 0);
   };
+
+  const [isWriting, setIsWriting] = useState(false);
+
+  const { data } = useAssociationInfo(!previewMode);
 
   return (
     <>
@@ -49,11 +54,27 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
           </Top>
 
           <Association>
-            <label className="title">{data?.associationName}</label>
-            <div>
-              <label className="member">
-                멤버 {data?.associationMemberCount}
-              </label>
+            <div
+              className="chevronWrapper"
+              onClick={() =>
+                handleNavigate(`/community/${data?.associationId}/info`)
+              }
+            >
+              <label className="title">{data?.associationName}</label>
+              <Chevron />
+            </div>
+            <div className="bottom">
+              <div
+                className="chevronWrapper"
+                onClick={() =>
+                  handleNavigate(`/community/${data?.associationId}/members`)
+                }
+              >
+                <label className="member">
+                  멤버 {data?.associationMemberCount}
+                </label>
+                <Chevron />
+              </div>
               <div className="invite">
                 <Plus />
                 <label className="invite-label">초대하기</label>
@@ -73,7 +94,7 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
             ))}
           </CommunityTabs>
 
-          {activeTab == '전체' ? (
+          {activeTab === '전체' ? (
             <CommunityHome onTabChange={handleTabChange} />
           ) : (
             <CommunityDetail boardType={activeTab} />
@@ -140,18 +161,24 @@ const Association = styled.div`
 
   div {
     display: flex;
+    align-items: center;
+  }
+
+  .bottom {
     justify-content: space-between;
   }
 
   .invite {
-    align-items: center;
     gap: 5px;
     cursor: pointer;
   }
 
   label {
     color: ${({ theme }) => theme.colors.black};
+    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     line-height: 140%;
+    cursor: pointer;
   }
 
   .title {
@@ -159,29 +186,22 @@ const Association = styled.div`
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   }
 
-  .member {
-    font-size: ${({ theme }) => theme.typography.fontSize.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  .invite-label {
+    color: ${({ theme }) => theme.colors.mainBlue};
   }
 
-  .invite-label {
-    cursor: pointer;
-    color: ${({ theme }) => theme.colors.mainBlue};
-    font-size: ${({ theme }) => theme.typography.fontSize.body2};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  .chevronWrapper {
+    gap: 8px;
   }
 `;
 
-const Tab = styled.div<{ active: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  //   gap: 25px;
-  text-align: center;
+const Chevron = styled(ChevronRight)`
+  path {
+    fill: ${({ theme }) => theme.colors.gray800};
+    stroke: ${({ theme }) => theme.colors.gray800};
+  }
+
   cursor: pointer;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.mainBlue : theme.colors.black};
-  padding-bottom: 6px;
-  border-bottom: ${({ active }) => (active ? '3px solid #0370ff' : '')};
 `;
 
 const CommunityTabs = styled.div`
@@ -195,6 +215,18 @@ const CommunityTabs = styled.div`
   top: 164px;
   z-index: 6;
   background: ${({ theme }) => theme.colors.white};
+`;
+
+const Tab = styled.div<{ active: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  //   gap: 25px;
+  text-align: center;
+  cursor: pointer;
+  color: ${({ theme, active }) =>
+    active ? theme.colors.mainBlue : theme.colors.black};
+  padding-bottom: 6px;
+  border-bottom: ${({ active }) => (active ? '3px solid #0370ff' : '')};
 `;
 
 const Button = styled.button`

@@ -8,7 +8,8 @@ import { ReactComponent as Photo } from '@/assets/icons/community/Photo.svg';
 import { ReactComponent as File } from '@/assets/icons/community/File.svg';
 import { ReactComponent as LinkIcon } from '@/assets/icons/community/LinkIcon.svg';
 import { ReactComponent as Check } from '@/assets/icons/matching/CircleCheck.svg';
-import BottomSheet from '@/components/Community/BottomSheet';
+import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
+import BottomSheet from '@/components/Community/common/BottomSheet';
 import Modal from '@/components/common/Modal/Modal';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
@@ -54,9 +55,11 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
     isSaveModalOpen,
     isCloseModalOpen,
     isPostModalOpen,
+    isLinkModalOpen,
     setIsSaveModalOpen,
     setIsCloseModalOpen,
     setIsPostModalOpen,
+    setIsLinkModalOpen,
     handleCloseLimitModal,
   } = useModals();
 
@@ -73,7 +76,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
     handleToggleChange,
     handleTitleChange,
     handleContentChange,
-    handleLinkClick,
+    handleLinkChange,
   } = usePostings();
 
   // 미디어 파일 업로드
@@ -254,7 +257,7 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
             multiple // 여러 파일 선택 가능하도록 설정
             accept=".pdf, .doc, .docx, .hwp" // 특정 파일 형식만 허용
           />
-          <LinkIcon onClick={handleLinkClick} />
+          <LinkIcon onClick={() => setIsLinkModalOpen(!isLinkModalOpen)} />
         </div>
       </Bottom>
 
@@ -312,6 +315,46 @@ const CommunityWritePage = ({ boardType, onClose }: WritingProp) => {
           handleLeftBtnClick={() => setIsPostModalOpen(!isPostModalOpen)}
           handleRightBtnClick={handlePostBtnClick}
         />
+      </Modal>
+
+      <Modal
+        isOpen={isLinkModalOpen}
+        onClose={() => setIsLinkModalOpen(!isLinkModalOpen)}
+      >
+        <ModalWrapper>
+          <ModalXImg onClick={() => setIsLinkModalOpen(!isLinkModalOpen)} />
+          <ModalLabelWrapper>
+            <label className="title">URL을 등록해주세요</label>
+            <URLInput
+              value={originalUrl}
+              placeholder="URL"
+              onChange={handleLinkChange}
+            />
+          </ModalLabelWrapper>
+          <ModalButtonWrapper>
+            <Button
+              width="100%"
+              height="52px"
+              variant="subBlue"
+              onClick={() => {
+                setOriginalUrl('');
+                setIsLinkModalOpen(!isLinkModalOpen);
+              }}
+            >
+              취소
+            </Button>
+            <Button
+              width="100%"
+              height="52px"
+              variant="mainBlue"
+              onClick={() => {
+                setIsLinkModalOpen(!isLinkModalOpen);
+              }}
+            >
+              확인
+            </Button>
+          </ModalButtonWrapper>
+        </ModalWrapper>
       </Modal>
     </Container>
   );
@@ -525,4 +568,66 @@ const Bottom = styled.div`
   svg {
     cursor: pointer;
   }
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  background: ${({ theme }) => theme.colors.white};
+  width: 272px;
+  border-radius: 12px;
+  padding: 56px 20px 20px 20px;
+`;
+
+const ModalXImg = styled(ModalClose)`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+`;
+
+const ModalLabelWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .title {
+    color: ${({ theme }) => theme.colors.gray900};
+    font-size: ${({ theme }) => theme.typography.fontSize.title3};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    text-align: center;
+  }
+`;
+
+const URLInput = styled.input`
+  height: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  background: ${({ theme }) => theme.colors.white};
+
+  color: ${({ theme }) => theme.colors.gray900};
+  font-size: ${({ theme }) => theme.typography.fontSize.title5};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray300};
+  }
+
+  &:hover,
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
+    outline: none;
+    caret-color: ${({ theme }) => theme.colors.mainBlue};
+  }
+`;
+
+const ModalButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 8px;
 `;

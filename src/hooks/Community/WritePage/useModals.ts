@@ -28,6 +28,8 @@ export const useModals = () => {
   const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
   // 등록 모달
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  // 링크 첨부 모달
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
 
   return {
     modalContent,
@@ -35,9 +37,11 @@ export const useModals = () => {
     isSaveModalOpen,
     isCloseModalOpen,
     isPostModalOpen,
+    isLinkModalOpen,
     setIsSaveModalOpen,
     setIsCloseModalOpen,
     setIsPostModalOpen,
+    setIsLinkModalOpen,
     handleOpenLimitModal,
     handleCloseLimitModal,
   };

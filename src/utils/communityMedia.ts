@@ -1,5 +1,5 @@
+/* community.ts의 postMedia api 요청에서 사용 */
 // 영상 길이 얻는 함수
-// community.ts의 postMedia api 요청에서 사용
 export const getVideoDuration = (file: File): Promise<number> => {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
