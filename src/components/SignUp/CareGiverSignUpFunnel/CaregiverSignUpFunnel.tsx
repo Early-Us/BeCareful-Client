@@ -24,7 +24,7 @@ const steps = [
   Step7SignUpComplete,
 ];
 
-const stepPercents = [20, 40, 60, 80, 100, 100];
+const stepPercents = [18, 36, 54, 72, 90, 100];
 
 export const CareGiverSignUpFunnel = () => {
   const { currentStep } = useCaregiverSignUpContext();

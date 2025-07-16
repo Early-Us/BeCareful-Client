@@ -3,7 +3,8 @@ import { Button } from '@/components/common/Button/Button';
 
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
 import { InstitutionRegisterNameInput } from '@/components/SignUp/InstitutionFunnel/Step1InstitutionName/InstitutionRegisterNameInput';
-import { InstitutionSearchInput } from '@/components/SignUp/SocialWorkerSignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
+import { InstitutionCodeInput } from '@/components/SignUp/InstitutionFunnel/Step1InstitutionName/InstitutionCodeInput';
+import { useState } from 'react';
 
 interface StepProps {
   goToNext: () => void;
@@ -27,7 +28,15 @@ export const Step1InstitutionName = ({
     setInstitutionFormData((prev) => ({ ...prev, institutionCode: code }));
   };
 
+  const [isInstitutionCodeDuplicate, setIsInstitutionCodeDuplicate] =
+    useState(false);
+
   const isInstitutionNameValid = institutionFormData.institutionName.length > 0;
+  const isInstitutionCodeValid =
+    institutionFormData.institutionCode.length > 0 &&
+    !isInstitutionCodeDuplicate;
+
+  const isNextEnabled = isInstitutionNameValid && isInstitutionCodeValid;
 
   return (
     <StepWrapper>
@@ -52,8 +61,9 @@ export const Step1InstitutionName = ({
         <SubText>소속된 기관의 코드를 등록해 주세요.</SubText>
       </Header2Section>
       <SearchContainer>
-        <InstitutionSearchInput
-          onInstitutionSelect={handleInstitutionCodeChange}
+        <InstitutionCodeInput
+          onInstitutionCodeChange={handleInstitutionCodeChange}
+          onDuplicateCheck={setIsInstitutionCodeDuplicate}
         />
       </SearchContainer>
       <ButtonContainer>
@@ -63,8 +73,8 @@ export const Step1InstitutionName = ({
         <Button
           onClick={goToNext}
           height="52px"
-          variant={isInstitutionNameValid ? 'blue' : 'gray'}
-          disabled={!isInstitutionNameValid}
+          variant={isNextEnabled ? 'blue' : 'gray'}
+          disabled={!isNextEnabled}
         >
           다음
         </Button>

@@ -1,5 +1,6 @@
 import { CaregiverSignUpProvider } from '@/contexts/CaregiverSignUpContext';
 import { SignUpProvider } from '@/contexts/SocialWorkerSignUpContext';
+
 import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
 import ChatListPage from '@/page/Chat/ChatListPage';
 import ChatRoomPage from '@/page/Chat/ChatRoomPage';
@@ -13,6 +14,7 @@ import MatchingStatus from '@/page/Matching/MatchingStatus';
 import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
 import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 import { CareGiverSignUpPage } from '@/page/SignUp/CareGiverSignUpPage';
+
 import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
 import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import { SocialWorkerMatchingPage } from '@/page/SocialWorkerMatching/SocialWorkerMatchingPage';
@@ -29,14 +31,7 @@ function App() {
       {/* 초기 - 스플래시, 온보딩, 회원가입 페이지 */}
       <Route path="/" element={<SplashPage />} />
       <Route path="/onboarding" element={<OnboardingPage />} />
-      <Route
-        path="/signup"
-        element={
-          <SignUpProvider>
-            <SignUpPage />
-          </SignUpProvider>
-        }
-      />
+      <Route path="/signup" element={<SignUpPage />} />
       <Route
         path="/signup/institution"
         element={

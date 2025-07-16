@@ -3,26 +3,23 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { useState } from 'react';
 
 import { Button } from '@/components/common/Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import {
   CardType,
   SignUpCardSelector,
 } from '@/components/SignUp/common/SignUpCardSelector';
-import { useGetGuestInfoForCaregiver } from '@/hooks/SignUp/useGuestInfoForCaregiver';
-import { useGetGuestInfo } from '@/hooks/SignUp/useGetGuestInfo';
 
 export const SignUpPage = () => {
   const [cardPressed, setCardPressed] = useState<CardType | null>(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const guestKey = searchParams.get('guestKey');
 
   const handleNextStep = () => {
     if (!cardPressed) return;
-    navigate(`/signup/${cardPressed}`);
+    navigate(`/signup/${cardPressed}?guestKey=${guestKey}&role=${cardPressed}`);
   };
-
-  useGetGuestInfoForCaregiver();
-  useGetGuestInfo();
 
   return (
     <PageLayout>
