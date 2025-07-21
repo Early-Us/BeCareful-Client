@@ -3,8 +3,8 @@ import { atom, AtomEffect } from 'recoil';
 export interface CurrentUserInfo {
   realName: string;
   nickName: string;
-  phoneNumber: string;
   institutionRank: string;
+  associationRank: string;
 }
 
 const localStorageEffect =
@@ -35,8 +35,8 @@ export const currentUserInfo = atom<CurrentUserInfo>({
   default: {
     realName: '',
     nickName: '',
-    phoneNumber: '',
     institutionRank: '',
+    associationRank: '',
   },
   effects: [localStorageEffect('currentUserInfo')],
 });

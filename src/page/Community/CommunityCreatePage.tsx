@@ -10,10 +10,12 @@ import { HomeMainContent } from '@/components/Home/HomeMainContent';
 import { useRecoilValue } from 'recoil';
 import { currentUserInfo } from '@/recoil/currentUserInfo';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
+import { useLoadUserInfo } from '@/hooks/useLoadUserInfo';
 
 export const CommunityCreatePage = () => {
   const navigate = useNavigate();
-  const user = useRecoilValue(currentUserInfo);
+  useLoadUserInfo();
+  const userInfo = useRecoilValue(currentUserInfo);
 
   const handleLogoClick = () => {
     navigate('/home/caregiver'); //TODO
@@ -42,7 +44,7 @@ export const CommunityCreatePage = () => {
       <MainWrapper>
         <LabelWrapper>
           <Name>
-            {user.nickName}님
+            {userInfo.nickName}님
             <br />
             협회 커뮤니티를 둘러보세요.
           </Name>

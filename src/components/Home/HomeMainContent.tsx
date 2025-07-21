@@ -1,30 +1,42 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as ArrowRightCircle } from '@/assets/icons/caregiver/home/ArrowRightCircle.svg';
-import { useState } from 'react';
 import Modal from '@/components/common/Modal/Modal';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
+import { useRecoilValue } from 'recoil';
+import { currentUserInfo } from '@/recoil/currentUserInfo';
+import { useJoinStatusModal } from '@/hooks/Community/CommunityJoin/useJoinStatusModal';
 
 export const HomeMainContent = () => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const userInfo = useRecoilValue(currentUserInfo);
+  const isChairman = userInfo.associationRank === 'CHAIRMAN';
+
+  const {
+    isLimitModalOpen,
+    isRejectedModalOpen,
+    openLimitModal,
+    closeLimitModal,
+    closeRejectedModal,
+  } = useJoinStatusModal();
 
   const handleCreateClick = () => {
-    navigate('/community/signup');
-    window.scrollTo(0, 0);
+    if (isChairman) {
+      navigate('/community/signup');
+      window.scrollTo(0, 0);
+    } else {
+      openLimitModal();
+    }
   };
 
   const handleJoinClick = () => {
-    setIsModalOpen(true);
+    navigate('/community/members/new');
+    openLimitModal();
   };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleModalConfirm = () => {
-    setIsModalOpen(false);
-    navigate('/community/signup');
+  const handleLimitConfirm = () => {
+    closeLimitModal();
+    navigate('/community/members/new');
     window.scrollTo(0, 0);
   };
 
@@ -36,7 +48,7 @@ export const HomeMainContent = () => {
       </ScheduleWrapper>
 
       <ButtonsWrapper>
-        <ApplyButton light onClick={handleCreateClick}>
+        <ApplyButton $light onClick={handleCreateClick}>
           <ApplyWrapper>
             <Label>커뮤니티</Label>
             <ApplyTitle>만들기</ApplyTitle>
@@ -63,14 +75,23 @@ export const HomeMainContent = () => {
         </ApplyButton>
       </ButtonsWrapper>
 
-      {/*TODO*/}
-      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+      <Modal isOpen={isLimitModalOpen} onClose={closeLimitModal}>
         <ModalLimit
-          onClose={handleModalClose}
+          onClose={closeLimitModal}
           title="커뮤니티 만들기 권한이 없습니다."
           detail="협회 임원진/회원은 커뮤니티를 가입해주세요!"
           button="커뮤니티 가입하기"
-          handleBtnClick={handleModalConfirm}
+          handleBtnClick={handleLimitConfirm}
+        />
+      </Modal>
+
+      <Modal isOpen={isRejectedModalOpen} onClose={closeRejectedModal}>
+        <ModalLimit
+          onClose={closeRejectedModal}
+          title="전주완주 장기요양기관 협회 커뮤니티 가입이 반려되었습니다." //TODO
+          detail="가입 조건에 부합하지 않아 반려되었습니다."
+          button="확인"
+          handleBtnClick={closeRejectedModal}
         />
       </Modal>
     </SectionWrapper>
@@ -117,7 +138,7 @@ const ButtonsWrapper = styled.div`
   gap: 8px;
 `;
 
-const ApplyButton = styled.button<{ light?: boolean }>`
+const ApplyButton = styled.button<{ $light?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -125,15 +146,15 @@ const ApplyButton = styled.button<{ light?: boolean }>`
   height: 186px;
   border-radius: 12px;
   width: 100%;
-  background: ${({ light, theme }) =>
-    light
+  background: ${({ $light, theme }) =>
+    $light
       ? 'linear-gradient(143deg, var(--White, #FFF) 0%, var(--sub-blue, #F0F5FF) 98.95%)'
       : theme.colors.mainBlue};
-  color: ${({ light, theme }) =>
-    light ? theme.colors.mainBlue : theme.colors.white};
+  color: ${({ $light, theme }) =>
+    $light ? theme.colors.mainBlue : theme.colors.white};
 
-  ${({ light }) =>
-    light &&
+  ${({ $light }) =>
+    $light &&
     `
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.03);
   `}

@@ -72,6 +72,7 @@ const ModalTitleLabel = styled.label`
   font-size: ${({ theme }) => theme.typography.fontSize.title3};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   text-align: center;
+  white-space: pre-line;
 `;
 
 const ModalDetailLabel = styled.label`

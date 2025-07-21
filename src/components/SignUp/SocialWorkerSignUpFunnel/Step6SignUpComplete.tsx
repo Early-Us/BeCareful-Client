@@ -4,15 +4,15 @@ import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
 import { useEffect } from 'react';
 import { useSignUpMember } from '@/api/signupFunnel';
+import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { currentUserInfo } from '@/recoil/currentUserInfo';
-import { useNavigate } from 'react-router-dom';
 
 export const Step6SignUpComplete = () => {
   const { formData } = useSignUpContext();
-  const setCurrentUser = useSetRecoilState(currentUserInfo);
   const { mutate } = useSignUpMember();
   const navigate = useNavigate();
+  const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
 
   useEffect(() => {
     if (formData.nursingInstitutionId != null) {
@@ -32,21 +32,21 @@ export const Step6SignUpComplete = () => {
         },
         {
           onSuccess: () => {
-            setCurrentUser({
+            setCurrentUserInfo({
               realName: formData.realName,
               nickName: formData.nickName,
-              phoneNumber: formData.phoneNumber,
               institutionRank: formData.institutionRank,
+              associationRank: 'none',
             });
             navigate('/community/create');
           },
           onError: (error) => {
-            console.error('회원가입 실패:', error); //TODO
+            console.error('회원가입 실패:', error); // TODO
           },
         },
       );
     }
-  }, [formData, mutate]);
+  }, [formData, mutate, navigate]);
 
   return (
     <StepWrapper>
