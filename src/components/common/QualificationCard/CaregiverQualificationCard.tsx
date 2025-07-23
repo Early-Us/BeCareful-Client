@@ -1,12 +1,13 @@
 import { styled } from 'styled-components';
 import { ReactComponent as IconCheckCircle } from '@/assets/icons/IconCheckCircle.svg';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { CertificateFormInput } from '@/types/CareGiverSignUp';
 
 type CardState = 'default' | 'focus' | 'check';
 
 interface CareGiverQualificationCardProps {
   initialType: string;
-  onChange: (data: { type: string; number: string }) => void;
+  onChange: (data: CertificateFormInput) => void;
 }
 
 export const CareGiverQualificationCard = ({
@@ -14,22 +15,23 @@ export const CareGiverQualificationCard = ({
   onChange,
 }: CareGiverQualificationCardProps) => {
   const [cardState, setCardState] = useState<CardState>('default');
-  const [certificateType] = useState(initialType);
   const [certificateNumber, setCertificateNumber] = useState('');
 
-  useEffect(() => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCertificateNumber(value);
     onChange({
-      type: certificateType,
-      number: certificateNumber,
+      certificateType: initialType,
+      certificateNumber: value,
     });
-  }, [certificateNumber, onChange]);
+  };
 
   return (
     <CardContainer state={cardState} onClick={() => setCardState('focus')}>
       <CardTopContainer>
         <CardHeader>
           <CardHeaderText state={cardState}>
-            {certificateType} <span>*</span>
+            {initialType} <span>*</span>
           </CardHeaderText>
           <IconWrapper
             state={cardState}
@@ -51,7 +53,7 @@ export const CareGiverQualificationCard = ({
           state={cardState}
           type="text"
           value={certificateNumber}
-          onChange={(e) => setCertificateNumber(e.target.value)}
+          onChange={handleChange}
         />
       </CardBottomContainer>
     </CardContainer>

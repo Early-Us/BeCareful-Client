@@ -3,8 +3,10 @@ import { ReactComponent as KakaoIcon } from '@/assets/icons/onboarding/Kakao.svg
 
 export const KakaoButton = () => {
   const handleClick = () => {
-    const redirectUri = encodeURIComponent(`${window.location.origin}`);
-    window.location.href = `https://blaybus.everdu.com/oauth2/authorization/kakao?redirectUri=${redirectUri}`;
+    const redirectUri = encodeURIComponent(window.location.origin);
+    const baseUrl = import.meta.env.VITE_APP_API_URL;
+
+    window.location.href = `${baseUrl}/oauth2/authorization/kakao?redirectUri=${redirectUri}`;
   };
 
   return (

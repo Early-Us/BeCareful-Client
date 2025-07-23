@@ -5,8 +5,8 @@ import { ReactComponent as IconPolygon6 } from '@/assets/icons/IconPolygon6.svg'
 interface SmallDropdownProps {
   title: string;
   contents: string[];
-  selectedContents: string[];
-  setSelectedContents: (selectedContents: string[]) => void;
+  selectedContents: string;
+  setSelectedContents: (selectedContents: string) => void;
   pressed?: boolean;
 }
 
@@ -37,22 +37,21 @@ export const MatchingApplicationDropdown = ({
   const handleToggleSmallDropdown = () => setOpen((prev) => !prev);
 
   const handleSelectContent = (content: string) => {
-    setSelectedContents([content]);
+    setSelectedContents(content);
   };
 
-  const selectedLabel =
-    selectedContents.length > 0 ? selectedContents[0] : title;
+  const selectedLabel = selectedContents.length > 0 ? selectedContents : title;
 
   return (
     <SmallDropdowns ref={selectContainerRef}>
       <SmallDropdownHeader
         onClick={handleToggleSmallDropdown}
-        pressed={pressed}
+        $pressed={pressed}
       >
-        <SmallDropdownLabel pressed={pressed}>
+        <SmallDropdownLabel $pressed={pressed}>
           {selectedLabel}
         </SmallDropdownLabel>
-        <IconWrapper pressed={pressed}>
+        <IconWrapper $pressed={pressed}>
           <IconPolygon6 />
         </IconWrapper>
       </SmallDropdownHeader>
@@ -84,7 +83,7 @@ const SmallDropdowns = styled.div`
   gap: 4px;
 `;
 
-const SmallDropdownHeader = styled.div<{ pressed?: boolean }>`
+const SmallDropdownHeader = styled.div<{ $pressed?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,17 +92,17 @@ const SmallDropdownHeader = styled.div<{ pressed?: boolean }>`
   height: 48px;
   border-radius: 12px;
   border: 1px solid
-    ${({ theme, pressed }) =>
-      pressed ? theme.colors.white : theme.colors.gray100};
+    ${({ theme, $pressed }) =>
+      $pressed ? theme.colors.white : theme.colors.gray100};
   background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
 `;
 
-const SmallDropdownLabel = styled.div<{ pressed?: boolean }>`
+const SmallDropdownLabel = styled.div<{ $pressed?: boolean }>`
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme, pressed }) =>
-    pressed ? theme.colors.mainBlue : theme.colors.gray900};
+  color: ${({ theme, $pressed }) =>
+    $pressed ? theme.colors.mainBlue : theme.colors.gray900};
 `;
 
 const SmallDropdownExpandContent = styled.div`
@@ -111,7 +110,6 @@ const SmallDropdownExpandContent = styled.div`
   top: 56px;
   left: 0;
   z-index: 2;
-
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
@@ -119,13 +117,14 @@ const SmallDropdownExpandContent = styled.div`
 
   box-sizing: border-box;
   border-radius: 8px;
-  width: 90px;
+  width: 100%;
 
   overflow: hidden;
 `;
 
 const SmallDropdownItem = styled.button<{ selected: boolean }>`
   display: flex;
+  align-items: center;
   padding: 16px;
   height: 48px;
   text-align: left;
@@ -143,13 +142,13 @@ const SmallDropdownItem = styled.button<{ selected: boolean }>`
   }
 `;
 
-const IconWrapper = styled.div<{ pressed?: boolean }>`
+const IconWrapper = styled.div<{ $pressed?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
 
   path {
-    fill: ${({ theme, pressed }) =>
-      pressed ? theme.colors.mainBlue : theme.colors.gray900};
+    fill: ${({ theme, $pressed }) =>
+      $pressed ? theme.colors.mainBlue : theme.colors.gray900};
   }
 `;

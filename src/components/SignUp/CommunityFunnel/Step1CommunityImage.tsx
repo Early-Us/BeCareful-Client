@@ -3,7 +3,7 @@ import { Button } from '@/components/common/Button/Button';
 
 import { ProfileImageUploader } from '@/components/SignUp/InstitutionFunnel/Step5UploadPhoto/ProfileImageUploader';
 import { CommunityFormData } from '@/components/SignUp/CommunityFunnel/CommunityFunnel';
-import { uploadAssociationProfileImage } from '@/api/communityFunnel';
+import { useUploadAssociationProfileImage } from '@/api/communityFunnel';
 
 interface StepProps {
   goToNext: () => void;
@@ -18,16 +18,20 @@ export const Step1CommunityImage = ({
   communityFormData,
   setCommunityFormData,
 }: StepProps) => {
-  const handleImageUpload = async (file: File) => {
-    try {
-      const imageUrl = await uploadAssociationProfileImage(file);
-      setCommunityFormData((prev) => ({
-        ...prev,
-        profileImageUrl: imageUrl,
-      }));
-    } catch (error) {
-      console.error('이미지 업로드 실패:', error);
-    }
+  const { mutate: uploadImage } = useUploadAssociationProfileImage();
+
+  const handleImageUpload = (file: File) => {
+    uploadImage(file, {
+      onSuccess: (url) => {
+        setCommunityFormData((prev) => ({
+          ...prev,
+          profileImageUrl: url,
+        }));
+      },
+      onError: () => {
+        alert('이미지 업로드에 실패했습니다.');
+      },
+    });
   };
 
   return (
@@ -64,6 +68,8 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  overflow-y: auto;
+  padding-bottom: 112px;
 `;
 
 const HeaderSection = styled.header`

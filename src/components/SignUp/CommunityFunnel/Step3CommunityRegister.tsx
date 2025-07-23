@@ -4,7 +4,7 @@ import { Button } from '@/components/common/Button/Button';
 import { ReactComponent as SignUpComplete } from '@/assets/icons/signup/SignUpComplete.svg';
 
 import { CommunityFormData } from '@/components/SignUp/CommunityFunnel/CommunityFunnel';
-import { registerAssociation } from '@/api/communityFunnel';
+import { useRegisterAssociation } from '@/api/communityFunnel';
 
 interface StepProps {
   onComplete: () => void;
@@ -14,21 +14,25 @@ export const Step3CommunityRegister = ({
   onComplete,
   communityFormData,
 }: StepProps) => {
-  const handleRegister = async () => {
-    try {
-      await registerAssociation(communityFormData);
-      onComplete();
-    } catch (error) {
-      console.error('커뮤니티 등록 실패:', error);
-      console.log(communityFormData);
-    }
+  const { mutate: registerAssociation } = useRegisterAssociation();
+
+  const handleRegister = () => {
+    registerAssociation(communityFormData, {
+      onSuccess: () => {
+        onComplete();
+      },
+      onError: (error) => {
+        console.error('커뮤니티 등록 실패:', error);
+        console.log(communityFormData);
+      },
+    });
   };
 
   return (
     <StepWrapper>
       <HeaderSection>
         <Title>
-          /협회명/ {/*TOOD*/}
+          /{communityFormData.name}/
           <br />
           커뮤니티가 만들어졌어요!
           <br />
@@ -57,6 +61,8 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  overflow-y: auto;
+  padding-bottom: 112px;
 `;
 
 const HeaderSection = styled.header`

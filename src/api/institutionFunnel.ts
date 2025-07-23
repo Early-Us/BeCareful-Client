@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/api/axiosInstance';
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 export const useUploadInstitutionProfileImage = () =>
   useMutation({
@@ -27,3 +27,25 @@ export const useRegisterInstitution = () =>
       return data.institutionId as number;
     },
   });
+
+export const checkInstitutionCode = async (code: string): Promise<boolean> => {
+  const { data } = await axiosInstance.get<boolean>(
+    '/nursingInstitution/for-guest/check/already-register',
+    {
+      params: { nursingInstitutionCode: code },
+    },
+  );
+  return data;
+};
+
+export const useCheckInstitutionCode = (
+  code: string,
+  options?: Omit<UseQueryOptions<boolean>, 'queryKey' | 'queryFn'>,
+) => {
+  return useQuery<boolean>({
+    queryKey: ['check-institution-code', code],
+    queryFn: () => checkInstitutionCode(code),
+    enabled: !!code,
+    ...options,
+  });
+};

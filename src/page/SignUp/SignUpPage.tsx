@@ -3,30 +3,29 @@ import { ReactComponent as IconArrowLeft } from '@/assets/icons/IconArrowLeft.sv
 import { useState } from 'react';
 
 import { Button } from '@/components/common/Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import {
   CardType,
   SignUpCardSelector,
 } from '@/components/SignUp/common/SignUpCardSelector';
-import { useGetGuestInfo } from '@/hooks/SignUp/useGetGuestInfo';
 
 export const SignUpPage = () => {
   const [cardPressed, setCardPressed] = useState<CardType | null>(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const guestKey = searchParams.get('guestKey');
 
   const handleNextStep = () => {
     if (!cardPressed) return;
-    navigate(`/signup/${cardPressed}`);
+    navigate(`/signup/${cardPressed}?guestKey=${guestKey}&role=${cardPressed}`);
   };
-
-  useGetGuestInfo();
 
   return (
     <PageLayout>
       <ContentWrapper>
         <BackButtonWrapper>
-          <IconArrowLeft onClick={() => navigate('/login')} />
+          <IconArrowLeft onClick={() => navigate(-1)} />
         </BackButtonWrapper>
         <Header>
           환영합니다!
@@ -56,8 +55,8 @@ const PageLayout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  margin: 24px 16px auto 16px;
+  padding-bottom: 135px;
+  margin: 0px 16px auto 16px;
 `;
 
 const ContentWrapper = styled.div`
@@ -105,4 +104,6 @@ const FooterButtonBar = styled.div`
   box-sizing: border-box;
   width: 100%;
   margin-top: 185px;
+
+  background: ${({ theme }) => theme.colors.white};
 `;

@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import PretendardVariable from '../assets/fonts/PretendardVariable.woff2';
+import KoPub from '../assets/fonts/KoPub Batang_Pro Bold.otf';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -7,6 +8,13 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     src: url(${PretendardVariable}) format('woff2');
   }
+
+  @font-face {
+  font-family: 'KoPub Batang Pro'; 
+  src: url(${KoPub}) format('opentype');
+  font-weight: bold; 
+  font-style: normal;
+}
 
   * {
     margin: 0;
@@ -18,6 +26,10 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     line-height: 1.4;
     letter-spacing: -0.025em; 
+  }
+
+  body.is-chrome textarea {
+    word-spacing: -5px;
   }
 
   p, h1, h2, h3 {

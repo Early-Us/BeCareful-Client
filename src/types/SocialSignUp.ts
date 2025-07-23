@@ -1,6 +1,8 @@
+import { FACILITY_TYPES } from '@/constants/institutionFacilityTypes';
+
 export type Gender = 'MALE' | 'FEMALE' | '';
 
-export type Rank = 'MANAGER' | 'SOCIALWORKER' | '';
+export type Rank = 'MANAGER' | 'SOCIALWORKER' | ''; //TODO
 
 export interface SocialSignUpFormData {
   name: string;
@@ -13,7 +15,7 @@ export interface SocialSignUpFormData {
   isAgreedToTerms: boolean;
   isAgreedToCollectPersonalInfo: boolean;
   isAgreedToReceiveMarketingInfo: boolean;
-}
+} //TODO
 
 export interface NursingInstitutionRegisterRequest {
   institutionId: string;
@@ -26,10 +28,11 @@ export interface NursingInstitutionRegisterRequest {
   profileImageUrl?: string;
 }
 
-export type SocialStepProps = {
-  formSocialData: SocialSignUpFormData;
-  setFormSocialData: React.Dispatch<React.SetStateAction<SocialSignUpFormData>>;
-  onPrevious: () => void;
-  onNext: (step?: number) => void;
-  onSubmit?: () => void;
-};
+export type FacilityType = (typeof FACILITY_TYPES)[number];
+
+export interface Institution {
+  institutionId: number;
+  institutionName: string;
+  institutionStreetAddress: string;
+  institutionDetailAddress: string;
+}

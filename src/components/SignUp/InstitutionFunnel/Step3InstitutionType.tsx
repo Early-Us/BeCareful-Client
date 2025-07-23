@@ -1,11 +1,9 @@
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
-import { CheckCard } from '@/components/SignUp/SignUpFunnel/common/CheckCard';
+import { CheckCard } from '@/components/SignUp/SocialWorkerSignUpFunnel/common/CheckCard';
 import { InstitutionFormData } from '@/components/SignUp/InstitutionFunnel/InstitutionFunnel';
-import {
-  FACILITY_TYPES,
-  FacilityType,
-} from '@/constants/institutionFacilityTypes';
+import { FACILITY_TYPES } from '@/constants/institutionFacilityTypes';
+import { FacilityType } from '@/types/SocialSignUp';
 
 interface StepProps {
   goToNext: () => void;
@@ -82,6 +80,8 @@ const StepWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  overflow-y: auto;
+  padding-bottom: 112px;
 `;
 
 const HeaderSection = styled.header`

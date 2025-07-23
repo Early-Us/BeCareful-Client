@@ -1,4 +1,4 @@
-export const AreaSocial = {
+export const AreaSocials = {
   city: [
     {
       name: '서울',

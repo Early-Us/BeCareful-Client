@@ -1,5 +1,4 @@
-import { SocialTabBar } from '@/components/common/TabBarSocial';
-import CommunityHome from '@/components/Community/CommunityHome';
+import CommunityHome from '@/components/Community/home/CommunityHome';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '@/assets/icons/Search.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
@@ -8,6 +7,7 @@ import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
+import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 
 const CommunitySplashPage = () => {
   const [activeTab, setActiveTab] = useState('전체');
@@ -60,7 +60,7 @@ const CommunitySplashPage = () => {
         글쓰기
       </Button>
 
-      <SocialTabBar />
+      <SocialWorkerTabBar />
 
       {isOpen && (
         <ModalOverlay>

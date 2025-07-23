@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import React from 'react';
+import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
+import { Button } from '@/components/common/Button/Button';
 
 interface ModalProps {
   onClose: () => void;
   title: string;
   detail: string;
-  left?: string;
+  left: string;
   right: string;
   handleLeftBtnClick: () => void;
   handleRightBtnClick: () => void;
@@ -23,11 +24,16 @@ const ModalButtons = ({
 }: ModalProps) => {
   return (
     <ModalWrapper>
-      <ModalXImg onClick={onClose}>
-        <ModalClose />
-      </ModalXImg>
+      <ModalXImg onClick={onClose} />
       <ModalLabelWrapper>
-        <ModalTitleLabel>{title}</ModalTitleLabel>
+        <ModalTitleLabel>
+          {title.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </ModalTitleLabel>
         <ModalDetailLabel>
           {detail.split('\n').map((line, index) => (
             <React.Fragment key={index}>
@@ -37,11 +43,13 @@ const ModalButtons = ({
           ))}
         </ModalDetailLabel>
       </ModalLabelWrapper>
-      <ModalButtonWrapper single={!left}>
-        {left && <Left onClick={handleLeftBtnClick}>{left}</Left>}
-        <Right single={!left} onClick={handleRightBtnClick}>
+      <ModalButtonWrapper>
+        <Button height="52px" variant="subBlue" onClick={handleLeftBtnClick}>
+          {left}
+        </Button>
+        <Button height="52px" variant="mainBlue" onClick={handleRightBtnClick}>
           {right}
-        </Right>
+        </Button>
       </ModalButtonWrapper>
     </ModalWrapper>
   );
@@ -60,7 +68,7 @@ const ModalWrapper = styled.div`
   padding: 56px 20px 20px 20px;
 `;
 
-const ModalXImg = styled.div`
+const ModalXImg = styled(ModalClose)`
   width: 24px;
   height: 24px;
   position: absolute;
@@ -89,30 +97,9 @@ const ModalDetailLabel = styled.label`
   line-height: 140%;
   text-align: center;
 `;
-const ModalButtonWrapper = styled.div<{ single?: boolean }>`
+
+const ModalButtonWrapper = styled.div`
   width: 100%;
   display: flex;
-  gap: ${({ single }) => (single ? 0 : '8px')};
-`;
-
-const Left = styled.button`
-  width: 100%;
-  height: 52px;
-  border-radius: 12px;
-  background: ${({ theme }) => theme.colors.subBlue};
-  color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  text-align: center;
-`;
-
-const Right = styled.button<{ single?: boolean }>`
-  width: ${({ single }) => (single ? '100%' : '100%')};
-  height: 52px;
-  border-radius: 12px;
-  background: ${({ theme }) => theme.colors.mainBlue};
-  color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  text-align: center;
+  gap: 8px;
 `;

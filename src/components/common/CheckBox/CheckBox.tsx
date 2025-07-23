@@ -21,8 +21,13 @@ export const CheckBox = ({
 }: CheckBoxProps) => {
   return (
     <CheckWrapper>
-      <Check type="checkbox" id={id} checked={checked} />
-      <LabelWrapper onClick={() => onChange(!checked)}>
+      <Check
+        type="checkbox"
+        id={id}
+        checked={checked}
+        onChange={() => onChange(!checked)}
+      />
+      <LabelWrapper>
         <CheckIcon aria-hidden="true" $borderRadius={borderRadius} />
         {select === '' ? (
           <Label htmlFor={id}>{label}</Label>

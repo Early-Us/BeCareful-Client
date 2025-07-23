@@ -13,5 +13,6 @@ export const useGuestInfoQuery = (guestKey?: string | null) => {
     queryKey: ['guestInfo', guestKey],
     queryFn: () => fetchGuestInfo(guestKey!),
     enabled: !!guestKey,
+    retry: false,
   });
 };

@@ -1,150 +1,76 @@
 import styled from 'styled-components';
 
-interface InputBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  width: string;
-  label: string;
-  labelStar: boolean;
-  state: string;
+interface InputBoxProps {
+  title: string;
+  detail?: string;
   placeholder: string;
-  guide: string;
+  value?: string;
 }
 
-export const InputBox = ({
-  width,
-  label,
-  labelStar,
-  state,
-  placeholder,
-  guide,
-  ...props
-}: InputBoxProps) => {
+const InputBox = ({ title, detail, placeholder, value }: InputBoxProps) => {
   return (
-    <InputWrapper width={width}>
-      <InputFieldLabelWrapper>
-        <InputFieldLabel>{label}</InputFieldLabel>
-        {labelStar ? <InputFieldStar>*</InputFieldStar> : <></>}
-      </InputFieldLabelWrapper>
-      <InputDefault
-        type="text"
-        placeholder={placeholder}
-        state={state}
-        {...props}
-      />
-      {guide === '' ? (
-        <></>
-      ) : (
-        <InputGuideWrapper>
-          <InputGuideStar state={state}>*</InputGuideStar>
-          <InputGuideLabel state={state}>{guide}</InputGuideLabel>
-        </InputGuideWrapper>
-      )}
-    </InputWrapper>
+    <Container>
+      <div className="titleWrapper">
+        <label className="title">
+          {title} <span>*</span>
+        </label>
+        {detail && <label className="detail">{detail}</label>}
+      </div>
+      <Input placeholder={placeholder} value={value} />
+    </Container>
   );
 };
 
-const InputWrapper = styled.div<{ width: string }>`
+export default InputBox;
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: ${({ width }) => (width ? width : '100%')};
+  gap: 12px;
+
+  .titleWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .title {
+    color: ${({ theme }) => theme.colors.gray900};
+    font-size: ${({ theme }) => theme.typography.fontSize.title5};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.mainBlue};
+  }
+
+  .detail {
+    color: ${({ theme }) => theme.colors.gray500};
+    font-size: ${({ theme }) => theme.typography.fontSize.body2};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
 `;
 
-const InputFieldLabelWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
-`;
-
-const InputFieldLabel = styled.div`
-  color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  letter-spacing: -0.35px;
-`;
-
-const InputFieldStar = styled.div`
-  color: ${({ theme }) => theme.colors.mainBlue};
-  font-size: ${({ theme }) => theme.typography.fontSize.body2};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  letter-spacing: -0.35px;
-`;
-
-const InputDefault = styled.input<{ state: string }>`
-  height: 22px;
-  padding: 15px 16px;
+const Input = styled.input`
+  width: 100%;
+  height: 20px;
+  padding: 16px;
   border-radius: 12px;
-  border: 1px solid;
-  border-color: ${({ theme, state }) => {
-    switch (state) {
-      case 'error':
-        return theme.colors.negative;
-      case 'success':
-        return theme.colors.positive;
-      default:
-        return theme.colors.gray100;
-    }
-  }};
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
   background: ${({ theme }) => theme.colors.white};
 
   color: ${({ theme }) => theme.colors.gray900};
-  font-size: ${({ theme }) => theme.typography.fontSize.body1};
+  font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  letter-spacing: -0.4px;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray300};
-    font-size: ${({ theme }) => theme.typography.fontSize.body1};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-    letter-spacing: -0.4px;
   }
 
-  &:hover {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
-  }
-
+  &:hover,
   &:focus {
-    border: 2px solid ${({ theme }) => theme.colors.mainBlue};
+    border: 1px solid ${({ theme }) => theme.colors.mainBlue};
     outline: none;
     caret-color: ${({ theme }) => theme.colors.mainBlue};
   }
-`;
-
-const InputGuideWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
-`;
-
-const InputGuideStar = styled.p<{ state: string }>`
-  color: ${({ theme, state }) => {
-    switch (state) {
-      case 'error':
-        return theme.colors.negative;
-      case 'success':
-        return theme.colors.positive;
-      default:
-        return theme.colors.mainBlue;
-    }
-  }};
-
-  font-size: ${({ theme }) => theme.typography.fontSize.body3};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  letter-spacing: -0.35px;
-`;
-
-const InputGuideLabel = styled.p<{ state: string }>`
-  color: ${({ theme, state }) => {
-    switch (state) {
-      case 'error':
-        return theme.colors.negative;
-      case 'success':
-        return theme.colors.positive;
-      default:
-        return theme.colors.gray500;
-    }
-  }};
-
-  font-size: ${({ theme }) => theme.typography.fontSize.body3};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  letter-spacing: -0.35px;
 `;
