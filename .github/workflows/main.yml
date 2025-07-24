@@ -20,6 +20,7 @@ jobs:
 
       - name: Setup SSH
         run: |
+          apk add openssh
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
@@ -36,3 +37,4 @@ jobs:
           git add .
           git commit -m "${{ github.event.commits[0].message }}"
           git push -f origin main
+
