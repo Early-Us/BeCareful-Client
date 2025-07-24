@@ -4,10 +4,11 @@ import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import theme from '@/style/Theme.tsx';
+
 import GlobalStyle from '@/style/GlobalStyle';
 import App from '@/App';
 import { ErrorPage } from '@/page/Error/ErrorPage';
+import { theme } from '@/style/theme/index';
 
 const queryClient = new QueryClient();
 

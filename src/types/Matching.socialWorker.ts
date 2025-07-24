@@ -1,4 +1,9 @@
-import { DAY_LABELS } from '@/constants/day.socialWorker';
+import {
+  DAY_EN_TO_KO,
+  DAY_LABELS,
+  TIME_EN_TO_KO,
+} from '@/constants/day.socialWorker';
+
 import {
   PAY_CODE_TO_LABEL,
   PAY_LABEL_TO_CODE,
@@ -66,3 +71,64 @@ export interface MatchingCareTypeOption {
 }
 
 export type DayLabel = (typeof DAY_LABELS)[number];
+
+export interface CaregiverDetailData {
+  matchingId: number;
+  matchingResultStatus: string;
+  workLocationMatchingResultReason: string;
+  workDaysMatchingResultReason: string;
+  workTimeMatchingResultReason: string;
+  caregiverInfo: {
+    caregiverId: number;
+    name: string;
+    phoneNumber: string;
+    gender: Gender;
+    age: number;
+    profileImageUrl: string;
+    caregiverDetailInfo: {
+      caregiverCertificate: {
+        grade: string;
+        certificateNumber: string;
+      };
+      socialWorkerCertificate: {
+        grade: string;
+        certificateNumber: string;
+      };
+      nursingCareCertificate: {
+        grade: string;
+        certificateNumber: string;
+      };
+      havingCar: boolean;
+      completeDementiaEducation: boolean;
+      certificateNames: string[];
+    };
+    certificates: string[];
+  };
+  workApplicationInfo: {
+    workApplicationId: number;
+    isActive: boolean;
+    careTypes: string[];
+    workDays: (keyof typeof DAY_EN_TO_KO)[];
+    workTimes: (keyof typeof TIME_EN_TO_KO)[];
+    workSalaryAmount: number;
+    workSalaryUnitType: string;
+    lastModifiedDate: string;
+    workLocations: {
+      siDo: string;
+      siGuGun: string;
+      dongEupMyeon: string;
+    }[];
+  };
+  careerInfo: {
+    title: string;
+    careerType: string;
+    introduce: string;
+    careerDetails: {
+      workInstitution: string;
+      workYear: string;
+    }[];
+  };
+  mediationTypes: string[];
+  mediationDescription: string;
+}
+

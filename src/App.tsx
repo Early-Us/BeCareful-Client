@@ -8,7 +8,7 @@ import ElderlyPage from '@/page/Elderly/ElderlyPage';
 import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
 import { ErrorPage } from '@/page/Error/ErrorPage';
 import LandingPage from '@/page/Landing/LandingPage';
-import { CareGiverInfoPage } from '@/page/Matching/CareGiverInfoPage';
+import { CareGiverDetailInfoPage } from '@/page/Matching/CareGiverDetailInfoPage';
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import MatchingStatus from '@/page/Matching/MatchingStatus';
 import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
@@ -82,9 +82,9 @@ function App() {
       />
       <Route
         path="/matching/:recruitmentId/caregiver/:caregiverId"
-        element={<CareGiverInfoPage />}
+        element={<CareGiverDetailInfoPage />}
       />
-      <Route path="/matching/caregiver" element={<CareGiverInfoPage />} />
+      {/*<Route path="/matching/caregiver" element={<CareGiverInfoPage />} />*/}
       <Route path="/matching/dashboard" element={<MatchingStatus />} />
 
       {/* 채팅 - 요양보호사, 사회복지사 */}
