@@ -1,67 +1,40 @@
 name: Deploy
 
-
-
 on:
-
   push:
-
     branches: ['main']
 
-
-
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     container: pandoc/latex
 
     steps:
-
       - uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: |
+          apk add ruby git openssh
+          gem install mustache
 
-
-      - name: Install mustache (to update the date)
-
-        run: apk add ruby && gem install mustache
-
-
-
-      - name: creates output
-
+      - name: Run build script
         run: sh ./build.sh
 
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-
-      - name: Pushes to another repository
-
-        id: push_directory
-
-        uses: cpina/github-action-push-to-another-repository@main
-
-        env:
-
-          API_TOKEN_GITHUB: ${{ secrets.LIFIN_SECRET_KEY }}
-
-        with:
-
-          source-directory: 'output'
-
-          destination-github-username: Early-Us
-
-          destination-repository-name: BeCareful-Client
-
-          user-email: ${{ secrets.EMAIL }}
-
-          commit-message: ${{ github.event.commits[0].message }}
-
-          target-branch: main
-
-
-
-      - name: Test get variable exported by push-to-another-repository
-
-        run: echo $DESTINATION_CLONED_DIRECTORY
+      - name: Push to forked repo via SSH
+        run: |
+          git config --global user.email "${{ secrets.EMAIL }}"
+          git config --global user.name "github-actions[bot]"
+          cd output
+          git init
+          git remote add origin git@github.com:Early-Us/BeCareful-Client.git
+          git checkout -b main
+          git add .
+          git commit -m "${{ github.event.commits[0].message }}"
+          git push -f origin main
