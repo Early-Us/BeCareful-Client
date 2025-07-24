@@ -3,6 +3,7 @@ import {
   DAY_LABELS,
   TIME_EN_TO_KO,
 } from '@/constants/day.socialWorker';
+
 import {
   PAY_CODE_TO_LABEL,
   PAY_LABEL_TO_CODE,
@@ -130,3 +131,4 @@ export interface CaregiverDetailData {
   mediationTypes: string[];
   mediationDescription: string;
 }
+

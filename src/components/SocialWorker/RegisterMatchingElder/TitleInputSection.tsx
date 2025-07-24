@@ -31,16 +31,13 @@ const TitleContainer = styled.div`
   align-items: flex-start;
   width: 100%;
   gap: 8px;
-
   flex-direction: column;
 
   font-size: ${({ theme }) => theme.typography.fontSize.body2};
-
   color: ${({ theme }) => theme.colors.gray900};
 
   .highlight {
     font-size: ${({ theme }) => theme.typography.fontSize.body2};
-
     color: ${({ theme }) => theme.colors.mainBlue};
   }
 

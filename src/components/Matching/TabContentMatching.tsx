@@ -9,6 +9,7 @@ interface TabContentMatchingProps {
   careerTitle: string;
   onClick?: () => void;
 }
+
 const getTagColors = (
   score: '높음' | '보통' | '낮음',
 ): { bg: ColorKey; color: ColorKey } => {

@@ -49,3 +49,4 @@ export const useCaregiverDetail = (
     queryFn: () => getCaregiverDetail(recruitmentId, caregiverId),
     enabled: !!recruitmentId && !!caregiverId,
   });
+
