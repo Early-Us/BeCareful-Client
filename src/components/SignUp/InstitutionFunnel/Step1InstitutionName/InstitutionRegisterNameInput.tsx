@@ -122,7 +122,7 @@ const DropdownItem = styled.li`
   padding: 12px 16px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semiBold};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   color: ${({ theme }) => theme.colors.gray900};
 
   &:hover {

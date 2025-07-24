@@ -19,3 +19,10 @@ export const DAY_EN_TO_KO = {
   SATURDAY: '토',
   SUNDAY: '일',
 } as const;
+
+export const TIME_EN_TO_KO = {
+  MORNING: '오전',
+  AFTERNOON: '오후',
+  EVENING: '저녁',
+  NIGHT: '야간',
+} as const;

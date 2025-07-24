@@ -38,7 +38,7 @@ export const ChatButton = ({ matchingId, date }: ChatButtonProps) => {
 
   return (
     <Button onClick={postHire} height={'52px'}>
-      채용하기
+      채용 제안하기
     </Button>
   );
 };

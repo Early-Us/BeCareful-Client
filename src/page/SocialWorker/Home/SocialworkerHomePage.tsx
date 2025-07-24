@@ -12,7 +12,8 @@ import { ReactComponent as ApplyRate } from '@/assets/icons/socialworker/home/Ap
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
 import { NavBar } from '@/components/common/NavBar/NavBar';
-
+import { colors } from '@/style/theme/color';
+type ColorKey = keyof typeof colors;
 const SocialworkerHomePage = () => {
   const navigate = useNavigate();
 
@@ -406,7 +407,7 @@ const Matching = styled.div`
   }
 `;
 
-const Circle = styled.div<{ color: string }>`
+const Circle = styled.div<{ color: ColorKey }>`
   width: 8px;
   height: 8px;
   border-radius: 50%;

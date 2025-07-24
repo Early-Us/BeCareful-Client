@@ -6,11 +6,13 @@ import {
   SalaryTypeMapping,
 } from '@/constants/caregiver';
 import { useNavigate } from 'react-router-dom';
+import { colors } from '@/style/theme/color';
 
+type ColorKey = keyof typeof colors;
 interface CaregiverWorkCardProps {
   recruitment: Recruitment;
-  stateColor: string;
-  bgColor: string;
+  stateColor: ColorKey;
+  bgColor: ColorKey;
   stateLabel: string;
   navigatePath: string;
 }
@@ -120,7 +122,7 @@ const CardContainer = styled.div`
   }
 `;
 
-const State = styled.div<{ stateColor: string; bgColor: string }>`
+const State = styled.div<{ stateColor: ColorKey; bgColor: ColorKey }>`
   width: fit-content;
   padding: 4px 8px;
   display: flex;

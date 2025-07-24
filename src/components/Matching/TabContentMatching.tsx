@@ -1,5 +1,7 @@
+import { colors } from '@/style/theme/color';
 import { styled } from 'styled-components';
 
+type ColorKey = keyof typeof colors;
 interface TabContentMatchingProps {
   matchingScore: '높음' | '보통' | '낮음';
   profileImageUrl?: string;
@@ -7,7 +9,9 @@ interface TabContentMatchingProps {
   careerTitle: string;
   onClick?: () => void;
 }
-const getTagColors = (score: '높음' | '보통' | '낮음') => {
+const getTagColors = (
+  score: '높음' | '보통' | '낮음',
+): { bg: ColorKey; color: ColorKey } => {
   if (score === '높음') return { bg: 'subBlue', color: 'mainBlue' };
   if (score === '보통') return { bg: 'gray50', color: 'gray500' };
   return { bg: 'subOrange', color: 'mainOrange' };

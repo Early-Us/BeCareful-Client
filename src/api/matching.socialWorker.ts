@@ -29,3 +29,23 @@ export const useMatchingRecruitment = (recruitmentId: string) =>
     queryFn: () => getMatchingRecruitment(recruitmentId),
     enabled: !!recruitmentId,
   });
+
+export const getCaregiverDetail = async (
+  recruitmentId: string,
+  caregiverId: string,
+) => {
+  const { data } = await axiosInstance.get(
+    `/matching/social-worker/recruitment/${recruitmentId}/caregiver/${caregiverId}`,
+  );
+  return data;
+};
+
+export const useCaregiverDetail = (
+  recruitmentId: string,
+  caregiverId: string,
+) =>
+  useQuery({
+    queryKey: ['caregiver-detail', recruitmentId, caregiverId],
+    queryFn: () => getCaregiverDetail(recruitmentId, caregiverId),
+    enabled: !!recruitmentId && !!caregiverId,
+  });
