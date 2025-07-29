@@ -1,29 +1,27 @@
-import { CaregiverSignUpProvider } from '@/contexts/CaregiverSignUpContext';
+import { Route, Routes } from 'react-router-dom';
+import SplashPage from '@/page/SplashPage';
+import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
 import { SignUpProvider } from '@/contexts/SocialWorkerSignUpContext';
-
-import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
-import ChatListPage from '@/page/Chat/ChatListPage';
-import ChatRoomPage from '@/page/Chat/ChatRoomPage';
+import { CaregiverSignUpProvider } from '@/contexts/CaregiverSignUpContext';
+import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
+import { SignUpPage } from '@/page/SignUp/SignUpPage';
+import { CareGiverSignUpPage } from './page/SignUp/CareGiverSignUpPage';
+import CaregiverRoute from '@/route/CaregiverRoute';
+import CommunityRoute from '@/route/CommunityRoute';
+import SocialworkerRoute from '@/route/SocialworkerRoute';
 import ElderlyPage from '@/page/Elderly/ElderlyPage';
 import ElderlyRegisterPage from '@/page/Elderly/ElderlyRegisterPage';
-import { ErrorPage } from '@/page/Error/ErrorPage';
-import LandingPage from '@/page/Landing/LandingPage';
 import { CareGiverDetailInfoPage } from '@/page/Matching/CareGiverDetailInfoPage';
 import { MatchingInformationPage } from '@/page/Matching/MatchingInformationPage';
 import MatchingStatus from '@/page/Matching/MatchingStatus';
 import { RegisterMatchingElderPage } from '@/page/Matching/RegisterMatchingElderPage';
-import { OnboardingPage } from '@/page/Onboarding/OnboardingPage';
-import { CareGiverSignUpPage } from '@/page/SignUp/CareGiverSignUpPage';
-
-import { InstitutionSignUpPage } from '@/page/SignUp/InstitutionSignUpPage';
-import { SignUpPage } from '@/page/SignUp/SignUpPage';
 import { SocialWorkerMatchingPage } from '@/page/SocialWorkerMatching/SocialWorkerMatchingPage';
-import SplashPage from '@/page/SplashPage';
+import ChatListCaregiver from '@/page/Chat/ChatListCaregiver';
+import ChatListPage from '@/page/Chat/ChatListPage';
+import ChatRoomPage from '@/page/Chat/ChatRoomPage';
+import LandingPage from '@/page/Landing/LandingPage';
 import { TestPage } from '@/page/TestPage';
-import CaregiverRoute from '@/route/CaregiverRoute';
-import CommunityRoute from '@/route/CommunityRoute';
-import SocialworkerRoute from '@/route/SocialworkerRoute';
-import { Route, Routes } from 'react-router-dom';
+import { ErrorPage } from '@/page/Error/ErrorPage';
 
 function App() {
   return (
@@ -84,7 +82,7 @@ function App() {
         path="/matching/:recruitmentId/caregiver/:caregiverId"
         element={<CareGiverDetailInfoPage />}
       />
-      {/*<Route path="/matching/caregiver" element={<CareGiverInfoPage />} />*/}
+      {/*<Route path="/matching/caregiver" element={<CareGiverDetailInfoPage />} />*/}
       <Route path="/matching/dashboard" element={<MatchingStatus />} />
 
       {/* 채팅 - 요양보호사, 사회복지사 */}
