@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import { ReactComponent as ModalClose } from '@/assets/icons/signup/ModalClose.svg';
 import { Button } from '@/components/common/Button/Button';
 
 interface CommunityJoinPendingModalProps {
@@ -13,16 +12,11 @@ export const CommunityJoinPendingModal = ({
   width,
   associationName,
   onCancelJoin,
-  onClose,
 }: CommunityJoinPendingModalProps) => {
   return (
     <Overlay>
       <ModalContent width={width}>
-        <ModalTopContainer>
-          <ModalCloseButton onClick={onClose}>
-            <ModalClose />
-          </ModalCloseButton>
-        </ModalTopContainer>
+        <ModalTopContainer></ModalTopContainer>
         <ModalMiddleContainer>
           <span>
             ‘{associationName}’
@@ -34,7 +28,7 @@ export const CommunityJoinPendingModal = ({
           </span>
         </ModalMiddleContainer>
         <ModalBottomContainer>
-          <Button onClick={onCancelJoin} height="52px">
+          <Button onClick={onCancelJoin} height="52px" variant="blue">
             가입 취소하기
           </Button>
         </ModalBottomContainer>
@@ -48,13 +42,11 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
-
   z-index: 1000;
 `;
 
@@ -103,6 +95,3 @@ const ModalBottomContainer = styled.div`
   gap: 8px;
 `;
 
-const ModalCloseButton = styled.div`
-  cursor: pointer;
-`;
