@@ -256,3 +256,26 @@ export const useMemberExpel = (memberId: number) => {
     },
   });
 };
+
+/* 사회복지사 마이페이지에서 사용 */
+// 협회 탈퇴하기
+export const usePutAssociationLeave = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      const response = await axiosInstance.put('/association/leave');
+      return response;
+    },
+    onSuccess: (response) => {
+      console.log('usePutAssociationLeave - 협회 탈퇴하기 성공:', response);
+      queryClient.invalidateQueries({ queryKey: ['associationInfo'] });
+      queryClient.invalidateQueries({ queryKey: ['communityAccess'] });
+      queryClient.invalidateQueries({ queryKey: ['membersOverview'] });
+      queryClient.invalidateQueries({ queryKey: ['members'] });
+    },
+    onError: (error) => {
+      console.error('usePutAssociationLeave - 협회 탈퇴하기 실패:', error);
+    },
+  });
+};

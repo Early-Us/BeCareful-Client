@@ -1,16 +1,15 @@
-import styled, { css } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import styled, { css, keyframes } from 'styled-components';
 import { ReactComponent as SymbolIcon } from '@/assets/icons/landing/Symbol.svg';
 import { useIsMobile } from '@/hooks/useIsMobile';
+import { useHandleNavigate } from '@/hooks/useHandleNavigate';
 import { mobile } from '@/utils/mobileStyle';
 
 const CommunityGuideSection = () => {
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/community/splash');
-    scrollTo(0, 0);
+  const { handleNavigate } = useHandleNavigate();
+  const handleToCommunity = () => {
+    handleNavigate('/community/splash');
   };
 
   return isMobile ? (
@@ -28,8 +27,8 @@ const CommunityGuideSection = () => {
           <br />
           다양한 교육과 교류가 이루어집니다.
         </label>
-        <button onClick={handleNavigate}>커뮤니티 참여하기</button>
-        <SymbolIcon onClick={handleNavigate} />
+        <button onClick={handleToCommunity}>커뮤니티 참여하기</button>
+        <SymbolIcon onClick={handleToCommunity} />
       </CommunityGuide>
     </CommunityGuideWrapper>
   ) : (
@@ -46,9 +45,9 @@ const CommunityGuideSection = () => {
           <br />
           다양한 교육과 교류가 이루어집니다.
         </label>
-        <button onClick={handleNavigate}>커뮤니티 참여하기</button>
+        <button onClick={handleToCommunity}>커뮤니티 참여하기</button>
       </CommunityGuide>
-      <SymbolIcon onClick={handleNavigate} />
+      <SymbolIcon onClick={handleToCommunity} />
     </CommunityGuideWrapper>
   );
 };
@@ -78,6 +77,24 @@ const CommunityGuideWrapper = styled.div`
       font-size: ${({ theme }) => theme.typography.fontSize.title3};
     `)}
   }
+`;
+
+const shake = keyframes`
+  0% {
+        transform: rotate(0deg)
+    }
+    25% {
+        transform: rotate(-4deg);
+    }
+    50% {
+        transform: rotate(4deg);
+    }
+    75% {
+        transform: rotate(-4deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 `;
 
 const CommunityGuide = styled.div`
@@ -129,5 +146,10 @@ const CommunityGuide = styled.div`
       width: 156px;
       font-size: ${({ theme }) => theme.typography.fontSize.body1};
     `)}
+
+    &:hover {
+      transition: transform 0.5s ease;
+      animation: ${shake} 0.7s;
+    }
   }
 `;

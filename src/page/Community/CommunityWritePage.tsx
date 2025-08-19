@@ -21,6 +21,7 @@ import { useSave } from '@/hooks/Community/WritePage/useSave';
 import { usePostingSubmit } from '@/hooks/Community/WritePage/usePostingSubmit';
 import { PostDetailResponse, PostRequest } from '@/types/Community/post';
 import { useBoardSelection } from '@/hooks/Community/WritePage/useBoardSelection';
+import { useEffect } from 'react';
 
 interface WritingProp {
   boardType: string;
@@ -139,6 +140,10 @@ const CommunityWritePage = ({
     console.log(postData);
     await handleSubmit(postData);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container>
@@ -369,12 +374,14 @@ const NavRight = styled.div<{ isActive: boolean }>`
   button {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
-    padding: 4px 8px;
+    padding: 4px 0px;
     border-radius: 4px;
   }
 
   .store {
+    width: 84px;
     background: ${({ theme }) => theme.colors.gray50};
     color: ${({ theme, isActive }) =>
       isActive ? theme.colors.black : theme.colors.gray500};
@@ -382,23 +389,14 @@ const NavRight = styled.div<{ isActive: boolean }>`
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   }
 
-  .store-svg path {
-    fill: ${({ theme, isActive }) =>
-      isActive ? theme.colors.black : theme.colors.gray500};
-  }
-
   .post {
+    width: 60px;
     background: ${({ theme, isActive }) =>
       isActive ? theme.colors.mainBlue : theme.colors.subBlue};
     color: ${({ theme, isActive }) =>
       isActive ? theme.colors.white : theme.colors.mainBlue};
     font-size: ${({ theme }) => theme.typography.fontSize.body2};
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  }
-
-  .post-svg path {
-    fill: ${({ theme, isActive }) =>
-      isActive ? theme.colors.white : theme.colors.mainBlue};
   }
 `;
 

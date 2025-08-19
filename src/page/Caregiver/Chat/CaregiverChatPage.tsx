@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { Button } from '@/components/common/Button/Button';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import ChatCard from '@/components/Chat/ChatCard';
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
+import { useHandleNavigate } from '@/hooks/useHandleNavigate';
 import {
   formatDateLabel,
   formatTimeLabel,
@@ -17,15 +18,7 @@ import { useGetCaregiverChat, usePostCaregiverContract } from '@/api/caregiver';
 const CaregiverChatPage = () => {
   const { matchingId } = useParams<{ matchingId: string }>();
 
-  const navigate = useNavigate();
-  const handleGoBack = () => {
-    navigate(-1);
-    window.scrollTo(0, 0);
-  };
-  const handleNavigate = (path: string) => {
-    navigate(path);
-    window.scrollTo(0, 0);
-  };
+  const { handleGoBack, handleNavigate } = useHandleNavigate();
 
   const handleModal = (
     setter: React.Dispatch<React.SetStateAction<boolean>>,
@@ -46,11 +39,18 @@ const CaregiverChatPage = () => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   // 최종 승인하기 팝업 - 최종 승인하기
   const handleConfirm = () => {
-    confirmApply(
-      data?.contractList[data?.contractList.length - 1]?.contractId ?? 0,
-    );
-    setFinalConfirm(true);
-    handleModal(setIsCompleteModalOpen, setIsConfirmModalOpen);
+    const lastContractId =
+      data?.contractList?.[data?.contractList.length - 1]?.contractId;
+    if (!lastContractId) {
+      console.error('유효한 계약 ID가 없습니다.');
+      return;
+    }
+    confirmApply(lastContractId, {
+      onSuccess: () => {
+        setFinalConfirm(true);
+        handleModal(setIsCompleteModalOpen, setIsConfirmModalOpen);
+      },
+    });
   };
   // 최종 확정 팝업
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
@@ -178,7 +178,7 @@ const CaregiverChatPage = () => {
           left="일정 보러가기"
           right="채팅 보기"
           handleLeftBtnClick={() =>
-            handleNavigate(`caregiver/apply/${data?.recruitmentId}`)
+            handleNavigate(`/caregiver/apply/${data?.recruitmentId}`)
           }
           handleRightBtnClick={() => handleModal(setIsCompleteModalOpen)}
         />

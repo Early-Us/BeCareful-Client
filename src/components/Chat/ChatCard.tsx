@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import InfoDisplay from '@/components/common/InfoDisplay/InfoDisplay';
 import { Button } from '@/components/common/Button/Button';
-
 import { caretypeFormat, dayFormat } from '@/utils/caregiver';
 import { Gender_Mapping } from '@/constants/caregiverMapping';
 import { ChatElderlyInfo, Contract } from '@/types/Common/chat';
@@ -34,7 +33,9 @@ const ChatCard = ({
       ? [
           {
             title: '성함/연령',
-            detail: `${elder?.elderlyName} ${elder?.elderlyAge}세 ${Gender_Mapping[elder?.elderlyGender ?? 'FEMALE']}`,
+            detail: elder
+              ? `${elder?.elderlyName} ${elder?.elderlyAge}세 ${Gender_Mapping[elder?.elderlyGender]}`
+              : '정보 없음',
           },
         ]
       : []),
