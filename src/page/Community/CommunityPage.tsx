@@ -5,7 +5,7 @@ import { ReactComponent as Search } from '@/assets/icons/Search.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/ChatNew.svg';
 import { ReactComponent as ChevronRight } from '@/assets/icons/ChevronRight.svg';
-import { ReactComponent as Plus } from '@/assets/icons/ButtonPlus.svg';
+// import { ReactComponent as Plus } from '@/assets/icons/ButtonPlus.svg';
 import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
 import CommunityWritePage from '@/page/Community/CommunityWritePage';
 import CommunityHome from '@/components/Community/home/CommunityHome';
@@ -62,7 +62,7 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
         <Container>
           <Top $backgroundImageUrl={data?.associationProfileImageUrl || ''}>
             <div className="right">
-              <Search />
+              <Search onClick={() => handleNavigate('/community/search')} />
               <ChatWrapper onClick={() => handleNavigate('/socialworker/chat')}>
                 {chatNew ? <ChatNew /> : <Chat />}
               </ChatWrapper>
@@ -91,10 +91,10 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
                 </label>
                 <Chevron />
               </div>
-              <div className="invite">
+              {/* <div className="invite">
                 <Plus />
                 <label className="invite-label">초대하기</label>
-              </div>
+              </div> */}
             </div>
           </Association>
 
