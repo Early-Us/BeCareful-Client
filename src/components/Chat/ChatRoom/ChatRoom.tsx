@@ -2,14 +2,15 @@ import styled from 'styled-components';
 import ChatBubble from '@/components/Chat/ChatRoom/ChatBubble';
 import ChatContractButton from '@/components/Chat/ChatRoom/ChatContractButton';
 import ChatGuide from '@/components/Chat/ChatRoom/ChatGuide';
-import { formatDateLabel, groupByDate } from '@/utils/formatTime';
 import {
   ChatResponse,
-  UserRole,
-  StatusMessage,
+  ChatRoomContractStatus,
+  ChatRoomStatus,
   OtherUserProfile,
-} from '@/types/common/chat';
-import { ChatRoomContractStatus, ChatRoomStatus } from '@/types/Caregiver/chat';
+  StatusMessage,
+} from '@/types/chat';
+import { UserRole } from '@/types/common';
+import { formatDateLabel, groupByDate } from '@/utils/format/date';
 
 interface ChatRoomProps {
   chat: ChatResponse[];
@@ -43,7 +44,13 @@ const ChatRoom = ({
           <div className="date">{formatDateLabel(date)}</div>
           {chatGroupByDate[date].map((chat, index) => {
             return (
-              <ChatBubble key={index} chat={chat} other={other} role={role}>
+              <ChatBubble
+                key={index}
+                chat={chat}
+                other={other}
+                role={role}
+                chatRoomId={chatRoomId}
+              >
                 {chat.chatType === 'CONTRACT' &&
                   lastContractChatId === chat.chatId && (
                     <ChatContractButton

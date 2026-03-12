@@ -8,12 +8,12 @@ import { Toggle } from '@/components/common/Toggle/Toggle';
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
 import ModalLimit from '@/components/common/Modal/ModalLimit';
-import { UserRole } from '@/types/common/chat';
-import { getTodayDateTime } from '@/utils/getTodayDate';
+import { UserRole } from '@/types/common';
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
 import { useNavigationActions } from '@/hooks/MyPage/useNavigationActions';
 import { useMarketingAgreement } from '@/hooks/MyPage/useMarketingAgreement';
 import { useUserAuthActions } from '@/hooks/MyPage/useUserAuthActions';
+import { getTodayDateTime } from '@/utils/format/date';
 
 interface SettingPageProps {
   role: UserRole;
@@ -26,8 +26,14 @@ const SettingPage = ({ role }: SettingPageProps) => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
-  const { handleService, handlePrivacy, handlePasswordChange } =
-    useNavigationActions(role);
+  const {
+    handleServiceTerms,
+    handlePrivacyPolicy,
+    handleThirdPartyConsent,
+    handleMarketingAgree,
+    handleBlock,
+    handlePasswordChange,
+  } = useNavigationActions(role);
 
   const {
     isMarketingAgree,
@@ -47,12 +53,20 @@ const SettingPage = ({ role }: SettingPageProps) => {
 
       <MenuWrapper>
         <div className="title">이용약관</div>
-        <Menu onClick={handleService}>
+        <Menu onClick={handleServiceTerms}>
           <div className="menu">서비스 이용약관</div>
           <Chevron />
         </Menu>
-        <Menu onClick={handlePrivacy}>
-          <div className="menu">개인정보 처리방침</div>
+        <Menu onClick={handlePrivacyPolicy}>
+          <div className="menu">개인정보 수집 및 이용 동의</div>
+          <Chevron />
+        </Menu>
+        <Menu onClick={handleThirdPartyConsent}>
+          <div className="menu">개인정보 제3자 제공 동의</div>
+          <Chevron />
+        </Menu>
+        <Menu onClick={handleMarketingAgree}>
+          <div className="menu">마케팅 정보 수신 동의</div>
           <Chevron />
         </Menu>
       </MenuWrapper>
@@ -69,17 +83,15 @@ const SettingPage = ({ role }: SettingPageProps) => {
 
       <Border />
 
-      {/* 
       <MenuWrapper>
         <div className="title">사용자 설정</div>
         <Menu onClick={handleBlock}>
           <div className="menu">차단 사용자 관리</div>
           <Chevron />
         </Menu>
-      </MenuWrapper> 
+      </MenuWrapper>
 
       <Border />
-      */}
 
       <MenuWrapper>
         <div className="title">계정</div>
@@ -151,7 +163,9 @@ const SettingPage = ({ role }: SettingPageProps) => {
         <ModalButtons
           onClose={() => setIsLeaveModalOpen(false)}
           title="정말 탈퇴하시겠습니까?"
-          detail={'돌봄다리 통합 서비스에서 탈퇴됩니다.\n계속하시겠습니까?'}
+          detail={
+            '탈퇴 완료 시 모든 데이터는 즉시 파기되며\n복구할 수 없습니다.'
+          }
           left="취소"
           right="탈퇴하기"
           handleLeftBtnClick={() => setIsLeaveModalOpen(false)}

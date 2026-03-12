@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
+import { ReactComponent as AD1 } from '@/assets/icons/AD1.svg';
+import { ReactComponent as AD2 } from '@/assets/icons/AD2.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/ChatNewWhite.svg';
 import { ReactComponent as ChevronRight } from '@/assets/icons/ChevronRight.svg';
 import { ReactComponent as Plus } from '@/assets/icons/socialworker/home/Plus.svg';
+import { ReactComponent as CoachmarkHome } from '@/assets/icons/CoachmarkHomeS.svg';
+import { useChatWebSocket } from '@/contexts/ChatWebSocketContext';
 import { Button } from '@/components/common/Button/Button';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import RankCard from '@/components/SocialWorker/Home/RankCard';
@@ -14,21 +18,17 @@ import InstitutionSection from '@/components/SocialWorker/Home/InstitutionSectio
 import Modal from '@/components/common/Modal/Modal';
 import ModalButtons from '@/components/common/Modal/ModalButtons';
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
-import { useGetSocialWorkerHome } from '@/api/socialworker';
-
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import PostOverviewAd from '@/components/Community/common/PostOverviewAd';
-import { adPostList } from '@/constants/Ad';
-import { useGetSocialworkerHasNewChat } from '@/api/chat';
+import { useSocialworkerHome } from '@/api/user/socialworker';
+import { Swiper } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { SwiperSlide } from 'swiper/react';
+import { TabGuideTour } from '@/components/common/TabGuideTour';
 
 const SocialworkerHomePage = () => {
   const { handleNavigate } = useHandleNavigate();
   const [isNew, setIsNew] = useState(false);
-  const { data: hasNewChat } = useGetSocialworkerHasNewChat();
-  const { data } = useGetSocialWorkerHome();
+  const { hasNewChat } = useChatWebSocket();
+  const { data } = useSocialworkerHome();
 
   return (
     <Container>
@@ -38,13 +38,20 @@ const SocialworkerHomePage = () => {
             onClose={() => setIsNew(false)}
             title="회원가입을 축하드립니다!"
             detail="지금 바로 ‘매칭하기’를 눌러 구인해보세요!"
-            left="내 포인트 확인"
+            // left="내 포인트 확인"
+            left="확인"
             right="홈으로"
-            handleLeftBtnClick={() => handleNavigate('/socialworker/point')}
+            handleLeftBtnClick={() => handleNavigate('/socialworker')}
             handleRightBtnClick={() => setIsNew(false)}
           />
         </Modal>
       )}
+
+      <TabGuideTour
+        target={'.sw-home'}
+        storageKey={'visitedHomeS'}
+        Img={<CoachmarkHome />}
+      />
 
       <NavBar
         left={<NavLeft />}
@@ -58,7 +65,7 @@ const SocialworkerHomePage = () => {
 
       <Top>
         <div className="institution">
-          <img src={data?.socialWorkerInfo.profileImageUrl} />
+          <img src={data?.institutionInfo.institutionDetail.profileImageUrl} />
           <label>{data?.institutionInfo.institutionDetail.name}</label>
           <RankCard
             rank={data?.socialWorkerInfo.institutionRank ?? 'SOCIAL_WORKER'}
@@ -66,7 +73,7 @@ const SocialworkerHomePage = () => {
         </div>
       </Top>
 
-      <CustomPagination>
+      {/* <CustomPagination>
         <Swiper
           modules={[Pagination]}
           pagination={{ clickable: true }}
@@ -83,7 +90,7 @@ const SocialworkerHomePage = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </CustomPagination>
+      </CustomPagination> */}
 
       {/* {searchResults.map((post, index) => ( */}
       {/* <React.Fragment key={post.postId}> */}
@@ -114,6 +121,24 @@ const SocialworkerHomePage = () => {
       </SectionWrapper>
 
       <SectionWrapper>
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          loop={true}
+          spaceBetween={10}
+          slidesPerView={1}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          speed={1000}
+          style={{ width: '100%', height: 'auto' }}
+        >
+          {[<AD1 />, <AD2 />].map((ad, index) => (
+            <SwiperSlide key={index}>
+              <AdWrapper index={index}>{ad}</AdWrapper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </SectionWrapper>
+
+      <SectionWrapper>
         <div className="titleWrapper">
           <label className="title">매칭 진행 중인 어르신</label>
           <div
@@ -135,6 +160,8 @@ const SocialworkerHomePage = () => {
         </div>
         <InstitutionSection data={data?.institutionInfo} />
       </SectionWrapper>
+
+      <CopyWrapper>© Copyright 2025 돌봄다리 All Rights Reserved.</CopyWrapper>
     </Container>
   );
 };
@@ -226,25 +253,37 @@ const SectionWrapper = styled.div`
   }
 `;
 
-const CustomPagination = styled.div`
-  padding: 20px;
-  padding-bottom: 0px;
-
-  .swiper-pagination {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-const PostWrapper = styled.div`
-  margin-bottom: 32px;
-  padding: 24px 20px;
+const AdWrapper = styled.div<{ index: number }>`
+  margin-top: 14px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  height: 84px;
   border-radius: 12px;
-  border-top: 1px solid ${({ theme }) => theme.colors.gray50};
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.03);
+  background: ${({ index, theme }) =>
+    index === 0 ? '#EBE8FE' : theme.colors.mainBlue};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
+
+const CopyWrapper = styled.div`
+  margin-top: 64px;
+  padding: 14px 20px;
+
+  color: ${({ theme }) => theme.colors.gray300};
+  font-size: ${({ theme }) => theme.typography.fontSize.body4};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+`;
+
+// const PostWrapper = styled.div`
+//   margin-bottom: 32px;
+//   padding: 24px 20px;
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 12px;
+//   border-radius: 12px;
+//   border-top: 1px solid ${({ theme }) => theme.colors.gray50};
+//   background: ${({ theme }) => theme.colors.white};
+//   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.03);
+// `;

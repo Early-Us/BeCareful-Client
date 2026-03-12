@@ -6,19 +6,20 @@ import { ReactComponent as Delete } from '@/assets/icons/CloseCircle.svg';
 import { ReactComponent as Send } from '@/assets/icons/community/ReplySend.svg';
 import { ReactComponent as SendDefault } from '@/assets/icons/community/ReplySendDefault.svg';
 import { ReactComponent as KakaoChannelIcon } from '@/assets/icons/KakaoChannel.svg';
+import { useChatWebSocket } from '@/contexts/ChatWebSocketContext';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import ChatGuide from '@/components/Chat/ChatRoom/ChatGuide';
 import ChatRoom from '@/components/Chat/ChatRoom/ChatRoom';
 import BottomSheet from '@/components/Community/common/BottomSheet';
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
-import { CaregiverChatResponse } from '@/types/Caregiver/chat';
-import { SocialworkerChatResponse } from '@/types/Socialworker/chat';
 import {
+  CaregiverChatResponse,
   OtherUserProfile,
-  SendTextChatRequest,
+  SendTextRequest,
+  SocialworkerChatResponse,
   StatusMessage,
-  UserRole,
-} from '@/types/common/chat';
+} from '@/types/chat';
+import { UserRole } from '@/types/common';
 import { useChat } from '@/hooks/useChat';
 
 interface ChatPageProps {
@@ -39,6 +40,7 @@ const ChatPage = ({
   placeholder,
 }: ChatPageProps) => {
   const { handleGoBack, handleNavigate } = useHandleNavigate();
+  const { setHasNewChat } = useChatWebSocket();
 
   const [isKakaoSheetOpen, setIsKakaoSheetOpen] = useState(false);
   const [newChat, setNewChat] = useState('');
@@ -58,6 +60,10 @@ const ChatPage = ({
     });
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setHasNewChat(false);
+  }, [setHasNewChat]);
 
   useEffect(() => {
     let statusTitle = '';
@@ -92,7 +98,7 @@ const ChatPage = ({
   }, [chat]);
 
   const handleSend = () => {
-    const request: SendTextChatRequest = {
+    const request: SendTextRequest = {
       sendRequestType: 'SEND_TEXT',
       text: newChat,
     };
@@ -104,7 +110,15 @@ const ChatPage = ({
     <Container>
       <NavBar
         left={<NavLeft onClick={handleGoBack} />}
-        center={<NavCenter>{chatRoomName}</NavCenter>}
+        center={
+          <NavCenter>
+            {chatRoomName === '탈퇴한 요양보호사' ? (
+              <div className="expelCaregiver">{chatRoomName}</div>
+            ) : (
+              <div>{chatRoomName}</div>
+            )}
+          </NavCenter>
+        }
         right={<NavRight onClick={() => setIsKakaoSheetOpen(true)} />}
         fix={true}
       />
@@ -200,10 +214,14 @@ const NavLeft = styled(ArrowLeft)`
   cursor: pointer;
 `;
 
-const NavCenter = styled.label`
+const NavCenter = styled.div`
   color: ${({ theme }) => theme.colors.black};
   font-size: ${({ theme }) => theme.typography.fontSize.title5};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+
+  .expelCaregiver {
+    color: ${({ theme }) => theme.colors.gray600};
+  }
 `;
 
 const NavRight = styled(DotIcon)`

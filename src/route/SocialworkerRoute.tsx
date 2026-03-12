@@ -17,16 +17,19 @@ import { ElderlyDetailPage } from '@/page/Elderly/ElderlyDetailPage';
 import { RecruitmentDetailPage } from '@/page/SocialWorker/Matching/RecruitmentDetailPage';
 import { MatchingInfoPage } from '@/page/Matching/MatchingInfoPage';
 import { ElderlyEditPage } from '@/page/Elderly/ElderlyEditPage';
-import AdPostPage from '@/page/SocialWorker/Home/AdPostPage';
+// import AdPostPage from '@/page/SocialWorker/Home/AdPostPage';
 import { RecruitmentEditPage } from '@/page/SocialWorker/Matching/RecruitmentEditPage';
+import { SocialworkerOnboardingPage } from '@/page/Onboarding/SocialworkerOnboardingPage';
 
 const SocialworkerRoute = () => {
   const location = useLocation();
 
   const hideTabBarPaths = [
+    '/socialworker/onboarding',
     '/socialworker/my/profile',
     '/socialworker/my/institution',
     '/socialworker/my/association',
+    '/socialworker/my/block',
     '/socialworker/elderly/new',
     '/socialworker/elderly/:elderlyId',
     '/socialworker/elderly/:elderlyId/edit',
@@ -42,7 +45,7 @@ const SocialworkerRoute = () => {
     '/socialworker/recruitment/:recruitmentId',
     '/socialworker/recruitment/:recruitmentId/edit',
 
-    '/socialworker/ad/:adId',
+    // '/socialworker/ad/:adId',
   ];
   const shouldHideTabBar = () => {
     return hideTabBarPaths.some((pathPattern) => {
@@ -58,6 +61,8 @@ const SocialworkerRoute = () => {
       <main>
         <Routes>
           <Route index element={<SocialworkerHomePage />} />
+
+          <Route path="/onboarding" element={<SocialworkerOnboardingPage />} />
 
           <Route path="my/*" element={<SocialworkerMyRoute />} />
 
@@ -125,7 +130,7 @@ const SocialworkerRoute = () => {
 
           <Route path="point" element={<PointPage />} />
 
-          <Route path="ad/:adId" element={<AdPostPage />} />
+          {/* <Route path="ad/:adId" element={<AdPostPage />} /> */}
         </Routes>
       </main>
 

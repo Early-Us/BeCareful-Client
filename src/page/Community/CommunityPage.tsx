@@ -7,21 +7,19 @@ import { ReactComponent as ChatNew } from '@/assets/icons/ChatNewWhite.svg';
 import { ReactComponent as ChevronRight } from '@/assets/icons/ChevronRight.svg';
 // import { ReactComponent as Plus } from '@/assets/icons/ButtonPlus.svg';
 import { ReactComponent as Write } from '@/assets/icons/community/Write.svg';
+import { useChatWebSocket } from '@/contexts/ChatWebSocketContext';
 import CommunityHome from '@/components/Community/home/CommunityHome';
 import CommunityDetail from '@/components/Community/home/CommunityDetail';
 import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { CommunityJoinRequestModal } from '@/components/Community/JoinCommunity/CommunityJoinRequestModal';
 import { CommunityJoinPendingModal } from '@/components/Home/CommunityJoinPendingModal';
 import { CommunityJoinApprovedModal } from '@/components/Home/CommunityJoinApprovedModal';
-import {
-  BOARD_KR_TO_PARAM,
-  COMMUNITY_BOARDS_TAB,
-} from '@/constants/community/communityBoard';
+
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
 import { useJoinStatusModal } from '@/hooks/Community/CommunityJoin/useJoinStatusModal';
-import { useGetCommunityHome } from '@/api/community';
-import { useCancelJoinAssociation } from '@/api/communityAssociation';
-import { useGetSocialworkerHasNewChat } from '@/api/chat';
+import { useCommunityHome } from '@/api/community/community';
+import { useCancelJoinAssociation } from '@/api/community/association';
+import { BOARD_MAP, COMMUNITY_BOARDS_TAB } from '@/constants/domain/community';
 
 const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
   const { handleGoBack, handleNavigate } = useHandleNavigate();
@@ -50,9 +48,9 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
     window.scrollTo(0, 0);
   };
 
-  const { data: hasNewChat } = useGetSocialworkerHasNewChat();
+  const { hasNewChat } = useChatWebSocket();
 
-  const { data } = useGetCommunityHome(!previewMode);
+  const { data } = useCommunityHome(!previewMode);
   const {
     isPendingModalOpen,
     isApprovedModalOpen,
@@ -138,7 +136,10 @@ const CommunityPage = ({ previewMode = false }: { previewMode?: boolean }) => {
 
       <Button
         onClick={() => {
-          const board = BOARD_KR_TO_PARAM[activeTab];
+          const board =
+            BOARD_MAP.KR_TO_PARAM[
+              activeTab as keyof typeof BOARD_MAP.KR_TO_PARAM
+            ];
           handleNavigate(
             board ? `/community/write?boardType=${board}` : '/community/write',
           );
