@@ -3,26 +3,39 @@ import { useState } from 'react';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/ChatNewBlack.svg';
 import { ReactComponent as Chevron } from '@/assets/icons/ChevronUp.svg';
+import { ReactComponent as CoachmarkWork } from '@/assets/icons/CoachmarkWork.svg';
+import { useChatWebSocket } from '@/contexts/ChatWebSocketContext';
+import { CAREGIVER_WORK_FILTERS } from '@/constants/domain/caregiver';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import { Toggle } from '@/components/common/Toggle/Toggle';
+import { TabGuideTour } from '@/components/common/TabGuideTour';
 import CaregiverWorkCard from '@/components/Caregiver/CaregiverWorkCard';
 import InfoDisplay from '@/components/common/InfoDisplay/InfoDisplay';
-import { CAREGIVER_WORK_FILTERS } from '@/constants/caregiver/caregiverWorkFilters';
+import Modal from '@/components/common/Modal/Modal';
+import ModalButtons from '@/components/common/Modal/ModalButtons';
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
 import { useApplicationData } from '@/hooks/Caregiver/work/useApplicationData';
 import { useMatchingList } from '@/hooks/Caregiver/work/useMatchingList';
-import { useGetCaregiverHasNewChat } from '@/api/chat';
 
 const CaregiverWorkPage = () => {
   const { handleNavigate } = useHandleNavigate();
-  const { data: hasNewChat } = useGetCaregiverHasNewChat();
+  const { hasNewChat } = useChatWebSocket();
 
   // 상단 부분(신청서 조회)
-  const { applicationData, isToggleChecked, handleToggleChange, applyInfo } =
-    useApplicationData();
+  const {
+    applicationData,
+    isToggleChecked,
+    handleToggleChange,
+    applyInfo,
+    isApplyModalOpen,
+    setIsApplyModalOpen,
+    isCareerModalOpen,
+    setIsCareerModalOpen,
+    handleApplyButtonClick,
+  } = useApplicationData();
 
   // 지원서 펼침 상태
-  const [showApplication, setShowApplication] = useState(false);
+  const [showApplication, setShowApplication] = useState(true);
 
   // 하단 부분(일자리 조회)
   const { activeTab, handleTabChange, filteredMatchingList } =
@@ -30,6 +43,12 @@ const CaregiverWorkPage = () => {
 
   return (
     <Container>
+      <TabGuideTour
+        target={'.cg-work'}
+        storageKey={'visitedWork'}
+        Img={<CoachmarkWork />}
+      />
+
       <NavBar
         left={<NavLeft>일자리</NavLeft>}
         right={
@@ -53,7 +72,7 @@ const CaregiverWorkPage = () => {
                 </span>
               </div>
             ) : (
-              <label className="date">아직 등록된 지원서 없어요!</label>
+              <label className="date">아직 등록된 지원서가 없어요!</label>
             )}
             <div className="title">
               {applicationData?.caregiverName} 일자리 지원서
@@ -78,7 +97,7 @@ const CaregiverWorkPage = () => {
         {showApplication && (
           <>
             <InfoDisplay items={applyInfo} gapColumn="8px" gapRow="32px" />
-            <Button onClick={() => handleNavigate('/caregiver/my/application')}>
+            <Button onClick={handleApplyButtonClick}>
               내 지원서 {applicationData?.workApplicationDto ? '수정' : '등록'}
               하기
             </Button>
@@ -102,7 +121,7 @@ const CaregiverWorkPage = () => {
       </FiltersWrapper>
 
       <ApplicationsWrapper>
-        <div className="count">총 {filteredMatchingList.length}건</div>
+        <div className="cg-work-main">총 {filteredMatchingList.length}건</div>
         {filteredMatchingList.length === 0 && (
           <div className="noapply">
             알맞은 일자리가 없어요.
@@ -129,6 +148,38 @@ const CaregiverWorkPage = () => {
           />
         ))}
       </ApplicationsWrapper>
+
+      <Modal
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+      >
+        <ModalButtons
+          onClose={() => setIsApplyModalOpen(false)}
+          title="아직 지원서가 등록되지 않았어요!"
+          detail="일자리 지원서를 등록 후에 지원해주세요."
+          left="확인"
+          right="지원서 등록하기"
+          handleLeftBtnClick={() => setIsApplyModalOpen(false)}
+          handleRightBtnClick={() =>
+            handleNavigate('/caregiver/my/application')
+          }
+        />
+      </Modal>
+
+      <Modal
+        isOpen={isCareerModalOpen}
+        onClose={() => setIsCareerModalOpen(false)}
+      >
+        <ModalButtons
+          onClose={() => setIsCareerModalOpen(false)}
+          title="아직 경력서가 작성되지 않았어요!"
+          detail="마이페이지에서 경력서를 먼저 작성해주세요."
+          left="확인"
+          right="경력서 작성하기"
+          handleLeftBtnClick={() => setIsCareerModalOpen(false)}
+          handleRightBtnClick={() => handleNavigate('/caregiver/my')}
+        />
+      </Modal>
     </Container>
   );
 };
@@ -222,7 +273,8 @@ const ToggleLabel = styled.label<{ isBlue: boolean | undefined }>`
 `;
 
 const Border = styled.div`
-  width: 100vw;
+  width: calc(100% + 40px);
+  box-sizing: border-box;
   height: 5px;
   background: ${({ theme }) => theme.colors.gray50};
   margin-left: -20px;
@@ -277,7 +329,7 @@ const ApplicationsWrapper = styled.div`
   flex-direction: column;
   gap: 12px;
 
-  .count {
+  .cg-work-main {
     color: ${({ theme }) => theme.colors.gray700};
     font-size: ${({ theme }) => theme.typography.fontSize.body2};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};

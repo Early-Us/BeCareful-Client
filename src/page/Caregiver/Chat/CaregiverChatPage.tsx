@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import ChatPage from '@/components/Chat/ChatPage/ChatPage';
+import { OtherUserProfile } from '@/types/chat';
 import { useGetCaregiverChat } from '@/api/chat';
-import { OtherUserProfile } from '@/types/common/chat';
 
 const CaregiverChatPage = () => {
   const { chatRoomId } = useParams<{ chatRoomId: string }>();
   const roomId = Number(chatRoomId);
   const { data } = useGetCaregiverChat(roomId);
 
+  const socialWorkerId =
+    data?.chatList.find((chat) => chat.socialWorkerId != null)
+      ?.socialWorkerId ?? 0;
+
   const otherUser: OtherUserProfile = {
+    id: socialWorkerId,
     profileImg:
       data?.institutionProfileImageUrl ??
       'https://care-bridges-main-bucket.s3.ap-northeast-2.amazonaws.com/institution-profile-image/default/institution_default.png',

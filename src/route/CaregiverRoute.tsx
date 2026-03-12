@@ -11,11 +11,13 @@ import CaregiverApplyPage from '@/page/Caregiver/Apply/CaregiverApplyPage';
 import CaregiverApplyDetailPage from '@/page/Caregiver/Apply/CaregiverApplyDetailPage';
 import CaregiverChatListPage from '@/page/Caregiver/Chat/CaregiverChatListPage';
 import CaregiverChatPage from '@/page/Caregiver/Chat/CaregiverChatPage';
+import { CaregiverOnboardingPage } from '@/page/Onboarding/CaregiverOnboardingPage';
 
 const CaregiverRoute = () => {
   const location = useLocation();
 
   const hideTabBarPaths = [
+    '/caregiver/onboarding',
     '/caregiver/mywork',
     '/caregiver/work/:recruitmentId',
     '/caregiver/apply/:recruitmentId',
@@ -23,6 +25,7 @@ const CaregiverRoute = () => {
     '/caregiver/my/profile',
     '/caregiver/my/career',
     '/caregiver/my/application',
+    '/caregiver/my/block',
     '/caregiver/chat',
     '/caregiver/chat/:chatRoomId',
   ];
@@ -40,6 +43,7 @@ const CaregiverRoute = () => {
       >
         <main>
           <Routes>
+            <Route path="/onboarding" element={<CaregiverOnboardingPage />} />
             <Route index element={<CaregiverHomePage />} />
             <Route path="mywork" element={<CaregiverMyworkPage />} />
             <Route path="work" element={<CaregiverWorkPage />} />

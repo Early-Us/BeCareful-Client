@@ -1,30 +1,27 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
-import AgreeSection from '@/components/SocialWorker/MyPage/AgreeSection';
 import BirthInputBox from '@/components/common/InputBox/BirthInputBox';
 import InputBox from '@/components/common/InputBox/InputBox';
+import ProfileImgUploader from '@/components/common/ProfileImgUploader';
 import { Button } from '@/components/common/Button/Button';
 import { CheckCard } from '@/components/SignUp/SocialWorkerSignUpFunnel/common/CheckCard';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import { InstitutionSearchInput } from '@/components/SignUp/SocialWorkerSignUpFunnel/Step3InstitutionName/InstitutionSearchInput';
-import {
-  INSTITUTION_RANK_EN_TO_RANK,
-  INSTITUTION_RANK_LIST,
-} from '@/constants/common/institutionRank';
-import { SocialworkerMyRequest } from '@/types/Socialworker/mypage';
+import { INSTITUTION_RANK_LIST } from '@/constants/common/maps';
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
+import { useProfileImg } from '@/hooks/useProfileImg';
 import { useSocialworkerBasicForm } from '@/hooks/Socialworker/useSocialworkerBasicForm';
-import { useAgreementStateForm } from '@/hooks/Socialworker/useAgreementStateForm';
+import { SocialworkerUpdateRequest } from '@/types/socialworker';
 import {
-  useGetSocialWorkerMyEdit,
-  usePutSocialworkerMy,
-} from '@/api/socialworker';
+  useSocialworkerProfileEdit,
+  useUpdateSocialworkerProfile,
+} from '@/api/user/socialworker';
 
 const SocialworkerEditProfilePage = () => {
   const { handleGoBack } = useHandleNavigate();
   const [isChanged, setIsChanged] = useState(false);
-  const { data } = useGetSocialWorkerMyEdit();
+  const { data } = useSocialworkerProfileEdit();
 
   const {
     name,
@@ -40,33 +37,34 @@ const SocialworkerEditProfilePage = () => {
     nicknameValidation,
     isDuplicateCheckButtonEnabled,
     handleChange,
+    handleChangeRank,
     handleCheckDuplicate,
   } = useSocialworkerBasicForm(data, setIsChanged);
 
-  const { agreementStates, handleAgreementChange } = useAgreementStateForm(
-    data,
-    setIsChanged,
-  );
+  const { mutate: updateProfile } = useUpdateSocialworkerProfile();
 
-  const { mutate: updateSocialMy } = usePutSocialworkerMy();
+  const profileUpload = useProfileImg(
+    '/social-worker/profile-img/presigned-url',
+  );
+  const [isImgActionSheetOpen, setIsImgActionSheetOpen] = useState(false);
+  const defaultImgUrl =
+    'https://care-bridges-main-bucket.s3.ap-northeast-2.amazonaws.com/caregiver-profile-image/default/caregiver_default.png';
 
   const handleEditBtnClick = async () => {
-    const myData: SocialworkerMyRequest = {
+    const profileUrl = profileUpload.getProfileImageKeyForServer();
+
+    const profileData: SocialworkerUpdateRequest = {
       realName: name,
       nickName: nickname,
       birthYymmdd: birth,
       genderCode: genderCode,
       phoneNumber: phoneNumber,
       nursingInstitutionId: institutionId,
-      institutionRank: INSTITUTION_RANK_EN_TO_RANK[rank],
-      isAgreedToTerms: agreementStates.isAgreedToTerms,
-      isAgreedToCollectPersonalInfo:
-        agreementStates.isAgreedToCollectPersonalInfo,
-      isAgreedToReceiveMarketingInfo:
-        agreementStates.isAgreedToReceiveMarketingInfo,
+      institutionRank: rank,
+      profileImageTempKey: profileUrl,
     };
-    console.log(myData);
-    updateSocialMy(myData, {
+    // console.log(profileData);
+    updateProfile(profileData, {
       onSuccess: () => {
         handleGoBack();
         setIsChanged(false);
@@ -79,6 +77,15 @@ const SocialworkerEditProfilePage = () => {
       <NavBar
         left={<NavLeft onClick={handleGoBack} />}
         center={<NavCenter>프로필 수정하기</NavCenter>}
+      />
+
+      <ProfileImgUploader
+        hook={profileUpload}
+        initialImgUrl={data?.profileImageUrl ?? defaultImgUrl}
+        defaultImgUrl={defaultImgUrl}
+        isImgActionSheetOpen={isImgActionSheetOpen}
+        setIsImgActionSheetOpen={setIsImgActionSheetOpen}
+        setIsChanged={setIsChanged}
       />
 
       <InfoWrapper>
@@ -148,21 +155,10 @@ const SocialworkerEditProfilePage = () => {
             key={option.value}
             pressed={rank === option.value}
             text={option.text}
-            onClick={() => handleChange('rank', option.value)}
+            onClick={() => handleChangeRank(option.value)}
           />
         ))}
       </CardContainer>
-
-      <AgreeSection
-        initialIsAgreedToTerms={agreementStates.isAgreedToTerms}
-        initialIsAgreedToCollectPersonalInfo={
-          agreementStates.isAgreedToCollectPersonalInfo
-        }
-        initialIsAgreedToReceiveMarketingInfo={
-          agreementStates.isAgreedToReceiveMarketingInfo
-        }
-        onAgreementChange={handleAgreementChange}
-      />
 
       <Bottom>
         <Button

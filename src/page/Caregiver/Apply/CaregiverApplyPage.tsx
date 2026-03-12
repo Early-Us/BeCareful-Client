@@ -2,15 +2,14 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/ChatNewBlack.svg';
+import { ReactComponent as CoachmarkApply } from '@/assets/icons/CoachmarkApply.svg';
+import { useChatWebSocket } from '@/contexts/ChatWebSocketContext';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import CaregiverWorkCard from '@/components/Caregiver/CaregiverWorkCard';
-import {
-  APPLY_TABS,
-  MATCHING_STATUS,
-} from '@/constants/caregiver/matchingStatus';
+import { APPLY_TABS, MATCHING_STATUS } from '@/constants/domain/caregiver';
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
-import { useApplicationListQuery } from '@/api/caregiver';
-import { useGetCaregiverHasNewChat } from '@/api/chat';
+import { useMyApplicationList } from '@/api/matching/caregiver';
+import { TabGuideTour } from '@/components/common/TabGuideTour';
 
 const CaregiverApplyPage = () => {
   const { handleNavigate } = useHandleNavigate();
@@ -21,15 +20,25 @@ const CaregiverApplyPage = () => {
     window.scrollTo(0, 0);
   };
 
-  const { data: hasNewChat } = useGetCaregiverHasNewChat();
+  const { hasNewChat } = useChatWebSocket();
 
-  const { data, error } = useApplicationListQuery(activeTab);
+  const { data, error } = useMyApplicationList(activeTab);
   if (error) {
     console.log('getApplicationList 에러: ', error);
   }
 
   return (
     <Container>
+      <TabGuideTour
+        target={'.cg-apply'}
+        storageKey={'visitedApply'}
+        Img={
+          <ImgWrapper>
+            <CoachmarkApply />
+          </ImgWrapper>
+        }
+      />
+
       <NavBar
         left={<NavLeft>지원현황</NavLeft>}
         right={
@@ -39,7 +48,7 @@ const CaregiverApplyPage = () => {
         }
       />
 
-      <TabWrapper>
+      <TabWrapper className="cg-apply-main">
         <Tabs>
           {APPLY_TABS.map((tab) => (
             <Tab
@@ -176,4 +185,11 @@ const ApplicationsWrapper = styled.div`
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     text-align: center;
   }
+`;
+
+const ImgWrapper = styled.div`
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
 `;

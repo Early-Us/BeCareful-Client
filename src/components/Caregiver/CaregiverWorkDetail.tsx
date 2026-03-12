@@ -2,15 +2,14 @@ import styled from 'styled-components';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
 import { ReactComponent as ChatNew } from '@/assets/icons/ChatNewBlack.svg';
+import { useChatWebSocket } from '@/contexts/ChatWebSocketContext';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import InfoDisplay from '@/components/common/InfoDisplay/InfoDisplay';
-import { SALARY_EN_TO_KR } from '@/constants/common/salary';
-import { GENDER_EN_TO_KR_2 } from '@/constants/common/gender';
+import { GENDER_MAP, SALARY_MAP } from '@/constants/common/maps';
+import { MatchingRecruitmentResponse } from '@/types/matching';
 import { useHandleNavigate } from '@/hooks/useHandleNavigate';
-import { MatchingRecruitmentResponse } from '@/types/Caregiver/work';
-import { formatDaysToKR } from '@/utils/caregiverFormatter';
-import { formatDateTime } from '@/utils/formatTime';
-import { useGetCaregiverHasNewChat } from '@/api/chat';
+import { formatDaysToKR } from '@/utils/format/domain';
+import { formatDateTime } from '@/utils/format/date';
 
 interface CaregiverWorkDetailProps {
   work: MatchingRecruitmentResponse;
@@ -19,7 +18,7 @@ interface CaregiverWorkDetailProps {
 const CaregiverWorkDetail = ({ work }: CaregiverWorkDetailProps) => {
   const { handleGoBack, handleNavigate } = useHandleNavigate();
 
-  const { data: hasNewChat } = useGetCaregiverHasNewChat();
+  const { hasNewChat } = useChatWebSocket();
 
   const workInfo = [
     {
@@ -35,7 +34,7 @@ const CaregiverWorkDetail = ({ work }: CaregiverWorkDetailProps) => {
       detail: `${work.recruitmentInfo.workStartTime} ~ ${work.recruitmentInfo.workEndTime}`,
     },
     {
-      title: SALARY_EN_TO_KR[work.recruitmentInfo.workSalaryUnitType],
+      title: SALARY_MAP.EN_TO_KR[work.recruitmentInfo.workSalaryUnitType],
       detail: `${work.recruitmentInfo.workSalaryAmount.toLocaleString('ko-KR')}원`,
     },
   ];
@@ -43,7 +42,7 @@ const CaregiverWorkDetail = ({ work }: CaregiverWorkDetailProps) => {
   const elderlyInfo = [
     {
       title: '나이/성별',
-      detail: `${work.recruitmentInfo.elderlyInfo.age}세 ${GENDER_EN_TO_KR_2[work.recruitmentInfo.elderlyInfo.gender]}`,
+      detail: `${work.recruitmentInfo.elderlyInfo.age}세 ${GENDER_MAP.EN_TO_KR_FULL[work.recruitmentInfo.elderlyInfo.gender]}`,
     },
     {
       title: '주소',

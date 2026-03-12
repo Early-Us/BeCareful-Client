@@ -1,23 +1,25 @@
 import { useMemo, useState } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
+import { ReactComponent as ChatNew } from '@/assets/icons/ChatNewBlack.svg';
+import { ReactComponent as CoachmarkMatching } from '@/assets/icons/CoachmarkMatching.svg';
+import { useChatWebSocket } from '@/contexts/ChatWebSocketContext';
 import { NavBar } from '@/components/common/NavBar/NavBar';
-import { SocialWorkerTabBar } from '@/components/SocialWorker/common/SocialWorkerTabBar';
 import { MatchingSearchBox } from '@/components/Matching/MatchingSearchBox';
 import { ElderCard } from '@/components/Matching/ElderCard';
 import { Pagination } from '@/components/common/Pagination/Pagination';
 import { Tab } from '@/components/common/Tab/Tab';
-import { useRecruitment, useWaitingElderly } from '@/api/elderly';
+import { useWaitingElderly } from '@/api/matching/elderly';
+import { useRecruitment } from '@/api/matching/socialworker';
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/LoadingIndicator';
 import { ErrorIndicator } from '@/components/common/ErrorIndicator/ErrorIndicator';
 import { EmptyStateIndicator } from '@/components/common/EmptyStateIndicator/EmptyStateIndicator';
-import { ReactComponent as Chat } from '@/assets/icons/Chat.svg';
-import { ReactComponent as ChatNew } from '@/assets/icons/ChatNewBlack.svg';
 import { NewElderRegistrationCard } from '@/components/SocialWorker/common/NewElderRegistrationCard';
 import { FloatingPostButton } from '@/components/SocialWorker/common/FloatingPostButton';
 import { ElderMatchingCard } from '@/components/SocialWorker/MatchingStatus/ElderMatchingCard';
 import { RegisterElderModal } from '@/components/SocialWorker/RegisterMatchingElder/RegisterElderModal';
-import { useGetSocialworkerHasNewChat } from '@/api/chat';
+import { TabGuideTour } from '@/components/common/TabGuideTour';
 
 const TAB_LABELS = ['매칭 대기', '매칭 중', '매칭 완료'] as const;
 
@@ -70,7 +72,7 @@ export const SocialWorkerMatchingListPage = () => {
             age={e.elderlyAge}
             gender={e.elderlyGender}
             careLevel={e.elderlyCareLevel}
-            imageUrl={e.elderlyProfileImageUrl}
+            profileImageUrl={e.elderlyProfileImageUrl}
             onClick={() => {
               setSelectedElderId(e.elderlyId);
               setIsRegisterModalOpen(true);
@@ -90,73 +92,82 @@ export const SocialWorkerMatchingListPage = () => {
           />
         ));
 
-  const { data: hasNewChat } = useGetSocialworkerHasNewChat();
+  const { hasNewChat } = useChatWebSocket();
 
   return (
-    <>
-      <Container>
-        <NavBar
-          left={<NavLeft>매칭</NavLeft>}
-          right={
-            <NavRight onClick={() => navigate('/caregiver/chat')}>
-              {hasNewChat ? <ChatNew /> : <Chat />}
-            </NavRight>
-          }
-        />
+    <Container>
+      <TabGuideTour
+        target={'.sw-matching'}
+        storageKey={'visitedMatching'}
+        Img={
+          <ImgWrapper>
+            <CoachmarkMatching />
+          </ImgWrapper>
+        }
+      />
 
-        <TabContainer>
-          <Tab
-            tabs={TAB_LABELS.map((label) => ({ name: label, content: null }))}
-            currentTab={selectedTab}
-            onTabChange={(i) => {
-              setSelectedTab(i as 0 | 1 | 2);
-              setCurrentPage(1);
-            }}
-          />
-        </TabContainer>
+      <NavBar
+        left={<NavLeft>매칭</NavLeft>}
+        right={
+          <NavRight onClick={() => navigate('/caregiver/chat')}>
+            {hasNewChat ? <ChatNew /> : <Chat />}
+          </NavRight>
+        }
+      />
 
-        <MatchingSearchBox
-          placeholder={
-            selectedTab === 0
-              ? '아직 공고를 등록하지 않은 어르신 검색'
-              : '공고/어르신 검색'
-          }
-          value={searchTerm}
-          onChange={(v) => {
-            setSearchTerm(v);
+      <TabContainer>
+        <Tab
+          tabs={TAB_LABELS.map((label) => ({ name: label, content: null }))}
+          currentTab={selectedTab}
+          onTabChange={(i) => {
+            setSelectedTab(i as 0 | 1 | 2);
             setCurrentPage(1);
           }}
         />
+      </TabContainer>
 
-        <CountText>총 {totalElements}명</CountText>
+      <MatchingSearchBox
+        placeholder={
+          selectedTab === 0
+            ? '아직 공고를 등록하지 않은 어르신 검색'
+            : '공고/어르신 검색'
+        }
+        value={searchTerm}
+        onChange={(v) => {
+          setSearchTerm(v);
+          setCurrentPage(1);
+        }}
+      />
 
-        <CardContainer>
-          {isError && <ErrorIndicator />}
-          {isLoading && <LoadingIndicator />}
+      <CountText>총 {totalElements}명</CountText>
 
-          {!isLoading && !isError && cards.length === 0 && (
-            <EmptyStateIndicator message="데이터가 없습니다" />
-          )}
+      <CardContainer>
+        {isError && <ErrorIndicator />}
+        {isLoading && <LoadingIndicator />}
 
-          {!isLoading && !isError && cards}
-        </CardContainer>
-
-        {selectedTab === 0 && (
-          <NewElderRegistrContainer>
-            <NewElderRegistrationCard />
-          </NewElderRegistrContainer>
+        {!isLoading && !isError && cards.length === 0 && (
+          <EmptyStateIndicator message="데이터가 없습니다" />
         )}
 
-        <PaginationContainer>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </PaginationContainer>
+        {!isLoading && !isError && cards}
+      </CardContainer>
 
-        <FloatingPostButton />
-      </Container>
+      {selectedTab === 0 && (
+        <NewElderRegistrContainer>
+          <NewElderRegistrationCard />
+        </NewElderRegistrContainer>
+      )}
+
+      <PaginationContainer>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      </PaginationContainer>
+
+      <FloatingPostButton />
+
       {isRegisterModalOpen && selectedElderId !== null && (
         <RegisterElderModal
           width="320px"
@@ -169,8 +180,7 @@ export const SocialWorkerMatchingListPage = () => {
           }}
         />
       )}
-      <SocialWorkerTabBar />
-    </>
+    </Container>
   );
 };
 
@@ -225,4 +235,10 @@ const PaginationContainer = styled.div`
 const NewElderRegistrContainer = styled.div`
   display: flex;
   padding-top: 16px;
+`;
+
+const ImgWrapper = styled.div`
+  position: fixed;
+  bottom: 77px;
+  right: 20px;
 `;
