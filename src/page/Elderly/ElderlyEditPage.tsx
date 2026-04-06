@@ -14,7 +14,7 @@ import { InmateSection } from '@/components/SocialWorker/ElderyRegister/InmateSe
 import { NameInputSection } from '@/components/SocialWorker/ElderyRegister/NameInputSection';
 import { PetSection } from '@/components/SocialWorker/ElderyRegister/PetSection';
 import { SubmitSection } from '@/components/SocialWorker/ElderyRegister/SubmitSection';
-import { AreaSocials } from '@/data/AreaSocial';
+// import { AreaSocials } from '@/data/AreaSocial';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '@/assets/icons/ArrowLeft.svg';
 import styled from 'styled-components';
@@ -22,6 +22,7 @@ import { useElderlyEditForm } from '@/hooks/Elderly/useElderlyEditForm';
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/LoadingIndicator';
 import { ErrorIndicator } from '@/components/common/ErrorIndicator/ErrorIndicator';
 import { AreaSelectData } from '@/types/common';
+import { Area } from '@/data/AreaData';
 
 export const ElderlyEditPage = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export const ElderlyEditPage = () => {
 
   const { data, isLoading, isError } = useElderDetail(id);
 
-  const areaData: AreaSelectData[] = AreaSocials.city;
+  const areaData: AreaSelectData[] = Area.city;
 
   const form = useElderlyEditForm({
     elderlyId: id,

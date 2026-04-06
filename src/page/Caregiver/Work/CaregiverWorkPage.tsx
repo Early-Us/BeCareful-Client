@@ -41,6 +41,22 @@ const CaregiverWorkPage = () => {
   const { activeTab, handleTabChange, filteredMatchingList } =
     useMatchingList();
 
+  const applicationClick = (recruitmentId: number) => {
+    if (!applicationData) return;
+
+    if (!applicationData.hasCareer) {
+      setIsCareerModalOpen(true);
+      return;
+    }
+
+    if (!applicationData.workApplicationDto) {
+      setIsApplyModalOpen(true);
+      return;
+    }
+
+    handleNavigate(`/caregiver/work/${recruitmentId}`);
+  };
+
   return (
     <Container>
       <TabGuideTour
@@ -123,11 +139,7 @@ const CaregiverWorkPage = () => {
       <ApplicationsWrapper>
         <div className="cg-work-main">총 {filteredMatchingList.length}건</div>
         {filteredMatchingList.length === 0 && (
-          <div className="noapply">
-            알맞은 일자리가 없어요.
-            <br />
-            일자리 지원서를 등록해보세요!
-          </div>
+          <div className="noapply">알맞은 일자리가 없어요.</div>
         )}
         {filteredMatchingList.map((matching) => (
           <CaregiverWorkCard
@@ -144,7 +156,9 @@ const CaregiverWorkPage = () => {
                 ? '일자리 모집중'
                 : '일자리 마감'
             }
-            navigatePath="work"
+            onClick={() =>
+              applicationClick(matching.recruitmentInfo.recruitmentId)
+            }
           />
         ))}
       </ApplicationsWrapper>

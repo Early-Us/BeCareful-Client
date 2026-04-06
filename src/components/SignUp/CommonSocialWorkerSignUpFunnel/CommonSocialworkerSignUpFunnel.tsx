@@ -6,16 +6,17 @@ import { SignUpModal } from '@/components/SignUp/common/SingUpModal';
 import { useState } from 'react';
 import { useCommonSignUpContext } from '@/contexts/CommonSocialWorkerSignUpContext';
 import { Step2InstitutionName } from '@/components/SignUp/CommonSocialWorkerSignUpFunnel/Step2InstitutionName';
-import { Step3AccountCredentials } from '@/components/SignUp/CommonSocialWorkerSignUpFunnel/Step3ccountCredentials';
+import { Step0AccountCredentials } from '@/components/SignUp/CommonSocialWorkerSignUpFunnel/Step0AccountCredentials';
 import { Step1SelectRole } from '@/components/SignUp/CommonSocialWorkerSignUpFunnel/Step1SelectRole';
 import { Step4BasicInfo } from '@/components/SignUp/CommonSocialWorkerSignUpFunnel/Step4BasicInfo';
 import { Step5AcceptTerms } from '@/components/SignUp/CommonSocialWorkerSignUpFunnel/Step5AcceptTerms';
 import { Step6SignUpComplete } from '@/components/SignUp/CommonSocialWorkerSignUpFunnel/Step6SignUpComplete';
 
 const steps = [
+  Step0AccountCredentials,
   Step1SelectRole,
   Step2InstitutionName,
-  Step3AccountCredentials,
+
   Step4BasicInfo,
   Step5AcceptTerms,
   Step6SignUpComplete,

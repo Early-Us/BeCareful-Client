@@ -12,6 +12,7 @@ interface PlainInputBoxProps {
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
   maxLength?: number;
   type?: string;
+  readOnly?: boolean;
 }
 
 export const PlainInputBox = ({
@@ -26,6 +27,7 @@ export const PlainInputBox = ({
   inputMode,
   maxLength,
   type = 'text',
+  readOnly = false,
 }: PlainInputBoxProps) => {
   return (
     <InputWrapper width={width}>
@@ -38,6 +40,7 @@ export const PlainInputBox = ({
         onKeyDown={onKeyDown}
         inputMode={inputMode}
         maxLength={maxLength}
+        readOnly={readOnly}
       ></InputDefault>
       {guide === '' ? (
         <></>
@@ -99,6 +102,12 @@ const InputDefault = styled.input<{ state: string }>`
     border: 1px solid ${({ theme }) => theme.colors.mainBlue};
     outline: none;
     caret-color: ${({ theme }) => theme.colors.mainBlue};
+  }
+
+  &:read-only {
+    background: ${({ theme }) => theme.colors.gray50};
+    color: ${({ theme }) => theme.colors.gray900};
+    cursor: default;
   }
 `;
 

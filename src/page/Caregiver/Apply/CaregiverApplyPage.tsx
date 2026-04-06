@@ -82,7 +82,11 @@ const CaregiverApplyPage = () => {
               stateColor={status.stateColor}
               bgColor={status.bgColor}
               stateLabel={status.stateLabel}
-              navigatePath="apply"
+              onClick={() =>
+                handleNavigate(
+                  `/caregiver/apply/${application.recruitmentInfo.recruitmentId}`,
+                )
+              }
             />
           );
         })}

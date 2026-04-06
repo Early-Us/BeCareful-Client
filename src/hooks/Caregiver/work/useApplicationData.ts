@@ -18,7 +18,7 @@ export const useApplicationData = () => {
   const [isCareerModalOpen, setIsCareerModalOpen] = useState(false);
 
   useEffect(() => {
-    setIsToggleChecked(!!applicationData?.workApplicationDto.isActive);
+    setIsToggleChecked(!!applicationData?.workApplicationDto?.isActive);
   }, [applicationData]);
 
   const { mutate: toggleWorkApplication } = useWorkApplicationToggleMutation({
@@ -26,11 +26,19 @@ export const useApplicationData = () => {
   });
 
   const handleToggleChange = () => {
-    if (applicationData?.workApplicationDto) {
-      toggleWorkApplication(isToggleChecked);
-    } else {
-      setIsApplyModalOpen(true);
+    if (!applicationData) return;
+
+    if (!applicationData.hasCareer) {
+      setIsCareerModalOpen(true);
+      return;
     }
+
+    if (!applicationData.workApplicationDto) {
+      setIsApplyModalOpen(true);
+      return;
+    }
+
+    toggleWorkApplication(isToggleChecked);
   };
 
   const handleApplyButtonClick = () => {

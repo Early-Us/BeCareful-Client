@@ -111,6 +111,18 @@ export interface CaregiverProfileResponse {
   workApplicationInfo: WorkApplication;
 }
 
+export type CaregiverLeaveType =
+  | 'INSUFFICIENT_JOB'
+  | 'UNCOMFORTABLE_APP'
+  | 'PERSONAL_INFO'
+  | 'OTHER';
+
+export interface CaregiverLeaveRequest {
+  isAgreedToDeleteTerms: boolean;
+  caregiverLeaveType: CaregiverLeaveType;
+  detailReason: string;
+}
+
 // ==================== 사회복지사 - 차단한 요양보호사 ====================
 export interface BlockCaregiverInfo extends Omit<BaseUserInfo, 'phoneNumber'> {
   caregiverId: number;

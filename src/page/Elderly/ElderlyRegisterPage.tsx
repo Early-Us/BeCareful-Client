@@ -12,19 +12,20 @@ import { CareTypeSection } from '@/components/SocialWorker/ElderyRegister/CareTy
 import { InmateSection } from '@/components/SocialWorker/ElderyRegister/InmateSection';
 import { SubmitSection } from '@/components/SocialWorker/ElderyRegister/SubmitSection';
 
-import { AreaSocials } from '@/data/AreaSocial';
+// import { AreaSocials } from '@/data/AreaSocial';
 import { useElderlyRegisterForm } from '@/hooks/Elderly/useElderlyRegisterForm';
 import { useUploadElderlyProfileImage } from '@/api/matching/elderly';
 import { ProfileImageUploader } from '@/components/SocialWorker/common/ProfileImageUploader';
 import { PetSection } from '@/components/SocialWorker/ElderyRegister/PetSection';
 import { NavBar } from '@/components/common/NavBar/NavBar';
 import { AreaSelectData } from '@/types/common';
+import { Area } from '@/data/AreaData';
 
 const ElderlyRegisterPage = () => {
   const navigate = useNavigate();
 
   const form = useElderlyRegisterForm();
-  const areaData: AreaSelectData[] = AreaSocials.city;
+  const areaData: AreaSelectData[] = Area.city;
 
   const { mutate: uploadImage } = useUploadElderlyProfileImage();
 

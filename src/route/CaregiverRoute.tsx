@@ -12,12 +12,14 @@ import CaregiverApplyDetailPage from '@/page/Caregiver/Apply/CaregiverApplyDetai
 import CaregiverChatListPage from '@/page/Caregiver/Chat/CaregiverChatListPage';
 import CaregiverChatPage from '@/page/Caregiver/Chat/CaregiverChatPage';
 import { CaregiverOnboardingPage } from '@/page/Onboarding/CaregiverOnboardingPage';
+import CaregiverLeavePage from '@/page/Caregiver/MyPage/CaregiverLeavePage';
 
 const CaregiverRoute = () => {
   const location = useLocation();
 
   const hideTabBarPaths = [
     '/caregiver/onboarding',
+    '/caregiver/leave',
     '/caregiver/mywork',
     '/caregiver/work/:recruitmentId',
     '/caregiver/apply/:recruitmentId',
@@ -62,6 +64,8 @@ const CaregiverRoute = () => {
             <Route path="chat/:chatRoomId" element={<CaregiverChatPage />} />
 
             <Route path="point" element={<PointPage />} />
+
+            <Route path="leave" element={<CaregiverLeavePage />} />
           </Routes>
         </main>
 

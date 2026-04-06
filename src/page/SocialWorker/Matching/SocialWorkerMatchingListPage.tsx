@@ -14,7 +14,6 @@ import { useWaitingElderly } from '@/api/matching/elderly';
 import { useRecruitment } from '@/api/matching/socialworker';
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/LoadingIndicator';
 import { ErrorIndicator } from '@/components/common/ErrorIndicator/ErrorIndicator';
-import { EmptyStateIndicator } from '@/components/common/EmptyStateIndicator/EmptyStateIndicator';
 import { NewElderRegistrationCard } from '@/components/SocialWorker/common/NewElderRegistrationCard';
 import { FloatingPostButton } from '@/components/SocialWorker/common/FloatingPostButton';
 import { ElderMatchingCard } from '@/components/SocialWorker/MatchingStatus/ElderMatchingCard';
@@ -25,7 +24,7 @@ const TAB_LABELS = ['매칭 대기', '매칭 중', '매칭 완료'] as const;
 
 export const SocialWorkerMatchingListPage = () => {
   const navigate = useNavigate();
-  const [selectedTab, setSelectedTab] = useState<0 | 1 | 2>(0);
+  const [selectedTab, setSelectedTab] = useState<0 | 1 | 2>(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -109,7 +108,7 @@ export const SocialWorkerMatchingListPage = () => {
       <NavBar
         left={<NavLeft>매칭</NavLeft>}
         right={
-          <NavRight onClick={() => navigate('/caregiver/chat')}>
+          <NavRight onClick={() => navigate('/socialworker/chat')}>
             {hasNewChat ? <ChatNew /> : <Chat />}
           </NavRight>
         }
@@ -144,10 +143,6 @@ export const SocialWorkerMatchingListPage = () => {
       <CardContainer>
         {isError && <ErrorIndicator />}
         {isLoading && <LoadingIndicator />}
-
-        {!isLoading && !isError && cards.length === 0 && (
-          <EmptyStateIndicator message="데이터가 없습니다" />
-        )}
 
         {!isLoading && !isError && cards}
       </CardContainer>

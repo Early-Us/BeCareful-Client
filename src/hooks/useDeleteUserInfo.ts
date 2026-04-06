@@ -7,10 +7,11 @@ export const useDeleteUserInfo = () => {
   const setUserInfo = useSetRecoilState(currentUserInfo);
 
   const queryClient = useQueryClient();
-  const { handleNavigate } = useHandleNavigate();
+  const { handleNavigateState } = useHandleNavigate();
 
   const deleteUserInfo = () => {
     localStorage.removeItem('currentUserInfo');
+    localStorage.removeItem('autoLoginCredentials');
 
     setUserInfo({
       realName: '',
@@ -19,7 +20,7 @@ export const useDeleteUserInfo = () => {
 
     queryClient.clear();
 
-    handleNavigate('/');
+    handleNavigateState('/', { replace: true });
   };
 
   return deleteUserInfo;

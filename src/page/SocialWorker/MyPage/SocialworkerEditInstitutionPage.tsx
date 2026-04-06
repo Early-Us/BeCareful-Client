@@ -22,7 +22,7 @@ const SocialworkerEditInstitutionPage = () => {
   const { data } = useSocialworkerProfile();
 
   const profileUpload = useProfileImg(
-    '/nursingInstitution/profile-img/presigned-url',
+    '/nursing-institution/profile-img/presigned-url',
   );
   const [isImgActionSheetOpen, setIsImgActionSheetOpen] = useState(false);
 

@@ -3,7 +3,6 @@ import { colors } from '@/style/theme/color';
 import InfoDisplay from '@/components/common/InfoDisplay/InfoDisplay';
 import { SALARY_MAP } from '@/constants/common/maps';
 import { useRecruitmentReadStatus } from '@/contexts/RecruitmentReadStatusContext';
-import { useHandleNavigate } from '@/hooks/useHandleNavigate';
 import { Recruitment } from '@/types/matching';
 import { formatDateTime } from '@/utils/format/date';
 import { formatCaretype, formatDaysToKR } from '@/utils/format/domain';
@@ -14,7 +13,7 @@ interface CaregiverWorkCardProps {
   stateColor: ColorKey;
   bgColor: ColorKey;
   stateLabel: string;
-  navigatePath: string;
+  onClick: () => void;
 }
 
 const CaregiverWorkCard = ({
@@ -22,10 +21,8 @@ const CaregiverWorkCard = ({
   stateColor,
   bgColor,
   stateLabel,
-  navigatePath,
+  onClick,
 }: CaregiverWorkCardProps) => {
-  const { handleNavigate } = useHandleNavigate();
-
   const { readStatuses } = useRecruitmentReadStatus();
   const isRead =
     readStatuses[recruitment.recruitmentInfo.recruitmentId] || false;
@@ -46,13 +43,7 @@ const CaregiverWorkCard = ({
   ];
 
   return (
-    <CardContainer
-      onClick={() =>
-        handleNavigate(
-          `/caregiver/${navigatePath}/${recruitment.recruitmentInfo.recruitmentId}`,
-        )
-      }
-    >
+    <CardContainer onClick={onClick}>
       <State bgColor={bgColor} stateColor={stateColor}>
         <div className="circle" />
         <label className="state">{stateLabel}</label>

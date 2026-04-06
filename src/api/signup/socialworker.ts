@@ -57,7 +57,7 @@ export const searchInstitution = async (
   name: string,
 ): Promise<InstitutionInfo[]> => {
   const { data } = await axiosInstance.get<InstitutionInfo[]>(
-    '/nursingInstitution/search',
+    '/nursing-institution/search',
     { params: { nursingInstitutionName: name } },
   );
   return data ?? [];

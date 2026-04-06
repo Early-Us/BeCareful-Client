@@ -1,5 +1,4 @@
 import { PlainInputBox } from '@/components/common/InputBox/PlainInputBox';
-import { SecretInputBox } from '@/components/common/InputBox/SecretInputBox';
 import styled from 'styled-components';
 
 interface ResidentIdInputProps {
@@ -33,13 +32,12 @@ export const ResidentIdInput = ({
           inputMode="numeric"
         />
         -
-        <SecretInputBox
+        <PlainInputBox
           width="25%"
           state="default"
           placeholder=""
           guide=""
           value={genderInput}
-          masked={true}
           onChange={onGenderChange}
           maxLength={1}
           inputMode="numeric"

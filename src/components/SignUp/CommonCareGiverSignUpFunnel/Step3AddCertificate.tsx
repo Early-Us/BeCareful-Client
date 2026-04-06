@@ -31,7 +31,7 @@ export const Step3AddCertificate = () => {
           소지하신 자격증 입력해주세요
           <br />
           <span className="subtext">
-            등급과 자격증 번호를 정확히 입력해주세요.
+            등급과 자격증 번호를 정확하게 입력해 주세요.
           </span>
         </Title>
       </HeaderSection>

@@ -43,7 +43,7 @@ const CareerSection = ({ data }: CareerSectionProps) => {
           <label className="title">{data.title}</label>
           {data.careerType === '경력' && (
             <div className="careers">
-              <InfoDisplay width="56px" gapRow="32px" items={careerInfo} />
+              <InfoDisplay width="68px" gapRow="32px" items={careerInfo} />
             </div>
           )}
         </Career>

@@ -131,8 +131,12 @@ export const ElderlyDetailPage = () => {
           height="52px"
           variant="blue"
           onClick={() => {
-            navigate('/socialworker/recruitment/new');
-            window.scrollTo(0, 0);
+            if (elderlyId) {
+              navigate('/socialworker/recruitment/new', {
+                state: { elderlyId: Number(elderlyId) },
+              });
+              window.scrollTo(0, 0);
+            }
           }}
         >
           새 공고 등록

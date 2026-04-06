@@ -1,5 +1,6 @@
 import { CertificateInfo } from '@/types/caregiver';
 import { Gender, InstitutionRank, Rank } from '@/types/common';
+import { formatPhoneNumber } from '@/utils/format/text';
 
 // ==================== 사회복지사 ====================
 export interface SocialSignUpFormData {
@@ -22,7 +23,10 @@ export interface SignUpPayload {
   birthYymmdd: string;
   genderCode: number;
   phoneNumber: string;
+  loginProvider: string;
+  password: string;
   institutionRank: InstitutionRank;
+  profileImageTempKey?: string;
   isAgreedToTerms: boolean;
   isAgreedToCollectPersonalInfo: boolean;
   isAgreedToReceiveMarketingInfo: boolean;
@@ -75,6 +79,7 @@ export const buildCaregiverSignUpPayload = (
 
   return {
     ...rest,
+    phoneNumber: formatPhoneNumber(fd.phoneNumber),
     caregiverCertificate,
     ...(hasNumber(socialWorkerCertificate) && { socialWorkerCertificate }),
     ...(hasNumber(nursingCareCertificate) && { nursingCareCertificate }),

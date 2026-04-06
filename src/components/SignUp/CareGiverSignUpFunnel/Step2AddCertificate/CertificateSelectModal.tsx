@@ -36,8 +36,8 @@ export const CertificateSelectModal = ({
           <NavigateNext />
         </CardContainer>
 
-        <CardContainer onClick={() => onAddCertificate('간호지원사')}>
-          <CardText>간호지원사 자격증 추가하기</CardText>
+        <CardContainer onClick={() => onAddCertificate('간호조무사')}>
+          <CardText>간호조무사 자격증 추가하기</CardText>
           <NavigateNext />
         </CardContainer>
       </CertificateSelectModalContent>

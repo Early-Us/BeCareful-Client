@@ -91,9 +91,11 @@ export const CareGiverDetailInfoPage = () => {
                 <ChevronIcon />
               </div>
             </div>
-            <span>믿고 맡길 수 있는 편안함을 제공합니다.</span>
+            <span>{data.careerInfo.introduce}</span>
           </ProfileInfo>
-          <TagContainer>적합도 {data.matchingResultStatus}</TagContainer>
+          {data.matchingResultStatus === '높음' && (
+            <TagContainer>적합도 {data.matchingResultStatus}</TagContainer>
+          )}
         </RightContainer>
       </ProfileInfoContainer>
 

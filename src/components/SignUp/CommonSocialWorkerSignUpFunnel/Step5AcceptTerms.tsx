@@ -62,7 +62,20 @@ export const Step5AcceptTerms = () => {
 
   const handleNext = useCallback(() => {
     if (!requiredAgreed || isPending) return;
-    submit(formData as SignUpPayload, { onSuccess: () => goToNext() });
+
+    if (formData.nursingInstitutionId === null) {
+      alert('소속 기관을 먼저 선택해주세요.');
+      return;
+    }
+
+    const payload: SignUpPayload = {
+      ...formData,
+      nursingInstitutionId: formData.nursingInstitutionId,
+      institutionRank:
+        formData.institutionRank === 'none' ? 'NONE' : formData.institutionRank,
+    };
+
+    submit(payload, { onSuccess: () => goToNext() });
   }, [requiredAgreed, isPending, formData, submit, goToNext]);
 
   return (

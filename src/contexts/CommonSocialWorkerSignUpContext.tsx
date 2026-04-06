@@ -17,9 +17,9 @@ export interface SignUpFormData {
   isAgreedToCollectPersonalInfo: boolean;
   isAgreedToReceiveMarketingInfo: boolean;
 
-  //api 나오면 수정 예정
   password: string;
-  profileImgeTempKey?: string;
+  profileImageTempKey: string;
+  loginProvider: string;
 }
 
 interface SignUpContextType extends ReturnType<typeof useFunnel> {
@@ -50,7 +50,8 @@ export const CommonSocialworkerSignUpProvider = ({
     isAgreedToCollectPersonalInfo: false,
     isAgreedToReceiveMarketingInfo: false,
     password: '',
-    profileImgeTempKey: 'default',
+    profileImageTempKey: 'default',
+    loginProvider: 'LOCAL',
   });
 
   const [isInstitutionFunnel, setIsInstitutionFunnel] = useState(false);

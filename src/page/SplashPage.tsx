@@ -8,7 +8,7 @@ const SplashPage = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/onboarding');
+      navigate('/login');
     }, 2000);
 
     return () => clearTimeout(timer);

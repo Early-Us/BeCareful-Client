@@ -38,6 +38,7 @@ export const PhoneNumberInput = ({
         maxLength={13}
         inputMode="tel"
         onKeyDown={locked ? blockEvent : undefined}
+        readOnly={locked}
       />
     </InputWrapper>
   );

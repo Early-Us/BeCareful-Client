@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Pretendard Variable';
     font-style: normal;
-    line-height: 1.4;
+    line-height: 160%;
     letter-spacing: -0.025em; 
   }
 
