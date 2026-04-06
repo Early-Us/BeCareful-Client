@@ -34,7 +34,11 @@ export const TabContentMatching = ({
         </TextInfo>
         <ProfileImage src={profileImageUrl} alt={`${caregiverName}의 프로필`} />
       </InfoContainer>
-      <TagContainer score={matchingScore}>적합도 {matchingScore}</TagContainer>
+      {matchingScore === '높음' && (
+        <TagContainer score={matchingScore}>
+          적합도 {matchingScore}
+        </TagContainer>
+      )}
     </TabContainer>
   );
 };

@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   SocialworkerAssociationResponse,
   SocialworkerHomeResponse,
+  SocialworkerLeaveRequest,
   SocialworkerProfileResponse,
   SocialworkerUpdateRequest,
   SocialworkerUpdateResponse,
@@ -183,10 +184,12 @@ export const useSocialworkerLogout = () => {
 };
 
 /* 회원탈퇴 */
-export const useDeleteSocialworker = () => {
+export const useLeaveSocialworker = () => {
   return useMutation({
-    mutationFn: async () => {
-      const response = await axiosInstance.delete('/social-worker/leave');
+    mutationFn: async (request: SocialworkerLeaveRequest) => {
+      const response = await axiosInstance.delete('/social-worker', {
+        data: request,
+      });
       return response;
     },
   });

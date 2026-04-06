@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { ReactComponent as ModalClose } from '@/assets/icons/Close.svg';
 import { Button } from '@/components/common/Button/Button';
 import Modal from '@/components/common/Modal/Modal';
-import { Area } from '@/data/Area';
+import { AreaWithAll } from '@/data/AreaData';
+// import { Area } from '@/data/Area';
 
 interface WorkLocationModalProps {
   isOpen: boolean;
@@ -41,7 +42,7 @@ const WorkLocationModal = ({
           <div className="area">
             <label className="category">시/도</label>
             <AreaItems>
-              {Area.city.map((city) => (
+              {AreaWithAll.city.map((city) => (
                 <AreaItem
                   key={city.name}
                   onClick={() => handleCitySelect(city.name)}
@@ -61,7 +62,7 @@ const WorkLocationModal = ({
                   borderRight: '1px solid #d9d9d9',
                 }}
               >
-                {Area.city
+                {AreaWithAll.city
                   .find((city) => city.name === selectedCity)
                   ?.gu?.map((gu) => (
                     <AreaItem
@@ -79,7 +80,7 @@ const WorkLocationModal = ({
             <div className="area">
               <label className="category">동/면/읍</label>
               <AreaItems>
-                {Area.city
+                {AreaWithAll.city
                   .find((city) => city.name === selectedCity)
                   ?.gu.find((gu) => gu.name === selectedGu)
                   ?.dong.map((dong) => (

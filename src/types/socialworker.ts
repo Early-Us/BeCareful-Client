@@ -93,3 +93,15 @@ export type SocialWorkerProfileViewResponse = {
     address: string;
   };
 };
+
+export type SocialworkerLeaveType =
+  | 'MATCHING_NOT_WORK'
+  | 'INSTITUTION_CLOSE'
+  | 'DIFFICULT_SERVICE'
+  | 'OTHER';
+
+export interface SocialworkerLeaveRequest {
+  isAgreedToDeleteTerms: boolean;
+  socialWorkerLeaveType: SocialworkerLeaveType;
+  detailReason: string;
+}

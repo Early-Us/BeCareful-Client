@@ -93,6 +93,10 @@ const CaregiverWorkDetail = ({ work }: CaregiverWorkDetailProps) => {
       title: '주소',
       detail: work.recruitmentInfo.institutionInfo.address,
     },
+    {
+      title: '전화번호',
+      detail: work.recruitmentInfo.institutionInfo.phoneNumber,
+    },
   ];
 
   return (
@@ -134,7 +138,7 @@ const CaregiverWorkDetail = ({ work }: CaregiverWorkDetailProps) => {
           )}
         </div>
 
-        <InfoDisplay width="72px" gapRow="20px" items={workInfo} />
+        <InfoDisplay width="92px" gapRow="20px" items={workInfo} />
       </WorkInfoWrapper>
 
       <Border />
@@ -147,16 +151,16 @@ const CaregiverWorkDetail = ({ work }: CaregiverWorkDetailProps) => {
             {work.recruitmentInfo.elderlyInfo.name}
           </label>
         </div>
-        <InfoDisplay width="56px" gapRow="24px" items={elderlyInfo} />
+        <InfoDisplay width="68px" gapRow="24px" items={elderlyInfo} />
       </SectionWrapper>
 
       <Border />
 
       <SectionWrapper>
         <label className="section-title">근무 내용</label>
-        <InfoDisplay width="56px" gapRow="24px" items={workCareInfo} />
+        <InfoDisplay width="68px" gapRow="24px" items={workCareInfo} />
         {work.recruitmentInfo.description && (
-          <InfoDisplay width="56px" gapRow="24px" items={workExtraInfo} />
+          <InfoDisplay width="68px" gapRow="24px" items={workExtraInfo} />
         )}
       </SectionWrapper>
 
@@ -164,7 +168,7 @@ const CaregiverWorkDetail = ({ work }: CaregiverWorkDetailProps) => {
 
       <SectionWrapper>
         <label className="section-title">기관 정보</label>
-        <InfoDisplay width="56px" gapRow="24px" items={institutionInfo} />
+        <InfoDisplay width="68px" gapRow="24px" items={institutionInfo} />
       </SectionWrapper>
     </Container>
   );

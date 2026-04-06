@@ -34,7 +34,7 @@ export const CommonCaregiverSignUpProvider = ({
     isAgreedToCollectPersonalInfo: false,
     isAgreedToReceiveMarketingInfo: false,
     profileImageTempKey: 'default',
-    loginProvider: '',
+    loginProvider: 'LOCAL',
   });
 
   return (

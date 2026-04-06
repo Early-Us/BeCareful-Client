@@ -3,6 +3,7 @@ import { currentUserInfo } from '@/recoil/currentUserInfo';
 import { SignUpPayload } from '@/types/auth';
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { formatPhoneNumber } from '@/utils/format/text';
 
 export const useSocialWorkerSignupSubmit = () => {
   const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
@@ -13,11 +14,16 @@ export const useSocialWorkerSignupSubmit = () => {
       payload: SignUpPayload,
       opts?: { onSuccess?: () => void; onError?: (e: unknown) => void },
     ) => {
-      mutate(payload, {
+      const normalizedPayload: SignUpPayload = {
+        ...payload,
+        phoneNumber: formatPhoneNumber(payload.phoneNumber),
+      };
+
+      mutate(normalizedPayload, {
         onSuccess: () => {
           setCurrentUserInfo({
-            realName: payload.realName,
-            nickName: payload.nickName,
+            realName: normalizedPayload.realName,
+            nickName: normalizedPayload.nickName,
           });
           opts?.onSuccess?.();
         },

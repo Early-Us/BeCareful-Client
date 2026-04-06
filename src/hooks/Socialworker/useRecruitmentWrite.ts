@@ -79,8 +79,14 @@ export const useRecruitmentWrite = ({
     e,
   ) => {
     const raw = e.target.value;
+    if (raw === '') {
+      setWorkSalaryAmount('');
+      onChange({ workSalaryAmount: 0 });
+      return;
+    }
+    const amount = Number(raw);
     setWorkSalaryAmount(raw);
-    onChange({ workSalaryAmount: raw === '' ? 0 : Number(raw) });
+    onChange({ workSalaryAmount: amount });
   };
 
   const handleMemoChange: React.ChangeEventHandler<HTMLTextAreaElement> = (

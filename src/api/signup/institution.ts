@@ -19,7 +19,7 @@ export const useUploadInstitutionProfileImage = () =>
           : 'application/octet-stream';
 
       const { data } = await axiosInstance.post<PresignedUrlResponse>(
-        '/nursingInstitution/profile-img/presigned-url',
+        '/nursing-institution/profile-img/presigned-url',
         null,
         {
           params: {
@@ -50,7 +50,7 @@ export const useUploadInstitutionProfileImage = () =>
   });
 export const checkInstitutionCode = async (code: string): Promise<boolean> => {
   const { data } = await axiosInstance.get<boolean>(
-    '/nursingInstitution/for-guest/check/already-register',
+    '/nursing-institution/exist',
     {
       params: { nursingInstitutionCode: code },
     },
@@ -73,7 +73,7 @@ export const useCheckInstitutionCode = (
 const PUBLIC_API_SERVICE_KEY = import.meta.env.VITE_APP_PUBLIC_API_KEY;
 
 export const fetchInstitutionsBySiDo = async (siDoCd: string) => {
-  const url = `https://apis.data.go.kr/B550928/searchLtcInsttService01/getLtcInsttSeachList01?siDoCd=${siDoCd}&numOfRows=10000&_type=json&serviceKey=${PUBLIC_API_SERVICE_KEY}`;
+  const url = `https://apis.data.go.kr/B550928/searchLtcInsttService02/getLtcInsttSeachList02?siDoCd=${siDoCd}&numOfRows=10000&_type=json&serviceKey=${PUBLIC_API_SERVICE_KEY}`;
   const res = await fetch(url);
   const data = await res.json();
   return (data?.response?.body?.items?.item ?? []) as PublicApiDto[];
@@ -104,7 +104,7 @@ export const useRegisterInstitution = () =>
   useMutation({
     mutationFn: async (formData: InstitutionFormData) => {
       const { data } = await axiosInstance.post(
-        '/nursingInstitution/for-guest/register',
+        '/nursing-institution',
         formData,
       );
       return data.institutionId as number;

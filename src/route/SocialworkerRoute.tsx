@@ -20,12 +20,14 @@ import { ElderlyEditPage } from '@/page/Elderly/ElderlyEditPage';
 // import AdPostPage from '@/page/SocialWorker/Home/AdPostPage';
 import { RecruitmentEditPage } from '@/page/SocialWorker/Matching/RecruitmentEditPage';
 import { SocialworkerOnboardingPage } from '@/page/Onboarding/SocialworkerOnboardingPage';
+import SocialworkerLeavePage from '@/page/SocialWorker/MyPage/SocialworkerLeavePage';
 
 const SocialworkerRoute = () => {
   const location = useLocation();
 
   const hideTabBarPaths = [
     '/socialworker/onboarding',
+    '/socialworker/leave',
     '/socialworker/my/profile',
     '/socialworker/my/institution',
     '/socialworker/my/association',
@@ -129,6 +131,8 @@ const SocialworkerRoute = () => {
           />
 
           <Route path="point" element={<PointPage />} />
+
+          <Route path="leave" element={<SocialworkerLeavePage />} />
 
           {/* <Route path="ad/:adId" element={<AdPostPage />} /> */}
         </Routes>

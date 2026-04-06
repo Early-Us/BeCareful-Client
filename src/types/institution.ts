@@ -30,6 +30,7 @@ export interface InstitutionInfo {
   name: string;
   profileImageUrl: string;
   address: string;
+  phoneNumber: string;
 }
 
 export interface SocialworkerInstitutionInfo {

@@ -55,6 +55,7 @@ export const CareGiverQualificationCard = ({
           type="text"
           value={certificateNumber}
           onChange={handleChange}
+          placeholder="2025-1234567 (선택)"
         />
       </CardBottomContainer>
     </CardContainer>
@@ -146,6 +147,10 @@ const CardInput = styled.input<{ state: CardState }>`
     state === 'focus' ? theme.colors.white : theme.colors.gray300};
   background-color: ${({ state, theme }) =>
     state === 'focus' ? theme.colors.mainBlue : theme.colors.white};
+  &::placeholder {
+    color: ${({ theme, state }) =>
+      state === 'focus' ? theme.colors.mainBlue : theme.colors.gray300};
+  }
 `;
 
 const QualificationCard = styled.div<{ state: CardState }>`

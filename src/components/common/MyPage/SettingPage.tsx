@@ -20,11 +20,10 @@ interface SettingPageProps {
 }
 
 const SettingPage = ({ role }: SettingPageProps) => {
-  const { handleGoBack } = useHandleNavigate();
+  const { handleGoBack, handleNavigate } = useHandleNavigate();
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
   const {
     handleServiceTerms,
@@ -42,7 +41,15 @@ const SettingPage = ({ role }: SettingPageProps) => {
     handleMarketingClick,
   } = useMarketingAgreement(role);
 
-  const { handleLogout, handleLeave } = useUserAuthActions(role);
+  const { handleLogout } = useUserAuthActions(role);
+
+  const handleLeave = () => {
+    if (role === 'CAREGIVER') {
+      handleNavigate('/caregiver/leave');
+    } else {
+      handleNavigate('/socialworker/leave');
+    }
+  };
 
   return (
     <Container>
@@ -107,7 +114,7 @@ const SettingPage = ({ role }: SettingPageProps) => {
         <div className="menu">로그아웃</div>
         <LogoutIcon />
       </Menu>
-      <Menu onClick={() => setIsLeaveModalOpen(true)}>
+      <Menu onClick={handleLeave}>
         <div className="expel">탈퇴하기</div>
         <LogoutIcon />
       </Menu>
@@ -153,24 +160,6 @@ const SettingPage = ({ role }: SettingPageProps) => {
           right="로그아웃"
           handleLeftBtnClick={() => setIsLogoutModalOpen(false)}
           handleRightBtnClick={handleLogout}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={isLeaveModalOpen}
-        onClose={() => setIsLeaveModalOpen(false)}
-      >
-        <ModalButtons
-          onClose={() => setIsLeaveModalOpen(false)}
-          title="정말 탈퇴하시겠습니까?"
-          detail={
-            '탈퇴 완료 시 모든 데이터는 즉시 파기되며\n복구할 수 없습니다.'
-          }
-          left="취소"
-          right="탈퇴하기"
-          handleLeftBtnClick={() => setIsLeaveModalOpen(false)}
-          handleRightBtnClick={handleLeave}
-          color="red"
         />
       </Modal>
     </Container>

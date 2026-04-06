@@ -21,6 +21,7 @@ export const PhoneAuthInput = ({
   onAuthCodeChange,
   onSendCode,
   sendButtonLabel,
+  remainTimeText,
 }: PhoneAuthInputProps) => {
   return (
     <InputWrapper>
@@ -56,7 +57,11 @@ export const PhoneAuthInput = ({
           inputMode="numeric"
           maxLength={6}
           suffix={
-            <span style={{ color: theme.colors.negative }}>남은시간 02:31</span>
+            remainTimeText ? (
+              <span style={{ color: theme.colors.negative }}>
+                {remainTimeText}
+              </span>
+            ) : undefined
           }
         />
       </AuthCodeRow>

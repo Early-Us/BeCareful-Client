@@ -1,3 +1,5 @@
+import { useRegisterCaregiver } from '@/api/signup/caregiver';
+import { ErrorIndicator } from '@/components/common/ErrorIndicator/ErrorIndicator';
 import { styled } from 'styled-components';
 import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@/components/common/Button/Button';
@@ -14,6 +16,11 @@ import { AgreeField } from '@/types/user';
 export const Step8AcceptTerms = () => {
   const { goToNext, goToPrev, formData, setFormData } =
     useCommonCaregiverSignUpContext();
+  const {
+    mutate: registerCaregiver,
+    isPending,
+    isError,
+  } = useRegisterCaregiver();
 
   const agreeState = useMemo(
     () => ({
@@ -55,6 +62,19 @@ export const Step8AcceptTerms = () => {
     marketing: false,
   });
   const isAnyExpanded = Object.values(expandedState).some(Boolean);
+
+  const handleNext = useCallback(() => {
+    if (!requiredAgreed || isPending) return;
+
+    registerCaregiver(formData, {
+      onSuccess: () => {
+        goToNext();
+      },
+      onError: () => {
+        alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+      },
+    });
+  }, [requiredAgreed, isPending, registerCaregiver, formData, goToNext]);
 
   return (
     <StepWrapper $isAnyExpanded={isAnyExpanded}>
@@ -108,17 +128,19 @@ export const Step8AcceptTerms = () => {
         </AgreeCheckContainer>
       </AgreeWrapper>
 
+      {isError && <ErrorIndicator />}
+
       <ButtonContainer>
-        <Button onClick={goToPrev} height="52px">
+        <Button onClick={goToPrev} height="52px" disabled={isPending}>
           이전
         </Button>
         <Button
-          onClick={goToNext}
+          onClick={handleNext}
           height="52px"
           variant={requiredAgreed ? 'blue' : 'gray'}
-          disabled={!requiredAgreed}
+          disabled={!requiredAgreed || isPending}
         >
-          {'다음'}
+          {isPending ? '처리 중...' : '다음'}
         </Button>
       </ButtonContainer>
     </StepWrapper>

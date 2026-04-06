@@ -12,3 +12,25 @@ axiosInstance.interceptors.request.use((config) => {
 
   return config;
 });
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+    const requestUrl = error.config?.url ?? '';
+    const isAuthFlowRequest =
+      requestUrl.includes('/login') ||
+      requestUrl.includes('/signup') ||
+      requestUrl.includes('/sms');
+
+    if (
+      status === 401 &&
+      !isAuthFlowRequest &&
+      window.location.pathname !== '/login'
+    ) {
+      window.location.replace('/login');
+    }
+
+    return Promise.reject(error);
+  },
+);

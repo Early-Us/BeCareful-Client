@@ -9,6 +9,7 @@ interface CheckBoxProps {
   select: string;
   guide: string;
   disabled?: boolean;
+  checkColor?: string;
 }
 
 export const CheckBox = ({
@@ -20,6 +21,7 @@ export const CheckBox = ({
   select,
   guide,
   disabled = false,
+  checkColor = '',
 }: CheckBoxProps) => {
   return (
     <CheckWrapper onClick={(e) => e.stopPropagation()}>
@@ -29,6 +31,7 @@ export const CheckBox = ({
         checked={checked}
         disabled={disabled}
         onChange={() => !disabled && onChange(!checked)}
+        $color={checkColor}
       />
       <LabelWrapper htmlFor={id}>
         <CheckIcon aria-hidden="true" $borderRadius={borderRadius} />
@@ -115,9 +118,10 @@ const GuideLabel = styled.span<{ $select: string }>`
     $select === '선택' ? theme.colors.gray700 : theme.colors.gray900};
 `;
 
-const Check = styled(CheckHidden)`
+const Check = styled(CheckHidden)<{ $color: string }>`
   &:checked + ${LabelWrapper} ${CheckIcon} {
-    background-color: ${({ theme }) => theme.colors.mainBlue};
+    background-color: ${({ theme, $color }) =>
+      $color === 'orange' ? theme.colors.mainOrange : theme.colors.mainBlue};
   }
 
   &:checked + ${LabelWrapper} ${CheckIcon}::before {

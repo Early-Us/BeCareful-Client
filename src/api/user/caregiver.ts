@@ -4,6 +4,7 @@ import {
   CareerInfo,
   CareerRequest,
   CaregiverHomeResponse,
+  CaregiverLeaveRequest,
   CaregiverProfileRequest,
   CaregiverProfileResponse,
 } from '@/types/caregiver';
@@ -202,10 +203,12 @@ export const useCaregiverLogout = () => {
 };
 
 /* 회원탈퇴 */
-export const useDeleteCaregiver = () => {
+export const useLeaveCaregiver = () => {
   return useMutation({
-    mutationFn: async () => {
-      const response = await axiosInstance.delete('/caregiver/leave');
+    mutationFn: async (request: CaregiverLeaveRequest) => {
+      const response = await axiosInstance.delete('/caregiver', {
+        data: request,
+      });
       return response;
     },
   });

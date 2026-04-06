@@ -5,7 +5,7 @@ export const mapReportReasonToApi = (reason: ReportReason) => {
     case 'SPAM':
       return '스팸';
     case 'ABUSE':
-      return '욕설/비방';
+      return '욕설';
     case 'SEXUAL':
       return '음란물';
     case 'PRIVACY':

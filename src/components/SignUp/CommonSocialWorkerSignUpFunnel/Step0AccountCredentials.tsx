@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { authenticateSmsAuthNumber, sendSmsAuthNumber } from '@/api/signup/sms';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { useCommonSignUpContext } from '@/contexts/CommonSocialWorkerSignUpContext';
@@ -8,14 +9,100 @@ import { PhoneAuthInput } from '@/components/SignUp/CommonSocialWorkerSignUpFunn
 import { PASSWORD_RULE_TEXT } from '@/constants/auth';
 import { isValidPassword } from '@/hooks/SignUp/usePasswordValidation';
 
-export const Step3AccountCredentials = () => {
-  const { goToNext, goToPrev } = useCommonSignUpContext();
+export const Step0AccountCredentials = () => {
+  const { goToNext, goToPrev, formData, setFormData } =
+    useCommonSignUpContext();
 
-  //임시 코드 api 나오면 수정 예정
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [authCode, setAuthCode] = useState('');
-  const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isVerifyingCode, setIsVerifyingCode] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(0);
+  const [verifiedPhoneNumber, setVerifiedPhoneNumber] = useState('');
+
+  const phoneNumber = formData.phoneNumber;
+  const password = formData.password;
+
+  const formatRemainTime = (seconds: number) => {
+    const minute = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const second = (seconds % 60).toString().padStart(2, '0');
+    return `남은시간 ${minute}:${second}`;
+  };
+
+  const normalizePhoneNumber = (value: string) => value.replace(/[^0-9]/g, '');
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      phoneNumber: value,
+    }));
+    setVerifiedPhoneNumber('');
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      password: e.target.value,
+    }));
+  };
+
+  const handleSendCode = async () => {
+    const normalizedPhoneNumber = normalizePhoneNumber(phoneNumber);
+    if (!normalizedPhoneNumber) {
+      alert('휴대전화 번호를 입력해주세요.');
+      return;
+    }
+
+    try {
+      setIsSendingCode(true);
+      await sendSmsAuthNumber(normalizedPhoneNumber);
+      setAuthCode('');
+      setVerifiedPhoneNumber('');
+      setRemainingTime(180);
+    } catch (error) {
+      console.error('인증번호 전송 실패:', error);
+      alert('인증번호 전송에 실패했습니다.');
+    } finally {
+      setIsSendingCode(false);
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    const normalizedPhoneNumber = normalizePhoneNumber(phoneNumber);
+    if (!normalizedPhoneNumber || authCode.length !== 6) return false;
+
+    try {
+      setIsVerifyingCode(true);
+      await authenticateSmsAuthNumber(normalizedPhoneNumber, authCode);
+      setVerifiedPhoneNumber(phoneNumber);
+      alert('휴대전화 인증이 완료되었습니다.');
+      return true;
+    } catch (error) {
+      console.error('인증번호 검증 실패:', error);
+      alert('인증번호가 올바르지 않습니다. 다시 확인해주세요.');
+      return false;
+    } finally {
+      setIsVerifyingCode(false);
+    }
+  };
+
+  useEffect(() => {
+    if (remainingTime <= 0) return;
+    const timer = window.setInterval(() => {
+      setRemainingTime((prev) => {
+        if (prev <= 1) {
+          window.clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [remainingTime]);
 
   const passwordRuleOk = isValidPassword(password);
   const hasPwInput = password.length > 0;
@@ -30,6 +117,20 @@ export const Step3AccountCredentials = () => {
     hasConfirmInput &&
     isMatch;
 
+  const handleNext = async () => {
+    if (!isFormValid || isVerifyingCode) return;
+
+    if (verifiedPhoneNumber === phoneNumber) {
+      goToNext();
+      return;
+    }
+
+    const verified = await handleVerifyCode();
+    if (verified) {
+      goToNext();
+    }
+  };
+
   return (
     <StepWrapper>
       <HeaderSection>
@@ -43,18 +144,17 @@ export const Step3AccountCredentials = () => {
 
       <PhoneAuthInput
         phoneNumber={phoneNumber}
-        onPhoneNumberChange={(e) => setPhoneNumber(e.target.value)}
+        onPhoneNumberChange={handlePhoneNumberChange}
         authCode={authCode}
         onAuthCodeChange={(e) => setAuthCode(e.target.value)}
-        onSendCode={() => {}}
-        sendButtonLabel="인증번호 전송"
-        remainTimeText="남은시간 02:59"
+        onSendCode={handleSendCode}
+        sendButtonLabel={isSendingCode ? '전송 중...' : '인증번호 전송'}
+        remainTimeText={
+          remainingTime > 0 ? formatRemainTime(remainingTime) : ''
+        }
       />
 
-      <PasswordInput
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <PasswordInput value={password} onChange={handlePasswordChange} />
 
       {hasPwInput && (
         <ValidationMessage state={passwordRuleOk ? 'success' : 'error'}>
@@ -80,12 +180,12 @@ export const Step3AccountCredentials = () => {
           이전
         </Button>
         <Button
-          onClick={goToNext}
+          onClick={handleNext}
           height="52px"
           variant={isFormValid ? 'blue' : 'gray'}
-          disabled={!isFormValid}
+          disabled={!isFormValid || isVerifyingCode}
         >
-          다음
+          {isVerifyingCode ? '인증 중...' : '다음'}
         </Button>
       </ButtonContainer>
     </StepWrapper>

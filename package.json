@@ -11,6 +11,9 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@capacitor/cli": "7",
+    "@capacitor/core": "7",
+    "@capacitor/ios": "7",
     "@hookform/resolvers": "^4.1.0",
     "@stomp/stompjs": "^7.2.1",
     "@svgr/rollup": "^8.1.0",

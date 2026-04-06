@@ -1,11 +1,6 @@
 import { useCaregiverSignUpContext } from '@/contexts/KakaoCaregiverSignUpContext';
 import { useGetGuestInfoBase } from '@/hooks/SignUp/useGetGuestInfoBase';
-
-const getGenderCode = (char: string): number => {
-  if (char === '1' || char === '3') return 1;
-  if (char === '2' || char === '4') return 2;
-  return 0;
-};
+import { getGenderCode } from '@/utils/format/text';
 
 export const useGetGuestInfoForCaregiver = () => {
   return useGetGuestInfoBase(useCaregiverSignUpContext, (guest) => ({

@@ -9,7 +9,7 @@ export const CAREGIVER_WORK_FILTERS = [
 
 export const CERTIFICATE_LABEL: Record<CertificateKey, string> = {
   caregiverCertificate: '요양보호사',
-  nursingCareCertificate: '간호지원사',
+  nursingCareCertificate: '간호조무사',
   socialWorkerCertificate: '사회복지사',
 };
 

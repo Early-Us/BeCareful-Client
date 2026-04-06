@@ -1,17 +1,21 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { UserRole } from '@/types/common';
 import { useDeleteUserInfo } from '@/hooks/useDeleteUserInfo';
-import { useCaregiverLogout, useDeleteCaregiver } from '@/api/user/caregiver';
+import { useCaregiverLogout, useLeaveCaregiver } from '@/api/user/caregiver';
 import {
-  useDeleteSocialworker,
+  useLeaveSocialworker,
   useSocialworkerLogout,
 } from '@/api/user/socialworker';
+import { CaregiverLeaveRequest } from '@/types/caregiver';
+import { SocialworkerLeaveRequest } from '@/types/socialworker';
 
 export const useUserAuthActions = (role: UserRole) => {
   const { mutate: caregiverLogout } = useCaregiverLogout();
-  const { mutate: caregiverLeave } = useDeleteCaregiver();
+  const { mutate: caregiverLeave } = useLeaveCaregiver();
   const { mutate: socialworkerLogout } = useSocialworkerLogout();
-  const { mutate: socialworkerLeave } = useDeleteSocialworker();
+  const { mutate: socialworkerLeave } = useLeaveSocialworker();
+
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
   const deleteUserInfo = useDeleteUserInfo();
 
@@ -20,10 +24,31 @@ export const useUserAuthActions = (role: UserRole) => {
     logout(undefined, { onSuccess: deleteUserInfo });
   }, [role, caregiverLogout, socialworkerLogout, deleteUserInfo]);
 
-  const handleLeave = useCallback(() => {
-    const leave = role === 'CAREGIVER' ? caregiverLeave : socialworkerLeave;
-    leave(undefined, { onSuccess: deleteUserInfo });
-  }, [role, caregiverLeave, socialworkerLeave, deleteUserInfo]);
+  const handleCaregiverLeave = (request: CaregiverLeaveRequest) => {
+    caregiverLeave(request, {
+      onSuccess: () => {
+        localStorage.clear();
+        deleteUserInfo();
+        setIsLeaveModalOpen(true);
+      },
+    });
+  };
 
-  return { handleLogout, handleLeave };
+  const handleSocialworkerLeave = (request: SocialworkerLeaveRequest) => {
+    socialworkerLeave(request, {
+      onSuccess: () => {
+        localStorage.clear();
+        deleteUserInfo();
+        setIsLeaveModalOpen(true);
+      },
+    });
+  };
+
+  return {
+    handleLogout,
+    handleCaregiverLeave,
+    handleSocialworkerLeave,
+    isLeaveModalOpen,
+    setIsLeaveModalOpen,
+  };
 };
