@@ -15,8 +15,26 @@ import { CommonSignUpPage } from '@/page/SignUp/CommonSignUpPage';
 import { CommonInstitutionSignUpPage } from '@/page/SignUp/CommonInstitutionSignUpPage';
 import { CommonCareGiverSignUpPage } from '@/page/SignUp/CommonCaregiverSignUpPage';
 import { ProfileViewPage } from '@/page/Common/ProfileViewPage';
+import { useEffect } from 'react';
+import ReactGA from 'react-ga4';
+import { useLocation } from 'react-router-dom';
 
 function App() {
+  const location = useLocation();
+  const GA_ID = import.meta.env.VITE_GA_ID;
+
+  useEffect(() => {
+    if (GA_ID) {
+      ReactGA.initialize(GA_ID);
+    }
+  }, [GA_ID]);
+
+  useEffect(() => {
+    if (GA_ID) {
+      ReactGA.send({ hitType: 'pageview', page: location.pathname });
+    }
+  }, [location, GA_ID]);
+
   return (
     <Routes>
       {/* 초기 - 스플래시, 온보딩, 회원가입 페이지 */}
