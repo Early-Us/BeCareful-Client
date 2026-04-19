@@ -10,9 +10,13 @@ import App from '@/App';
 import { ErrorPage } from '@/page/Error/ErrorPage';
 import { theme } from '@/style/theme/index';
 import { NetworkGuardModal } from '@/components/common/NetworkGuard/NetworkGuardModal';
+import { SentryBridge } from '@/components/common/Sentry/SentryBridge';
 import { ChatWebSocketProvider } from '@/contexts/ChatWebSocketContext';
+import { initSentry, captureError } from '@/lib/sentry';
 
 const queryClient = new QueryClient();
+
+initSentry();
 
 createRoot(document.getElementById('root')!).render(
   <RecoilRoot>
@@ -20,8 +24,16 @@ createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <BrowserRouter>
+          <SentryBridge />
           <NetworkGuardModal />
-          <ErrorBoundary fallback={<ErrorPage />}>
+          <ErrorBoundary
+            fallback={<ErrorPage />}
+            onError={(error, info) => {
+              captureError(error, {
+                componentStack: info.componentStack,
+              });
+            }}
+          >
             <ChatWebSocketProvider>
               <App />
             </ChatWebSocketProvider>

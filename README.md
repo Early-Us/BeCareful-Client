@@ -48,3 +48,24 @@ export default tseslint.config({
   },
 });
 ```
+
+## Sentry setup
+
+This project loads the browser SDK from `index.html` and initializes it in `src/lib/sentry.ts`.
+
+Set the following variables in `.env`:
+
+```bash
+VITE_SENTRY_DSN=your_sentry_dsn
+VITE_SENTRY_ENVIRONMENT=production
+VITE_SENTRY_RELEASE=becareful-client@1.0.0
+VITE_SENTRY_ENABLED=true
+VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
+VITE_SENTRY_REPLAYS_SESSION_SAMPLE_RATE=0
+VITE_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE=1
+```
+
+- `VITE_SENTRY_DSN` is required. Without it, Sentry does not initialize.
+- `VITE_SENTRY_ENABLED=false` disables event sending without removing the code.
+- Route changes and basic user info are attached automatically.
+- React render errors and non-auth API errors are reported automatically.

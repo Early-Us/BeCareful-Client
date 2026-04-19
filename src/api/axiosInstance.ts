@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { captureApiError } from '@/lib/sentry';
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
@@ -18,10 +19,20 @@ axiosInstance.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     const requestUrl = error.config?.url ?? '';
+    const method = error.config?.method;
     const isAuthFlowRequest =
       requestUrl.includes('/login') ||
       requestUrl.includes('/signup') ||
       requestUrl.includes('/sms');
+    const isCanceledError = axios.isCancel(error);
+
+    if (!isCanceledError && status !== 401) {
+      captureApiError(error, {
+        method,
+        url: requestUrl,
+        status,
+      });
+    }
 
     if (
       status === 401 &&
